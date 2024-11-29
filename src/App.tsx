@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Digital from "./pages/services/Digital";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
+import Pharmacies from "./pages/Pharmacies";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/services/digital" element={<Digital />} />
               <Route path="/services/community" element={<Community />} />
               <Route path="/services/consulting" element={<Consulting />} />
+              <Route path="/pharmacies" element={<Pharmacies />} />
             </Routes>
           </main>
           <Footer />

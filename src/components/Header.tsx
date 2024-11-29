@@ -31,6 +31,9 @@ const Header = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
+                <Link to="/pharmacies" className="px-4 py-2">Pharmacies</Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link to="/contact" className="px-4 py-2">Contact</Link>
               </NavigationMenuItem>
             </NavigationMenuList>
