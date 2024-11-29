@@ -75,6 +75,45 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Partners Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Nos Partenaires
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+            <div className="flex items-center justify-center p-4">
+              <img
+                src="/placeholder.svg"
+                alt="Partner 1"
+                className="max-h-16 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div>
+            <div className="flex items-center justify-center p-4">
+              <img
+                src="/placeholder.svg"
+                alt="Partner 2"
+                className="max-h-16 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div>
+            <div className="flex items-center justify-center p-4">
+              <img
+                src="/placeholder.svg"
+                alt="Partner 3"
+                className="max-h-16 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div>
+            <div className="flex items-center justify-center p-4">
+              <img
+                src="/placeholder.svg"
+                alt="Partner 4"
+                className="max-h-16 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
