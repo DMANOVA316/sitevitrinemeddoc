@@ -1,13 +1,21 @@
-// import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { authService } from "../services/authService";
 
+// Schéma de validation
 const formSchema = z.object({
   email: z.string().email("Email invalide"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
@@ -25,66 +33,66 @@ const Login = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log("Login attempt with:", values);
-      // TODO: Implement actual login logic
-      toast.success("Connexion réussie");
+      // Appel au service authService
+      const data = await authService.login(values);
+
+      // Connexion réussie
+      toast.success(`Bienvenue, ${data.user?.email || "utilisateur"}`);
       navigate("/");
-    } catch (error) {
-      toast.error("Erreur lors de la connexion");
+    } catch (error: any) {
+      toast.error(`Erreur: ${error.message}`);
     }
   };
 
   return (
-   
-      <div className="mx-auto max-w-md space-y-6 p-6">
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold">Connexion</h1>
-          <p className="text-gray-500">Connectez-vous à votre compte MedDoc</p>
-        </div>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="exemple@email.com" type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mot de passe</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" className="w-full">
-              Se connecter
-            </Button>
-          </form>
-        </Form>
-
-        <div className="text-center text-sm">
-          <a href="/forgot-password" className="text-primary hover:underline">
-            Mot de passe oublié ?
-          </a>
-        </div>
+    <div className="mx-auto max-w-md space-y-6 p-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-3xl font-bold">Connexion</h1>
+        <p className="text-gray-500">Connectez-vous à votre compte MEDDoC</p>
       </div>
-    
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="exemple@email.com" type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mot de passe</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-full">
+            Se connecter
+          </Button>
+        </form>
+      </Form>
+
+      <div className="text-center text-sm">
+        <a href="/forgot-password" className="text-primary hover:underline">
+          Mot de passe oublié ?
+        </a>
+      </div>
+    </div>
   );
 };
 
