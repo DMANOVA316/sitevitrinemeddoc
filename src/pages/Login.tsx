@@ -1,21 +1,14 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { authService } from "../services/authService";
+import supabase from "@/utils/supabase";  // Importer Supabase
 
-// Schéma de validation
 const formSchema = z.object({
   email: z.string().email("Email invalide"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
@@ -33,14 +26,22 @@ const Login = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // Appel au service authService
-      const data = await authService.login(values);
+      console.log("Login attempt with:", values);
 
-      // Connexion réussie
-      toast.success(`Bienvenue, ${data.user?.email || "utilisateur"}`);
-      navigate("/");
+      // Connexion avec Supabase
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success("Connexion réussie");
+      navigate("/dashboard"); // Rediriger vers le tableau de bord après une connexion réussie
     } catch (error: any) {
-      toast.error(`Erreur: ${error.message}`);
+      toast.error(error.message || "Erreur lors de la connexion");
     }
   };
 
@@ -48,7 +49,7 @@ const Login = () => {
     <div className="mx-auto max-w-md space-y-6 p-6">
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold">Connexion</h1>
-        <p className="text-gray-500">Connectez-vous à votre compte MEDDoC</p>
+        <p className="text-gray-500">Connectez-vous à votre compte MedDoc</p>
       </div>
 
       <Form {...form}>
