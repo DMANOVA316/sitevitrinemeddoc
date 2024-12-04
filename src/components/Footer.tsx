@@ -12,10 +12,12 @@ const Footer = () => {
               La première entreprise 360° santé à Madagascar.
             </p>
             
-           <br />
-           <Button size="lg" className="bg-meddoc-primary hover:bg-meddoc-secondary">
-           Se Connecter
-          </Button>
+            <br />
+            <Link to="/login">
+            <Button size="lg" className="bg-meddoc-primary hover:bg-meddoc-secondary">
+            Se Connecter
+            </Button>
+            </Link>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>

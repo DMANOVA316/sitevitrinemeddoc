@@ -10,6 +10,7 @@ import Digital from "./pages/services/Digital";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
 import Pharmacies from "./pages/Pharmacies";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -24,10 +25,12 @@ const App = () => (
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
+
               <Route path="/services/digital" element={<Digital />} />
               <Route path="/services/community" element={<Community />} />
               <Route path="/services/consulting" element={<Consulting />} />
               <Route path="/pharmacies" element={<Pharmacies />} />
+              <Route path="/login" element={ <Login />} />
             </Routes>
           </main>
           <Footer />
