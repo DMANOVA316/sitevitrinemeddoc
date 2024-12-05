@@ -1,0 +1,38 @@
+[
+    {
+        "@id": "/api/provinces/018d0daf-fd27-7955-8a5e-782d021f4cea",
+        "@type": "Province",
+        "id": "018d0daf-fd27-7955-8a5e-782d021f4cea",
+        "name": "Antananarivo"
+    },
+    {
+        "@id": "/api/provinces/018d0daf-fd2e-7d8d-a20f-3ecb4b126abf",
+        "@type": "Province",
+        "id": "018d0daf-fd2e-7d8d-a20f-3ecb4b126abf",
+        "name": "Antsiranana"
+    },
+    {
+        "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+        "@type": "Province",
+        "id": "018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+        "name": "Fianarantsoa"
+    },
+    {
+        "@id": "/api/provinces/018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+        "@type": "Province",
+        "id": "018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+        "name": "Mahajanga"
+    },
+    {
+        "@id": "/api/provinces/018d0daf-fd3a-7aca-9cd9-5e70a620268e",
+        "@type": "Province",
+        "id": "018d0daf-fd3a-7aca-9cd9-5e70a620268e",
+        "name": "Toamasina"
+    },
+    {
+        "@id": "/api/provinces/018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+        "@type": "Province",
+        "id": "018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+        "name": "Toliara"
+    }
+]
