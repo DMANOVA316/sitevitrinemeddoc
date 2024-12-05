@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
@@ -10,6 +11,13 @@ const Footer = () => {
             <p className="text-gray-400">
               La première entreprise 360° santé à Madagascar.
             </p>
+            
+            <br />
+            <Link to="/login">
+            <Button size="lg" className="bg-meddoc-primary hover:bg-meddoc-secondary">
+            Se Connecter
+            </Button>
+            </Link>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
