@@ -58,7 +58,6 @@ declare global {
     id: number;
     name: string;
     profile: string;
-    horaire: string;
     contact: string;
     address: string;
     province: string;
