@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddPharmacy from "@/components/Pharmacie/AddPharmacy";
+import AddPharmacy from "./AddPharmacy";
 import {
     Dialog,
     DialogContent,
@@ -34,7 +34,7 @@ interface Pharmacy {
     };
 }
 
-const PharmacyList: React.FC = () => {
+const ListePharmacy: React.FC = () => {
     const [data, setData] = useState<Pharmacy[]>([
         {
             id: 1,
@@ -246,4 +246,4 @@ const PharmacyList: React.FC = () => {
     );
 };
 
-export default PharmacyList;
+export default ListePharmacy;
