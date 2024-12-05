@@ -13,26 +13,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search } from "lucide-react";
-
-interface Pharmacy {
-    id: number;
-    profile: string;
-    name: string;
-    contact: string;
-    address: string;
-    province: string;
-    region: string;
-    district: string;
-    commune: string;
-    service: string;
-    location: string;
-    deGarde: boolean;
-    heureOuverture: {
-        debut: string;
-        fin: string;
-    };
-}
+import { Search, Clock } from "lucide-react";
 
 const PharmacyList: React.FC = () => {
     const [data, setData] = useState<Pharmacy[]>([
@@ -76,13 +57,27 @@ const PharmacyList: React.FC = () => {
 
     const [search, setSearch] = useState("");
     const [filterDeGarde, setFilterDeGarde] = useState<boolean | null>(null);
+    const [editingPharmacy, setEditingPharmacy] = useState<Pharmacy | null>(null);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
     const handleDelete = (id: number) => {
         setData(data.filter((item) => item.id !== id));
     };
 
     const handleEdit = (id: number) => {
-        alert(`Edit item with id: ${id}`);
+        const pharmacyToEdit = data.find((item) => item.id === id);
+        if (pharmacyToEdit) {
+            setEditingPharmacy(pharmacyToEdit);
+            setIsEditDialogOpen(true);
+        }
+    };
+
+    const handleUpdatePharmacy = (updatedData: Pharmacy) => {
+        setData(data.map(item => 
+            item.id === updatedData.id ? updatedData : item
+        ));
+        setIsEditDialogOpen(false);
+        setEditingPharmacy(null);
     };
 
     const toggleDeGarde = (id: number) => {
@@ -103,6 +98,17 @@ const PharmacyList: React.FC = () => {
 
     return (
         <div className="container mx-auto p-4">
+            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogContent className="max-w-4xl">
+                    <DialogHeader>
+                        <DialogTitle>Modifier la pharmacie</DialogTitle>
+                    </DialogHeader>
+                    <AddPharmacy 
+                        initialData={editingPharmacy} 
+                        onSubmit={handleUpdatePharmacy}
+                    />
+                </DialogContent>
+            </Dialog>
             <div className="flex justify-between items-center mb-4">
                 <div className="relative w-1/3">
                     <input
@@ -197,7 +203,12 @@ const PharmacyList: React.FC = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.service}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        {item.heureOuverture.debut} - {item.heureOuverture.fin}
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="h-4 w-4" />
+                                            <span>
+                                                {item.heureOuverture.debut} - {item.heureOuverture.fin}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.contact}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.address}</td>
