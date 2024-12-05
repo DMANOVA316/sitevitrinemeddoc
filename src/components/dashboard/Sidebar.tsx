@@ -1,33 +1,182 @@
-// src/components/dashboard/Sidebar.tsx
-import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import {
+  LayoutDashboard,
+  Pill,
+  Ambulance,
+  Handshake,
+  FileText,
+  Settings,
+  LogOut,
+  Wrench,
+  MessageSquare,
+  Share2,
+  Image,
+  Contact,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useToast } from "@/components/ui/use-toast";
+import supabase from "@/utils/supabase";
 
-const Sidebar = () => {
+interface SidebarProps {
+  className?: string;
+}
+
+const Sidebar = ({ className }: SidebarProps) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast({
+        title: "Déconnexion réussie",
+        description: "À bientôt !",
+      });
+      navigate("/login");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: error.message,
+      });
+    }
+  };
+
+  const menuItems = [
+    {
+      title: "Tableau de bord",
+      icon: LayoutDashboard,
+      href: "/dashboard",
+    },
+    {
+      title: "Gestion MEDDoC",
+      items: [
+        {
+          title: "Page MEDDoC",
+          icon: FileText,
+          href: "/dashboard/page-meddoc",
+        },
+        {
+          title: "Services",
+          icon: Wrench,
+          href: "/dashboard/services",
+        },
+        {
+          title: "Contact",
+          icon: Contact,
+          href: "/dashboard/contact-meddoc",
+        },
+        {
+          title: "Réseaux sociaux",
+          icon: Share2,
+          href: "/dashboard/reseaux-sociaux",
+        },
+        {
+          title: "Couverture",
+          icon: Image,
+          href: "/dashboard/couverture",
+        },
+      ],
+    },
+    {
+      title: "Gestion Santé",
+      items: [
+        {
+          title: "Pharmacies",
+          icon: Pill,
+          href: "/dashboard/pharmacies",
+        },
+        {
+          title: "Ambulances",
+          icon: Ambulance,
+          href: "/dashboard/ambulances",
+        },
+        {
+          title: "Urgences",
+          icon: MessageSquare,
+          href: "/dashboard/urgences",
+        },
+      ],
+    },
+    {
+      title: "Partenaires",
+      icon: Handshake,
+      href: "/dashboard/partenaires",
+    },
+  ];
+
   return (
-    <div className="w-64 bg-gray-800 text-white p-6 flex flex-col">
-      <h2 className="text-xl font-bold mb-6">Tableau de Bord</h2>
-      <ul className="space-y-4">
-        <li>
-          <Link to="/dashboard" className="hover:bg-gray-700 p-2 rounded">
-            Accueil
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard/profile" className="hover:bg-gray-700 p-2 rounded">
-            Profil
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard/settings" className="hover:bg-gray-700 p-2 rounded">
-            Paramètres
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard/analytics" className="hover:bg-gray-700 p-2 rounded">
-            Analytique
-          </Link>
-        </li>
-      </ul>
+    <div className={cn("pb-12 min-h-screen", className)}>
+      <div className="space-y-4 py-4">
+        <div className="px-3 py-2">
+          <div className="mb-8">
+            <img src="/logo.png" alt="MEDDoC" className="h-8" />
+          </div>
+          <div className="space-y-1">
+            <ScrollArea className="h-[calc(100vh-12rem)]">
+              {menuItems.map((item, index) => (
+                <div key={index} className="mb-4">
+                  {item.items ? (
+                    <>
+                      <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-primary">
+                        {item.title}
+                      </h2>
+                      <div className="space-y-1">
+                        {item.items.map((subItem, subIndex) => (
+                          <NavLink
+                            key={subIndex}
+                            to={subItem.href}
+                            className={({ isActive }) =>
+                              cn(
+                                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
+                                isActive
+                                  ? "bg-primary/10 text-primary"
+                                  : "text-muted-foreground hover:bg-primary/5"
+                              )
+                            }
+                          >
+                            <subItem.icon className="h-4 w-4" />
+                            {subItem.title}
+                          </NavLink>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <NavLink
+                      to={item.href}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
+                          isActive
+                            ? "bg-primary/10 text-primary"
+                            : "text-muted-foreground hover:bg-primary/5"
+                        )
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.title}
+                    </NavLink>
+                  )}
+                </div>
+              ))}
+            </ScrollArea>
+          </div>
+        </div>
+      </div>
+      <div className="px-3 absolute bottom-4 w-full">
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+          onClick={handleLogout}
+        >
+          <LogOut className="h-4 w-4" />
+          Déconnexion
+        </Button>
+      </div>
     </div>
   );
 };

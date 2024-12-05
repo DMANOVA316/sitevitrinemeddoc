@@ -38,7 +38,7 @@ const Login = () => {
         throw new Error(error.message);
       }
 
-      toast.success("Connexion réussie");
+      toast.success("Connexion réussie, Bienvenue !");
       navigate("/dashboard"); // Rediriger vers le tableau de bord après une connexion réussie
     } catch (error: any) {
       toast.error(error.message || "Erreur lors de la connexion");
