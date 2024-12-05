@@ -8,7 +8,6 @@ const PrivateRoute: React.FC = () => {
 
   useEffect(() => {
     const checkSession = async () => {
-      
       try {
         const session = await authService.getSession();
         setIsAuthenticated(!!session);
@@ -43,3 +42,4 @@ const PrivateRoute: React.FC = () => {
 };
 
 export default PrivateRoute;
+
