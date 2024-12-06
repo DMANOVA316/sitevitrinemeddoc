@@ -105,7 +105,7 @@ const Sidebar = ({ className }: SidebarProps) => {
     {
       title: "Partenaires",
       icon: Handshake,
-      href: "/dashboard/partenaires",
+      href: "/dashboard/partenaires/list",
     },
   ];
 
