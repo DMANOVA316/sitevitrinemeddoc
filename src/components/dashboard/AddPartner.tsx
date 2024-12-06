@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import {
   Dialog,
@@ -31,16 +32,17 @@ export default function AddPartner() {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Vérifier la taille du fichier (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        setUploadError("L'image ne doit pas dépasser 5MB");
+      // Vérifier la taille du fichier (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setUploadError("L'image ne doit pas dépasser 10MB");
         return;
       }
-      
+
       // Vérifier le type de fichier
       if (!file.type.startsWith("image/")) {
         setUploadError("Le fichier doit être une image");
@@ -48,6 +50,7 @@ export default function AddPartner() {
       }
 
       setSelectedFile(file);
+      setImagePreview(URL.createObjectURL(file));
       setUploadError(null);
     }
   };
@@ -65,16 +68,19 @@ export default function AddPartner() {
       // Créer le partenaire avec l'URL de l'image
       await handleAddPartner({
         ...formData,
-        logo: logoUrl
+        logo: logoUrl,
       });
 
       // Réinitialiser le formulaire et fermer la modale
       setFormData({ nom_partenaire: "", lien: "", logo: "" });
       setSelectedFile(null);
+      setImagePreview(null);
       setIsAddPartnerOpen(false);
     } catch (err) {
       console.error("Error adding partner:", err);
-      setUploadError(err instanceof Error ? err.message : "Une erreur s'est produite");
+      setUploadError(
+        err instanceof Error ? err.message : "Une erreur s'est produite"
+      );
     }
   };
 
@@ -137,6 +143,16 @@ export default function AddPartner() {
                 Fichier sélectionné: {selectedFile.name}
               </p>
             )}
+            {imagePreview && (
+              <div className="flex items-center space-x-4 mt-4">
+                <img
+                  src={imagePreview}
+                  alt="Aperçu du logo"
+                  className="h-20 w-50 object-contain rounded-lg border p-2"
+                />
+                <span className="text-sm text-gray-500">Aperçu du logo</span>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-2 justify-end pt-4">
@@ -153,7 +169,7 @@ export default function AddPartner() {
               className="bg-blue-600 hover:bg-blue-500"
               disabled={isLoading}
             >
-              {isLoading ? "Ajout en cours..." : "Ajouter"}
+              {isLoading ? <Skeleton className="h-6 w-24" /> : "Ajouter"}
             </Button>
           </div>
         </form>

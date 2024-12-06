@@ -5,7 +5,9 @@ import { uploadService } from "@/services/uploadService";
 
 export default function usePartner() {
   const [partners, setPartners] = useState<PartnerType[]>([]);
-  const [currentPartner, setCurrentPartner] = useState<PartnerType | null>(null);
+  const [currentPartner, setCurrentPartner] = useState<PartnerType | null>(
+    null
+  );
   const [isAddPartnerOpen, setIsAddPartnerOpen] = useState(false);
   const [isEditPartnerOpen, setIsEditPartnerOpen] = useState(false);
   const [isRemovePartnerOpen, setIsRemovePartnerOpen] = useState(false);
@@ -19,7 +21,9 @@ export default function usePartner() {
       const data = await partnerService.getAllPartners();
       setPartners(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Une erreur s'est produite");
+      setError(
+        err instanceof Error ? err.message : "Une erreur s'est produite"
+      );
       console.error("Error fetching partners:", err);
     } finally {
       setIsLoading(false);
@@ -46,7 +50,9 @@ export default function usePartner() {
       setIsAddPartnerOpen(false);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Erreur lors de l'ajout du partenaire"
+        err instanceof Error
+          ? err.message
+          : "Erreur lors de l'ajout du partenaire"
       );
       console.error("Error adding partner:", err);
     } finally {
@@ -59,7 +65,7 @@ export default function usePartner() {
       setIsLoading(true);
       setError(null);
 
-      let updatedPartner = { ...partner };
+      const updatedPartner = { ...partner };
 
       // Si un nouveau fichier est fourni, uploader la nouvelle image
       if (file) {
@@ -110,7 +116,10 @@ export default function usePartner() {
     await addPartner(partner, file);
   };
 
-  const handleEditPartner = async (partner: PartnerType, file?: File | null) => {
+  const handleEditPartner = async (
+    partner: PartnerType,
+    file?: File | null
+  ) => {
     await editPartner(partner, file);
   };
 

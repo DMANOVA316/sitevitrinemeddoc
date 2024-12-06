@@ -30,9 +30,9 @@ export const uploadService = {
         throw new Error("Le fichier doit être une image");
       }
 
-      // Vérifier la taille du fichier (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        throw new Error("L'image ne doit pas dépasser 5MB");
+      // Vérifier la taille du fichier (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        throw new Error("L'image ne doit pas dépasser 10MB");
       }
 
       // Créer un nom de fichier unique avec le chemin du dossier

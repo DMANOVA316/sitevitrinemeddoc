@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
 import {
   Dialog,
@@ -28,6 +29,8 @@ export default function EditPartner() {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (currentPartner) {
       setFormData(currentPartner);
@@ -37,7 +40,9 @@ export default function EditPartner() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     await handleEditPartner(formData, selectedFile);
+    setIsLoading(false);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,8 +132,12 @@ export default function EditPartner() {
             >
               Annuler
             </Button>
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-500">
-              Modifier
+            <Button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-500"
+              disabled={isLoading}
+            >
+              {isLoading ? <Skeleton className="h-6 w-24" /> : "Modifier"}
             </Button>
           </div>
         </form>
