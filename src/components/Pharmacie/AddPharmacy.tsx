@@ -1,225 +1,302 @@
-import React, { useState } from "react";
-import LocationSelector from "../LocationSelector/LocationSelector";
-import { Label } from "../ui/label";
+import { useState } from "react";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Trash2, Plus } from "lucide-react";
+import LocationSelector from "../LocationSelector/LocationSelector";
 
-interface AddPharmacyProps {
-    initialData?: Pharmacy | null;
-    onSubmit?: (data: Pharmacy) => void;
+interface PharmacyContact {
+    numero: string;
 }
 
-const AddPharmacy: React.FC<AddPharmacyProps> = ({ initialData, onSubmit }) => {
-    const [formData, setFormData] = useState<Pharmacy>(
-        initialData || {
-            id: Math.floor(Math.random() * 1000),
-            name: "",
-            profile: "",
-            contact: "",
-            address: "",
-            province: "",
-            region: "",
-            district: "",
-            commune: "",
-            service: "",
-            location: "",
-            deGarde: false,
-            heureOuverture: {
-                debut: "",
-                fin: "",
-            },
-        }
-    );
+interface PharmacySchedule {
+    heure_debut: string;
+    heure_fin: string;
+}
+
+interface Pharmacy {
+    id?: number;
+    nom_pharmacie: string;
+    photo_profil?: string;
+    address: string;
+    province: string;
+    region?: string;
+    district?: string;
+    commune: string;
+    service: string;
+    de_garde: boolean;
+    contacts?: PharmacyContact[];
+    horaires?: PharmacySchedule[];
+}
+
+interface AddPharmacyProps {
+    onSubmit: (data: Pharmacy) => void;
+    pharmacy?: Pharmacy;
+    isEdit?: boolean;
+}
+
+export default function AddPharmacy({ onSubmit, pharmacy, isEdit = false }: AddPharmacyProps) {
+    const [formData, setFormData] = useState<Pharmacy>({
+        id: pharmacy?.id,
+        nom_pharmacie: pharmacy?.nom_pharmacie || "",
+        photo_profil: pharmacy?.photo_profil || "",
+        address: pharmacy?.address || "",
+        province: pharmacy?.province || "",
+        region: pharmacy?.region || "",
+        district: pharmacy?.district || "",
+        commune: pharmacy?.commune || "",
+        service: pharmacy?.service || "",
+        de_garde: pharmacy?.de_garde || false,
+        contacts: pharmacy?.contacts || [{ numero: "" }],
+        horaires: pharmacy?.horaires || [{ heure_debut: "", heure_fin: "" }]
+    });
+
+    const [contacts, setContacts] = useState<PharmacyContact[]>(formData.contacts);
+
+    const [horaires, setHoraires] = useState<PharmacySchedule[]>(formData.horaires);
+
+    const handleLocationChange = (location: {
+        province: string;
+        region?: string;
+        district?: string;
+        commune: string;
+    }) => {
+        setFormData(prev => ({
+            ...prev,
+            province: location.province,
+            region: location.region || "",
+            district: location.district || "",
+            commune: location.commune
+        }));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (onSubmit) {
-            onSubmit(formData);
+            const formattedContacts = contacts.map(({ numero }) => ({ numero }));
+            const formattedHoraires = horaires.map(({ heure_debut, heure_fin }) => ({
+                heure_debut,
+                heure_fin
+            }));
+
+            onSubmit({
+                ...formData,
+                contacts: formattedContacts,
+                horaires: formattedHoraires
+            });
         }
     };
 
+    const addContact = () => {
+        setContacts([...contacts, { numero: "" }]);
+    };
+
+    const removeContact = (index: number) => {
+        setContacts(contacts.filter((_, i) => i !== index));
+    };
+
+    const updateContact = (index: number, numero: string) => {
+        const newContacts = [...contacts];
+        newContacts[index] = { numero };
+        setContacts(newContacts);
+    };
+
+    const addHoraire = () => {
+        setHoraires([...horaires, { heure_debut: "", heure_fin: "" }]);
+    };
+
+    const removeHoraire = (index: number) => {
+        setHoraires(horaires.filter((_, i) => i !== index));
+    };
+
+    const updateHoraire = (index: number, field: keyof PharmacySchedule, value: string) => {
+        const newHoraires = [...horaires];
+        newHoraires[index] = { ...newHoraires[index], [field]: value };
+        setHoraires(newHoraires);
+    };
+
     return (
-        <div className="max-h-[80vh] overflow-y-auto">
-            <form className="p-4" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-8 p-4 relative flex flex-col h-[calc(100vh-8rem)]">
+            <div className="flex-1 overflow-y-auto pr-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Colonne de gauche */}
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                         <div>
-                            <Label className="block text-sm font-medium text-gray-700">
+                            <Label className="text-sm font-medium text-gray-700">
                                 Nom de la pharmacie
                             </Label>
                             <Input
-                                type="text"
-                                value={formData.name}
+                                value={formData.nom_pharmacie}
                                 onChange={(e) =>
-                                    setFormData({ ...formData, name: e.target.value })
+                                    setFormData({ ...formData, nom_pharmacie: e.target.value })
                                 }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                                className="w-full"
                             />
                         </div>
 
                         <div>
-                            <Label className="block text-sm font-medium text-gray-700">
-                                Profile
+                            <Label className="text-sm font-medium text-gray-700">
+                                Photo de profil
                             </Label>
                             <Input
                                 type="file"
                                 onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        profile: e.target.files?.[0]?.name || "",
-                                    })
+                                    setFormData({ ...formData, photo_profil: e.target.value })
                                 }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                                className="w-full"
                             />
                         </div>
 
                         <div>
-                            <Label className="block text-sm font-medium text-gray-700">
-                                Contact
-                            </Label>
-                            <Input
-                                type="text"
-                                value={formData.contact}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, contact: e.target.value })
-                                }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-
-                        <div>
-                            <Label className="block text-sm font-medium text-gray-700">
+                            <Label className="text-sm font-medium text-gray-700">
                                 Adresse
                             </Label>
                             <Input
-                                type="text"
                                 value={formData.address}
                                 onChange={(e) =>
                                     setFormData({ ...formData, address: e.target.value })
                                 }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                                className="w-full"
                             />
                         </div>
 
+                        <LocationSelector
+                            onLocationChange={handleLocationChange}
+                            initialValues={isEdit ? {
+                                province: pharmacy?.province,
+                                region: pharmacy?.region,
+                                district: pharmacy?.district,
+                                commune: pharmacy?.commune
+                            } : undefined}
+                        />
+
                         <div>
-                            <Label className="block text-sm font-medium text-gray-700">
+                            <Label className="text-sm font-medium text-gray-700">
                                 Service
                             </Label>
                             <Input
-                                type="text"
                                 value={formData.service}
                                 onChange={(e) =>
                                     setFormData({ ...formData, service: e.target.value })
                                 }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                                className="w-full"
                             />
-                        </div>
-
-                        <div>
-                            <Label className="block text-sm font-medium text-gray-700">
-                                Location
-                            </Label>
-                            <Input
-                                type="text"
-                                value={formData.location}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, location: e.target.value })
-                                }
-                                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-
-                        <div>
-                            <Label className="block text-sm font-medium text-gray-700">
-                                De garde
-                            </Label>
-                            <Input
-                                type="checkbox"
-                                checked={formData.deGarde}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, deGarde: e.target.checked })
-                                }
-                                className="w-4 h-4 border rounded focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-
-                        {/* Heures d'ouverture */}
-                        <div className="space-y-4">
-                            <Label className="block text-sm font-medium text-gray-700">
-                                Heures d'ouverture
-                            </Label>
-                            <div className="flex gap-4">
-                                <div className="flex-1">
-                                    <Label htmlFor="heureDebut" className="block text-xs text-gray-600">
-                                        Heure de début
-                                    </Label>
-                                    <Input
-                                        id="heureDebut"
-                                        type="time"
-                                        value={formData.heureOuverture.debut}
-                                        onChange={(e) => setFormData({
-                                            ...formData,
-                                            heureOuverture: {
-                                                ...formData.heureOuverture,
-                                                debut: e.target.value
-                                            }
-                                        })}
-                                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                                <div className="flex-1">
-                                    <Label htmlFor="heureFin" className="block text-xs text-gray-600">
-                                        Heure de fin
-                                    </Label>
-                                    <Input
-                                        id="heureFin"
-                                        type="time"
-                                        value={formData.heureOuverture.fin}
-                                        onChange={(e) => setFormData({
-                                            ...formData,
-                                            heureOuverture: {
-                                                ...formData.heureOuverture,
-                                                fin: e.target.value
-                                            }
-                                        })}
-                                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     {/* Colonne de droite */}
                     <div className="space-y-6">
-                        <LocationSelector
-                            // formData={formData}
-                            // setFormData={setFormData}
-                        />
+                        <div>
+                            <Label className="text-sm font-medium text-gray-700">
+                                Contacts
+                            </Label>
+                            <div className="space-y-2">
+                                {contacts.map((contact, index) => (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <Input
+                                            type="tel"
+                                            value={contact.numero}
+                                            onChange={(e) => updateContact(index, e.target.value)}
+                                            placeholder="Numéro de téléphone"
+                                            required
+                                        />
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => removeContact(index)}
+                                            className="flex-shrink-0"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                            <span className="sr-only">Supprimer le contact</span>
+                                        </Button>
+                                    </div>
+                                ))}
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={addContact}
+                                    className="w-full"
+                                >
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Ajouter un contact
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label className="text-sm font-medium text-gray-700">
+                                Horaires d'ouverture
+                            </Label>
+                            <div className="space-y-2">
+                                {horaires.map((horaire, index) => (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <div className="grid grid-cols-2 gap-2 flex-1">
+                                            <Input
+                                                type="time"
+                                                value={horaire.heure_debut}
+                                                onChange={(e) =>
+                                                    updateHoraire(index, 'heure_debut', e.target.value)
+                                                }
+                                                required
+                                            />
+                                            <Input
+                                                type="time"
+                                                value={horaire.heure_fin}
+                                                onChange={(e) =>
+                                                    updateHoraire(index, 'heure_fin', e.target.value)
+                                                }
+                                                required
+                                            />
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => removeHoraire(index)}
+                                            className="flex-shrink-0"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                            <span className="sr-only">Supprimer l'horaire</span>
+                                        </Button>
+                                    </div>
+                                ))}
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={addHoraire}
+                                    className="w-full"
+                                >
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Ajouter un horaire
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="de_garde"
+                                checked={formData.de_garde}
+                                onCheckedChange={(checked: boolean) =>
+                                    setFormData({ ...formData, de_garde: checked })
+                                }
+                            />
+                            <Label htmlFor="de_garde" className="text-sm font-medium text-gray-700">
+                                De garde
+                            </Label>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div className="mt-6 flex justify-end gap-4">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => console.log("Annuler")}
-                    >
-                        Annuler
-                    </Button>
-                    <Button
-                        type="submit"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            console.log("Enregistrer", formData);
-                        }}
-                    >
-                        Enregistrer
-                    </Button>
-                </div>
-            </form>
-        </div>
+            <div className="flex justify-end pt-4 mt-auto border-t">
+                <Button type="submit" className="w-full md:w-auto">
+                    Enregistrer
+                </Button>
+            </div>
+        </form>
     );
-};
-
-export default AddPharmacy;
+}

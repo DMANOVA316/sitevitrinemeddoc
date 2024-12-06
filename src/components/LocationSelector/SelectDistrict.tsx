@@ -1,22 +1,35 @@
 import React from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const SelectDistrict:React.FC<SelectDistrictProps> = ({ districts, selectedDistrict, onSelectDistrict, disabled }) => {
+interface District {
+    "@id": string;
+    name: string;
+    region: {
+        "@id": string;
+        name: string;
+    };
+}
+
+interface SelectDistrictProps {
+    districts: District[];
+    value: string;
+    onChange: (value: string) => void;
+}
+
+const SelectDistrict: React.FC<SelectDistrictProps> = ({ districts, value, onChange }) => {
     return (
-        <div className="mb-3">
-            <select
-                value={selectedDistrict}
-                onChange={(e) => onSelectDistrict(e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                disabled={!disabled}
-            >
-                <option value="">-- Sélectionner un district --</option>
+        <Select value={value} onValueChange={onChange}>
+            <SelectTrigger>
+                <SelectValue placeholder="District" />
+            </SelectTrigger>
+            <SelectContent>
                 {districts.map((district) => (
-                    <option key={district["@id"]} value={district["@id"]}>
+                    <SelectItem key={district["@id"]} value={district["@id"]}>
                         {district.name}
-                    </option>
+                    </SelectItem>
                 ))}
-            </select>
-        </div>
+            </SelectContent>
+        </Select>
     );
 };
 
