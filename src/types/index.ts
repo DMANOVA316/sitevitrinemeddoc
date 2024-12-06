@@ -54,23 +54,33 @@ declare global {
     onSelectProvince: (provinceId: string) => void;
   }
 
-  type Pharmacy = {
-    id: number;
-    name: string;
-    profile: string;
-    contact: string;
+  export interface PharmacyContact {
+    id?: number;
+    id_pharmacie?: number;
+    numero: string;
+  }
+
+  export interface PharmacySchedule {
+    id?: number;
+    id_pharmacie?: number;
+    heure_debut: string;
+    heure_fin: string;
+  }
+
+  export interface Pharmacy {
+    id?: number;
+    nom_pharmacie: string;
+    photo_profil?: string;
     address: string;
     province: string;
-    region: string;
-    district: string;
+    region?: string;
+    district?: string;
     commune: string;
     service: string;
-    location: string;
-    deGarde: boolean;
-    heureOuverture: {
-      debut: string;
-      fin: string;
-    };
+    de_garde: boolean;
+    // localisation?: { x: number; y: number };
+    contacts?: PharmacyContact[];
+    horaires?: PharmacySchedule[];
   }
 }
 

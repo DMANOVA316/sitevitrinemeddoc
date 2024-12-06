@@ -1,22 +1,35 @@
 import React from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const SelectRegion:React.FC<SelectRegionProps> = ({ regions, selectedRegion, onSelectRegion, disabled }) => {
+interface Region {
+    "@id": string;
+    name: string;
+    province: {
+        "@id": string;
+        name: string;
+    };
+}
+
+interface SelectRegionProps {
+    regions: Region[];
+    value: string;
+    onChange: (value: string) => void;
+}
+
+const SelectRegion: React.FC<SelectRegionProps> = ({ regions, value, onChange }) => {
     return (
-        <div className="mb-3">
-            <select
-                value={selectedRegion}
-                onChange={(e) => onSelectRegion(e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                disabled={!disabled}
-            >
-                <option value="">-- Sélectionner une région --</option>
+        <Select value={value} onValueChange={onChange}>
+            <SelectTrigger>
+                <SelectValue placeholder="Région" />
+            </SelectTrigger>
+            <SelectContent>
                 {regions.map((region) => (
-                    <option key={region["@id"]} value={region["@id"]}>
+                    <SelectItem key={region["@id"]} value={region["@id"]}>
                         {region.name}
-                    </option>
+                    </SelectItem>
                 ))}
-            </select>
-        </div>
+            </SelectContent>
+        </Select>
     );
 };
 

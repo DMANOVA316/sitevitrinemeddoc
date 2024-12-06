@@ -1,21 +1,31 @@
 import React from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const SelectProvince:React.FC<SelectProvinceProps> = ({ provinces, selectedProvince, onSelectProvince }) => {
+interface Province {
+    "@id": string;
+    name: string;
+}
+
+interface SelectProvinceProps {
+    provinces: Province[];
+    value: string;
+    onChange: (value: string) => void;
+}
+
+const SelectProvince: React.FC<SelectProvinceProps> = ({ provinces, value, onChange }) => {
     return (
-        <div className="mb-3">
-            <select
-                value={selectedProvince}
-                onChange={(e) => onSelectProvince(e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-                <option value="">-- Sélectionner une province --</option>
+        <Select value={value} onValueChange={onChange}>
+            <SelectTrigger>
+                <SelectValue placeholder="Province" />
+            </SelectTrigger>
+            <SelectContent>
                 {provinces.map((province) => (
-                    <option key={province["@id"]} value={province["@id"]}>
+                    <SelectItem key={province["@id"]} value={province["@id"]}>
                         {province.name}
-                    </option>
+                    </SelectItem>
                 ))}
-            </select>
-        </div>
+            </SelectContent>
+        </Select>
     );
 };
 
