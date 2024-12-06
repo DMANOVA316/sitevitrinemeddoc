@@ -17,6 +17,8 @@ import EditHeader from "./pages/Dashboard/EditPages/EditHeader";
 import EditFooter from "./pages/Dashboard/EditPages/EditFooter";
 import EditLandingPage from "./pages/Dashboard/EditPages/EditLandingPage";
 import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
+import PartnerIndex from "./pages/Dashboard/Partners/PartnerIndex";
+import PartnerList from "./pages/Dashboard/Partners/PartnerList";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +105,12 @@ const App = () => (
                 path="/dashboard/page-meddoc/landing-page"
                 element={<EditLandingPage />}
               />
+              <Route path="/dashboard/partenaires" element={<PartnerIndex />}>
+                <Route
+                  path="/dashboard/partenaires/list"
+                  element={<PartnerList />}
+                />
+              </Route>
             </Route>
           </Route>
         </Routes>
