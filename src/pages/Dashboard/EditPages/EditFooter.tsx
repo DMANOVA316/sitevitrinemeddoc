@@ -1,137 +1,106 @@
-import { useState } from "react";
-
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
-interface Header {
-  title: string;
-  service1: string;
-  service2: string;
-  service3: string;
-  logo: globalThis.File | null;
-}
+import { Textarea } from "@/components/ui/textarea";
+import { FormEvent, useState } from "react";
 
 const EditFooter = () => {
-  const [formData, setFormData] = useState<Header>({
-    title: "",
-    service1: "",
-    service2: "",
-    service3: "",
-    logo: null,
-  });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [services, setServices] = useState("");
+  const [email, setEmail] = useState("");
+  const [tel, setTel] = useState("");
+  const [address, setAddress] = useState("");
+  const [copyright, setCopyright] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = {
+      title: title,
+      description: description,
+      services: services,
+      email: email,
+      tel: tel,
+      address: address,
+      copyright: copyright,
+    };
+    // send data to server when the server is ready for that XD
+    console.log(data);
   };
 
   return (
-    <div className="max-h-[80vh] overflow-y-auto">
-      <form className="p-4" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Titre du site
-              </Label>
-              <Input
-                type="text"
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+    <form
+      className="flex flex-col gap-2 p-5 shadow w-3/4"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <h1 className="font-bold text-center">Modifier le Footer</h1>
+      <Label>Titre du site</Label>
+      <Input
+        type="text"
+        name="title"
+        placeholder="Titre du site"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
 
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Nos services {">"} Option 1
-              </Label>
-              <Input
-                type="file"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    service1: e.target.files?.[0]?.name || "",
-                  })
-                }
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+      <Label>Descriptions</Label>
+      <Input
+        type="text"
+        name="description"
+        placeholder="Description du site"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
 
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Nos services {">"} Option 2
-              </Label>
-              <Input
-                type="text"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    service2: e.target.value,
-                  })
-                }
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+      <Label>Nos services</Label>
+      <Textarea
+        name="services"
+        placeholder="Liste des services"
+        className="resize-none"
+        value={services}
+        onChange={(e) => setServices(e.target.value)}
+        required
+      ></Textarea>
 
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Nos services {">"} Option 3
-              </Label>
-              <Input
-                type="text"
-                value={formData.service3}
-                onChange={(e) =>
-                  setFormData({ ...formData, service3: e.target.value })
-                }
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+      <Label>Contacts</Label>
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <Input
+        type="text"
+        name="tel"
+        placeholder="Numero telephone"
+        value={tel}
+        onChange={(e) => setTel(e.target.value)}
+        required
+      />
+      <Input
+        type="text"
+        name="address"
+        placeholder="Adresse"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        required
+      />
 
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Logo du site
-              </Label>
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    logo: e.target.files?.[0] || null,
-                  })
-                }
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+      <Label>Copyright</Label>
+      <Input
+        type="text"
+        placeholder="Copyright"
+        value={copyright}
+        onChange={(e) => setCopyright(e.target.value)}
+        required
+      />
 
-            <div className="mt-6 flex justify-end gap-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => console.log("Annuler")}
-              >
-                Annuler
-              </Button>
-              <div>
-                <Button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log("Enregistrer", formData);
-                  }}
-                >
-                  Enregistrer
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div></div>
-      </form>
-    </div>
+      <Button type="submit">Valider</Button>
+    </form>
   );
 };
 

@@ -19,13 +19,13 @@ export default function EditPageIndex() {
             Modifier header
           </Link>
           <Link
-            to={"/dashboard/page-meddoc/footer"}
+            to={"/dashboard/page-meddoc/landing-page"}
             className="py-2 px-4 bg-green-500 text-white rounded-md"
           >
             Modifier l'image de fond du landing page
           </Link>
           <Link
-            to={"/dashboard/page-meddoc/landing-page"}
+            to={"/dashboard/page-meddoc/footer"}
             className="py-2 px-4 bg-yellow-500 text-white rounded-md"
           >
             Modifier le footer
