@@ -4,8 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 const STORAGE_BUCKET = "images";
 const PARTNERS_FOLDER = "partners";
 const PHARMACIES_FOLDER = "pharmacies";
+const MEDDOC_FOLDER = "meddoc";
 
-type ImageType = "partner" | "pharmacy";
+type ImageType = "partner" | "pharmacy" | "meddoc";
 
 export const uploadService = {
   uploadImage: async (file: File, type: ImageType): Promise<string> => {
@@ -39,7 +40,20 @@ export const uploadService = {
       }
 
       // Sélectionner le dossier approprié
-      const folder = type === "partner" ? PARTNERS_FOLDER : PHARMACIES_FOLDER;
+      let folder;
+      switch (type) {
+        case "partner":
+          folder = PARTNERS_FOLDER;
+          break;
+        case "pharmacy":
+          folder = PHARMACIES_FOLDER;
+          break;
+        case "meddoc":
+          folder = MEDDOC_FOLDER;
+          break;
+        default:
+          folder = MEDDOC_FOLDER;
+      }
 
       // Créer un nom de fichier unique avec le chemin du dossier
       const fileExt = file.name.split(".").pop()?.toLowerCase() || "jpg";
@@ -49,36 +63,32 @@ export const uploadService = {
       console.log("To bucket:", STORAGE_BUCKET);
 
       // Upload du fichier
-      const { error: uploadError, data } = await supabase.storage
+      const { data, error } = await supabase.storage
         .from(STORAGE_BUCKET)
         .upload(fileName, file, {
           cacheControl: "3600",
-          upsert: true,
+          upsert: false,
         });
 
-      if (uploadError) {
-        console.error("Upload error details:", {
-          message: uploadError.message,
-          statusCode: uploadError.statusCode,
-          name: uploadError.name,
-          details: uploadError.details,
-        });
-        throw new Error(
-          `Erreur lors de l'upload de l'image: ${uploadError.message}`
-        );
+      if (error) {
+        console.error("Upload error:", error.message);
+        throw error;
       }
 
       if (!data) {
-        throw new Error("Aucune donnée retournée après l'upload");
+        throw new Error("Erreur lors de l'upload de l'image");
       }
 
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(fileName);
+      // Récupérer l'URL publique du fichier
+      const { data: publicUrl } = supabase.storage
+        .from(STORAGE_BUCKET)
+        .getPublicUrl(fileName);
 
-      return publicUrl;
+      console.log("Upload successful. Public URL:", publicUrl.publicUrl);
+
+      return publicUrl.publicUrl;
     } catch (error) {
-      console.error("Error in uploadImage:", error);
+      console.error("Upload error:", error);
       throw error;
     }
   },
@@ -102,23 +112,18 @@ export const uploadService = {
 
       console.log("Attempting to delete file:", fileName);
 
-      const { error: deleteError } = await supabase.storage
+      const { error } = await supabase.storage
         .from(STORAGE_BUCKET)
         .remove([fileName]);
 
-      if (deleteError) {
-        console.error("Delete error details:", {
-          message: deleteError.message,
-          statusCode: deleteError.statusCode,
-          name: deleteError.name,
-          details: deleteError.details,
-        });
-        throw new Error(
-          `Erreur lors de la suppression de l'image: ${deleteError.message}`
-        );
+      if (error) {
+        console.error("Delete error:", error.message);
+        throw error;
       }
+
+      console.log("File deleted successfully");
     } catch (error) {
-      console.error("Error in deleteImage:", error);
+      console.error("Delete error:", error);
       throw error;
     }
   },

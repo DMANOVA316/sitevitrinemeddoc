@@ -91,6 +91,13 @@ export interface PartnerType {
   logo: string;
 }
 
+export interface ServiceType {
+  id: number;
+  nom: string;
+  description: string;
+  lien: string;
+}
+
 export interface usePartnerProps {
   partners: PartnerType[];
   currentPartner: PartnerType | null;
@@ -102,11 +109,32 @@ export interface usePartnerProps {
   setIsAddPartnerOpen: (isOpen: boolean) => void;
   setIsEditPartnerOpen: (isOpen: boolean) => void;
   setIsRemovePartnerOpen: (isOpen: boolean) => void;
-  handleAddPartner: (partner: Omit<PartnerType, "id">, file?: File) => Promise<void>;
-  handleEditPartner: (partner: PartnerType, file?: File | null) => Promise<void>;
+  handleAddPartner: (
+    partner: Omit<PartnerType, "id">,
+    file?: File
+  ) => Promise<void>;
+  handleEditPartner: (
+    partner: PartnerType,
+    file?: File | null
+  ) => Promise<void>;
   handleRemovePartner: (id: number) => Promise<void>;
   handleSelectPartner: (partner: PartnerType) => void;
   setCurrentPartner: (partner: PartnerType | null) => void;
+}
+
+export interface Info_page_meddoc {
+  id: number;
+  titre_site: string;
+  favicon: string;
+  logo: string;
+  email: string;
+  addresse: string;
+  copyrigth: string;
+}
+
+export interface Numero_meddoc {
+  id: number;
+  numero: string;
 }
 
 export {};

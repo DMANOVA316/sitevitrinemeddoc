@@ -1,106 +1,105 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { FormEvent, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useEditPagesContext } from "@/contexts/EditPagesContext";
 
 const EditFooter = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [services, setServices] = useState("");
+  const { isFooterModalOpen, setIsFooterModalOpen } = useEditPagesContext();
   const [email, setEmail] = useState("");
-  const [tel, setTel] = useState("");
-  const [address, setAddress] = useState("");
+  const [contact, setContact] = useState("");
+  const [addresse, setAddresse] = useState("");
   const [copyright, setCopyright] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
-      title: title,
-      description: description,
-      services: services,
       email: email,
-      tel: tel,
-      address: address,
+      contact: contact,
+      addresse: addresse,
       copyright: copyright,
     };
     // send data to server when the server is ready for that XD
     console.log(data);
+    setIsFooterModalOpen(false);
   };
 
   return (
-    <form
-      className="flex flex-col gap-2 p-5 shadow w-3/4"
-      onSubmit={(e) => handleSubmit(e)}
-    >
-      <h1 className="font-bold text-center">Modifier le Footer</h1>
-      <Label>Titre du site</Label>
-      <Input
-        type="text"
-        name="title"
-        placeholder="Titre du site"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+    <Dialog open={isFooterModalOpen} onOpenChange={setIsFooterModalOpen}>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
+        <form>
+          <DialogHeader>
+            <DialogTitle>Modifier le Footer</DialogTitle>
+          </DialogHeader>
+          <div>
+            <Label>Email</Label>
+            <Input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-      <Label>Descriptions</Label>
-      <Input
-        type="text"
-        name="description"
-        placeholder="Description du site"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
+          <div>
+            <Label>Téléphone</Label>
+            <Input
+              type="tel"
+              name="contact"
+              placeholder="Téléphone"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              required
+            />
+          </div>
 
-      <Label>Nos services</Label>
-      <Textarea
-        name="services"
-        placeholder="Liste des services"
-        className="resize-none"
-        value={services}
-        onChange={(e) => setServices(e.target.value)}
-        required
-      ></Textarea>
+          <div>
+            <Label>Adresse</Label>
+            <Input
+              type="text"
+              name="address"
+              placeholder="Adresse"
+              value={addresse}
+              onChange={(e) => setAddresse(e.target.value)}
+              required
+            />
+          </div>
 
-      <Label>Contacts</Label>
-      <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        name="tel"
-        placeholder="Numero telephone"
-        value={tel}
-        onChange={(e) => setTel(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        name="address"
-        placeholder="Adresse"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        required
-      />
+          <div>
+            <Label>Copyright</Label>
+            <Input
+              type="text"
+              name="copyright"
+              placeholder="Copyright"
+              value={copyright}
+              onChange={(e) => setCopyright(e.target.value)}
+              required
+            />
+          </div>
 
-      <Label>Copyright</Label>
-      <Input
-        type="text"
-        placeholder="Copyright"
-        value={copyright}
-        onChange={(e) => setCopyright(e.target.value)}
-        required
-      />
-
-      <Button type="submit">Valider</Button>
-    </form>
+          <div className="flex justify-end space-x-3 mt-6">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsFooterModalOpen(false)}
+            >
+              Annuler
+            </Button>
+            <Button type="submit" className="bg-yellow-500 hover:bg-yellow-600">
+              Enregistrer
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 };
 

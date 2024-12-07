@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useEditPagesContext } from "@/contexts/EditPagesContext";
+import EditHeader from "./EditHeader";
+import EditLandingPage from "./EditLandingPage";
+import EditFooter from "./EditFooter";
 
 export default function EditPageIndex() {
+  const {
+    setIsHeaderModalOpen,
+    setIsLandingPageModalOpen,
+    setIsFooterModalOpen,
+  } = useEditPagesContext();
+
   return (
     <div className="">
       <main className="p-6">
@@ -12,26 +22,30 @@ export default function EditPageIndex() {
           </p>
         </div>
         <div className="mt-6 space-x-4 flex flex-wrap items-center justify-start gap-2">
-          <Link
-            to={"/dashboard/page-meddoc/header"}
-            className="py-2 px-4 bg-blue-500 text-white rounded-md"
+          <Button
+            onClick={() => setIsHeaderModalOpen(true)}
+            className="bg-blue-500 hover:bg-blue-600"
           >
             Modifier header
-          </Link>
-          <Link
-            to={"/dashboard/page-meddoc/landing-page"}
-            className="py-2 px-4 bg-green-500 text-white rounded-md"
+          </Button>
+          <Button
+            onClick={() => setIsLandingPageModalOpen(true)}
+            className="bg-green-500 hover:bg-green-600"
           >
             Modifier l'image de fond du landing page
-          </Link>
-          <Link
-            to={"/dashboard/page-meddoc/footer"}
-            className="py-2 px-4 bg-yellow-500 text-white rounded-md"
+          </Button>
+          <Button
+            onClick={() => setIsFooterModalOpen(true)}
+            className="bg-yellow-500 hover:bg-yellow-600"
           >
             Modifier le footer
-          </Link>
+          </Button>
         </div>
       </main>
+
+      <EditHeader />
+      <EditLandingPage />
+      <EditFooter />
     </div>
   );
 }

@@ -1,13 +1,48 @@
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Info_page_meddoc } from "@/types";
+import { infoMeddocService } from "@/services/infoMeddocService";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Header = () => {
+  const [info, setInfo] = useState<Info_page_meddoc | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        setIsLoading(true);
+        const data = await infoMeddocService.getInfo();
+        setInfo(data);
+      } catch (error) {
+        console.error("Error fetching site info:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInfo();
+  }, []);
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-meddoc-primary">
-            MEDDoC
+          <Link to="/" className="flex items-center">
+            {isLoading ? (
+              <Skeleton className="h-8 w-32" />
+            ) : info?.logo ? (
+              <img
+                src={info.logo}
+                alt="MEDDoC Logo"
+                className="h-8 object-contain"
+              />
+            ) : (
+              <span className="text-2xl font-bold text-meddoc-primary">
+                MEDDoC
+              </span>
+            )}
           </Link>
           <NavigationMenu>
             <NavigationMenuList>

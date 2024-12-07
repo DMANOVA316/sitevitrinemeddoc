@@ -19,6 +19,10 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/components/ui/use-toast";
 import supabase from "@/utils/supabase";
+import { useEffect, useState } from "react";
+import { Info_page_meddoc } from "@/types";
+import { infoMeddocService } from "@/services/infoMeddocService";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface SidebarProps {
   className?: string;
@@ -27,6 +31,24 @@ interface SidebarProps {
 const Sidebar = ({ className }: SidebarProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [info, setInfo] = useState<Info_page_meddoc | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        setIsLoading(true);
+        const data = await infoMeddocService.getInfo();
+        setInfo(data);
+      } catch (error) {
+        console.error("Error fetching site info:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInfo();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -113,8 +135,20 @@ const Sidebar = ({ className }: SidebarProps) => {
     <div className={cn("pb-12 min-h-screen", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
-          <div className="mb-8">
-            <img src="/logo.png" alt="MEDDoC" className="h-8" />
+          <div className="mb-4">
+            {isLoading ? (
+              <Skeleton className="h-8 w-32 mx-auto" />
+            ) : info?.logo ? (
+              <img
+                src={info.logo}
+                alt="MEDDoC Logo"
+                className="h-8 object-contain mx-auto"
+              />
+            ) : (
+              <h2 className="text-2xl font-bold text-center text-meddoc-primary">
+                MEDDoC
+              </h2>
+            )}
           </div>
           <div className="space-y-1">
             <ScrollArea className="h-[calc(100vh-12rem)]">
