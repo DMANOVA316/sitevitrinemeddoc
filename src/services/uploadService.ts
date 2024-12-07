@@ -2,10 +2,13 @@ import supabase from "@/utils/supabase";
 import { v4 as uuidv4 } from "uuid";
 
 const STORAGE_BUCKET = "images";
-const PARTNERS_FOLDER = "partners"; // Sous-dossier pour les images des partenaires
+const PARTNERS_FOLDER = "partners";
+const PHARMACIES_FOLDER = "pharmacies";
+
+type ImageType = "partner" | "pharmacy";
 
 export const uploadService = {
-  uploadImage: async (file: File): Promise<string> => {
+  uploadImage: async (file: File, type: ImageType): Promise<string> => {
     try {
       // Vérifier si l'utilisateur est authentifié
       const {
@@ -35,9 +38,12 @@ export const uploadService = {
         throw new Error("L'image ne doit pas dépasser 10MB");
       }
 
+      // Sélectionner le dossier approprié
+      const folder = type === "partner" ? PARTNERS_FOLDER : PHARMACIES_FOLDER;
+
       // Créer un nom de fichier unique avec le chemin du dossier
       const fileExt = file.name.split(".").pop()?.toLowerCase() || "jpg";
-      const fileName = `${PARTNERS_FOLDER}/${uuidv4()}.${fileExt}`;
+      const fileName = `${folder}/${uuidv4()}.${fileExt}`;
 
       console.log("Attempting to upload file:", fileName);
       console.log("To bucket:", STORAGE_BUCKET);
@@ -47,7 +53,7 @@ export const uploadService = {
         .from(STORAGE_BUCKET)
         .upload(fileName, file, {
           cacheControl: "3600",
-          upsert: true, // Permettre le remplacement si le fichier existe
+          upsert: true,
         });
 
       if (uploadError) {
@@ -62,22 +68,17 @@ export const uploadService = {
         );
       }
 
-      if (!data?.path) {
-        throw new Error("Chemin de l'image non disponible");
+      if (!data) {
+        throw new Error("Aucune donnée retournée après l'upload");
       }
 
-      console.log("Upload successful. File path:", data.path);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(fileName);
 
-      // Obtenir l'URL publique
-      const { data: publicUrlData } = supabase.storage
-        .from(STORAGE_BUCKET)
-        .getPublicUrl(data.path);
-
-      console.log("Public URL generated:", publicUrlData.publicUrl);
-
-      return publicUrlData.publicUrl;
+      return publicUrl;
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error in uploadImage:", error);
       throw error;
     }
   },
@@ -89,46 +90,35 @@ export const uploadService = {
         data: { session },
       } = await supabase.auth.getSession();
 
-      console.log(
-        "Session status for delete:",
-        session ? "Authenticated" : "Not authenticated"
-      );
-
       if (!session) {
         throw new Error("Vous devez être connecté pour supprimer une image");
       }
 
-      // Extraire le chemin du fichier de l'URL
+      // Extraire le nom du fichier de l'URL
       const urlParts = imageUrl.split("/");
-      const bucketIndex = urlParts.indexOf(STORAGE_BUCKET);
-      if (bucketIndex === -1) {
-        throw new Error("URL d'image invalide");
-      }
+      const fileName = `${urlParts[urlParts.length - 2]}/${
+        urlParts[urlParts.length - 1]
+      }`;
 
-      // Reconstruire le chemin relatif
-      const filePath = urlParts.slice(bucketIndex + 1).join("/");
+      console.log("Attempting to delete file:", fileName);
 
-      console.log("Attempting to delete file:", filePath);
-
-      const { error } = await supabase.storage
+      const { error: deleteError } = await supabase.storage
         .from(STORAGE_BUCKET)
-        .remove([filePath]);
+        .remove([fileName]);
 
-      if (error) {
+      if (deleteError) {
         console.error("Delete error details:", {
-          message: error.message,
-          statusCode: error.statusCode,
-          name: error.name,
-          details: error.details,
+          message: deleteError.message,
+          statusCode: deleteError.statusCode,
+          name: deleteError.name,
+          details: deleteError.details,
         });
         throw new Error(
-          `Erreur lors de la suppression de l'image: ${error.message}`
+          `Erreur lors de la suppression de l'image: ${deleteError.message}`
         );
       }
-
-      console.log("File successfully deleted");
     } catch (error) {
-      console.error("Error deleting image:", error);
+      console.error("Error in deleteImage:", error);
       throw error;
     }
   },
