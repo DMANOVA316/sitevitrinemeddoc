@@ -1,4 +1,11 @@
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Info_page_meddoc } from "@/types";
@@ -27,62 +34,62 @@ const Header = () => {
     fetchInfo();
   }, []);
 
-  useEffect(() => {
-    // Mettre à jour le favicon quand il change
-    const updateFavicon = async () => {
-      try {
-        const data = await infoMeddocService.getInfo();
-        if (data?.favicon) {
-          const faviconUrl = getPublicUrl(data.favicon);
-          const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-          link.type = 'image/x-icon';
-          link.rel = 'shortcut icon';
-          link.href = faviconUrl;
-          document.getElementsByTagName('head')[0].appendChild(link);
-        }
-      } catch (error) {
-        console.error("Error updating favicon:", error);
-      }
-    };
-
-    updateFavicon();
-  }, []);
-
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {isLoading ? (
-            <Skeleton className="h-8 w-32" />
-          ) : (
-            <SiteLogo />
-          )}
+          {isLoading ? <Skeleton className="h-8 w-32" /> : <SiteLogo />}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Nos Services</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-6 w-[400px]">
-                    <Link to="/services/digital" className="block p-3 hover:bg-meddoc-light rounded-lg">
-                      <div className="text-lg font-semibold">Solutions Numériques</div>
-                      <p className="text-sm text-gray-500">Développement d'outils innovants</p>
+                    <Link
+                      to="/services/digital"
+                      className="block p-3 hover:bg-meddoc-light rounded-lg"
+                    >
+                      <div className="text-lg font-semibold">
+                        Solutions Numériques
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        Développement d'outils innovants
+                      </p>
                     </Link>
-                    <Link to="/services/community" className="block p-3 hover:bg-meddoc-light rounded-lg">
-                      <div className="text-lg font-semibold">Community Management</div>
-                      <p className="text-sm text-gray-500">Gestion de votre présence en ligne</p>
+                    <Link
+                      to="/services/community"
+                      className="block p-3 hover:bg-meddoc-light rounded-lg"
+                    >
+                      <div className="text-lg font-semibold">
+                        Community Management
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        Gestion de votre présence en ligne
+                      </p>
                     </Link>
-                    <Link to="/services/consulting" className="block p-3 hover:bg-meddoc-light rounded-lg">
-                      <div className="text-lg font-semibold">Services de Conseil</div>
-                      <p className="text-sm text-gray-500">Expertise et accompagnement</p>
+                    <Link
+                      to="/services/consulting"
+                      className="block p-3 hover:bg-meddoc-light rounded-lg"
+                    >
+                      <div className="text-lg font-semibold">
+                        Services de Conseil
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        Expertise et accompagnement
+                      </p>
                     </Link>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="/pharmacies" className="px-4 py-2">Pharmacies</Link>
+                <Link to="/pharmacies" className="px-4 py-2">
+                  Pharmacies
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="/contact" className="px-4 py-2">Contact</Link>
+                <Link to="/contact" className="px-4 py-2">
+                  Contact
+                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
