@@ -135,20 +135,19 @@ const Sidebar = ({ className }: SidebarProps) => {
     <div className={cn("pb-12 min-h-screen", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
-          <div className="mb-4">
+          <div className="mb-4 flex justify-center gap-2">
             {isLoading ? (
               <Skeleton className="h-8 w-32 mx-auto" />
             ) : info?.logo ? (
               <img
                 src={info.logo}
                 alt="MEDDoC Logo"
-                className="h-8 object-contain mx-auto"
+                className="h-8 object-contain"
               />
-            ) : (
-              <h2 className="text-2xl font-bold text-center text-meddoc-primary">
-                MEDDoC
-              </h2>
-            )}
+            ) : null}
+            <h2 className="text-2xl font-bold text-center text-meddoc-primary">
+              MEDDoC
+            </h2>
           </div>
           <div className="space-y-1">
             <ScrollArea className="h-[calc(100vh-12rem)]">

@@ -6,10 +6,11 @@ interface EditPagesContextType {
   isFooterModalOpen: boolean;
   setIsHeaderModalOpen: (isOpen: boolean) => void;
   setIsLandingPageModalOpen: (isOpen: boolean) => void;
-  setIsFooterModalOpen: (isOpen: boolean) => void;
 }
 
-const EditPagesContext = createContext<EditPagesContextType | undefined>(undefined);
+const EditPagesContext = createContext<EditPagesContextType | undefined>(
+  undefined
+);
 
 export function EditPagesProvider({ children }: { children: ReactNode }) {
   const [isHeaderModalOpen, setIsHeaderModalOpen] = useState(false);
@@ -21,10 +22,8 @@ export function EditPagesProvider({ children }: { children: ReactNode }) {
       value={{
         isHeaderModalOpen,
         isLandingPageModalOpen,
-        isFooterModalOpen,
         setIsHeaderModalOpen,
         setIsLandingPageModalOpen,
-        setIsFooterModalOpen,
       }}
     >
       {children}
@@ -35,7 +34,9 @@ export function EditPagesProvider({ children }: { children: ReactNode }) {
 export function useEditPagesContext() {
   const context = useContext(EditPagesContext);
   if (context === undefined) {
-    throw new Error("useEditPagesContext must be used within a EditPagesProvider");
+    throw new Error(
+      "useEditPagesContext must be used within a EditPagesProvider"
+    );
   }
   return context;
 }

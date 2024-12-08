@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Info_page_meddoc } from "@/types";
 import { infoMeddocService } from "@/services/infoMeddocService";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SiteLogo } from "@/components/ui/site-logo";
+import { getPublicUrl } from "@/utils/supabase";
 
 const Header = () => {
   const [info, setInfo] = useState<Info_page_meddoc | null>(null);
@@ -25,25 +27,36 @@ const Header = () => {
     fetchInfo();
   }, []);
 
+  useEffect(() => {
+    // Mettre à jour le favicon quand il change
+    const updateFavicon = async () => {
+      try {
+        const data = await infoMeddocService.getInfo();
+        if (data?.favicon) {
+          const faviconUrl = getPublicUrl(data.favicon);
+          const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = faviconUrl;
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+      } catch (error) {
+        console.error("Error updating favicon:", error);
+      }
+    };
+
+    updateFavicon();
+  }, []);
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            {isLoading ? (
-              <Skeleton className="h-8 w-32" />
-            ) : info?.logo ? (
-              <img
-                src={info.logo}
-                alt="MEDDoC Logo"
-                className="h-8 object-contain"
-              />
-            ) : (
-              <span className="text-2xl font-bold text-meddoc-primary">
-                MEDDoC
-              </span>
-            )}
-          </Link>
+          {isLoading ? (
+            <Skeleton className="h-8 w-32" />
+          ) : (
+            <SiteLogo />
+          )}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
