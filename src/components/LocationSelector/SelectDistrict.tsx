@@ -20,15 +20,17 @@ interface SelectDistrictProps {
   districts: District[];
   value: string;
   onChange: (value: string) => void;
+  disabled: boolean;
 }
 
 const SelectDistrict: React.FC<SelectDistrictProps> = ({
   districts,
   value,
   onChange,
+  disabled,
 }) => {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger>
         <SelectValue placeholder="District" />
       </SelectTrigger>

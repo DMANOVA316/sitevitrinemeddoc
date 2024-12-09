@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import PrivateRoute from "@/components/PrivateRoute";
 import DashboardIndex from "./pages/Dashboard/Index";
-import DashboardPharmacies from "./pages/Dashboard/Pharmacies";
+import DashboardPharmacies from "./pages/Dashboard/PharmacyList";
 import Pharmacies from "./pages/Pharmacies";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
