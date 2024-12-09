@@ -15,7 +15,7 @@ interface SiteLogoProps {
 
 export function SiteLogo({
   className = "",
-  imgClassName = "h-8 object-contain",
+  imgClassName = "h-12 object-contain",
   textClassName = "text-2xl font-bold text-meddoc-primary ml-3",
   showText = true,
   to = "/",
