@@ -20,15 +20,17 @@ interface SelectRegionProps {
   regions: Region[];
   value: string;
   onChange: (value: string) => void;
+  disabled: boolean;
 }
 
 const SelectRegion: React.FC<SelectRegionProps> = ({
   regions,
   value,
   onChange,
+  disabled,
 }) => {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger>
         <SelectValue placeholder="Région" />
       </SelectTrigger>

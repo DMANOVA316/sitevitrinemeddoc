@@ -20,15 +20,17 @@ interface SelectCommuneProps {
   communes: Commune[];
   value: string;
   onChange: (value: string) => void;
+  disabled: boolean;
 }
 
 const SelectCommune: React.FC<SelectCommuneProps> = ({
   communes,
   value,
   onChange,
+  disabled,
 }) => {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger>
         <SelectValue placeholder="Commune" />
       </SelectTrigger>

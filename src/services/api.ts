@@ -1,7 +1,6 @@
 import Provinces from './provinces.json';
 import Regions from './regions.json';
 const BASE_URL = "https://localization.mg-dev.space/api";
-import { Province, Region } from '../types';
 
 export const fetchProvinces = async () => {
     const provinces: Province[] = Provinces;
