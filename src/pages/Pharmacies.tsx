@@ -1,148 +1,125 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone } from "lucide-react";
-
-interface Pharmacy {
-  id: number;
-  name: string;
-  address: string;
-  phone: string;
-  isOnDuty: boolean;
-  openingHours: string;
-}
-
-const mockPharmacies: Pharmacy[] = [
-  {
-    id: 1,
-    name: "Pharmacie ANALAKELY",
-    address: "Rue de l'Indépendance, Analakely",
-    phone: "+261 20 22 235 54",
-    isOnDuty: true,
-    openingHours: "24/24",
-  },
-  {
-    id: 2,
-    name: "Pharmacie ANKADIFOTSY",
-    address: "Route d'Ankadifotsy",
-    phone: "+261 20 22 222 07",
-    isOnDuty: false,
-    openingHours: "8h-20h",
-  },
-  {
-    id: 3,
-    name: "Pharmacie MAHAMASINA",
-    address: "Avenue de l'Indépendance, Mahamasina",
-    phone: "+261 20 22 273 44",
-    isOnDuty: true,
-    openingHours: "24/24",
-  },
-];
+import PharmacyCard from "@/components/Pharmacie/PharmacyCard";
+import { Building2, Search } from "lucide-react";
+import { pharmacyService } from "@/services/pharmacyService";
 
 const Pharmacies = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [pharmacies, setPharmacies] = useState<Pharmacy[]>(mockPharmacies);
+  const [pharmacies, setPharmacies] = useState<Pharmacy[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPharmacies = async () => {
+      try {
+        const data = await pharmacyService.getPharmacies();
+        setPharmacies(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des pharmacies:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchPharmacies();
+  }, []);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    const filtered = mockPharmacies.filter(
-      (pharmacy) =>
-        pharmacy.name.toLowerCase().includes(term.toLowerCase()) ||
-        pharmacy.address.toLowerCase().includes(term.toLowerCase())
-    );
-    setPharmacies(filtered);
   };
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-meddoc-primary mb-8">
-        Recherche de Pharmacies
-      </h1>
+  const filteredPharmacies = pharmacies.filter(
+    (pharmacy) =>
+      pharmacy.nom_pharmacie.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-      <div className="mb-8">
-        <Input
-          type="text"
-          placeholder="Rechercher une pharmacie par nom ou adresse..."
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="max-w-xl"
-        />
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="max-w-2xl mx-auto text-center mb-12">
+        <h1 className="text-4xl font-bold text-meddoc-primary mb-4">
+          Recherche de Pharmacies
+        </h1>
+        <p className="text-gray-600 mb-8">
+          Trouvez facilement les pharmacies près de chez vous
+        </p>
+        <div className="relative max-w-xl mx-auto">
+          <Input
+            type="text"
+            placeholder="Rechercher une pharmacie par nom ou adresse..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="pl-12"
+          />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+        </div>
       </div>
 
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList>
-          <TabsTrigger value="all">Toutes les pharmacies</TabsTrigger>
-          <TabsTrigger value="duty">Pharmacies de garde</TabsTrigger>
-        </TabsList>
+      <div className="max-w-6xl mx-auto">
+        <Tabs defaultValue="all" className="w-full">
+          <div className="flex justify-center mb-8">
+            <TabsList className="grid w-full max-w-md grid-cols-2">
+              <TabsTrigger value="all" className="px-8">Toutes les pharmacies</TabsTrigger>
+              <TabsTrigger value="duty" className="px-8">Pharmacies de garde</TabsTrigger>
+            </TabsList>
+          </div>
 
-        <TabsContent value="all" className="mt-6">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {pharmacies.map((pharmacy) => (
-              <Card key={pharmacy.id} className="animate-fade-up">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">{pharmacy.name}</h3>
-                  <div className="space-y-3 text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>{pharmacy.address}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4" />
-                      <span>{pharmacy.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      <span>{pharmacy.openingHours}</span>
-                    </div>
+          {loading ? (
+            <div className="mt-12 text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-meddoc-primary mx-auto"></div>
+              <p className="text-gray-500 mt-4">Chargement des pharmacies...</p>
+            </div>
+          ) : (
+            <>
+              <TabsContent value="all" className="mt-6">
+                <div className="flex flex-col items-center">
+                  <div className="grid gap-6 w-full justify-items-center" 
+                       style={{ 
+                         display: 'grid',
+                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 384px), 1fr))',
+                         maxWidth: '1280px',
+                         margin: '0 auto'
+                       }}>
+                    {filteredPharmacies.length > 0 ? (
+                      filteredPharmacies.map((pharmacy) => (
+                        <div key={pharmacy.id} className="w-full flex justify-center">
+                          <PharmacyCard pharmacy={pharmacy} />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="col-span-full text-center py-12">
+                        <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500 text-lg">Aucune pharmacie trouvée.</p>
+                      </div>
+                    )}
                   </div>
-                  {pharmacy.isOnDuty && (
-                    <div className="mt-4">
-                      <span className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">
-                        De garde
-                      </span>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
+                </div>
+              </TabsContent>
 
-        <TabsContent value="duty" className="mt-6">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {pharmacies
-              .filter((pharmacy) => pharmacy.isOnDuty)
-              .map((pharmacy) => (
-                <Card key={pharmacy.id} className="animate-fade-up">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-4">{pharmacy.name}</h3>
-                    <div className="space-y-3 text-gray-600">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        <span>{pharmacy.address}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        <span>{pharmacy.phone}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" />
-                        <span>{pharmacy.openingHours}</span>
-                      </div>
-                    </div>
-                    <div className="mt-4">
-                      <span className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">
-                        De garde
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+              <TabsContent value="duty" className="mt-6">
+                <div className="flex flex-col items-center">
+                  <div className="grid gap-6 w-full justify-items-center"
+                       style={{ 
+                         display: 'grid',
+                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 384px), 1fr))',
+                         maxWidth: '1280px',
+                         margin: '0 auto'
+                       }}>
+                    {filteredPharmacies
+                      .filter((pharmacy) => pharmacy.de_garde)
+                      .map((pharmacy) => (
+                        <div key={pharmacy.id} className="w-full flex justify-center">
+                          <PharmacyCard pharmacy={pharmacy} />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </TabsContent>
+            </>
+          )}
+        </Tabs>
+      </div>
     </div>
   );
 };

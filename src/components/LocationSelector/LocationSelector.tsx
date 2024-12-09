@@ -12,12 +12,14 @@ import SelectProvince from "./SelectProvince";
 import { Label } from "../ui/label";
 
 interface LocationSelectorProps {
-  onLocationChange: (location: {
-    province: string;
-    region?: string;
-    district?: string;
-    commune: string;
-  }) => void;
+  onLocationChange: (
+    location: {
+      province: string;
+      region?: string;
+      district?: string;
+      commune: string;
+    }
+  ) => void;
   initialValues?: {
     province?: string;
     region?: string;
@@ -118,16 +120,19 @@ const LocationSelector = ({
             regions={filteredRegions}
             value={selectedRegion}
             onChange={setSelectedRegion}
+            disabled={!selectedProvince}
           />
           <SelectDistrict
             districts={filteredDistricts}
             value={selectedDistrict}
             onChange={setSelectedDistrict}
+            disabled={!selectedRegion}
           />
           <SelectCommune
             communes={filteredCommunes}
             value={selectedCommune}
             onChange={setSelectedCommune}
+            disabled={!selectedDistrict}
           />
         </div>
       </div>
