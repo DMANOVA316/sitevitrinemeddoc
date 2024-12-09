@@ -24,6 +24,8 @@ import { EditPagesProvider } from "./contexts/EditPagesContext";
 import { ServiceProvider } from "./contexts/ServiceContext";
 import { NumberProvider } from "./contexts/NumberContext";
 import { InfoMeddocProvider } from "./contexts/InfoMeddocContext";
+import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
+import { SocialMediaProvider } from "./contexts/SocialMediaContext";
 
 const queryClient = new QueryClient();
 
@@ -103,14 +105,6 @@ const App = () => (
                         element={<EditPageIndex />}
                       />
                       <Route
-                        path="/dashboard/page-meddoc/header"
-                        element={<EditHeader />}
-                      />
-                      <Route
-                        path="/dashboard/page-meddoc/landing-page"
-                        element={<EditLandingPage />}
-                      />
-                      <Route
                         path="/dashboard/partenaires"
                         element={<PartnerIndex />}
                       >
@@ -119,13 +113,18 @@ const App = () => (
                           element={<PartnerList />}
                         />
                       </Route>
+
+                      <Route
+                        path="/dashboard/reseaux-sociaux"
+                        element={
+                          <SocialMediaProvider>
+                            <SocialMediaIndex />
+                          </SocialMediaProvider>
+                        }
+                      />
                       <Route
                         path="/dashboard/services"
-                        element={
-                          <ServiceProvider>
-                            <Services />
-                          </ServiceProvider>
-                        }
+                        element={<Services />}
                       />
                       <Route
                         path="/dashboard/contact-meddoc"

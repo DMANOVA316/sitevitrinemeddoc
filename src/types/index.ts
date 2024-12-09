@@ -122,6 +122,24 @@ export interface usePartnerProps {
   setCurrentPartner: (partner: PartnerType | null) => void;
 }
 
+export interface useSocialMediaProps {
+  socialMedias: SocialMedia[];
+  isAddSocialMediaOpen: boolean;
+  isEditSocialMediaOpen: boolean;
+  isRemoveSocialMediaOpen: boolean;
+  isLoading: boolean;
+  error: string | null;
+  setIsAddSocialMediaOpen: (isOpen: boolean) => void;
+  setIsEditSocialMediaOpen: (isOpen: boolean) => void;
+  setIsRemoveSocialMediaOpen: (isOpen: boolean) => void;
+  handleAddSocialMedia: (socialMedia: Omit<SocialMedia, "id">) => void;
+  handleEditSocialMedia: (socialMedia: SocialMedia) => void;
+  handleRemoveSocialMedia: (id: number) => void;
+  currentSocialMedia: SocialMedia | null;
+  setCurrentSocialMedia: (socialMedia: SocialMedia | null) => void;
+  handleSelectSocialMedia: (socialMedia: SocialMedia) => void;
+}
+
 export interface Info_page_meddoc {
   id: number;
   titre_site: string;
@@ -135,6 +153,12 @@ export interface Info_page_meddoc {
 export interface Numero_meddoc {
   id: number;
   numero: string;
+}
+
+export interface SocialMedia {
+  id: number;
+  nom: string;
+  lien: string;
 }
 
 export {};
