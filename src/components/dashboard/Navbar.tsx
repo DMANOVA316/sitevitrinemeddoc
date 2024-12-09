@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import supabase from "@/utils/supabase";
+import { SiteLogo } from "@/components/ui/site-logo";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function Navbar() {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
+        {/* <SiteLogo to="/dashboard" className="mr-4" /> */}
         <div className="flex-1">
           <div className="relative w-full max-w-sm">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -67,10 +69,7 @@ export default function Navbar() {
                 Paramètres
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={handleLogout}
-                className="text-red-600"
-              >
+              <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                 Déconnexion
               </DropdownMenuItem>
             </DropdownMenuContent>

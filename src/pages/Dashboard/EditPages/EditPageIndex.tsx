@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { useEditPagesContext } from "@/contexts/EditPagesContext";
+import { useInfoMeddocContext } from "@/contexts/InfoMeddocContext";
 import EditHeader from "./EditHeader";
 import EditLandingPage from "./EditLandingPage";
-import EditFooter from "./EditFooter";
+import EditInfo from "@/components/dashboard/EditInfo";
+import { GeneralInfoSection } from "@/components/dashboard/GeneralInfoSection";
+import { HeaderSection } from "@/components/dashboard/sections/HeaderSection";
+import { LandingPageSection } from "@/components/dashboard/sections/LandingPageSection";
+import { getFileNameFromPath } from "@/utils/fileUtils";
 
 export default function EditPageIndex() {
-  const {
-    setIsHeaderModalOpen,
-    setIsLandingPageModalOpen,
-    setIsFooterModalOpen,
-  } = useEditPagesContext();
+  const { setIsHeaderModalOpen, setIsLandingPageModalOpen } = useEditPagesContext();
+  const { info, isLoading, error, setIsEditModalOpen } = useInfoMeddocContext();
 
   return (
     <div className="">
@@ -21,31 +23,17 @@ export default function EditPageIndex() {
             dans le landing page pour les utilisateurs et visisteurs du site.
           </p>
         </div>
-        <div className="mt-6 space-x-4 flex flex-wrap items-center justify-start gap-2">
-          <Button
-            onClick={() => setIsHeaderModalOpen(true)}
-            className="bg-blue-500 hover:bg-blue-600"
-          >
-            Modifier header
-          </Button>
-          <Button
-            onClick={() => setIsLandingPageModalOpen(true)}
-            className="bg-green-500 hover:bg-green-600"
-          >
-            Modifier l'image de fond du landing page
-          </Button>
-          <Button
-            onClick={() => setIsFooterModalOpen(true)}
-            className="bg-yellow-500 hover:bg-yellow-600"
-          >
-            Modifier le footer
-          </Button>
-        </div>
-      </main>
 
-      <EditHeader />
-      <EditLandingPage />
-      <EditFooter />
+        <div className="mt-8 space-y-6">
+          <GeneralInfoSection />
+          <HeaderSection />
+          <LandingPageSection />
+        </div>
+
+        <EditHeader />
+        <EditLandingPage />
+        <EditInfo />
+      </main>
     </div>
   );
 }
