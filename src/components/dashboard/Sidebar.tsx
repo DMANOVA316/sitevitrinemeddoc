@@ -82,6 +82,12 @@ const Sidebar = ({ className }: SidebarProps) => {
           icon: FileText,
           href: "/dashboard/page-meddoc",
         },
+        ,
+        {
+          title: "Partenaires",
+          icon: Handshake,
+          href: "/dashboard/partenaires/list",
+        },
         {
           title: "Services",
           icon: Wrench,
@@ -117,18 +123,8 @@ const Sidebar = ({ className }: SidebarProps) => {
           icon: Ambulance,
           href: "/dashboard/ambulances",
         },
-        {
-          title: "Urgences",
-          icon: MessageSquare,
-          href: "/dashboard/urgences",
-        },
       ],
-    },
-    {
-      title: "Partenaires",
-      icon: Handshake,
-      href: "/dashboard/partenaires/list",
-    },
+    }
   ];
 
   return (

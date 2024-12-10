@@ -10,10 +10,10 @@ export const infoMeddocService = {
       const { data, error } = await supabase
         .from(INFO_TABLE)
         .select("*")
-        .single();
+        .limit(1);
 
       if (error) throw error;
-      return data;
+      return data?.[0] || null;
     } catch (error) {
       console.error("Error fetching info:", error);
       throw error;
@@ -56,17 +56,37 @@ export const infoMeddocService = {
   },
 
   createInfo: async (
-    info: Omit<Info_page_meddoc, "id">
+    info: Omit<Info_page_meddoc, "id">,
+    files?: { logo: File | null; favicon: File | null }
   ): Promise<Info_page_meddoc> => {
-    const { data, error } = await supabase
-      .from(INFO_TABLE)
-      .insert([info])
-      .select()
-      .single();
+    try {
+      let newInfo = { ...info };
 
-    if (error) throw new Error(error.message);
-    return data;
-  },
+      // Upload logo if provided
+      if (files?.logo) {
+        const logoUrl = await uploadService.uploadImage(files.logo, "meddoc");
+        newInfo.logo = logoUrl;
+      }
+
+      // Upload favicon if provided
+      if (files?.favicon) {
+        const faviconUrl = await uploadService.uploadImage(files.favicon, "meddoc");
+        newInfo.favicon = faviconUrl;
+      }
+
+      const { data, error } = await supabase
+        .from(INFO_TABLE)
+        .insert(newInfo)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error creating info:", error);
+      throw error;
+    }
+  }
 };
 
 export default infoMeddocService;
