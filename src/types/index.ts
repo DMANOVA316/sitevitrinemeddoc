@@ -82,6 +82,17 @@ declare global {
     contacts?: PharmacyContact[];
     horaires?: PharmacySchedule[];
   }
+
+  export interface Numero_meddoc {
+    id: number;
+    numero: string;
+  }
+
+  export interface SocialMedia {
+    id: number;
+    nom: string;
+    lien: string;
+  }
 }
 
 export interface PartnerType {
@@ -111,11 +122,11 @@ export interface usePartnerProps {
   setIsRemovePartnerOpen: (isOpen: boolean) => void;
   handleAddPartner: (
     partner: Omit<PartnerType, "id">,
-    file?: File
+    file?: File,
   ) => Promise<void>;
   handleEditPartner: (
     partner: PartnerType,
-    file?: File | null
+    file?: File | null,
   ) => Promise<void>;
   handleRemovePartner: (id: number) => Promise<void>;
   handleSelectPartner: (partner: PartnerType) => void;
@@ -150,15 +161,6 @@ export interface Info_page_meddoc {
   copyrigth: string;
 }
 
-export interface Numero_meddoc {
-  id: number;
-  numero: string;
-}
-
-export interface SocialMedia {
-  id: number;
-  nom: string;
-  lien: string;
-}
+export { Pharmacy };
 
 export {};

@@ -1,23 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Partner from "./Partner";
-import { usePartnerContext } from "@/contexts/PartnerContext";
 import AddPartner from "@/components/dashboard/AddPartner";
 import EditPartner from "@/components/dashboard/EditPartner";
 import RemovePartner from "@/components/dashboard/RemovePartner";
+import { usePartnerRedux } from "@/hooks/use-partner-redux";
+import EmptyData from "@/components/EmptyData";
 
 export default function PartnerList() {
-  const { partners, isAddPartnerOpen, setIsAddPartnerOpen } =
-    usePartnerContext();
+  const { partners, showAddPartnerModal, getPartners } = usePartnerRedux();
   const [researchVal, setResearchVal] = useState("");
+
+  useEffect(() => {
+    getPartners();
+  }, []);
 
   const filteredPartners = partners.filter(
     (partner) =>
       partner.nom_partenaire
         .toLowerCase()
         .includes(researchVal.toLowerCase()) ||
-      partner.lien.toLowerCase().includes(researchVal.toLowerCase())
+      partner.lien.toLowerCase().includes(researchVal.toLowerCase()),
   );
 
   return (
@@ -34,7 +38,7 @@ export default function PartnerList() {
           />
         </div>
         <Button
-          onClick={() => setIsAddPartnerOpen(true)}
+          onClick={() => showAddPartnerModal(true)}
           className="bg-blue-600 hover:bg-blue-500"
         >
           Ajouter un partenaire
@@ -75,41 +79,19 @@ export default function PartnerList() {
                 </p>
               </>
             ) : (
-              <>
-                <svg
-                  className="w-16 h-16 mb-4 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M7 9h4m-4 3h4"
-                  />
-                </svg>
-                <p className="text-lg">Pas encore de partenaire</p>
-                <p className="text-sm">
-                  Cliquez sur "Ajouter un partenaire" pour commencer
-                </p>
-              </>
+              <EmptyData
+                text="Aucune partenaire"
+                tips="Ajouter une partenaire"
+              />
             )}
           </div>
         ) : (
           filteredPartners.map((partner) => (
-            <Partner partner={partner} key={partner.id} />
+            <Partner key={partner.id} partner={partner} />
           ))
         )}
       </div>
 
-      {/* Modals */}
       <AddPartner />
       <EditPartner />
       <RemovePartner />

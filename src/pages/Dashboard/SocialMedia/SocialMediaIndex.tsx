@@ -1,25 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import Partner from "../Partners/Partner";
-import AddPartner from "@/components/dashboard/AddPartner";
-import EditPartner from "@/components/dashboard/EditPartner";
-import RemovePartner from "@/components/dashboard/RemovePartner";
-import { useSocialMediaContext } from "@/contexts/SocialMediaContext";
+import { useEffect, useState } from "react";
 import AddSocialMedia from "@/components/dashboard/socialMedia/AddSocialMedia";
 import EditSocialMedia from "@/components/dashboard/socialMedia/EditSocialMedia";
 import RemoveSocialMedia from "@/components/dashboard/socialMedia/RemoveSocialMedia";
 import SocialMedia from "./SocialMedia";
+import useSocialMediaRedux from "@/hooks/use-social-media-redux";
 
 export default function SocialMediaIndex() {
-  const { socialMedias, isAddSocialMediaOpen, setIsAddSocialMediaOpen } =
-    useSocialMediaContext();
+  const { socialMedias, showAddSocialMediaModal, getSocialMedias } =
+    useSocialMediaRedux();
   const [researchVal, setResearchVal] = useState("");
+
+  useEffect(() => {
+    getSocialMedias();
+  }, []);
 
   const filteredSocialMedias = socialMedias.filter(
     (socialMedia) =>
       socialMedia.nom.toLowerCase().includes(researchVal.toLowerCase()) ||
-      socialMedia.lien.toLowerCase().includes(researchVal.toLowerCase())
+      socialMedia.lien.toLowerCase().includes(researchVal.toLowerCase()),
   );
 
   return (
@@ -37,7 +37,7 @@ export default function SocialMediaIndex() {
             />
           </div>
           <Button
-            onClick={() => setIsAddSocialMediaOpen(true)}
+            onClick={() => showAddSocialMediaModal(true)}
             className="bg-blue-600 hover:bg-blue-500"
           >
             Ajouter un reseau social

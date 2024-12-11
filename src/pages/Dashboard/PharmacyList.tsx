@@ -8,16 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Search,
-  Clock,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { Search, Clock, Pencil, Trash2 } from "lucide-react";
 import { pharmacyService } from "@/services/pharmacyService";
 import { uploadService } from "@/services/uploadService";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 
 const PharmacyList: React.FC = () => {
   const [data, setData] = useState<Pharmacy[]>([]);
@@ -113,13 +109,13 @@ const PharmacyList: React.FC = () => {
           de_garde: updatedData.de_garde,
         },
         updatedData.contacts,
-        updatedData.horaires
+        updatedData.horaires,
       );
 
       setData(
         data.map((item) =>
-          item.id === updatedData.id ? { ...updatedData, photo_profil } : item
-        )
+          item.id === updatedData.id ? { ...updatedData, photo_profil } : item,
+        ),
       );
       setIsEditDialogOpen(false);
       setEditingPharmacy(null);
@@ -170,7 +166,7 @@ const PharmacyList: React.FC = () => {
       await pharmacyService.addPharmacy(
         pharmacyData,
         newData.contacts || [],
-        newData.horaires || []
+        newData.horaires || [],
       );
 
       fetchPharmacies();
@@ -246,7 +242,7 @@ const PharmacyList: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"> */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"> */}
         {filteredData.map((pharmacy) => (
           <div key={pharmacy.id} className="relative group">
             <PharmacyCard pharmacy={pharmacy} />

@@ -8,21 +8,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { usePartnerContext } from "@/contexts/PartnerContext";
-import { SocialMedia } from "@/types";
-import useSocialMedia from "@/hooks/use-social-media";
-import { useSocialMediaContext } from "@/contexts/SocialMediaContext";
+import useSocialMediaRedux from "@/hooks/use-social-media-redux";
 
 type NewPartnerData = Omit<SocialMedia, "id">;
 
 export default function AddSocialMedia() {
   const {
+    showAddSocialMediaModal,
+    createSocialMedia,
     isAddSocialMediaOpen,
-    setIsAddSocialMediaOpen,
-    handleAddSocialMedia,
     isLoading,
     error,
-  } = useSocialMediaContext();
+  } = useSocialMediaRedux();
 
   const [formData, setFormData] = useState<NewPartnerData>({
     nom: "",
@@ -32,24 +29,18 @@ export default function AddSocialMedia() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Créer le partenaire avec l'URL de l'image
-      await handleAddSocialMedia({
+      await createSocialMedia({
         ...formData,
       });
 
-      // Réinitialiser le formulaire et fermer la modale
       setFormData({ nom: "", lien: "" });
-      setIsAddSocialMediaOpen(false);
     } catch (err) {
       console.error("Error adding Social Media:", err);
     }
   };
 
   return (
-    <Dialog
-      open={isAddSocialMediaOpen}
-      onOpenChange={() => setIsAddSocialMediaOpen(false)}
-    >
+    <Dialog open={isAddSocialMediaOpen} onOpenChange={showAddSocialMediaModal}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Nouveau reseau social</DialogTitle>
@@ -95,7 +86,7 @@ export default function AddSocialMedia() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsAddSocialMediaOpen(false)}
+              onClick={() => showAddSocialMediaModal(false)}
               disabled={isLoading}
             >
               Annuler

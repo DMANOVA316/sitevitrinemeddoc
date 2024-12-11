@@ -13,8 +13,6 @@ import Pharmacies from "./pages/Pharmacies";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
 import Digital from "./pages/services/Digital";
-import EditHeader from "./pages/Dashboard/EditPages/EditHeader";
-import EditLandingPage from "./pages/Dashboard/EditPages/EditLandingPage";
 import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
 import PartnerIndex from "./pages/Dashboard/Partners/PartnerIndex";
 import PartnerList from "./pages/Dashboard/Partners/PartnerList";
@@ -22,20 +20,20 @@ import Services from "./pages/Dashboard/Services";
 import NumberList from "./pages/Dashboard/Numbers/NumberList";
 import { EditPagesProvider } from "./contexts/EditPagesContext";
 import { ServiceProvider } from "./contexts/ServiceContext";
-import { NumberProvider } from "./contexts/NumberContext";
 import { InfoMeddocProvider } from "./contexts/InfoMeddocContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
-import { SocialMediaProvider } from "./contexts/SocialMediaContext";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <InfoMeddocProvider>
-        <EditPagesProvider>
-          <ServiceProvider>
-            <NumberProvider>
+    <Provider store={store}>
+      <TooltipProvider>
+        <InfoMeddocProvider>
+          <EditPagesProvider>
+            <ServiceProvider>
               <Toaster richColors />
               <BrowserRouter>
                 <Routes>
@@ -116,11 +114,7 @@ const App = () => (
 
                       <Route
                         path="/dashboard/reseaux-sociaux"
-                        element={
-                          <SocialMediaProvider>
-                            <SocialMediaIndex />
-                          </SocialMediaProvider>
-                        }
+                        element={<SocialMediaIndex />}
                       />
                       <Route
                         path="/dashboard/services"
@@ -134,11 +128,11 @@ const App = () => (
                   </Route>
                 </Routes>
               </BrowserRouter>
-            </NumberProvider>
-          </ServiceProvider>
-        </EditPagesProvider>
-      </InfoMeddocProvider>
-    </TooltipProvider>
+            </ServiceProvider>
+          </EditPagesProvider>
+        </InfoMeddocProvider>
+      </TooltipProvider>
+    </Provider>
   </QueryClientProvider>
 );
 

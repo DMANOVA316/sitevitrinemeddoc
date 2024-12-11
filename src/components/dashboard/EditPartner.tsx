@@ -9,16 +9,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { usePartnerContext } from "@/contexts/PartnerContext";
+import { usePartnerRedux } from "@/hooks/use-partner-redux";
 import { PartnerType } from "@/types";
+import { toast } from "sonner";
 
 export default function EditPartner() {
   const {
     currentPartner,
     isEditPartnerOpen,
-    setIsEditPartnerOpen,
-    handleEditPartner,
-  } = usePartnerContext();
+    showEditPartnerModal,
+    handleUpdatePartner,
+    isLoading,
+    error,
+  } = usePartnerRedux();
 
   const [formData, setFormData] = useState<PartnerType>({
     id: 0,
@@ -28,116 +31,137 @@ export default function EditPartner() {
   });
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentPartner) {
       setFormData(currentPartner);
-      setSelectedFile(null); // Réinitialiser le fichier sélectionné
+      setImagePreview(currentPartner.logo);
     }
   }, [currentPartner]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    await handleEditPartner(formData, selectedFile);
-    setIsLoading(false);
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        setUploadError("L'image ne doit pas dépasser 10MB");
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        setUploadError("Le fichier doit être une image");
+        return;
+      }
+
       setSelectedFile(file);
-      // Ne pas mettre à jour le logo dans formData ici
-      // Il sera géré par handleEditPartner
+      setUploadError(null);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentPartner) return;
+
+    try {
+      await handleUpdatePartner(currentPartner.id, formData, selectedFile);
+      toast.success("Mise a jours reussi");
+    } catch (err) {
+      console.error("Error updating partner:", err);
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Erreur lors de la mise a jours du partenaire",
+      );
+    }
+  };
+
+  if (!currentPartner) return null;
+
   return (
-    <Dialog
-      open={isEditPartnerOpen}
-      onOpenChange={() => setIsEditPartnerOpen(false)}
-    >
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
+    <Dialog open={isEditPartnerOpen} onOpenChange={showEditPartnerModal}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Modifier le partenaire</DialogTitle>
         </DialogHeader>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 p-4"
-          encType="multipart/form-data"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label>Nom</Label>
+            <Label htmlFor="nom_partenaire">Nom du partenaire</Label>
             <Input
-              type="text"
+              id="nom_partenaire"
               value={formData.nom_partenaire}
               onChange={(e) =>
                 setFormData({ ...formData, nom_partenaire: e.target.value })
               }
-              placeholder="Nom du partenaire"
+              required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Site web</Label>
+            <Label htmlFor="lien">Lien du site web</Label>
             <Input
-              type="text"
+              id="lien"
+              type="url"
               value={formData.lien}
               onChange={(e) =>
                 setFormData({ ...formData, lien: e.target.value })
               }
-              placeholder="Url site web du partenaire"
+              required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Logo actuel</Label>
-            {formData.logo ? (
-              <div className="flex items-center space-x-4 mb-4">
-                <img
-                  src={formData.logo}
-                  alt={`Logo ${formData.nom_partenaire}`}
-                  className="h-20 w-50 object-contain rounded-lg border p-2"
-                />
-                <span className="text-sm text-gray-500">
-                  Logo actuel du partenaire
-                </span>
-              </div>
-            ) : (
-              <p className="text-sm text-gray-500 mb-4">Aucun logo</p>
-            )}
-
-            <Label>Nouveau logo</Label>
+            <Label htmlFor="logo">Logo</Label>
             <Input
+              id="logo"
               type="file"
-              onChange={handleFileChange}
               accept="image/*"
+              onChange={handleFileChange}
               className="cursor-pointer"
             />
-            {selectedFile && (
-              <p className="text-sm text-gray-500 mt-1">
-                Nouveau fichier sélectionné : {selectedFile.name}
-              </p>
+            {uploadError && (
+              <p className="text-sm text-red-500 mt-1">{uploadError}</p>
+            )}
+            {imagePreview && (
+              <div className="mt-2">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="h-20 w-20 object-contain"
+                />
+              </div>
             )}
           </div>
 
-          <div className="flex gap-2 justify-end pt-4">
+          {error && <p className="text-sm text-red-500">{error}</p>}
+
+          <div className="flex justify-end gap-4">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsEditPartnerOpen(false)}
+              onClick={() => showEditPartnerModal(false)}
             >
               Annuler
             </Button>
             <Button
               type="submit"
+              disabled={isLoading && error != ""}
               className="bg-blue-600 hover:bg-blue-500"
-              disabled={isLoading}
             >
-              {isLoading ? <Skeleton className="h-6 w-24" /> : "Modifier"}
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  Modification en cours...
+                </div>
+              ) : (
+                "Modifier"
+              )}
             </Button>
           </div>
         </form>

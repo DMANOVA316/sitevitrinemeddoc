@@ -4,25 +4,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PharmacyCard from "@/components/Pharmacie/PharmacyCard";
 import { Building2, Search } from "lucide-react";
 import { pharmacyService } from "@/services/pharmacyService";
+import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 
 const Pharmacies = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [pharmacies, setPharmacies] = useState<Pharmacy[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { getPharmacies, pharmacies, isLoading } = usePharmacyRedux();
 
   useEffect(() => {
-    const fetchPharmacies = async () => {
-      try {
-        const data = await pharmacyService.getPharmacies();
-        setPharmacies(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des pharmacies:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchPharmacies();
+    getPharmacies();
   }, []);
 
   const handleSearch = (term: string) => {
@@ -60,12 +49,16 @@ const Pharmacies = () => {
         <Tabs defaultValue="all" className="w-full">
           <div className="flex justify-center mb-8">
             <TabsList className="grid w-full max-w-md grid-cols-2">
-              <TabsTrigger value="all" className="px-8">Toutes les pharmacies</TabsTrigger>
-              <TabsTrigger value="duty" className="px-8">Pharmacies de garde</TabsTrigger>
+              <TabsTrigger value="all" className="px-8">
+                Toutes les pharmacies
+              </TabsTrigger>
+              <TabsTrigger value="duty" className="px-8">
+                Pharmacies de garde
+              </TabsTrigger>
             </TabsList>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="mt-12 text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-meddoc-primary mx-auto"></div>
               <p className="text-gray-500 mt-4">Chargement des pharmacies...</p>
@@ -74,23 +67,31 @@ const Pharmacies = () => {
             <>
               <TabsContent value="all" className="mt-6">
                 <div className="flex flex-col items-center">
-                  <div className="grid gap-6 w-full justify-items-center" 
-                       style={{ 
-                         display: 'grid',
-                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 384px), 1fr))',
-                         maxWidth: '1280px',
-                         margin: '0 auto'
-                       }}>
+                  <div
+                    className="grid gap-6 w-full justify-items-center"
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(min(100%, 384px), 1fr))",
+                      maxWidth: "1280px",
+                      margin: "0 auto",
+                    }}
+                  >
                     {filteredPharmacies.length > 0 ? (
                       filteredPharmacies.map((pharmacy) => (
-                        <div key={pharmacy.id} className="w-full flex justify-center">
+                        <div
+                          key={pharmacy.id}
+                          className="w-full flex justify-center"
+                        >
                           <PharmacyCard pharmacy={pharmacy} />
                         </div>
                       ))
                     ) : (
                       <div className="col-span-full text-center py-12">
                         <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-500 text-lg">Aucune pharmacie trouvée.</p>
+                        <p className="text-gray-500 text-lg">
+                          Aucune pharmacie trouvée.
+                        </p>
                       </div>
                     )}
                   </div>
@@ -99,17 +100,23 @@ const Pharmacies = () => {
 
               <TabsContent value="duty" className="mt-6">
                 <div className="flex flex-col items-center">
-                  <div className="grid gap-6 w-full justify-items-center"
-                       style={{ 
-                         display: 'grid',
-                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 384px), 1fr))',
-                         maxWidth: '1280px',
-                         margin: '0 auto'
-                       }}>
+                  <div
+                    className="grid gap-6 w-full justify-items-center"
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(min(100%, 384px), 1fr))",
+                      maxWidth: "1280px",
+                      margin: "0 auto",
+                    }}
+                  >
                     {filteredPharmacies
                       .filter((pharmacy) => pharmacy.de_garde)
                       .map((pharmacy) => (
-                        <div key={pharmacy.id} className="w-full flex justify-center">
+                        <div
+                          key={pharmacy.id}
+                          className="w-full flex justify-center"
+                        >
                           <PharmacyCard pharmacy={pharmacy} />
                         </div>
                       ))}
