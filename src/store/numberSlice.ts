@@ -1,6 +1,5 @@
 import numberService from "@/services/numberService";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/store";
 
 interface NumberState {
   numeros: Numero_meddoc[];

@@ -3,6 +3,7 @@ import partnerReducer from "./partnerSlice";
 import pharmacyReducer from "./pharmacySlice";
 import numberReducer from "./numberSlice";
 import socialMediaReducer from "./socialMediaSlice";
+import infoMeddocReducer from "./infoMeddocSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     pharmacy: pharmacyReducer,
     number: numberReducer,
     socialMedia: socialMediaReducer,
+    infoMedoc: infoMeddocReducer,
   },
 });
 
