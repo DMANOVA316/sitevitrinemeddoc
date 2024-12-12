@@ -22,7 +22,6 @@ export default function EditPageIndex() {
         </div>
 
         <EditHeader />
-        <EditLandingPage />
         <EditInfo />
       </main>
     </div>

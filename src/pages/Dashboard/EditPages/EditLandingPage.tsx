@@ -16,10 +16,11 @@ import {
 } from "@/services/couvertureService";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 
 export default function EditLandingPage() {
-  const { isLandingPageModalOpen, setIsLandingPageModalOpen } =
-    useEditPagesContext();
+  // const { isLandingPageModalOpen, setIsLandingPageModalOpen } =
+  //   useEditPagesContext();
   const [photo, setPhoto] = useState<File | null>();
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState<Omit<CouvertureType, "id">>({
@@ -86,7 +87,7 @@ export default function EditLandingPage() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({

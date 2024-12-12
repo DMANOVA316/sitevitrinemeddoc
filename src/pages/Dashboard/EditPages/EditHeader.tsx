@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,54 +8,40 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useEditPagesContext } from "@/contexts/EditPagesContext";
-import { uploadService } from "@/services/uploadService"; 
-import { toast } from "sonner"; 
-
-interface Header {
-  favicon: globalThis.File | null;
-  logo: globalThis.File | null;
-}
+import { toast } from "sonner";
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
+import { Info_page_meddoc } from "@/types";
 
 const EditHeader = () => {
-  const { isHeaderModalOpen, setIsHeaderModalOpen } = useEditPagesContext();
-  const [formData, setFormData] = useState<Header>({
+  const {
+    isEditInformationOpen,
+    showEditInformationModal,
+    updateInformations,
+    infoMeddoc,
+  } = useInfoMeddocRedux();
+  const [formData, setFormData] = useState<Info_page_meddoc>({
+    id: null,
+    titre_site: "",
+    email: "",
+    addresse: "",
+    copyrigth: "",
     favicon: null,
     logo: null,
   });
+  const [currentFavIcon, setCurrentFavIcon] = useState<File | null>();
+  const [currentLogo, setCurrentLogo] = useState<File | null>();
+
+  useEffect(() => {
+    setFormData(infoMeddoc);
+  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const uploadPromises = [];
-      let faviconUrl = "";
-      let logoUrl = "";
-
-      if (formData.favicon) {
-        uploadPromises.push(
-          uploadService.uploadImage(formData.favicon, "meddoc").then((url) => {
-            faviconUrl = url;
-          })
-        );
-      }
-
-      if (formData.logo) {
-        uploadPromises.push(
-          uploadService.uploadImage(formData.logo, "meddoc").then((url) => {
-            logoUrl = url;
-          })
-        );
-      }
-
-      await Promise.all(uploadPromises);
-
-      // TODO: Ajouter l'appel API pour sauvegarder les URLs dans la base de données
-      console.log("Images uploaded successfully:", {
-        favicon: faviconUrl,
-        logo: logoUrl,
-      });
-
-      setIsHeaderModalOpen(false);
+      updateInformations(
+        { ...formData },
+        { favicon: currentFavIcon, logo: currentLogo },
+      );
       toast.success("Header modifié avec succès");
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -64,7 +50,10 @@ const EditHeader = () => {
   };
 
   return (
-    <Dialog open={isHeaderModalOpen} onOpenChange={setIsHeaderModalOpen}>
+    <Dialog
+      open={isEditInformationOpen}
+      onOpenChange={showEditInformationModal}
+    >
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Modifier le Header</DialogTitle>
@@ -81,10 +70,7 @@ const EditHeader = () => {
                 <Input
                   type="file"
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      favicon: e.target.files?.[0] || null,
-                    })
+                    setCurrentFavIcon(e.target.files?.[0] || null)
                   }
                   className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                 />
@@ -97,12 +83,7 @@ const EditHeader = () => {
                 <Input
                   type="file"
                   accept="image/*"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      logo: e.target.files?.[0] || null,
-                    })
-                  }
+                  onChange={(e) => setCurrentLogo(e.target.files?.[0] || null)}
                   className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -114,9 +95,9 @@ const EditHeader = () => {
                 <Label className="block text-sm font-medium text-gray-700">
                   Aperçu FavIcon
                 </Label>
-                {formData.favicon && (
+                {formData && currentFavIcon && formData.favicon && (
                   <img
-                    src={URL.createObjectURL(formData.favicon)}
+                    src={URL.createObjectURL(currentFavIcon)}
                     alt="Aperçu favicon"
                     className="mt-2 w-16 h-16 object-contain border rounded"
                   />
@@ -127,9 +108,9 @@ const EditHeader = () => {
                 <Label className="block text-sm font-medium text-gray-700">
                   Aperçu Logo
                 </Label>
-                {formData.logo && (
+                {formData && currentLogo && formData.logo && (
                   <img
-                    src={URL.createObjectURL(formData.logo)}
+                    src={URL.createObjectURL(currentLogo)}
                     alt="Aperçu logo"
                     className="mt-2 w-32 h-32 object-contain border rounded"
                   />
@@ -142,7 +123,7 @@ const EditHeader = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsHeaderModalOpen(false)}
+              onClick={() => showEditInformationModal(false)}
             >
               Annuler
             </Button>

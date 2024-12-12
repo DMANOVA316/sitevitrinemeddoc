@@ -13,12 +13,13 @@ import EditNumber from "@/components/dashboard/EditNumber";
 import RemoveNumber from "@/components/dashboard/RemoveNumber";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import useNumberRedux from "@/hooks/use-number-redux";
 import Number from "./Number";
 
 export default function NumberList() {
-  const { numeros, isLoading, showAddNumberModal } = useNumberRedux();
+  const { numeros, isLoading, showAddNumberModal, getNumbers } =
+    useNumberRedux();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -28,6 +29,10 @@ export default function NumberList() {
       number.numero.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [numeros, searchQuery]);
+
+  useEffect(() => {
+    getNumbers();
+  }, []);
 
   return (
     <div className="space-y-4">
