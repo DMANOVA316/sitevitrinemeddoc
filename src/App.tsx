@@ -27,9 +27,9 @@ import { InfoMeddocProvider } from "./contexts/InfoMeddocContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
 import { SocialMediaProvider } from "./contexts/SocialMediaContext";
 import AmbulanceList from "./pages/Dashboard/AmbulanceList";
-import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import ContactUs from "./pages/ContactUs";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +66,14 @@ const App = () => (
                       element={
                         <PublicLayout>
                           <Pharmacies />
+                        </PublicLayout>
+                      }
+                    />
+                    <Route
+                      path="/contact"
+                      element={
+                        <PublicLayout>
+                          <ContactUs />
                         </PublicLayout>
                       }
                     />
