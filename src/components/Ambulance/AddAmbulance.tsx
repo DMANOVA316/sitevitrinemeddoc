@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Ambulance } from '@/redux/features/ambulanceSlice';
+import { Ambulance } from '@/store/ambulanceSlice';
 import { Plus, Trash2 } from 'lucide-react';
 
 const contactSchema = z.object({

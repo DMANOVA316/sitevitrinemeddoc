@@ -4,6 +4,7 @@ import pharmacyReducer from "./pharmacySlice";
 import numberReducer from "./numberSlice";
 import socialMediaReducer from "./socialMediaSlice";
 import infoMeddocReducer from "./infoMeddocSlice";
+import ambulanceReducer from './ambulanceSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     number: numberReducer,
     socialMedia: socialMediaReducer,
     infoMedoc: infoMeddocReducer,
+    ambulance: ambulanceReducer,
   },
 });
 

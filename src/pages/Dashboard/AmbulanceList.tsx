@@ -7,7 +7,7 @@ import {
   updateAmbulance,
   deleteAmbulance,
   Ambulance,
-} from '@/redux/features/ambulanceSlice';
+} from '@/store/ambulanceSlice';
 import AddAmbulance from '@/components/Ambulance/AddAmbulance';
 import AmbulanceCard from '@/components/Ambulance/AmbulanceCard';
 import {

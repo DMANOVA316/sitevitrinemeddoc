@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Phone } from 'lucide-react';
-import { Ambulance } from '@/redux/features/ambulanceSlice';
+import { Ambulance } from '@/store/ambulanceSlice';
 
 interface AmbulanceCardProps {
   ambulance: Ambulance;

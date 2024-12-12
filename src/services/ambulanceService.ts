@@ -1,5 +1,5 @@
 import supabase from "@/utils/supabase";
-import { Ambulance, Contact } from '@/redux/features/ambulanceSlice';
+import { Ambulance, Contact } from '@/store/ambulanceSlice';
 
 export const ambulanceService = {
   // Récupérer toutes les ambulances avec leurs contacts
