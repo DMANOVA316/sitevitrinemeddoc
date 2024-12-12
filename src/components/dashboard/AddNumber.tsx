@@ -8,32 +8,50 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useNumberContext } from "@/contexts/NumberContext";
-import { Numero_meddoc } from "@/types";
+import useNumberRedux from "@/hooks/use-number-redux";
+import { toast } from "sonner";
 
 type NewNumberData = Omit<Numero_meddoc, "id">;
 
 export default function AddNumber() {
   const {
     isAddNumberOpen,
-    setIsAddNumberOpen,
-    handleAddNumber,
+    showAddNumberModal,
     isLoading,
     error,
-  } = useNumberContext();
-
+    createNumber,
+  } = useNumberRedux();
   const [formData, setFormData] = useState<NewNumberData>({
     numero: "",
   });
+  const [localError, setLocalError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleAddNumber(formData);
-    setFormData({ numero: "" });
+    if (!formData.numero.match(/^\d+$/)) {
+      setLocalError("Le numéro doit contenir uniquement des chiffres.");
+      return;
+    }
+    try {
+      setLocalError(null); // Réinitialise les erreurs locales
+      await createNumber(formData).then(() => {
+        if (!localError) toast.success("Ajout reussi");
+      });
+      setFormData({ numero: "" });
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Une erreur s'est produite lors de l'ajout du numéro.",
+      );
+      setLocalError(
+        error || "Une erreur s'est produite lors de l'ajout du numéro.",
+      );
+    }
   };
 
   return (
-    <Dialog open={isAddNumberOpen} onOpenChange={setIsAddNumberOpen}>
+    <Dialog open={isAddNumberOpen} onOpenChange={showAddNumberModal}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Ajouter un numéro</DialogTitle>
@@ -51,12 +69,15 @@ export default function AddNumber() {
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {/* Gestion des erreurs */}
+          {(error || localError) && (
+            <p className="text-red-500 text-sm">{localError || error}</p>
+          )}
           <div className="flex justify-end space-x-2">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsAddNumberOpen(false)}
+              onClick={() => showAddNumberModal(false)}
             >
               Annuler
             </Button>

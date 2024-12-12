@@ -1,27 +1,24 @@
-import { usePartnerContext } from "@/contexts/PartnerContext";
-import { useSocialMediaContext } from "@/contexts/SocialMediaContext";
-import { PartnerType, SocialMedia as SocialMediaType } from "@/types";
+import useSocialMediaRedux from "@/hooks/use-social-media-redux";
 
 interface SocialMediaProps {
-  socialMedia: SocialMediaType;
+  socialMedia: SocialMedia;
 }
 
 const SocialMedia: React.FC<SocialMediaProps> = ({ socialMedia }) => {
   const {
-    handleSelectSocialMedia,
-    setIsRemoveSocialMediaOpen,
-    setCurrentSocialMedia,
-    setIsEditSocialMediaOpen,
-  } = useSocialMediaContext();
+    showRemoveSocialMediaModal,
+    showEditSocialMediaModal,
+    selectCurrentSocialMedia,
+  } = useSocialMediaRedux();
 
   const handleEdit = () => {
-    handleSelectSocialMedia(socialMedia);
-    setIsEditSocialMediaOpen(true);
+    selectCurrentSocialMedia(socialMedia);
+    showEditSocialMediaModal(true);
   };
 
   const handleRemove = () => {
-    setCurrentSocialMedia(socialMedia);
-    setIsRemoveSocialMediaOpen(true);
+    selectCurrentSocialMedia(socialMedia);
+    showRemoveSocialMediaModal(true);
   };
 
   return (

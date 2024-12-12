@@ -6,28 +6,27 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { usePartnerContext } from "@/contexts/PartnerContext";
-import { useSocialMediaContext } from "@/contexts/SocialMediaContext";
+import useSocialMediaRedux from "@/hooks/use-social-media-redux";
 
 export default function RemoveSocialMedia() {
   const {
     currentSocialMedia,
     isRemoveSocialMediaOpen,
-    setIsRemoveSocialMediaOpen,
-    handleRemoveSocialMedia,
-  } = useSocialMediaContext();
+    showRemoveSocialMediaModal,
+    deleteSocialMedia,
+    isLoading,
+  } = useSocialMediaRedux();
 
   const handleRemove = async () => {
     if (currentSocialMedia) {
-      await handleRemoveSocialMedia(currentSocialMedia.id);
-      setIsRemoveSocialMediaOpen(false);
+      await deleteSocialMedia();
     }
   };
 
   return (
     <Dialog
       open={isRemoveSocialMediaOpen}
-      onOpenChange={() => setIsRemoveSocialMediaOpen(false)}
+      onOpenChange={showRemoveSocialMediaModal}
     >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -42,12 +41,17 @@ export default function RemoveSocialMedia() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => setIsRemoveSocialMediaOpen(false)}
+            onClick={() => showRemoveSocialMediaModal(false)}
           >
             Annuler
           </Button>
-          <Button type="button" variant="destructive" onClick={handleRemove}>
-            Supprimer
+          <Button
+            type="button"
+            variant="destructive"
+            disabled={isLoading}
+            onClick={handleRemove}
+          >
+            {isLoading ? "Suppression..." : "Supprimer"}
           </Button>
         </div>
       </DialogContent>

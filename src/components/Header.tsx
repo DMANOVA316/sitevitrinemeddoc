@@ -2,28 +2,23 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Info_page_meddoc } from "@/types";
 import { infoMeddocService } from "@/services/infoMeddocService";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SiteLogo } from "@/components/ui/site-logo";
-import { getPublicUrl } from "@/utils/supabase";
 
 const Header = () => {
-  const [info, setInfo] = useState<Info_page_meddoc | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchInfo = async () => {
       try {
         setIsLoading(true);
-        const data = await infoMeddocService.getInfo();
-        setInfo(data);
+        await infoMeddocService.getInfo();
       } catch (error) {
         console.error("Error fetching site info:", error);
       } finally {
@@ -87,8 +82,8 @@ const Header = () => {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to="/contact" className="px-4 py-2">
-                  Contact
+                <Link to="/apropos" className="px-4 py-2">
+                  A propos
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>

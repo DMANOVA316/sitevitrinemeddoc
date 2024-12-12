@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Clock, Phone, Building2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Pharmacy } from "@/types";
 
 interface LocationData {
   "@type": string;
@@ -9,9 +10,17 @@ interface LocationData {
 
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
+  isEditable?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
+const PharmacyCard = ({
+  pharmacy,
+  isEditable,
+  onEdit,
+  onDelete,
+}: PharmacyCardProps) => {
   const [locationData, setLocationData] = useState<{
     province?: LocationData;
     region?: LocationData;
@@ -23,10 +32,14 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
     const fetchLocationData = async () => {
       try {
         const responses = await Promise.all([
-          pharmacy.province && fetch(`https://localization.mg-dev.space${pharmacy.province}`),
-          pharmacy.region && fetch(`https://localization.mg-dev.space${pharmacy.region}`),
-          pharmacy.district && fetch(`https://localization.mg-dev.space${pharmacy.district}`),
-          pharmacy.commune && fetch(`https://localization.mg-dev.space${pharmacy.commune}`)
+          pharmacy.province &&
+            fetch(`https://localization.mg-dev.space${pharmacy.province}`),
+          pharmacy.region &&
+            fetch(`https://localization.mg-dev.space${pharmacy.region}`),
+          pharmacy.district &&
+            fetch(`https://localization.mg-dev.space${pharmacy.district}`),
+          pharmacy.commune &&
+            fetch(`https://localization.mg-dev.space${pharmacy.commune}`),
         ]);
 
         const data = await Promise.all(
@@ -35,110 +48,143 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
               return await response.json();
             }
             return null;
-          })
+          }),
         );
 
         setLocationData({
           province: data[0],
           region: data[1],
           district: data[2],
-          commune: data[3]
+          commune: data[3],
         });
       } catch (error) {
-        console.error("Erreur lors de la récupération des données de localisation:", error);
+        console.error(
+          "Erreur lors de la récupération des données de localisation:",
+          error,
+        );
       }
     };
 
     fetchLocationData();
-  }, [pharmacy.province, pharmacy.region, pharmacy.district, pharmacy.commune]);
+  }, [pharmacy]);
+
+  const getFormattedLocation = () => {
+    const parts = [];
+    if (locationData.commune?.name) parts.push(locationData.commune.name);
+    if (locationData.district?.name) parts.push(locationData.district.name);
+    if (locationData.region?.name) parts.push(locationData.region.name);
+    if (locationData.province?.name) parts.push(locationData.province.name);
+    return parts.join(", ");
+  };
 
   return (
-    <Card className="animate-fade-up group hover:shadow-lg transition-all duration-300 overflow-hidden w-full max-w-md">
+    <Card className="w-full h-full animate-fade-up group hover:shadow-lg transition-all duration-300 overflow-hidden">
       <CardContent className="p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="relative w-16 h-16 rounded-full overflow-hidden bg-meddoc-primary/10 flex items-center justify-center flex-shrink-0">
+        <div className="space-y-4">
+          {/* Nom de la pharmacie */}
+          <div className="flex items-center gap-6">
             {pharmacy.photo_profil ? (
               <img
                 src={pharmacy.photo_profil}
                 alt={pharmacy.nom_pharmacie}
-                className="w-full h-full object-cover"
+                className="w-12 h-12 object-cover rounded-full"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.parentElement?.classList.add('fallback-icon');
+                  target.style.display = "none";
+                  target.parentElement?.classList.add("fallback-icon");
                 }}
               />
             ) : (
               <Building2 className="w-8 h-8 text-meddoc-primary" />
             )}
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-xl font-semibold text-meddoc-primary group-hover:text-meddoc-primary/80 transition-colors truncate">
-              {pharmacy.nom_pharmacie}
-            </h3>
-            {pharmacy.de_garde && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
-                De garde
-              </span>
+            <div className="flex flex-col justify-start items-start">
+              <h3 className="text-xl font-semibold text-gray-900">
+                {pharmacy.nom_pharmacie}
+              </h3>
+              {pharmacy.de_garde && (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                  De garde
+                </span>
+              )}
+            </div>
+            {isEditable && (
+              <div className="flex gap-2">
+                <button
+                  onClick={onEdit}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={onDelete}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+              </div>
             )}
           </div>
-        </div>
-        <div className="space-y-4 text-gray-600">
-          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
-            <MapPin className="h-5 w-5 text-meddoc-primary/70" />
-            <span className="text-sm">{pharmacy.address}</span>
+
+          {/* Adresse */}
+          <div className="flex items-start gap-3">
+            <MapPin className="w-5 h-5 text-gray-500 mt-1" />
+            <div className="flex-1">
+              <p className="text-gray-700">{pharmacy.address}</p>
+              <p className="text-sm text-gray-500">{getFormattedLocation()}</p>
+            </div>
           </div>
+
+          {/* Contacts */}
           {pharmacy.contacts && pharmacy.contacts.length > 0 && (
-            <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
-              <Phone className="h-5 w-5 text-meddoc-primary/70 mt-1" />
-              <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <Phone className="w-5 h-5 text-gray-500 mt-1" />
+              <div className="flex-1">
                 {pharmacy.contacts.map((contact, index) => (
-                  <span key={index} className="text-sm">
+                  <p key={index} className="text-gray-700">
                     {contact.numero}
-                  </span>
+                  </p>
                 ))}
               </div>
             </div>
           )}
+
+          {/* Horaires */}
           {pharmacy.horaires && pharmacy.horaires.length > 0 && (
-            <div className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
-              <Clock className="h-5 w-5 text-meddoc-primary/70 mt-1" />
-              <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <Clock className="w-5 h-5 text-gray-500" />
+              <div className="flex-1 space-y-1">
                 {pharmacy.horaires.map((horaire, index) => (
-                  <span key={index} className="text-sm">
+                  <p key={index} className="text-sm text-gray-600">
                     {horaire.heure_debut} - {horaire.heure_fin}
-                  </span>
+                  </p>
                 ))}
               </div>
             </div>
           )}
-          <div className="border-t pt-4 mt-4">
-            <span className="text-sm font-medium text-meddoc-primary mb-2 block">
-              Situation géographique
-            </span>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                <span className="text-gray-500">Province</span>
-                <p className="font-medium">{locationData.province?.name || "Chargement..."}</p>
-              </div>
-              {pharmacy.region && (
-                <div className="p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-gray-500">Région</span>
-                  <p className="font-medium">{locationData.region?.name || "Chargement..."}</p>
-                </div>
-              )}
-              {pharmacy.district && (
-                <div className="p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  <span className="text-gray-500">District</span>
-                  <p className="font-medium">{locationData.district?.name || "Chargement..."}</p>
-                </div>
-              )}
-              <div className="p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                <span className="text-gray-500">Commune</span>
-                <p className="font-medium">{locationData.commune?.name || "Chargement..."}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </CardContent>
     </Card>

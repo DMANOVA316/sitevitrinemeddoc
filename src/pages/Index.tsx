@@ -6,7 +6,6 @@ import {
   Code,
   Users,
   Phone,
-  Building2,
   ArrowUpRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -15,51 +14,37 @@ import {
   couvertureService,
   CouvertureType,
 } from "@/services/couvertureService";
-import { partnerService } from "@/services/partnerService";
 import { toast } from "sonner";
-import { PartnerType } from "@/types";
 import PartnerCard from "@/components/PartnerCard";
+import { usePartnerRedux } from "@/hooks/use-partner-redux";
 
 const Index = () => {
   const [couverture, setCouverture] = useState<CouvertureType | null>(null);
   const [isLoadingCouverture, setIsLoadingCouverture] = useState(true);
-
-  const [partners, setPartners] = useState<PartnerType[] | null>(null);
-  const [isLoadingPartner, setIsLoadingPartner] = useState(true);
+  const {
+    partners,
+    isLoading: isLoadingPartner,
+    getPartners,
+  } = usePartnerRedux();
 
   useEffect(() => {
     const fetchCouverture = async () => {
       try {
         setIsLoadingCouverture(true);
-        let data = await couvertureService.getCouverture();
-
-        // Si aucune donnée n'existe, créer une entrée par défaut
-        if (!data) {
-          data = await couvertureService.createCouverture();
-        }
-
+        const data = await couvertureService.getCouverture();
         setCouverture(data);
       } catch (error) {
         console.error("Error fetching couverture:", error);
+        toast.error(
+          "Une erreur s'est produite lors du chargement de la couverture",
+        );
       } finally {
         setIsLoadingCouverture(false);
       }
     };
 
-    const fetchPartner = async () => {
-      try {
-        setIsLoadingPartner(true);
-        const data = await partnerService.getAllPartners();
-        setPartners(data);
-      } catch (error) {
-        console.error("Error fetching partners:", error);
-      } finally {
-        setIsLoadingPartner(false);
-      }
-    };
-
     fetchCouverture();
-    fetchPartner();
+    getPartners();
   }, []);
 
   return (
@@ -209,23 +194,26 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-32 bg-slate-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Nos Partenaires
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Ils nous font confiance pour améliorer leurs services de santé
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Nos Partenaires
+          </h2>
+          {isLoadingPartner ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : partners && partners.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {partners.map((partner) => (
+                <PartnerCard key={partner.id} partner={partner} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500">
+              Aucun partenaire disponible
             </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
-            {isLoadingPartner
-              ? "Chargement..."
-              : partners.map((partner) => (
-                  <PartnerCard key={partner.id} partner={partner} />
-                ))}
-          </div>
+          )}
         </div>
       </section>
 

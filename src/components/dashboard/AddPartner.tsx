@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 import { useState } from "react";
 import {
   Dialog,
@@ -9,20 +9,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { usePartnerContext } from "@/contexts/PartnerContext";
+import { usePartnerRedux } from "@/hooks/use-partner-redux";
 import { PartnerType } from "@/types";
-import { uploadService } from "@/services/uploadService";
 
 type NewPartnerData = Omit<PartnerType, "id">;
 
 export default function AddPartner() {
   const {
     isAddPartnerOpen,
-    setIsAddPartnerOpen,
+    showAddPartnerModal,
     handleAddPartner,
     isLoading,
     error,
-  } = usePartnerContext();
+  } = usePartnerRedux();
 
   const [formData, setFormData] = useState<NewPartnerData>({
     nom_partenaire: "",
@@ -37,139 +36,126 @@ export default function AddPartner() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Vérifier la taille du fichier (max 10MB)
       if (file.size > 10 * 1024 * 1024) {
         setUploadError("L'image ne doit pas dépasser 10MB");
         return;
       }
 
-      // Vérifier le type de fichier
       if (!file.type.startsWith("image/")) {
         setUploadError("Le fichier doit être une image");
         return;
       }
 
       setSelectedFile(file);
-      setImagePreview(URL.createObjectURL(file));
       setUploadError(null);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploadError(null);
+
     try {
-      let logoUrl = formData.logo;
-
-      if (selectedFile) {
-        // Upload de l'image si une nouvelle image est sélectionnée
-        logoUrl = await uploadService.uploadImage(selectedFile);
-      }
-
-      // Créer le partenaire avec l'URL de l'image
-      await handleAddPartner({
-        ...formData,
-        logo: logoUrl,
+      await handleAddPartner(formData, selectedFile);
+      setFormData({
+        nom_partenaire: "",
+        lien: "",
+        logo: "",
       });
-
-      // Réinitialiser le formulaire et fermer la modale
-      setFormData({ nom_partenaire: "", lien: "", logo: "" });
       setSelectedFile(null);
       setImagePreview(null);
-      setIsAddPartnerOpen(false);
+      showAddPartnerModal(false);
+      toast.success("Ajout reussi.");
     } catch (err) {
       console.error("Error adding partner:", err);
-      setUploadError(
-        err instanceof Error ? err.message : "Une erreur s'est produite"
+      toast.error(
+        err instanceof Error ? err.message : "Erreur lors de l'ajout",
       );
     }
   };
 
   return (
-    <Dialog
-      open={isAddPartnerOpen}
-      onOpenChange={() => setIsAddPartnerOpen(false)}
-    >
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
+    <Dialog open={isAddPartnerOpen} onOpenChange={showAddPartnerModal}>
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Nouveau partenaire</DialogTitle>
+          <DialogTitle>Ajouter un partenaire</DialogTitle>
         </DialogHeader>
 
-        {(error || uploadError) && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span className="block sm:inline">{error || uploadError}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4 p-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label>Nom</Label>
+            <Label htmlFor="nom_partenaire">Nom du partenaire</Label>
             <Input
-              type="text"
+              id="nom_partenaire"
               value={formData.nom_partenaire}
               onChange={(e) =>
                 setFormData({ ...formData, nom_partenaire: e.target.value })
               }
-              placeholder="Nom du partenaire"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Site web</Label>
+            <Label htmlFor="lien">Lien du site web</Label>
             <Input
+              id="lien"
               type="url"
               value={formData.lien}
               onChange={(e) =>
                 setFormData({ ...formData, lien: e.target.value })
               }
-              placeholder="https://example.com"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Logo du partenaire</Label>
+            <Label htmlFor="logo">Logo</Label>
             <Input
+              id="logo"
               type="file"
-              onChange={handleFileChange}
               accept="image/*"
-              required
+              onChange={handleFileChange}
+              className="cursor-pointer"
             />
-            {selectedFile && (
-              <p className="text-sm text-gray-500">
-                Fichier sélectionné: {selectedFile.name}
-              </p>
+            {uploadError && (
+              <p className="text-sm text-red-500 mt-1">{uploadError}</p>
             )}
             {imagePreview && (
-              <div className="flex items-center space-x-4 mt-4">
+              <div className="mt-2">
                 <img
                   src={imagePreview}
-                  alt="Aperçu du logo"
-                  className="h-20 w-50 object-contain rounded-lg border p-2"
+                  alt="Preview"
+                  className="h-20 w-20 object-contain"
                 />
-                <span className="text-sm text-gray-500">Aperçu du logo</span>
               </div>
             )}
           </div>
 
-          <div className="flex gap-2 justify-end pt-4">
+          {error && <p className="text-sm text-red-500">{error}</p>}
+
+          <div className="flex justify-end gap-4">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsAddPartnerOpen(false)}
-              disabled={isLoading}
+              onClick={() => showAddPartnerModal(false)}
             >
               Annuler
             </Button>
             <Button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-500"
               disabled={isLoading}
+              className="bg-blue-600 hover:bg-blue-500"
             >
-              {isLoading ? <Skeleton className="h-6 w-24" /> : "Ajouter"}
+              {isLoading ? (
+                <div className="flex items-center gap-2">Ajout en cours...</div>
+              ) : (
+                "Ajouter"
+              )}
             </Button>
           </div>
         </form>
