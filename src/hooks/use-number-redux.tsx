@@ -8,6 +8,7 @@ import {
   fetchNumbers,
   setError,
 } from "@/store/numberSlice";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function useNumberRedux() {
@@ -73,9 +74,13 @@ export default function useNumberRedux() {
     }
   };
 
-  const getNumbers = () => {
-    dispatch(fetchNumbers());
+  const getNumbers = async () => {
+    await dispatch(fetchNumbers());
   };
+
+  useEffect(() => {
+    getNumbers();
+  }, []);
 
   // Action : Supprimer un numéro
   const deleteNumber = async () => {

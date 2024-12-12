@@ -9,14 +9,20 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useInfoMeddocContext } from "@/contexts/InfoMeddocContext";
 import { Info_page_meddoc } from "@/types";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
+import { toast } from "sonner";
 
 export default function EditInfo() {
-  const { info, isEditModalOpen, setIsEditModalOpen, handleUpdateInfo } =
-    useInfoMeddocContext();
+  const {
+    infoMeddoc,
+    showEditInformationModal,
+    isEditInformationOpen,
+    updateInformations,
+    isLoading,
+  } = useInfoMeddocRedux();
 
   const [formData, setFormData] = useState<Info_page_meddoc>({
     id: 0,
@@ -37,18 +43,27 @@ export default function EditInfo() {
   });
 
   useEffect(() => {
-    if (info) {
-      setFormData(info);
+    if (infoMeddoc) {
+      setFormData(infoMeddoc);
     }
-  }, [info]);
+  }, [infoMeddoc]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await handleUpdateInfo(formData, selectedFiles);
+  const handleSubmit = (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      updateInformations({ ...formData }, selectedFiles);
+      toast.success("Informations mis a jours.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Erreur lors de ma mise a jours des informations",
+      );
+    }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -72,7 +87,10 @@ export default function EditInfo() {
   };
 
   return (
-    <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+    <Dialog
+      open={isEditInformationOpen}
+      onOpenChange={showEditInformationModal}
+    >
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Modifier les informations du site</DialogTitle>
@@ -149,11 +167,13 @@ export default function EditInfo() {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => setIsEditModalOpen(false)}
+                onClick={() => showEditInformationModal(false)}
               >
                 Annuler
               </Button>
-              <Button type="submit">Enregistrer</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Enregistrement..." : "Enregistrer"}
+              </Button>
             </div>
           </form>
         </Tabs>

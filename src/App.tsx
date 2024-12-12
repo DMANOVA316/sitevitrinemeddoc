@@ -20,7 +20,6 @@ import Services from "./pages/Dashboard/Services";
 import NumberList from "./pages/Dashboard/Numbers/NumberList";
 import { EditPagesProvider } from "./contexts/EditPagesContext";
 import { ServiceProvider } from "./contexts/ServiceContext";
-import { InfoMeddocProvider } from "./contexts/InfoMeddocContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -31,106 +30,101 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <TooltipProvider>
-        <InfoMeddocProvider>
-          <EditPagesProvider>
-            <ServiceProvider>
-              <Toaster richColors />
-              <BrowserRouter>
-                <Routes>
-                  {/* Routes publiques */}
-                  <Route
-                    path="/"
-                    element={
-                      <PublicLayout>
-                        <Index />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/login"
-                    element={
-                      <PublicLayout>
-                        <Login />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/pharmacies"
-                    element={
-                      <PublicLayout>
-                        <Pharmacies />
-                      </PublicLayout>
-                    }
-                  />
+        <EditPagesProvider>
+          <ServiceProvider>
+            <Toaster richColors />
+            <BrowserRouter>
+              <Routes>
+                {/* Routes publiques */}
+                <Route
+                  path="/"
+                  element={
+                    <PublicLayout>
+                      <Index />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <PublicLayout>
+                      <Login />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/pharmacies"
+                  element={
+                    <PublicLayout>
+                      <Pharmacies />
+                    </PublicLayout>
+                  }
+                />
 
-                  {/* Routes des services */}
-                  <Route
-                    path="/services/community"
-                    element={
-                      <PublicLayout>
-                        <Community />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/services/consulting"
-                    element={
-                      <PublicLayout>
-                        <Consulting />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/services/digital"
-                    element={
-                      <PublicLayout>
-                        <Digital />
-                      </PublicLayout>
-                    }
-                  />
+                {/* Routes des services */}
+                <Route
+                  path="/services/community"
+                  element={
+                    <PublicLayout>
+                      <Community />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/services/consulting"
+                  element={
+                    <PublicLayout>
+                      <Consulting />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/services/digital"
+                  element={
+                    <PublicLayout>
+                      <Digital />
+                    </PublicLayout>
+                  }
+                />
 
-                  {/* Routes protégées pour le tableau de bord */}
-                  <Route element={<PrivateRoute />}>
-                    <Route element={<DashboardLayout />}>
-                      <Route path="/dashboard" element={<DashboardIndex />} />
+                {/* Routes protégées pour le tableau de bord */}
+                <Route element={<PrivateRoute />}>
+                  <Route element={<DashboardLayout />}>
+                    <Route path="/dashboard" element={<DashboardIndex />} />
+                    <Route
+                      path="/dashboard/pharmacies"
+                      element={<DashboardPharmacies />}
+                    />
+                    {/* Edition de page */}
+                    <Route
+                      path="/dashboard/page-meddoc/"
+                      element={<EditPageIndex />}
+                    />
+                    <Route
+                      path="/dashboard/partenaires"
+                      element={<PartnerIndex />}
+                    >
                       <Route
-                        path="/dashboard/pharmacies"
-                        element={<DashboardPharmacies />}
-                      />
-                      {/* Edition de page */}
-                      <Route
-                        path="/dashboard/page-meddoc/"
-                        element={<EditPageIndex />}
-                      />
-                      <Route
-                        path="/dashboard/partenaires"
-                        element={<PartnerIndex />}
-                      >
-                        <Route
-                          path="/dashboard/partenaires/list"
-                          element={<PartnerList />}
-                        />
-                      </Route>
-
-                      <Route
-                        path="/dashboard/reseaux-sociaux"
-                        element={<SocialMediaIndex />}
-                      />
-                      <Route
-                        path="/dashboard/services"
-                        element={<Services />}
-                      />
-                      <Route
-                        path="/dashboard/contact-meddoc"
-                        element={<NumberList />}
+                        path="/dashboard/partenaires/list"
+                        element={<PartnerList />}
                       />
                     </Route>
+
+                    <Route
+                      path="/dashboard/reseaux-sociaux"
+                      element={<SocialMediaIndex />}
+                    />
+                    <Route path="/dashboard/services" element={<Services />} />
+                    <Route
+                      path="/dashboard/contact-meddoc"
+                      element={<NumberList />}
+                    />
                   </Route>
-                </Routes>
-              </BrowserRouter>
-            </ServiceProvider>
-          </EditPagesProvider>
-        </InfoMeddocProvider>
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </ServiceProvider>
+        </EditPagesProvider>
       </TooltipProvider>
     </Provider>
   </QueryClientProvider>

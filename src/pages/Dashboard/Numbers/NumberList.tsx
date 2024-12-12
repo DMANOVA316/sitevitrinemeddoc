@@ -13,19 +13,14 @@ import EditNumber from "@/components/dashboard/EditNumber";
 import RemoveNumber from "@/components/dashboard/RemoveNumber";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import useNumberRedux from "@/hooks/use-number-redux";
 import Number from "./Number";
 
 export default function NumberList() {
-  const { numeros, isLoading, showAddNumberModal, getNumbers } =
-    useNumberRedux();
+  const { numeros, isLoading, showAddNumberModal } = useNumberRedux();
 
   const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    getNumbers();
-  }, []);
 
   const filteredNumbers = useMemo(() => {
     if (!numeros) return [];

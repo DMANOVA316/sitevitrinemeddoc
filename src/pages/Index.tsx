@@ -6,7 +6,6 @@ import {
   Code,
   Users,
   Phone,
-  Building2,
   ArrowUpRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -22,7 +21,11 @@ import { usePartnerRedux } from "@/hooks/use-partner-redux";
 const Index = () => {
   const [couverture, setCouverture] = useState<CouvertureType | null>(null);
   const [isLoadingCouverture, setIsLoadingCouverture] = useState(true);
-  const { partners, isLoading: isLoadingPartner, getPartners } = usePartnerRedux();
+  const {
+    partners,
+    isLoading: isLoadingPartner,
+    getPartners,
+  } = usePartnerRedux();
 
   useEffect(() => {
     const fetchCouverture = async () => {
@@ -33,7 +36,7 @@ const Index = () => {
       } catch (error) {
         console.error("Error fetching couverture:", error);
         toast.error(
-          "Une erreur s'est produite lors du chargement de la couverture"
+          "Une erreur s'est produite lors du chargement de la couverture",
         );
       } finally {
         setIsLoadingCouverture(false);
@@ -207,7 +210,9 @@ const Index = () => {
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-500">Aucun partenaire disponible</p>
+            <p className="text-center text-gray-500">
+              Aucun partenaire disponible
+            </p>
           )}
         </div>
       </section>

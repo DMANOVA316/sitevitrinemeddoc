@@ -30,11 +30,17 @@ export const updateInfos = createAsyncThunk(
   async ({
     id,
     data,
+    files,
   }: {
     id: number;
-    data: Partial<Omit<Info_page_meddoc, "id">>;
+    data: Partial<Info_page_meddoc>;
+    files?: { logo: File; favicon: File };
   }) => {
-    const response = await infoMeddocService.updateInfo(id, data);
+    const response = await infoMeddocService.updateInfo(
+      id,
+      data,
+      files ? files : null,
+    );
     return response;
   },
 );
@@ -76,6 +82,7 @@ const infoMeddocSlice = createSlice({
       .addCase(updateInfos.fulfilled, (state, action) => {
         state.isLoading = false;
         state.infoMeddoc = { ...action.payload };
+        state.isEditInformationOpen = false;
       })
       .addCase(updateInfos.rejected, (state, action) => {
         state.isLoading = false;

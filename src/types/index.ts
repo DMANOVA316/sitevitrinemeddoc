@@ -161,6 +161,4 @@ export interface Info_page_meddoc {
   copyrigth: string;
 }
 
-export { Pharmacy };
-
 export {};

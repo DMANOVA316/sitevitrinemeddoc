@@ -1,3 +1,4 @@
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 import infoMeddocService from "@/services/infoMeddocService";
 import { getPublicUrl } from "@/utils/supabase";
 import { useEffect, useState } from "react";
@@ -7,19 +8,19 @@ export interface PageTitleProps {
 }
 
 function PageTitle({ isDashboard }: PageTitleProps) {
-  const [title, setTitle] = useState("");
+  const { infoMeddoc, showEditInformationModal, error, isLoading } =
+    useInfoMeddocRedux();
 
   useEffect(() => {
     const updateInfo = async () => {
       try {
-        const data = await infoMeddocService.getInfo();
+        const data = infoMeddoc;
         // Mise à jour du titre
         if (data?.titre_site) {
           const pageTitle = isDashboard
             ? `${data.titre_site} - Dashboard`
             : data.titre_site;
           document.title = pageTitle;
-          setTitle(pageTitle);
         }
         // Mise à jour du favicon
         if (data?.favicon) {
@@ -38,7 +39,7 @@ function PageTitle({ isDashboard }: PageTitleProps) {
     };
 
     updateInfo();
-  }, [isDashboard]);
+  }, [infoMeddoc]);
 
   return null;
 }
