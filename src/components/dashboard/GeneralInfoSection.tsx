@@ -1,10 +1,11 @@
-import { useInfoMeddocContext } from "@/contexts/InfoMeddocContext";
 import { getFileNameFromPath } from "@/utils/fileUtils";
 import { EditSection } from "./EditSection";
 import { InfoField } from "./InfoField";
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 
 export function GeneralInfoSection() {
-  const { info, isLoading, error, setIsEditModalOpen } = useInfoMeddocContext();
+  const { infoMeddoc, isLoading, error, showEditInformationModal } =
+    useInfoMeddocRedux();
 
   if (error) {
     return <p className="text-red-500 mt-2">{error}</p>;
@@ -25,21 +26,21 @@ export function GeneralInfoSection() {
       title="Informations générales"
       description="Gérez les informations de base du site comme le titre, l'email et l'adresse"
       buttonText="Modifier les informations"
-      onEdit={() => setIsEditModalOpen(true)}
+      onEdit={() => showEditInformationModal(true)}
     >
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <InfoField label="Titre du site" value={info?.titre_site} />
-        <InfoField label="Email" value={info?.email} />
-        <InfoField label="Adresse" value={info?.addresse} />
-        <InfoField label="Copyright" value={info?.copyrigth} />
-        <InfoField 
-          label="Logo" 
-          value={info?.logo}
+        <InfoField label="Titre du site" value={infoMeddoc?.titre_site} />
+        <InfoField label="Email" value={infoMeddoc?.email} />
+        <InfoField label="Adresse" value={infoMeddoc?.addresse} />
+        <InfoField label="Copyright" value={infoMeddoc?.copyrigth} />
+        <InfoField
+          label="Logo"
+          value={infoMeddoc?.logo}
           formatter={getFileNameFromPath}
         />
-        <InfoField 
-          label="Favicon" 
-          value={info?.favicon}
+        <InfoField
+          label="Favicon"
+          value={infoMeddoc?.favicon}
           formatter={getFileNameFromPath}
         />
       </div>

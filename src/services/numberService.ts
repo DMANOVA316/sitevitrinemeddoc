@@ -1,7 +1,7 @@
 import supabase from "@/utils/supabase";
-import { Numero_meddoc } from "@/types";
 
 const NUMBER_TABLE = "Numero_meddoc";
+const MAX_NUMBER_COUNT = 3;
 
 export const numberService = {
   getAllNumber: async (): Promise<Numero_meddoc[] | null> => {
@@ -12,16 +12,21 @@ export const numberService = {
   },
 
   createNumber: async (
-    number: Omit<Numero_meddoc, "id">
+    number: Omit<Numero_meddoc, "id">,
   ): Promise<Numero_meddoc> => {
-    const { data, error } = await supabase
-      .from(NUMBER_TABLE)
-      .insert([number])
-      .select()
-      .single();
+    const numbers = await numberService.getAllNumber();
+    if (numbers.length < MAX_NUMBER_COUNT) {
+      const { data, error } = await supabase
+        .from(NUMBER_TABLE)
+        .insert([number])
+        .select()
+        .single();
 
-    if (error) throw new Error(error.message);
-    return data;
+      if (error) throw new Error(error.message);
+      return data;
+    } else {
+      throw new Error("Nombre de contact plein");
+    }
   },
 
   deleteNumber: async (id: number): Promise<void> => {
@@ -32,7 +37,7 @@ export const numberService = {
 
   updateNumber: async (
     id: number,
-    number: Partial<Omit<Numero_meddoc, "id">>
+    number: Partial<Omit<Numero_meddoc, "id">>,
   ): Promise<Numero_meddoc> => {
     const { data, error } = await supabase
       .from(NUMBER_TABLE)

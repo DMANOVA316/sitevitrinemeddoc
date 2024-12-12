@@ -8,22 +8,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useNumberContext } from "@/contexts/NumberContext";
-import { Numero_meddoc } from "@/types";
+import useNumberRedux from "@/hooks/use-number-redux";
+import { toast } from "sonner";
 
 export default function EditNumber() {
   const {
     isEditNumberOpen,
-    setIsEditNumberOpen,
-    handleUpdateNumber,
+    showEditNumberModal,
+    updateNumber,
     currentNumber,
     isLoading,
     error,
-  } = useNumberContext();
+  } = useNumberRedux();
 
-  const [formData, setFormData] = useState<Partial<Omit<Numero_meddoc, "id">>>({
+  const [formData, setFormData] = useState<Omit<Numero_meddoc, "id">>({
     numero: "",
   });
+  const [localError, setLocalError] = useState("");
 
   useEffect(() => {
     if (currentNumber) {
@@ -35,13 +36,29 @@ export default function EditNumber() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (currentNumber) {
-      await handleUpdateNumber(currentNumber.id, formData);
+    if (!formData.numero.match(/^\d+$/)) {
+      setLocalError("Le numéro doit contenir uniquement des chiffres.");
+      return;
+    }
+    try {
+      if (currentNumber) {
+        await updateNumber(formData).then(() => {
+          if (!localError) toast.success("Mise a jours reussi");
+        });
+      }
+    } catch (error) {
+      if (!localError) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "Erreur lors de la mise a jours du contact",
+        );
+      }
     }
   };
 
   return (
-    <Dialog open={isEditNumberOpen} onOpenChange={setIsEditNumberOpen}>
+    <Dialog open={isEditNumberOpen} onOpenChange={showEditNumberModal}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Modifier le numéro</DialogTitle>
@@ -59,17 +76,19 @@ export default function EditNumber() {
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {(error || localError) && (
+            <p className="text-red-500 text-sm">{localError || error}</p>
+          )}
           <div className="flex justify-end space-x-2">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsEditNumberOpen(false)}
+              onClick={() => showEditNumberModal(false)}
             >
               Annuler
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Modification en cours..." : "Modifier"}
+              {isLoading ? "Modification..." : "Modifier"}
             </Button>
           </div>
         </form>

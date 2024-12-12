@@ -7,26 +7,38 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useNumberContext } from "@/contexts/NumberContext";
+import useNumberRedux from "@/hooks/use-number-redux";
+import { toast } from "sonner";
 
 export default function RemoveNumber() {
   const {
     isRemoveNumberOpen,
-    setIsRemoveNumberOpen,
-    handleDeleteNumber,
-    currentNumber,
-    isLoading,
+    showRemoveNumberModal,
+    selectCurrentNumber,
+    deleteNumber,
     error,
-  } = useNumberContext();
+    isLoading,
+  } = useNumberRedux();
 
   const handleRemove = async () => {
-    if (currentNumber) {
-      await handleDeleteNumber(currentNumber.id);
+    try {
+      await deleteNumber().then(() => {
+        toast.success("Suppression reussi");
+      });
+      selectCurrentNumber(null);
+    } catch (error) {
+      console.log("Error encouterred:", error);
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Erreur lors de la suppression du contact",
+      );
     }
   };
 
   return (
-    <Dialog open={isRemoveNumberOpen} onOpenChange={setIsRemoveNumberOpen}>
+    <Dialog open={isRemoveNumberOpen} onOpenChange={showRemoveNumberModal}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Supprimer le numéro</DialogTitle>
@@ -41,7 +53,7 @@ export default function RemoveNumber() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsRemoveNumberOpen(false)}
+              onClick={() => showRemoveNumberModal(false)}
             >
               Annuler
             </Button>

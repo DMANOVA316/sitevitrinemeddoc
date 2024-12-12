@@ -1,25 +1,23 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { usePartnerContext } from "@/contexts/PartnerContext";
-import { PartnerType, SocialMedia } from "@/types";
-import { useSocialMediaContext } from "@/contexts/SocialMediaContext";
+import useSocialMediaRedux from "@/hooks/use-social-media-redux";
 
 export default function EditSocialMedia() {
   const {
     currentSocialMedia,
+    showEditSocialMediaModal,
     isEditSocialMediaOpen,
-    setIsEditSocialMediaOpen,
-    handleEditSocialMedia,
-  } = useSocialMediaContext();
+    updateSocialMedia,
+    isLoading,
+  } = useSocialMediaRedux();
 
   const [formData, setFormData] = useState<SocialMedia>({
     id: 0,
@@ -27,28 +25,19 @@ export default function EditSocialMedia() {
     lien: "",
   });
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
-    if (currentSocialMedia) {
-      setFormData(currentSocialMedia);
-      setSelectedFile(null); // Réinitialiser le fichier sélectionné
-    }
+    if (currentSocialMedia) setFormData(currentSocialMedia);
   }, [currentSocialMedia]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    await handleEditSocialMedia(formData);
-    setIsLoading(false);
+    await updateSocialMedia(formData);
   };
 
   return (
     <Dialog
       open={isEditSocialMediaOpen}
-      onOpenChange={() => setIsEditSocialMediaOpen(false)}
+      onOpenChange={showEditSocialMediaModal}
     >
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
@@ -90,7 +79,7 @@ export default function EditSocialMedia() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsEditSocialMediaOpen(false)}
+              onClick={() => showEditSocialMediaModal(false)}
             >
               Annuler
             </Button>

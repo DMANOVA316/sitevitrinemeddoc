@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { SocialMedia } from "../types/index";
 import { socialMediaService } from "@/services/socialMediaService";
 
 export default function useSocialMedia() {
@@ -20,7 +19,7 @@ export default function useSocialMedia() {
       setSocialMedias(data);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Une erreur s'est produite"
+        err instanceof Error ? err.message : "Une erreur s'est produite",
       );
       console.error("Error fetching social medias:", err);
     } finally {
@@ -29,7 +28,7 @@ export default function useSocialMedia() {
   };
 
   const addSocialMedia = async (
-    newSocialMedia: Omit<SocialMedia, "id">
+    newSocialMedia: Omit<SocialMedia, "id">,
   ): Promise<void> => {
     try {
       setIsLoading(true);
@@ -43,7 +42,7 @@ export default function useSocialMedia() {
       setError(
         err instanceof Error
           ? err.message
-          : "Erreur lors de l'ajout du social media"
+          : "Erreur lors de l'ajout du social media",
       );
       console.error("Error adding social media:", err);
     } finally {
@@ -60,7 +59,7 @@ export default function useSocialMedia() {
 
       await socialMediaService.updateSocialMedia(
         socialMedia.id,
-        updatedSocialMedia
+        updatedSocialMedia,
       );
       await getSocialMedias();
       setCurrentSocialMedia(null);
@@ -69,7 +68,7 @@ export default function useSocialMedia() {
       setError(
         err instanceof Error
           ? err.message
-          : "Erreur lors de la modification du social media"
+          : "Erreur lors de la modification du social media",
       );
       console.error("Error updating social media:", err);
     } finally {
@@ -89,7 +88,7 @@ export default function useSocialMedia() {
       setError(
         err instanceof Error
           ? err.message
-          : "Erreur lors de la suppression du social media"
+          : "Erreur lors de la suppression du social media",
       );
       console.error("Error removing social media:", err);
     } finally {
@@ -103,7 +102,7 @@ export default function useSocialMedia() {
 
   const handleEditSocialMedia = async (
     socialMedia: SocialMedia,
-    file?: File | null
+    file?: File | null,
   ) => {
     await editSocialMedia(socialMedia);
   };
