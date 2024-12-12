@@ -77,20 +77,24 @@ const Index = () => {
                   "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."}
             </p>
             <div className="flex gap-4">
-              <Button
-                size="lg"
-                className="bg-white text-meddoc-primary hover:bg-white/90"
-              >
-                Découvrir nos services
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-transparent border-white text-white hover:bg-white/10"
-              >
-                Nous contacter
-              </Button>
+              <Link to="#services" className="block">
+                <Button
+                  size="lg"
+                  className="bg-white text-meddoc-primary hover:bg-white/90"
+                >
+                  Découvrir nos services
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/contact" className="block">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent border-white text-white hover:bg-white/10"
+                >
+                  Nous contacter
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

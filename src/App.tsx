@@ -23,9 +23,10 @@ import { ServiceProvider } from "./contexts/ServiceContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
 
 import AmbulanceList from "./pages/Dashboard/AmbulanceList";
+import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
-
+import ContactUs from "./pages/ContactUs";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -63,7 +64,14 @@ const App = () => (
                       </PublicLayout>
                     }
                   />
-
+                  <Route
+                    path="/contact"
+                    element={
+                      <PublicLayout>
+                        <ContactUs />
+                      </PublicLayout>
+                    }
+                  />
                   {/* Routes des services */}
                   <Route
                     path="/services/community"
