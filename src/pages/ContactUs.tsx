@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Phone, Mail, MapPin } from 'lucide-react';
@@ -21,6 +22,7 @@ const contactSchema = z.object({
   nom: z.string().min(2, 'Le nom est requis'),
   email: z.string().email('Email invalide'),
   contact: z.string().optional(),
+  vous_ete: z.string().optional(),
   service: z.string().optional(),
   message: z.string().min(10, 'Le message doit contenir au moins 10 caractères'),
 });
@@ -38,6 +40,7 @@ const ContactUs = () => {
         nom: data.nom,
         email: data.email,
         contact: data.contact,
+        vous_ete: data.vous_ete,
         service: data.service,
         message: data.message,
       };
@@ -54,52 +57,89 @@ const ContactUs = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <Card className="shadow-xl border border-gray-200">
-        <CardContent className="p-8">
-          <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Nous Contacter</h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Nom</label>
-              <Input type="text" {...register('nom')} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-              {errors.nom && <p className="text-red-500 text-xs mt-1">{errors.nom.message}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Email</label>
-              <Input type="email" {...register('email')} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Contact</label>
-              <Input type="text" {...register('contact')} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Service</label>
-              <Select {...register('service')}>
-                <SelectTrigger className="mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                  <SelectValue placeholder="Service" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem key="service1" value={"service1"}>
-                    Solutions Numériques
-                  </SelectItem>
-                  <SelectItem key="service2" value="service2">
-                    Community Management
-                  </SelectItem>
-                  <SelectItem key="service3" value="service3">
-                    Services de Conseil
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700">Message</label>
-              <Textarea {...register('message')} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" rows={4} />
-              {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
-            </div>
-            <Button type="submit" className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md shadow-sm">Envoyer</Button>
-          </form>
-        </CardContent>
-      </Card>
+      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Nous Contacter</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Full Name Section */}
+        <Label className="font-semibold mb-4 block text-sm text-gray-700">Nom</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <Input
+              {...register('nom')}
+              type="text"
+              placeholder="Nom"
+              className="w-full bg-gray-100 border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:border-blue-400"
+            />
+            {errors.nom && <p className="text-red-500 text-xs">{errors.nom.message}</p>}
+          </div>
+          <Select {...register('vous_ete')}>
+            <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
+              <SelectValue placeholder="Vous etez" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem key="professionnel de santé" value={"professionnel de santé"}>
+                Professionnel de santé
+              </SelectItem>
+              <SelectItem key="patient" value="patient">
+                Patient
+              </SelectItem>
+              <SelectItem key="autres" value="autres">
+                Autres
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        {/* Dropdown Section  */}
+        <Label className="font-semibold mb-4 block text-sm text-gray-700">Service</Label>
+        <Select {...register('service')}>
+          <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
+            <SelectValue placeholder="Service" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem key="service1" value={"service1"}>
+              Solutions Numériques
+            </SelectItem>
+            <SelectItem key="service2" value="service2">
+              Community Management
+            </SelectItem>
+            <SelectItem key="service3" value="service3">
+              Services de Conseil
+            </SelectItem>
+          </SelectContent>
+        </Select>
+        {/* Contact Information Section  */}
+        <Label className="font-semibold mb-4 block text-sm text-gray-700">Contact Information</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <Input
+              {...register('email')}
+              type="email"
+              placeholder="Email*"
+              className="bg-gray-100 border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1"><br />{errors.email.message}</p>}
+          </div>
+          <div>
+            <Input
+              {...register('contact')}
+              type="tel"
+              placeholder="Phone"
+              className="bg-gray-100 border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+            />
+          </div>
+        </div>
+        {/* Questions / Comments Section  */}
+        <div>
+          <Label className="font-semibold mb-4 block text-sm text-gray-700">Questions / Comments</Label>
+          <textarea
+            {...register('message')}
+            rows={4}
+            placeholder="Message*"
+            className="w-full bg-gray-100 border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:border-blue-400"
+          ></textarea>
+          {errors.message && <p className="text-red-500 text-xs">{errors.message.message}</p>}
+        </div>
+        <Button type="submit" className="w-full">Envoyer</Button>
+      </form>
     </div>
   );
 };

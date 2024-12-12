@@ -14,6 +14,7 @@ export const contactService = {
     nom: string;
     email: string;
     contact?: string;
+    vous_ete?: string;
     service?: string;
     message: string;
   }): Promise<void> => {
@@ -28,6 +29,7 @@ export const contactService = {
     nom?: string;
     email?: string;
     contact?: string;
+    vous_ete?: string;
     service?: string;
     message?: string;
   }): Promise<void> => {
