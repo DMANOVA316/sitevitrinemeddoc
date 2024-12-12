@@ -78,10 +78,6 @@ export default function useNumberRedux() {
     await dispatch(fetchNumbers());
   };
 
-  useEffect(() => {
-    getNumbers();
-  }, []);
-
   // Action : Supprimer un numéro
   const deleteNumber = async () => {
     try {

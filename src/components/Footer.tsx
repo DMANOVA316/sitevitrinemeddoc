@@ -2,12 +2,16 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 import useNumberRedux from "@/hooks/use-number-redux";
-import { Skeleton } from "./ui/skeleton";
-import { info } from "console";
+import { useEffect } from "react";
 
 const Footer = () => {
   const { infoMeddoc, isLoading: isLoadingInfos } = useInfoMeddocRedux();
-  const { numeros, isLoading: isLoadingNumbers } = useNumberRedux();
+  const { numeros, isLoading: isLoadingNumbers, getNumbers } = useNumberRedux();
+
+  useEffect(() => {
+    getNumbers();
+  }, []);
+
   return (
     <footer className="bg-gray-800 text-white py-12">
       <div className="container mx-auto px-4">
@@ -69,7 +73,7 @@ const Footer = () => {
                       return (
                         <span key={num.id}>
                           {num.numero}
-                          {numeros.length - 1 >= index ? " / " : ""}
+                          {index < numeros.length - 1 ? " / " : ""}
                         </span>
                       );
                     })
@@ -82,7 +86,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-gray-400">© 2024 MEDDoC. Tous droits réservés.</p>
+          <p className="text-gray-400">© 2024 {infoMeddoc?.copyrigth}</p>
         </div>
       </div>
     </footer>
