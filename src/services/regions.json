@@ -1,0 +1,255 @@
+[
+    {
+        "@id": "/api/regions/018d03a1-faaf-7fa8-8f9b-48673f038429",
+        "@type": "Region",
+        "id": "018d03a1-faaf-7fa8-8f9b-48673f038429",
+        "name": "ANALAMANGA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd27-7955-8a5e-782d021f4cea",
+            "@type": "Province",
+            "name": "Antananarivo"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a2-2b25-7517-b844-825f4a9d64de",
+        "@type": "Region",
+        "id": "018d03a2-2b25-7517-b844-825f4a9d64de",
+        "name": "BONGOLAVA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd27-7955-8a5e-782d021f4cea",
+            "@type": "Province",
+            "name": "Antananarivo"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a2-3c6d-736b-8ab3-090a321f1055",
+        "@type": "Region",
+        "id": "018d03a2-3c6d-736b-8ab3-090a321f1055",
+        "name": "ITASY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd27-7955-8a5e-782d021f4cea",
+            "@type": "Province",
+            "name": "Antananarivo"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a2-62d5-7510-ae7a-ccc175bb6bb2",
+        "@type": "Region",
+        "id": "018d03a2-62d5-7510-ae7a-ccc175bb6bb2",
+        "name": "VAKINANKARATRA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd27-7955-8a5e-782d021f4cea",
+            "@type": "Province",
+            "name": "Antananarivo"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a2-b849-7688-a1bb-a76edb2c0c23",
+        "@type": "Region",
+        "id": "018d03a2-b849-7688-a1bb-a76edb2c0c23",
+        "name": "DIANA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd2e-7d8d-a20f-3ecb4b126abf",
+            "@type": "Province",
+            "name": "Antsiranana"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a2-f7a1-79b7-af6f-077bd399dd10",
+        "@type": "Region",
+        "id": "018d03a2-f7a1-79b7-af6f-077bd399dd10",
+        "name": "SAVA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd2e-7d8d-a20f-3ecb4b126abf",
+            "@type": "Province",
+            "name": "Antsiranana"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a3-6005-7b8b-8800-7df16e59ea14",
+        "@type": "Region",
+        "id": "018d03a3-6005-7b8b-8800-7df16e59ea14",
+        "name": "AMORON'I MANIA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a3-cf9f-7ef0-af56-5309a547257d",
+        "@type": "Region",
+        "id": "018d03a3-cf9f-7ef0-af56-5309a547257d",
+        "name": "ATSIMO-ATSINANANA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a4-59db-722b-b6d4-5f2f299f60c8",
+        "@type": "Region",
+        "id": "018d03a4-59db-722b-b6d4-5f2f299f60c8",
+        "name": "HAUTE MATSIATRA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a4-f07d-71b7-9852-d8018bc8e89e",
+        "@type": "Region",
+        "id": "018d03a4-f07d-71b7-9852-d8018bc8e89e",
+        "name": "IHOROMBE",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a5-2c3e-7f1d-9080-995ce2ee0169",
+        "@type": "Region",
+        "id": "018d03a5-2c3e-7f1d-9080-995ce2ee0169",
+        "name": "FITOVINANY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a5-b73f-7771-a1f3-0f965336a6fd",
+        "@type": "Region",
+        "id": "018d03a5-b73f-7771-a1f3-0f965336a6fd",
+        "name": "VATOVAVY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd31-7dd1-aee2-a87cbb20f660",
+            "@type": "Province",
+            "name": "Fianarantsoa"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a6-5406-7e2f-9c65-161a3ab89814",
+        "@type": "Region",
+        "id": "018d03a6-5406-7e2f-9c65-161a3ab89814",
+        "name": "BETSIBOKA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+            "@type": "Province",
+            "name": "Mahajanga"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a6-b4d3-7556-93ef-5c261305b9cf",
+        "@type": "Region",
+        "id": "018d03a6-b4d3-7556-93ef-5c261305b9cf",
+        "name": "BOENY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+            "@type": "Province",
+            "name": "Mahajanga"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a7-3458-70d5-b97e-ecf449350fa9",
+        "@type": "Region",
+        "id": "018d03a7-3458-70d5-b97e-ecf449350fa9",
+        "name": "MELAKY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+            "@type": "Province",
+            "name": "Mahajanga"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a7-948c-7254-913c-15c3adb24aa0",
+        "@type": "Region",
+        "id": "018d03a7-948c-7254-913c-15c3adb24aa0",
+        "name": "SOFIA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd35-7c4a-ac3d-16ad3200290e",
+            "@type": "Province",
+            "name": "Mahajanga"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03a9-2810-7a47-b926-433947376eda",
+        "@type": "Region",
+        "id": "018d03a9-2810-7a47-b926-433947376eda",
+        "name": "ALAOTRA-MANGORO",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3a-7aca-9cd9-5e70a620268e",
+            "@type": "Province",
+            "name": "Toamasina"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03aa-0a91-701d-af4f-f1aa1f06bc17",
+        "@type": "Region",
+        "id": "018d03aa-0a91-701d-af4f-f1aa1f06bc17",
+        "name": "ANALANJIROFO",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3a-7aca-9cd9-5e70a620268e",
+            "@type": "Province",
+            "name": "Toamasina"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03ab-1ced-7f49-b4ed-d2b8a5f39407",
+        "@type": "Region",
+        "id": "018d03ab-1ced-7f49-b4ed-d2b8a5f39407",
+        "name": "ATSINANANA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3a-7aca-9cd9-5e70a620268e",
+            "@type": "Province",
+            "name": "Toamasina"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03ac-9cfa-74f7-befe-bbd03013fa2e",
+        "@type": "Region",
+        "id": "018d03ac-9cfa-74f7-befe-bbd03013fa2e",
+        "name": "ANDROY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+            "@type": "Province",
+            "name": "Toliara"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03af-8c84-7a33-97e0-82eb2941e2ce",
+        "@type": "Region",
+        "id": "018d03af-8c84-7a33-97e0-82eb2941e2ce",
+        "name": "ANOSY",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+            "@type": "Province",
+            "name": "Toliara"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03b0-ddc7-75c1-8d39-54d9bd8d2d56",
+        "@type": "Region",
+        "id": "018d03b0-ddc7-75c1-8d39-54d9bd8d2d56",
+        "name": "ATSIMO-ANDREFANA",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+            "@type": "Province",
+            "name": "Toliara"
+        }
+    },
+    {
+        "@id": "/api/regions/018d03b3-7f30-7554-a552-2f4d94d1c4d0",
+        "@type": "Region",
+        "id": "018d03b3-7f30-7554-a552-2f4d94d1c4d0",
+        "name": "MENABE",
+        "province": {
+            "@id": "/api/provinces/018d0daf-fd3f-7f10-bac3-cd5d755383f2",
+            "@type": "Province",
+            "name": "Toliara"
+        }
+    }
+]

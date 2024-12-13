@@ -1,40 +1,154 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import PublicLayout from "@/components/PublicLayout";
 import Index from "./pages/Index";
-import Digital from "./pages/services/Digital";
+import Login from "./pages/Login";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import PrivateRoute from "@/components/PrivateRoute";
+import DashboardIndex from "./pages/Dashboard/Index";
+import DashboardPharmacies from "./pages/Dashboard/PharmacyList";
+import Pharmacies from "./pages/Pharmacies";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
-import Pharmacies from "./pages/Pharmacies";
+import Digital from "./pages/services/Digital";
+import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
+import PartnerIndex from "./pages/Dashboard/Partners/PartnerIndex";
+import PartnerList from "./pages/Dashboard/Partners/PartnerList";
+import Services from "./pages/Dashboard/Services";
+import NumberList from "./pages/Dashboard/Numbers/NumberList";
+import { ServiceProvider } from "./contexts/ServiceContext";
+import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
+import About from "./pages/About"; // Added import statement
 
+import AmbulanceList from "./pages/Dashboard/AmbulanceList";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import ContactUs from "./pages/ContactUs";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services/digital" element={<Digital />} />
-              <Route path="/services/community" element={<Community />} />
-              <Route path="/services/consulting" element={<Consulting />} />
-              <Route path="/pharmacies" element={<Pharmacies />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <TooltipProvider>
+            <ServiceProvider>
+              <Toaster richColors />
+              <BrowserRouter>
+                <Routes>
+                  {/* Routes publiques */}
+                  <Route
+                    path="/"
+                    element={
+                      <PublicLayout>
+                        <Index />
+                      </PublicLayout>
+                    }
+                  />
+                  <Route
+                    path="/login"
+                    element={
+                      <PublicLayout>
+                        <Login />
+                      </PublicLayout>
+                    }
+                  />
+                  <Route
+                    path="/pharmacies"
+                    element={
+                      <PublicLayout>
+                        <Pharmacies />
+                      </PublicLayout>
+                    }
+                  />
+                  <Route
+                    path="/contact"
+                    element={
+                      <PublicLayout>
+                        <ContactUs />
+                      </PublicLayout>
+                    }
+                  />
+                  <Route
+                    path="/apropos"
+                    element={
+                      <PublicLayout>
+                        <About />
+                      </PublicLayout>
+                    }
+                  />
+                {/* Routes des services */}
+                <Route
+                  path="/services/community"
+                  element={
+                    <PublicLayout>
+                      <Community />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/services/consulting"
+                  element={
+                    <PublicLayout>
+                      <Consulting />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/services/digital"
+                  element={
+                    <PublicLayout>
+                      <Digital />
+                    </PublicLayout>
+                  }
+                />
+
+                {/* Routes protégées pour le tableau de bord */}
+                <Route element={<PrivateRoute />}>
+                  <Route element={<DashboardLayout />}>
+                    <Route path="/dashboard" element={<DashboardIndex />} />
+                    <Route
+                      path="/dashboard/pharmacies"
+                      element={<DashboardPharmacies />}
+                    />
+                    {/* Edition de page */}
+                    <Route
+                      path="/dashboard/page-meddoc/"
+                      element={<EditPageIndex />}
+                    />
+                    <Route
+                      path="/dashboard/partenaires"
+                      element={<PartnerIndex />}
+                    >
+                      <Route
+                        path="/dashboard/partenaires/list"
+                        element={<PartnerList />}
+                      />
+                    </Route>
+
+                    <Route
+                      path="/dashboard/reseaux-sociaux"
+                      element={<SocialMediaIndex />}
+                    />
+                    <Route path="/dashboard/services" element={<Services />} />
+                    <Route
+                      path="/dashboard/contact-meddoc"
+                      element={<NumberList />}
+                    />
+                    <Route
+                      path="/dashboard/ambulances"
+                      element={<AmbulanceList />}
+                    />
+                  </Route>
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </ServiceProvider>
+        </TooltipProvider>
+      </Provider>
+    </QueryClientProvider>
+  </Provider>
 );
 
 export default App;
