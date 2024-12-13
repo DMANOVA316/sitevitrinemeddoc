@@ -6,6 +6,21 @@ import SelectDistrict from "./SelectDistrict";
 import SelectCommune from "./SelectCommune";
 import { useEffect } from "react";
 
+interface LocationSelectorProps {
+  onLocationChange: (location: {
+    province: string;
+    region?: string;
+    district?: string;
+    commune: string;
+  }) => void;
+  initialValues?: {
+    province?: string;
+    region?: string;
+    district?: string;
+    commune?: string;
+  };
+}
+
 const LocationSelector = ({
   onLocationChange,
   initialValues,
@@ -23,15 +38,14 @@ const LocationSelector = ({
     setSelectedRegion,
     setSelectedDistrict,
     setSelectedCommune,
+    getLocationNames,
   } = useLocationSelector(initialValues);
 
   useEffect(() => {
-    onLocationChange({
-      province: selectedProvince,
-      region: selectedRegion,
-      district: selectedDistrict,
-      commune: selectedCommune,
-    });
+    if (selectedProvince && selectedCommune) {
+      const locationNames = getLocationNames();
+      onLocationChange(locationNames);
+    }
   }, [
     selectedProvince,
     selectedRegion,

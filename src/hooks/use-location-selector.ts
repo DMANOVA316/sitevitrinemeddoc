@@ -1,67 +1,141 @@
-import { useState, useEffect, useMemo } from "react";
-import { locationService } from "@/services/locationService";
+import { useState, useEffect, useMemo } from 'react';
+import { locationService } from '@/services/locationService';
 
-export const useLocationSelector = (initialValues?: {
+interface LocationSelectorState {
+  provinces: Province[];
+  regions: Region[];
+  districts: District[];
+  communes: Commune[];
+  selectedProvince: string;
+  selectedRegion: string;
+  selectedDistrict: string;
+  selectedCommune: string;
+}
+
+interface LocationSelectorInitialValues {
   province?: string;
   region?: string;
   district?: string;
   commune?: string;
-}) => {
-  const [provinces, setProvinces] = useState<Province[]>([]);
-  const [regions, setRegions] = useState<Region[]>([]);
-  const [districts, setDistricts] = useState<District[]>([]);
-  const [communes, setCommunes] = useState<Commune[]>([]);
+}
 
-  const [selectedProvince, setSelectedProvince] = useState(
-    initialValues?.province || "",
-  );
-  const [selectedRegion, setSelectedRegion] = useState(
-    initialValues?.region || "",
-  );
-  const [selectedDistrict, setSelectedDistrict] = useState(
-    initialValues?.district || "",
-  );
-  const [selectedCommune, setSelectedCommune] = useState(
-    initialValues?.commune || "",
-  );
+export const useLocationSelector = (initialValues?: LocationSelectorInitialValues) => {
+  const [data, setData] = useState<LocationSelectorState>({
+    provinces: [],
+    regions: [],
+    districts: [],
+    communes: [],
+    selectedProvince: initialValues?.province || '',
+    selectedRegion: initialValues?.region || '',
+    selectedDistrict: initialValues?.district || '',
+    selectedCommune: initialValues?.commune || '',
+  });
 
+  // Charger les données initiales
   useEffect(() => {
-    locationService.fetchProvinces().then(setProvinces);
-    locationService.fetchRegions().then(setRegions);
-    locationService.fetchDistricts().then(setDistricts);
-    locationService.fetchCommunes().then(setCommunes);
+    const loadData = async () => {
+      const [provinces, regions, districts, communes] = await Promise.all([
+        locationService.fetchProvinces(),
+        locationService.fetchRegions(),
+        locationService.fetchDistricts(),
+        locationService.fetchCommunes(),
+      ]);
+
+      setData(prev => ({
+        ...prev,
+        provinces,
+        regions,
+        districts,
+        communes,
+      }));
+    };
+
+    loadData();
   }, []);
 
+  // Filtrer les régions en fonction de la province sélectionnée
   const filteredRegions = useMemo(() => {
-    return regions.filter(
-      (region) => region.province["@id"] === selectedProvince,
+    return data.regions.filter(
+      (region) => region.province['@id'] === data.selectedProvince
     );
-  }, [regions, selectedProvince]);
+  }, [data.regions, data.selectedProvince]);
 
+  // Filtrer les districts en fonction de la région sélectionnée
   const filteredDistricts = useMemo(() => {
-    return districts.filter(
-      (district) => district.region["@id"] === selectedRegion,
+    return data.districts.filter(
+      (district) => district.region['@id'] === data.selectedRegion
     );
-  }, [districts, selectedRegion]);
+  }, [data.districts, data.selectedRegion]);
 
+  // Filtrer les communes en fonction du district sélectionné
   const filteredCommunes = useMemo(() => {
-    return communes.filter(
-      (commune) => commune.district["@id"] === selectedDistrict,
+    return data.communes.filter(
+      (commune) => commune.district['@id'] === data.selectedDistrict
     );
-  }, [communes, selectedDistrict]);
+  }, [data.communes, data.selectedDistrict]);
+
+  const setSelectedProvince = (provinceId: string) => {
+    setData(prev => ({
+      ...prev,
+      selectedProvince: provinceId,
+      selectedRegion: '',
+      selectedDistrict: '',
+      selectedCommune: '',
+    }));
+  };
+
+  const setSelectedRegion = (regionId: string) => {
+    setData(prev => ({
+      ...prev,
+      selectedRegion: regionId,
+      selectedDistrict: '',
+      selectedCommune: '',
+    }));
+  };
+
+  const setSelectedDistrict = (districtId: string) => {
+    setData(prev => ({
+      ...prev,
+      selectedDistrict: districtId,
+      selectedCommune: '',
+    }));
+  };
+
+  const setSelectedCommune = (communeId: string) => {
+    setData(prev => ({
+      ...prev,
+      selectedCommune: communeId,
+    }));
+  };
+
+  // Obtenir les noms au lieu des IDs
+  const getLocationNames = () => {
+    const province = data.provinces.find(p => p['@id'] === data.selectedProvince)?.name || '';
+    const region = data.regions.find(r => r['@id'] === data.selectedRegion)?.name || '';
+    const district = data.districts.find(d => d['@id'] === data.selectedDistrict)?.name || '';
+    const commune = data.communes.find(c => c['@id'] === data.selectedCommune)?.name || '';
+
+    return {
+      province,
+      region,
+      district,
+      commune,
+    };
+  };
 
   return {
-    provinces,
+    provinces: data.provinces,
     filteredRegions,
     filteredDistricts,
     filteredCommunes,
-    selectedProvince,
-    selectedRegion,
-    selectedDistrict,
-    selectedCommune,
+    selectedProvince: data.selectedProvince,
+    selectedRegion: data.selectedRegion,
+    selectedDistrict: data.selectedDistrict,
+    selectedCommune: data.selectedCommune,
     setSelectedProvince,
     setSelectedRegion,
     setSelectedDistrict,
     setSelectedCommune,
+    getLocationNames,
   };
 };
