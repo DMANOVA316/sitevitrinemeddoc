@@ -13,16 +13,26 @@ class LocationService {
   }
 
   async fetchDistricts(): Promise<District[]> {
+    const cachedDistricts = localStorage.getItem("districts");
+    if (cachedDistricts) {
+      return JSON.parse(cachedDistricts);
+    }
     const districts = await this.fetchPaginatedData<District>(
-      `${BASE_URL}/districts`,
+      `${BASE_URL}/districts`
     );
+    localStorage.setItem("districts", JSON.stringify(districts));
     return districts;
   }
 
   async fetchCommunes(): Promise<Commune[]> {
+    const cachedCommunes = localStorage.getItem("communes");
+    if (cachedCommunes) {
+      return JSON.parse(cachedCommunes);
+    }
     const communes = await this.fetchPaginatedData<Commune>(
-      `${BASE_URL}/communes`,
+      `${BASE_URL}/communes`
     );
+    localStorage.setItem("communes", JSON.stringify(communes));
     return communes;
   }
 

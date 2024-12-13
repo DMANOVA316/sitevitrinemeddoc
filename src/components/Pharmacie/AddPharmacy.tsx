@@ -214,10 +214,10 @@ export default function AddPharmacy({
               initialValues={
                 isEdit
                   ? {
-                      province: pharmacy?.province,
-                      region: pharmacy?.region,
-                      district: pharmacy?.district,
-                      commune: pharmacy?.commune,
+                      province: formData.province,
+                      region: formData.region,
+                      district: formData.district,
+                      commune: formData.commune,
                     }
                   : undefined
               }

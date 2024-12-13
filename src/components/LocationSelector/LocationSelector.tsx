@@ -1,10 +1,24 @@
 import { Label } from "../ui/label";
-import { useLocationSelector } from "@/hooks/use-location-selector";
 import SelectProvince from "./SelectProvince";
 import SelectRegion from "./SelectRegion";
 import SelectDistrict from "./SelectDistrict";
 import SelectCommune from "./SelectCommune";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchLocations,
+  initializeFromNames,
+  selectLocationState,
+  selectFilteredRegions,
+  selectFilteredDistricts,
+  selectFilteredCommunes,
+  selectLocationNames,
+  setSelectedProvince,
+  setSelectedRegion,
+  setSelectedDistrict,
+  setSelectedCommune,
+} from "@/store/locationSlice";
+import { AppDispatch } from "@/store";
 
 interface LocationSelectorProps {
   onLocationChange: (location: {
@@ -25,34 +39,31 @@ const LocationSelector = ({
   onLocationChange,
   initialValues,
 }: LocationSelectorProps) => {
-  const {
-    provinces,
-    filteredRegions,
-    filteredDistricts,
-    filteredCommunes,
-    selectedProvince,
-    selectedRegion,
-    selectedDistrict,
-    selectedCommune,
-    setSelectedProvince,
-    setSelectedRegion,
-    setSelectedDistrict,
-    setSelectedCommune,
-    getLocationNames,
-  } = useLocationSelector(initialValues);
+  const dispatch = useDispatch<AppDispatch>();
+  const { provinces, selectedProvince, selectedRegion, selectedDistrict, selectedCommune } = useSelector(selectLocationState);
+  const filteredRegions = useSelector(selectFilteredRegions);
+  const filteredDistricts = useSelector(selectFilteredDistricts);
+  const filteredCommunes = useSelector(selectFilteredCommunes);
 
+  // Charger les données au montage du composant
+  useEffect(() => {
+    dispatch(fetchLocations());
+  }, [dispatch]);
+
+  // Initialiser les valeurs si on est en mode édition
+  useEffect(() => {
+    if (initialValues && provinces.length > 0) {
+      dispatch(initializeFromNames(initialValues));
+    }
+  }, [dispatch, initialValues, provinces]);
+
+  // Mettre à jour le parent quand la sélection change
   useEffect(() => {
     if (selectedProvince && selectedCommune) {
-      const locationNames = getLocationNames();
+      const locationNames = selectLocationNames({ location: useSelector(selectLocationState) });
       onLocationChange(locationNames);
     }
-  }, [
-    selectedProvince,
-    selectedRegion,
-    selectedDistrict,
-    selectedCommune,
-    onLocationChange,
-  ]);
+  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune]);
 
   return (
     <div className="space-y-4">
@@ -63,24 +74,24 @@ const LocationSelector = ({
         <SelectProvince
           provinces={provinces}
           value={selectedProvince}
-          onChange={setSelectedProvince}
+          onChange={(value) => dispatch(setSelectedProvince(value))}
         />
         <SelectRegion
           regions={filteredRegions}
           value={selectedRegion}
-          onChange={setSelectedRegion}
+          onChange={(value) => dispatch(setSelectedRegion(value))}
           disabled={!selectedProvince}
         />
         <SelectDistrict
           districts={filteredDistricts}
           value={selectedDistrict}
-          onChange={setSelectedDistrict}
+          onChange={(value) => dispatch(setSelectedDistrict(value))}
           disabled={!selectedRegion}
         />
         <SelectCommune
           communes={filteredCommunes}
           value={selectedCommune}
-          onChange={setSelectedCommune}
+          onChange={(value) => dispatch(setSelectedCommune(value))}
           disabled={!selectedDistrict}
         />
       </div>

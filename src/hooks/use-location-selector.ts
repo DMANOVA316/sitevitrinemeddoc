@@ -25,10 +25,10 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
     regions: [],
     districts: [],
     communes: [],
-    selectedProvince: initialValues?.province || '',
-    selectedRegion: initialValues?.region || '',
-    selectedDistrict: initialValues?.district || '',
-    selectedCommune: initialValues?.commune || '',
+    selectedProvince: '',
+    selectedRegion: '',
+    selectedDistrict: '',
+    selectedCommune: '',
   });
 
   // Charger les données initiales
@@ -48,10 +48,26 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
         districts,
         communes,
       }));
+
+      // Si nous avons des valeurs initiales, trouvons les IDs correspondants
+      if (initialValues) {
+        const provinceId = provinces.find(p => p.name === initialValues.province)?.['@id'] || '';
+        const regionId = regions.find(r => r.name === initialValues.region)?.['@id'] || '';
+        const districtId = districts.find(d => d.name === initialValues.district)?.['@id'] || '';
+        const communeId = communes.find(c => c.name === initialValues.commune)?.['@id'] || '';
+
+        setData(prev => ({
+          ...prev,
+          selectedProvince: provinceId,
+          selectedRegion: regionId,
+          selectedDistrict: districtId,
+          selectedCommune: communeId,
+        }));
+      }
     };
 
     loadData();
-  }, []);
+  }, [initialValues]);
 
   // Filtrer les régions en fonction de la province sélectionnée
   const filteredRegions = useMemo(() => {
