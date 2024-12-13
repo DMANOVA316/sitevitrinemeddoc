@@ -5,7 +5,8 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Trash2, Plus } from "lucide-react";
 import LocationSelector from "../LocationSelector/LocationSelector";
-import { uploadService } from "@/services/uploadService";
+import ServiceList from "@/pages/Dashboard/Services/ServiceList";
+import ServicesList from "./ServicesList";
 
 interface PharmacyContact {
   numero: string;
@@ -58,11 +59,11 @@ export default function AddPharmacy({
   });
 
   const [contacts, setContacts] = useState<PharmacyContact[]>(
-    formData.contacts
+    formData.contacts,
   );
 
   const [horaires, setHoraires] = useState<PharmacySchedule[]>(
-    formData.horaires
+    formData.horaires,
   );
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -83,6 +84,13 @@ export default function AddPharmacy({
     }));
   };
 
+  const handleServiceChange = (val: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      service: val,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (onSubmit) {
@@ -98,7 +106,7 @@ export default function AddPharmacy({
           contacts: formattedContacts,
           horaires: formattedHoraires,
         },
-        selectedFile || undefined
+        selectedFile || undefined,
       );
     }
   };
@@ -137,7 +145,7 @@ export default function AddPharmacy({
   const updateHoraire = (
     index: number,
     field: keyof PharmacySchedule,
-    value: string
+    value: string,
   ) => {
     const newHoraires = [...horaires];
     newHoraires[index] = { ...newHoraires[index], [field]: value };
@@ -216,15 +224,9 @@ export default function AddPharmacy({
             />
 
             <div>
-              <Label className="text-sm font-medium text-gray-700">
-                Service
-              </Label>
-              <Input
+              <ServicesList
                 value={formData.service}
-                onChange={(e) =>
-                  setFormData({ ...formData, service: e.target.value })
-                }
-                className="w-full"
+                onChange={handleServiceChange}
               />
             </div>
           </div>
