@@ -17,6 +17,7 @@ import {
 import { toast } from "sonner";
 import PartnerCard from "@/components/PartnerCard";
 import { usePartnerRedux } from "@/hooks/use-partner-redux";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
   const [couverture, setCouverture] = useState<CouvertureType | null>(null);
@@ -66,15 +67,25 @@ const Index = () => {
               La première entreprise 360° santé à Madagascar
             </span>
             <h1 className="mb-6 text-6xl font-bold leading-tight text-white">
-              {isLoadingCouverture
-                ? "Chargement..."
-                : couverture?.titre || "Des Solutions Innovantes pour la Santé"}
+              {isLoadingCouverture ? (
+                <div className="flex flex-col gap-1">
+                  <Skeleton className="w-full h-[50px]" />
+                  <Skeleton className="w-1/2 h-[50px]" />
+                </div>
+              ) : (
+                couverture?.titre || "Des Solutions Innovantes pour la Santé"
+              )}
             </h1>
             <p className="mb-8 text-xl text-white/90 leading-relaxed">
-              {isLoadingCouverture
-                ? "Chargement..."
-                : couverture?.description ||
-                  "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."}
+              {isLoadingCouverture ? (
+                <div className="flex flex-col gap-1">
+                  <Skeleton className="w-full h-[40px]" />
+                  <Skeleton className="w-1/2 h-[40px]" />
+                </div>
+              ) : (
+                couverture?.description ||
+                "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."
+              )}
             </p>
             <div className="flex gap-4">
               <Link to="#services" className="block">

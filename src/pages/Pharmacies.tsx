@@ -21,7 +21,9 @@ const Pharmacies = () => {
   const filteredPharmacies = pharmacies.filter(
     (pharmacy) =>
       pharmacy.nom_pharmacie.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase())
+      pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pharmacy.province.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pharmacy.commune.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

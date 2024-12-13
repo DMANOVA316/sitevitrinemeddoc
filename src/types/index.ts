@@ -1,18 +1,18 @@
 declare global {
-  type Province = {
+  export type Province = {
     "@id": string;
     "@type": string;
     name: string;
   };
 
-  type Region = {
+  export type Region = {
     "@id": string;
     "@type": string;
     name: string;
     province: Province;
   };
 
-  type District = {
+  export type District = {
     "@id": string;
     "@type": string;
     id: string;
@@ -20,7 +20,7 @@ declare global {
     region: Region;
   };
 
-  type Commune = {
+  export type Commune = {
     "@id": string;
     "@type": string;
     id: string;
@@ -92,6 +92,35 @@ declare global {
     id: number;
     nom: string;
     lien: string;
+  }
+  export interface LocationSelectorProps {
+    /**
+     * Callback pour notifier un changement de localisation.
+     * Fournit un objet décrivant la localisation sélectionnée.
+     */
+    onLocationChange: (location: {
+      province: string;
+      region?: string;
+      district?: string;
+      commune: string;
+    }) => void;
+
+    /**
+     * Valeurs initiales pour chaque sélection. Ces valeurs sont facultatives
+     * pour permettre l'utilisation sans préconfiguration.
+     */
+    initialValues?: {
+      province?: string;
+      region?: string;
+      district?: string;
+      commune?: string;
+    };
+  }
+  export interface locationData {
+    provinces: Province[];
+    regions: Region[];
+    districts: District[];
+    communes: Commune[];
   }
 }
 

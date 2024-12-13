@@ -16,10 +16,12 @@ import {
 } from "@/services/couvertureService";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 
 export default function EditLandingPage() {
-  const { isLandingPageModalOpen, setIsLandingPageModalOpen } =
-    useEditPagesContext();
+  // const { isLandingPageModalOpen, setIsLandingPageModalOpen } =
+  //   useEditPagesContext();
+  const { isEditInformationOpen, showEditInformationModal } = useInfoMeddocRedux();
   const [photo, setPhoto] = useState<File | null>();
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState<Omit<CouvertureType, "id">>({
@@ -50,10 +52,10 @@ export default function EditLandingPage() {
       }
     };
 
-    if (isLandingPageModalOpen) {
+    if (isEditInformationOpen) {
       fetchData();
     }
-  }, [isLandingPageModalOpen]);
+  }, [isEditInformationOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +69,7 @@ export default function EditLandingPage() {
       }
 
       await couvertureService.updateCouverture(updatedData);
-      setIsLandingPageModalOpen(false);
+      showEditInformationModal(false);
       toast.success("Page de couverture mise à jour avec succès");
     } catch (error) {
       console.error("Error updating couverture:", error);
@@ -86,7 +88,7 @@ export default function EditLandingPage() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -97,8 +99,8 @@ export default function EditLandingPage() {
 
   return (
     <Dialog
-      open={isLandingPageModalOpen}
-      onOpenChange={setIsLandingPageModalOpen}
+      open={isEditInformationOpen}
+      onOpenChange={showEditInformationModal}
     >
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
@@ -162,7 +164,7 @@ export default function EditLandingPage() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setIsLandingPageModalOpen(false)}
+              onClick={() => showEditInformationModal(false)}
               disabled={isLoading}
             >
               Annuler

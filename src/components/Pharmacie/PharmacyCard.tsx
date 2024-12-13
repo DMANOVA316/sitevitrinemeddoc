@@ -1,13 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Clock, Phone, Building2 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Pharmacy } from "@/types";
-
-interface LocationData {
-  "@type": string;
-  name: string;
-}
-
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
   isEditable?: boolean;
@@ -21,62 +13,6 @@ const PharmacyCard = ({
   onEdit,
   onDelete,
 }: PharmacyCardProps) => {
-  const [locationData, setLocationData] = useState<{
-    province?: LocationData;
-    region?: LocationData;
-    district?: LocationData;
-    commune?: LocationData;
-  }>({});
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        const responses = await Promise.all([
-          pharmacy.province &&
-            fetch(`https://localization.mg-dev.space${pharmacy.province}`),
-          pharmacy.region &&
-            fetch(`https://localization.mg-dev.space${pharmacy.region}`),
-          pharmacy.district &&
-            fetch(`https://localization.mg-dev.space${pharmacy.district}`),
-          pharmacy.commune &&
-            fetch(`https://localization.mg-dev.space${pharmacy.commune}`),
-        ]);
-
-        const data = await Promise.all(
-          responses.map(async (response) => {
-            if (response && response.ok) {
-              return await response.json();
-            }
-            return null;
-          }),
-        );
-
-        setLocationData({
-          province: data[0],
-          region: data[1],
-          district: data[2],
-          commune: data[3],
-        });
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des données de localisation:",
-          error,
-        );
-      }
-    };
-
-    fetchLocationData();
-  }, [pharmacy]);
-
-  const getFormattedLocation = () => {
-    const parts = [];
-    if (locationData.commune?.name) parts.push(locationData.commune.name);
-    if (locationData.district?.name) parts.push(locationData.district.name);
-    if (locationData.region?.name) parts.push(locationData.region.name);
-    if (locationData.province?.name) parts.push(locationData.province.name);
-    return parts.join(", ");
-  };
-
   return (
     <Card className="w-full h-full animate-fade-up group hover:shadow-lg transition-all duration-300 overflow-hidden">
       <CardContent className="p-6">
@@ -154,7 +90,11 @@ const PharmacyCard = ({
             <MapPin className="w-5 h-5 text-gray-500 mt-1" />
             <div className="flex-1">
               <p className="text-gray-700">{pharmacy.address}</p>
-              <p className="text-sm text-gray-500">{getFormattedLocation()}</p>
+              <p className="text-sm text-gray-500">
+                {pharmacy.province && pharmacy.province + ", "}
+                {pharmacy.region && pharmacy.region + ","}
+                {pharmacy.district && pharmacy.district}
+              </p>
             </div>
           </div>
 
