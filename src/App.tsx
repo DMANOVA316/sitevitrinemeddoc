@@ -21,6 +21,7 @@ import NumberList from "./pages/Dashboard/Numbers/NumberList";
 import { EditPagesProvider } from "./contexts/EditPagesContext";
 import { ServiceProvider } from "./contexts/ServiceContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
+import About from "./pages/About"; // Added import statement
 
 import AmbulanceList from "./pages/Dashboard/AmbulanceList";
 import React from "react";
@@ -69,6 +70,14 @@ const App = () => (
                     element={
                       <PublicLayout>
                         <ContactUs />
+                      </PublicLayout>
+                    }
+                  />
+                  <Route
+                    path="/apropos"
+                    element={
+                      <PublicLayout>
+                        <About />
                       </PublicLayout>
                     }
                   />
