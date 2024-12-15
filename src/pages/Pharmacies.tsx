@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PharmacyCard from "@/components/Pharmacie/PharmacyCard";
 import { Building2, Search } from "lucide-react";
-import { pharmacyService } from "@/services/pharmacyService";
 import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 
 const Pharmacies = () => {
@@ -23,7 +22,9 @@ const Pharmacies = () => {
       pharmacy.nom_pharmacie.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pharmacy.province.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pharmacy.commune.toLowerCase().includes(searchTerm.toLowerCase())
+      pharmacy.commune.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pharmacy.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pharmacy.district.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -38,7 +39,7 @@ const Pharmacies = () => {
         <div className="relative max-w-xl mx-auto">
           <Input
             type="text"
-            placeholder="Rechercher une pharmacie par nom ou adresse..."
+            placeholder="Rechercher une pharmacie par nom ou par province, region ou district"
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-12"
