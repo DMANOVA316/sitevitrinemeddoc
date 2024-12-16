@@ -134,6 +134,12 @@ declare global {
     date_envoye: string;
     vue: boolean;
   }
+  type Couverture = {
+    id: number;
+    photo: string;
+    titre: string;
+    description: string;
+  }
   type PartnerType = {
     id: number;
     nom_partenaire: string;

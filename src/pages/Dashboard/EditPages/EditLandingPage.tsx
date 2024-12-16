@@ -1,107 +1,94 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useEditPagesContext } from "@/contexts/EditPagesContext";
 import { uploadService } from "@/services/uploadService";
-import {
-  couvertureService,
-  CouvertureType,
-} from "@/services/couvertureService";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
-import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
+import useCouvertureRedux from "@/hooks/use-couverture-redux";
 
 export default function EditLandingPage() {
-  // const { isLandingPageModalOpen, setIsLandingPageModalOpen } =
-  //   useEditPagesContext();
-  const { isEditInformationOpen, showEditInformationModal } = useInfoMeddocRedux();
+  const {
+    couverture,
+    editLandingPage,
+    isLoading,
+    error,
+    isEditModalOpen,
+    showEditCouvertureModal,
+    getCurrentCouvertureData,
+  } = useCouvertureRedux();
+
   const [photo, setPhoto] = useState<File | null>();
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [formData, setFormData] = useState<Omit<CouvertureType, "id">>({
+  const [formData, setFormData] = useState<Omit<Couverture, "id">>({
     photo: "",
     titre: "",
     description: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    getCurrentCouvertureData();
+  }, []);
+
+  useEffect(() => {
+    if (couverture) {
+      setFormData(couverture);
+    }
+  }, [couverture]);
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
       try {
-        setIsLoading(true);
-        const data = await couvertureService.getCouverture();
-        if (data) {
-          setFormData({
-            photo: data.photo || "",
-            titre: data.titre || "",
-            description: data.description || "",
-          });
-          setPhotoPreview(data.photo || null);
+        const updatedData = { ...formData };
+
+        if (photo) {
+          const uploadResponse = await uploadService.uploadImage(photo, "couverture");
+          if (uploadResponse) {
+            updatedData.photo = uploadResponse;
+          }
         }
+        await editLandingPage(updatedData);
+        toast.success("Landing page modifié avec succès");
+        showEditCouvertureModal(false);
       } catch (error) {
-        console.error("Error fetching couverture data:", error);
-        toast.error("Erreur lors du chargement des données");
-      } finally {
-        setIsLoading(false);
+        console.error("Error updating landing page:", error);
+        toast.error("Erreur lors de la modification du landing page");
       }
-    };
+    },
+    [formData, photo, editLandingPage, showEditCouvertureModal]
+  );
 
-    if (isEditInformationOpen) {
-      fetchData();
-    }
-  }, [isEditInformationOpen]);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      const updatedData = { ...formData };
-
-      if (photo) {
-        const photoUrl = await uploadService.uploadImage(photo, "meddoc");
-        updatedData.photo = photoUrl;
+  const handlePhotoChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+        setPhoto(file);
+        setPhotoPreview(URL.createObjectURL(file));
       }
-
-      await couvertureService.updateCouverture(updatedData);
-      showEditInformationModal(false);
-      toast.success("Page de couverture mise à jour avec succès");
-    } catch (error) {
-      console.error("Error updating couverture:", error);
-      toast.error("Erreur lors de la mise à jour de la page de couverture");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhoto(file);
-      setPhotoPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+    },
+    []
+  );
 
   return (
-    <Dialog
-      open={isEditInformationOpen}
-      onOpenChange={showEditInformationModal}
-    >
+    <Dialog open={isEditModalOpen} onOpenChange={showEditCouvertureModal}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Modifier la page de couverture</DialogTitle>
@@ -118,7 +105,7 @@ export default function EditLandingPage() {
               <Input
                 type="file"
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={handlePhotoChange}
                 className="mt-2"
                 disabled={isLoading}
               />
@@ -160,11 +147,12 @@ export default function EditLandingPage() {
             </div>
           </div>
 
+          {error && <p className="text-sm text-red-500">{error}</p>}
           <div className="flex justify-end space-x-3 mt-6">
             <Button
               type="button"
               variant="outline"
-              onClick={() => showEditInformationModal(false)}
+              onClick={() => showEditCouvertureModal(false)}
               disabled={isLoading}
             >
               Annuler

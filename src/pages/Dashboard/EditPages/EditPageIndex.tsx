@@ -1,8 +1,9 @@
 import EditHeader from "./EditHeader";
 import EditLandingPage from "./EditLandingPage";
 import EditInfo from "@/components/dashboard/EditInfo";
-import { GeneralInfoSection } from "@/components/dashboard/GeneralInfoSection";
+import { GeneralInfoSection } from "@/components/dashboard/sections/GeneralInfoSection";
 import { ContactsSection } from "@/components/dashboard/sections/ContactsSection";
+import LandingPageSection from "@/components/dashboard/sections/LandingPageSection";
 
 export default function EditPageIndex() {
   return (
@@ -19,10 +20,12 @@ export default function EditPageIndex() {
         <div className="mt-8 space-y-6">
           <GeneralInfoSection />
           <ContactsSection />
+          <LandingPageSection />
         </div>
 
         <EditHeader />
         <EditInfo />
+        <EditLandingPage />
       </main>
     </div>
   );

@@ -5,8 +5,9 @@ const STORAGE_BUCKET = "images";
 const PARTNERS_FOLDER = "partners";
 const PHARMACIES_FOLDER = "pharmacies";
 const MEDDOC_FOLDER = "meddoc";
+const COUVERTURE_FOLDER = "couverture";
 
-type ImageType = "partner" | "pharmacy" | "meddoc";
+type ImageType = "partner" | "pharmacy" | "meddoc" | "couverture";
 
 export const uploadService = {
   uploadImage: async (file: File, type: ImageType): Promise<string> => {
@@ -50,6 +51,9 @@ export const uploadService = {
           break;
         case "meddoc":
           folder = MEDDOC_FOLDER;
+          break;
+        case "couverture":
+          folder = COUVERTURE_FOLDER;
           break;
         default:
           folder = MEDDOC_FOLDER;
