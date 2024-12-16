@@ -1,49 +1,68 @@
+import { useCallback, useMemo } from "react";
 import { AppDispatch, RootState } from "@/store";
 import {
   fetchContacts,
   markContactAsViewed,
   setFilter,
+  deleteContact,
+  createContact,
 } from "@/store/contactSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function useContactRedux() {
   const dispatch = useDispatch<AppDispatch>();
-
-  // Sélecteurs pour accéder à l'état
   const { contacts, filter, status, error } = useSelector(
     (state: RootState) => state.contact
   );
 
-  // Gestion des filtres
-  const setFilterType = (filterType: 'all' | 'viewed' | 'unviewed') => {
-    dispatch(setFilter(filterType));
-  };
+  const filteredContacts = useMemo(() => {
+    if (filter === "all") return contacts;
+    return contacts.filter((contact) =>
+      filter === "read" ? contact.vue : !contact.vue
+    );
+  }, [contacts, filter]);
 
-  // Marquer comme lu
-  const markAsViewed = async (id: number) => {
-    try {
-      await dispatch(markContactAsViewed(id)).unwrap();
-    } catch (error) {
-      console.error("Erreur lors du marquage comme lu:", error);
-    }
-  };
-
-  // Charger les contacts
-  const loadContacts = () => {
+  const loadContacts = useCallback(() => {
     dispatch(fetchContacts());
-  };
+  }, [dispatch]);
+
+  const setFilterType = useCallback(
+    (filterType: "all" | "read" | "unread") => {
+      dispatch(setFilter(filterType));
+    },
+    [dispatch]
+  );
+
+  const markAsViewed = useCallback(
+    async (id: number) => {
+      await dispatch(markContactAsViewed(id)).unwrap();
+    },
+    [dispatch]
+  );
+
+  const removeContact = useCallback(
+    async (id: number) => {
+      await dispatch(deleteContact(id)).unwrap();
+    },
+    [dispatch]
+  );
+
+  const addContact = useCallback(
+    async (contact: Omit<contactez_nous, "id" | "date_envoye" | "vue">) => {
+      await dispatch(createContact(contact)).unwrap();
+    },
+    [dispatch]
+  );
 
   return {
-    // État
-    contacts,
+    contacts: filteredContacts,
     filter,
-    status,
+    isLoading: status === "loading",
     error,
-    isLoading: status === 'loading',
-
-    // Actions
     setFilterType,
     markAsViewed,
     loadContacts,
+    removeContact,
+    addContact,
   };
 }

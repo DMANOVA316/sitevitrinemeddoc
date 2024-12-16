@@ -17,37 +17,48 @@ const initialState: ContactState = {
 
 export const fetchContacts = createAsyncThunk(
   "contact/fetchContacts",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const state = getState() as { contact: ContactState };
-      let data: contactez_nous[];
-
-      switch (state.contact.filter) {
-        case "viewed":
-          data = await contactService.getViewedContacts();
-          break;
-        case "unviewed":
-          data = await contactService.getUnviewedContacts();
-          break;
-        default:
-          data = await contactService.getContacts();
-      }
-      return data;
+      return await contactService.getAllContacts();
     } catch (error) {
-      return rejectWithValue((error as Error).message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const createContact = createAsyncThunk(
+  "contact/createContact",
+  async (
+    contact: Omit<contactez_nous, "id" | "date_envoye" | "vue">,
+    { rejectWithValue }
+  ) => {
+    try {
+      return await contactService.createContact(contact);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  "contact/deleteContact",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      await contactService.deleteContact(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const markContactAsViewed = createAsyncThunk(
   "contact/markAsViewed",
-  async (id: number, { dispatch, rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      await contactService.markAsViewed(id);
-      dispatch(fetchContacts());
-      return id;
+      return await contactService.markAsViewed(id);
     } catch (error) {
-      return rejectWithValue((error as Error).message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -56,12 +67,13 @@ const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
-    setFilter: (state, action) => {
+    setFilter(state, action) {
       state.filter = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
+      // Fetch Contacts
       .addCase(fetchContacts.pending, (state) => {
         state.status = "loading";
       })
@@ -73,6 +85,25 @@ const contactSlice = createSlice({
       .addCase(fetchContacts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload as string;
+      })
+      // Create Contact
+      .addCase(createContact.fulfilled, (state, action) => {
+        state.contacts.unshift(action.payload);
+      })
+      // Delete Contact
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.contacts = state.contacts.filter(
+          (contact) => contact.id !== action.payload
+        );
+      })
+      // Mark as Viewed
+      .addCase(markContactAsViewed.fulfilled, (state, action) => {
+        const index = state.contacts.findIndex(
+          (contact) => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.contacts[index] = action.payload;
+        }
       });
   },
 });

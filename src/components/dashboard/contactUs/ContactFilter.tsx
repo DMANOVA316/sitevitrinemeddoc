@@ -1,53 +1,47 @@
 import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-type FilterType = "all" | "viewed" | "unviewed";
+type FilterType = "all" | "unread" | "read";
 
 interface ContactFilterProps {
   currentFilter: FilterType;
   onFilterChange: (filter: FilterType) => void;
 }
 
+const filterOptions = [
+  { value: "all", label: "Tous les messages" },
+  { value: "unread", label: "Non lus" },
+  { value: "read", label: "Lus" },
+];
+
 export default function ContactFilter({
   currentFilter,
   onFilterChange,
 }: ContactFilterProps) {
   return (
-    <div className="mb-6">
-      <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-4">
-        Filtrer les messages
-      </h2>
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <button
-          onClick={() => onFilterChange("all")}
-          className={`px-4 sm:px-6 py-2 rounded-lg text-base sm:text-lg font-medium transition-colors w-full sm:w-auto ${
-            currentFilter === "all"
-              ? "bg-meddoc-primary text-white hover:bg-meddoc-primary"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          Tous
-        </button>
-        <button
-          onClick={() => onFilterChange("unviewed")}
-          className={`px-4 sm:px-6 py-2 rounded-lg text-base sm:text-lg font-medium transition-colors w-full sm:w-auto ${
-            currentFilter === "unviewed"
-              ? "bg-meddoc-primary text-white "
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          Non lus
-        </button>
-        <button
-          onClick={() => onFilterChange("viewed")}
-          className={`px-4 sm:px-6 py-2 rounded-lg text-base sm:text-lg font-medium transition-colors w-full sm:w-auto ${
-            currentFilter === "viewed"
-              ? "bg-meddoc-primary text-white "
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }`}
-        >
-          Lus
-        </button>
-      </div>
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Messages de contact</h2>
+      <Select
+        value={currentFilter}
+        onValueChange={(value: FilterType) => onFilterChange(value)}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Filtrer par statut" />
+        </SelectTrigger>
+        <SelectContent>
+          {filterOptions.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
