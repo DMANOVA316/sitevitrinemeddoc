@@ -134,6 +134,13 @@ declare global {
     date_envoye: string;
     vue: boolean;
   }
+
+  export interface Couverture {
+    id: number;
+    photo: string;
+    titre: string;
+    description: string;
+  }
 }
 
 export interface PartnerType {
@@ -163,11 +170,11 @@ export interface usePartnerProps {
   setIsRemovePartnerOpen: (isOpen: boolean) => void;
   handleAddPartner: (
     partner: Omit<PartnerType, "id">,
-    file?: File
+    file?: File,
   ) => Promise<void>;
   handleEditPartner: (
     partner: PartnerType,
-    file?: File | null
+    file?: File | null,
   ) => Promise<void>;
   handleRemovePartner: (id: number) => Promise<void>;
   handleSelectPartner: (partner: PartnerType) => void;

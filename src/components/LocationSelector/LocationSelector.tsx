@@ -3,7 +3,7 @@ import SelectProvince from "./SelectProvince";
 import SelectRegion from "./SelectRegion";
 import SelectDistrict from "./SelectDistrict";
 import SelectCommune from "./SelectCommune";
-import { useEffect } from "react";
+import { useEffect, forwardRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchLocations,
@@ -17,6 +17,7 @@ import {
   setSelectedRegion,
   setSelectedDistrict,
   setSelectedCommune,
+  resetLocations,
 } from "@/store/locationSlice";
 import { AppDispatch } from "@/store";
 
@@ -35,12 +36,17 @@ interface LocationSelectorProps {
   };
 }
 
-const LocationSelector = ({
+export interface LocationSelectorRef {
+  reset: () => void;
+}
+
+const LocationSelector = forwardRef<LocationSelectorRef, LocationSelectorProps>(({
   onLocationChange,
   initialValues,
-}: LocationSelectorProps) => {
+}, ref) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { provinces, selectedProvince, selectedRegion, selectedDistrict, selectedCommune } = useSelector(selectLocationState);
+  const locationState = useSelector(selectLocationState);
+  const { provinces, selectedProvince, selectedRegion, selectedDistrict, selectedCommune } = locationState;
   const filteredRegions = useSelector(selectFilteredRegions);
   const filteredDistricts = useSelector(selectFilteredDistricts);
   const filteredCommunes = useSelector(selectFilteredCommunes);
@@ -60,10 +66,16 @@ const LocationSelector = ({
   // Mettre à jour le parent quand la sélection change
   useEffect(() => {
     if (selectedProvince && selectedCommune) {
-      const locationNames = selectLocationNames({ location: useSelector(selectLocationState) });
+      const locationNames = selectLocationNames({ location: locationState });
       onLocationChange(locationNames);
     }
-  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune]);
+  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune, locationState]);
+
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      dispatch(resetLocations());
+    }
+  }));
 
   return (
     <div className="space-y-4">
@@ -97,6 +109,6 @@ const LocationSelector = ({
       </div>
     </div>
   );
-};
+});
 
 export default LocationSelector;
