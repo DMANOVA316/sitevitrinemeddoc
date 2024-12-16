@@ -122,6 +122,18 @@ declare global {
     districts: District[];
     communes: Commune[];
   }
+
+  export interface contactez_nous {
+    id: number;
+    nom: string;
+    email: string;
+    contact: string;
+    vous_ete: string;
+    service: string;
+    message: string;
+    date_envoye: string;
+    vue: boolean;
+  }
 }
 
 export interface PartnerType {
@@ -151,11 +163,11 @@ export interface usePartnerProps {
   setIsRemovePartnerOpen: (isOpen: boolean) => void;
   handleAddPartner: (
     partner: Omit<PartnerType, "id">,
-    file?: File,
+    file?: File
   ) => Promise<void>;
   handleEditPartner: (
     partner: PartnerType,
-    file?: File | null,
+    file?: File | null
   ) => Promise<void>;
   handleRemovePartner: (id: number) => Promise<void>;
   handleSelectPartner: (partner: PartnerType) => void;

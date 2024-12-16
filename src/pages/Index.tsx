@@ -55,10 +55,7 @@ const Index = () => {
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
-            backgroundImage: `url(${
-              couverture?.photo ||
-              "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
-            })`,
+            backgroundImage: `url(${couverture?.photo})`,
           }}
         ></div>
         <div className="container mx-auto px-4 relative">
