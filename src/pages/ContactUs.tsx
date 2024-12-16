@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { contactService } from "@/services/contactService";
 import { toast } from "sonner";
+import useContactRedux from "@/hooks/use-contact-redux";
 import {
   Select,
   SelectContent,
@@ -32,17 +33,21 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const ContactUs = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { contacts, status, error } = useContactRedux();
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: Omit<ContactFormData, "date_envoye">) => {
     try {
+      setIsSubmitting(true);
       const contactData = {
         nom: data.nom,
         email: data.email,
@@ -54,11 +59,12 @@ const ContactUs = () => {
 
       await contactService.addContact(contactData);
       toast.success("Nous vous remercions pour votre message.");
-
-      // Réinitialiser les valeurs du formulaire
       reset();
     } catch (error) {
       console.error("Erreur lors de l'ajout du contact:", error);
+      toast.error("Une erreur est survenue lors de l'envoi du message.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -84,25 +90,31 @@ const ContactUs = () => {
               <p className="text-red-500 text-xs">{errors.nom.message}</p>
             )}
           </div>
-          <Select {...register("vous_ete")}>
-            <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
-              <SelectValue placeholder="Vous êtes ?" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem
-                key="professionnel de santé"
-                value={"professionnel de santé"}
-              >
-                Professionnel de santé
-              </SelectItem>
-              <SelectItem key="patient" value="patient">
-                Patient
-              </SelectItem>
-              <SelectItem key="autres" value="autres">
-                Autres
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <div>
+            <Controller
+              name="vous_ete"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
+                    <SelectValue placeholder="Vous êtes ?" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="professionnel de santé">
+                      Professionnel de santé
+                    </SelectItem>
+                    <SelectItem value="patient">
+                      Patient
+                    </SelectItem>
+                    <SelectItem value="autres">
+                      Autres
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
         </div>
         {/* Dropdown Section  */}
         <Label className="font-semibold mb-4 block text-sm text-gray-700">
@@ -167,8 +179,12 @@ const ContactUs = () => {
             <p className="text-red-500 text-xs">{errors.message.message}</p>
           )}
         </div>
-        <Button type="submit" className="w-full">
-          Envoyer
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Envoi en cours..." : "Envoyer"}
         </Button>
       </form>
     </div>
