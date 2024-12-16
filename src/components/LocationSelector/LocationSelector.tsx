@@ -60,10 +60,14 @@ const LocationSelector = ({
   // Mettre à jour le parent quand la sélection change
   useEffect(() => {
     if (selectedProvince && selectedCommune) {
-      const locationNames = selectLocationNames({ location: useSelector(selectLocationState) });
-      onLocationChange(locationNames);
+      onLocationChange({
+        province: selectedProvince,
+        region: selectedRegion || "",
+        district: selectedDistrict || "",
+        commune: selectedCommune
+      });
     }
-  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune]);
+  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune, onLocationChange]);
 
   return (
     <div className="space-y-4">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AddPharmacy from "@/components/Pharmacie/AddPharmacy";
-import PharmacyCard from "@/components/Pharmacie/PharmacyCard";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +7,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Search, Clock, Pencil, Trash2 } from "lucide-react";
 import { pharmacyService } from "@/services/pharmacyService";
 import { uploadService } from "@/services/uploadService";
 import { Button } from "@/components/ui/button";
+import { Clock, MapPin, Phone, Search } from "lucide-react";
+import { Table, TableBody, TableHead, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
+import TableRowPharmacy from "@/components/Pharmacie/TableRowPharmacy";
 
 const PharmacyList: React.FC = () => {
   const [data, setData] = useState<Pharmacy[]>([]);
@@ -109,13 +110,13 @@ const PharmacyList: React.FC = () => {
           de_garde: updatedData.de_garde,
         },
         updatedData.contacts,
-        updatedData.horaires,
+        updatedData.horaires
       );
 
       setData(
         data.map((item) =>
-          item.id === updatedData.id ? { ...updatedData, photo_profil } : item,
-        ),
+          item.id === updatedData.id ? { ...updatedData, photo_profil } : item
+        )
       );
       setIsEditDialogOpen(false);
       setEditingPharmacy(null);
@@ -166,7 +167,7 @@ const PharmacyList: React.FC = () => {
       await pharmacyService.addPharmacy(
         pharmacyData,
         newData.contacts || [],
-        newData.horaires || [],
+        newData.horaires || []
       );
 
       fetchPharmacies();
@@ -186,6 +187,14 @@ const PharmacyList: React.FC = () => {
 
   const [search, setSearch] = useState("");
   const [filterDeGarde, setFilterDeGarde] = useState<boolean | null>(null);
+
+  const toggleDeGarde = (id: number) => {
+    setData(
+      data.map((item) =>
+        item.id === id ? { ...item, de_garde: !item.de_garde } : item
+      )
+    );
+  };
 
   const filteredData = data.filter((item) => {
     const matchesSearch =
@@ -241,46 +250,87 @@ const PharmacyList: React.FC = () => {
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"> */}
-        {filteredData.map((pharmacy) => (
-          <div key={pharmacy.id} className="relative group">
-            <PharmacyCard pharmacy={pharmacy} />
-            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 bg-white"
-                onClick={() => handleEdit(pharmacy)}
+      <div className="relative">
+        <div className="border rounded-lg overflow-x-auto">
+          <Table className="w-full min-w-[600px]">
+            <TableRow>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <Pencil className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 bg-white text-red-600 hover:text-red-700"
-                onClick={() => handleDelete(pharmacy.id)}
+                Profile
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        ))}
+                Nom
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Service
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-gray-500" />
+                  <div className="flex-1 space-y-1">Horaire</div>
+                </div>
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-gray-500 mt-1" />
+                  <div className="flex-1 space-y-1">Contact</div>
+                </div>
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-gray-500 mt-1" />
+                  <div className="flex-1 space-y-1">Adresse</div>
+                </div>
+              </TableHead>
+              <TableHead
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              ></TableHead>
+            </TableRow>
+            <TableBody className="bg-white divide-y divide-gray-200">
+              {filteredData.map((item) => (
+                <TableRowPharmacy
+                  key={item.id}
+                  pharmacy={item}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                  toggleDeGarde={toggleDeGarde}
+                />
+              ))}
+            </TableBody>
+          </Table>
+          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Modifier la pharmacie</DialogTitle>
+              </DialogHeader>
+              {editingPharmacy && (
+                <AddPharmacy
+                  pharmacy={editingPharmacy}
+                  onSubmit={handleUpdatePharmacy}
+                />
+              )}
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
-
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Modifier la pharmacie</DialogTitle>
-          </DialogHeader>
-          {editingPharmacy && (
-            <AddPharmacy
-              pharmacy={editingPharmacy}
-              onSubmit={handleUpdatePharmacy}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

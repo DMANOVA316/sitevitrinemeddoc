@@ -41,44 +41,67 @@ export const pharmacyService = {
     contacts: Omit<PharmacyContact, "id" | "id_pharmacie">[],
     horaires: Omit<PharmacySchedule, "id" | "id_pharmacie">[],
   ) => {
-    // Insérer la pharmacie
-    const { data: pharmacy, error: pharmacyError } = await supabase
-      .from("pharmacies")
-      .insert([pharmacyData])
-      .select()
-      .single();
+    try {
+      // Vérifier les données requises
+      if (!pharmacyData.nom_pharmacie || !pharmacyData.address || !pharmacyData.province || !pharmacyData.commune) {
+        throw new Error("Données manquantes: nom, adresse, province et commune sont requis");
+      }
 
-    if (pharmacyError) throw new Error(pharmacyError.message);
+      // Insérer la pharmacie
+      const { data: pharmacy, error: pharmacyError } = await supabase
+        .from("pharmacies")
+        .insert([pharmacyData])
+        .select()
+        .single();
 
-    // Insérer les contacts
-    if (contacts.length > 0) {
-      const { error: contactsError } = await supabase
-        .from("contact_pharmacies")
-        .insert(
-          contacts.map((contact) => ({
-            ...contact,
-            id_pharmacie: pharmacy.id,
-          })),
-        );
+      if (pharmacyError) {
+        console.error("Erreur lors de l'insertion de la pharmacie:", pharmacyError);
+        throw new Error(`Erreur lors de l'insertion de la pharmacie: ${pharmacyError.message}`);
+      }
 
-      if (contactsError) throw new Error(contactsError.message);
+      if (!pharmacy) {
+        throw new Error("Aucune pharmacie n'a été créée");
+      }
+
+      // Insérer les contacts
+      if (contacts.length > 0) {
+        const contactsToInsert = contacts.map((contact) => ({
+          ...contact,
+          id_pharmacie: pharmacy.id,
+        }));
+
+        const { error: contactsError } = await supabase
+          .from("contact_pharmacies")
+          .insert(contactsToInsert);
+
+        if (contactsError) {
+          console.error("Erreur lors de l'insertion des contacts:", contactsError);
+          throw new Error(`Erreur lors de l'insertion des contacts: ${contactsError.message}`);
+        }
+      }
+
+      // Insérer les horaires
+      if (horaires.length > 0) {
+        const horairesToInsert = horaires.map((horaire) => ({
+          ...horaire,
+          id_pharmacie: pharmacy.id,
+        }));
+
+        const { error: horairesError } = await supabase
+          .from("horaire_ouverture")
+          .insert(horairesToInsert);
+
+        if (horairesError) {
+          console.error("Erreur lors de l'insertion des horaires:", horairesError);
+          throw new Error(`Erreur lors de l'insertion des horaires: ${horairesError.message}`);
+        }
+      }
+
+      return pharmacy;
+    } catch (error) {
+      console.error("Erreur complète lors de l'ajout de la pharmacie:", error);
+      throw error;
     }
-
-    // Insérer les horaires
-    if (horaires.length > 0) {
-      const { error: horairesError } = await supabase
-        .from("horaire_ouverture")
-        .insert(
-          horaires.map((horaire) => ({
-            ...horaire,
-            id_pharmacie: pharmacy.id,
-          })),
-        );
-
-      if (horairesError) throw new Error(horairesError.message);
-    }
-
-    return pharmacy;
   },
 
   // Mettre à jour une pharmacie

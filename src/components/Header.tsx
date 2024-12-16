@@ -133,40 +133,42 @@ const Header = () => {
       </div>
 
       {/* Mobile Menu */}
-      { menuOpen && <div className="lg:hidden bg-white shadow-md transition-all duration-300 ease-in-out transform">
-        <div className="p-4 space-y-4">
-          <Link
-            to="/services/digital"
-            className="pl-4 block text-lg text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
-          >
-            Solutions Numériques
-          </Link>
-          <Link
-            to="/services/community"
-            className="pl-4 block text-lg text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
-          >
-            Community Management
-          </Link>
-          <Link
-            to="/services/consulting"
-            className="pl-4 block text-lg text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
-          >
-            Services de Conseil
-          </Link>
-          <Link
-            to="/pharmacies"
-            className="pl-4 block text-lg text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
-          >
-            Pharmacies
-          </Link>
-          <Link
-            to="/apropos"
-            className="pl-4 block text-lg text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
-          >
-            A propos
-          </Link>
+      {menuOpen && (
+        <div className="lg:hidden bg-white shadow-md transition-all duration-300 ease-in-out transform">
+          <div className="p-4 space-y-4">
+            <Link
+              to="/services/digital"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              Solutions Numériques
+            </Link>
+            <Link
+              to="/services/community"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              Community Management
+            </Link>
+            <Link
+              to="/services/consulting"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              Services de Conseil
+            </Link>
+            <Link
+              to="/pharmacies"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              Pharmacies
+            </Link>
+            <Link
+              to="/apropos"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              A propos
+            </Link>
+          </div>
         </div>
-      </div>}
+      )}
     </header>
   );
 };

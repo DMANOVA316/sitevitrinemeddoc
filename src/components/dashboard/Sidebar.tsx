@@ -22,7 +22,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/components/ui/use-toast";
 import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
-import { Info_page_meddoc } from "@/types";
 import { infoMeddocService } from "@/services/infoMeddocService";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -35,7 +34,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const { toast } = useToast();
   const [info, setInfo] = useState<Info_page_meddoc | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -131,14 +130,6 @@ const Sidebar = ({ className }: SidebarProps) => {
 
   return (
     <div>
-      {/* Bouton pour afficher/masquer la barre latérale */}
-      <button
-        className="fixed top-4 left-4 z-50 p-2 bg-primary text-white rounded-md md:hidden"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-      </button>
-
       {/* Barre latérale */}
       <div
         className={cn(
@@ -227,6 +218,13 @@ const Sidebar = ({ className }: SidebarProps) => {
             </Button>
           </div>
         </div>
+        {/* Bouton pour afficher/masquer la barre latérale */}
+        <button
+          className="m fixed top-0 right-0 z-50 p-2 bg-primary text-white rounded-md md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
     </div>
   );
