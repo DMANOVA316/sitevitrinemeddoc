@@ -1,6 +1,6 @@
 import { getFileNameFromPath } from "@/utils/fileUtils";
-import { EditSection } from "./EditSection";
-import { InfoField } from "./InfoField";
+import { EditSection } from "../EditSection";
+import { InfoField } from "../InfoField";
 import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
 
 export function GeneralInfoSection() {

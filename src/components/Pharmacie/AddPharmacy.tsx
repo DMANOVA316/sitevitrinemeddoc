@@ -59,15 +59,16 @@ export default function AddPharmacy({
   });
 
   const [contacts, setContacts] = useState<PharmacyContact[]>(
-    formData.contacts,
+    formData.contacts
   );
 
   const [horaires, setHoraires] = useState<PharmacySchedule[]>(
-    formData.horaires,
+    formData.horaires
   );
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const locationSelectorRef = useRef<LocationSelectorRef>(null);
 
   const handleLocationChange = (location: {
     province: string;
@@ -100,14 +101,17 @@ export default function AddPharmacy({
         heure_fin,
       }));
 
-      onSubmit(
-        {
-          ...formData,
-          contacts: formattedContacts,
-          horaires: formattedHoraires,
-        },
-        selectedFile || undefined,
-      );
+      const updatedFormData = {
+        ...formData,
+        contacts: formattedContacts,
+        horaires: formattedHoraires,
+      };
+
+      onSubmit(updatedFormData, selectedFile || undefined);
+
+      if (!isEdit) {
+        locationSelectorRef.current?.reset();
+      }
     }
   };
 
@@ -145,7 +149,7 @@ export default function AddPharmacy({
   const updateHoraire = (
     index: number,
     field: keyof PharmacySchedule,
-    value: string,
+    value: string
   ) => {
     const newHoraires = [...horaires];
     newHoraires[index] = { ...newHoraires[index], [field]: value };
@@ -210,14 +214,15 @@ export default function AddPharmacy({
             </div>
 
             <LocationSelector
+              ref={locationSelectorRef}
               onLocationChange={handleLocationChange}
               initialValues={
                 isEdit
                   ? {
-                      province: formData.province,
-                      region: formData.region,
-                      district: formData.district,
-                      commune: formData.commune,
+                      province: pharmacy?.province,
+                      region: pharmacy?.region,
+                      district: pharmacy?.district,
+                      commune: pharmacy?.commune,
                     }
                   : undefined
               }

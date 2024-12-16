@@ -2,16 +2,9 @@ import supabase from "@/utils/supabase";
 
 const COUVERTURE_TABLE = "couverture";
 
-export interface CouvertureType {
-  id?: number;
-  photo: string;
-  titre: string;
-  description: string;
-}
-
 export const couvertureService = {
   // Get couverture data
-  getCouverture: async (): Promise<CouvertureType | null> => {
+  getCouverture: async (): Promise<Couverture | null> => {
     const { data, error } = await supabase
       .from(COUVERTURE_TABLE)
       .select("*")
@@ -22,7 +15,7 @@ export const couvertureService = {
   },
 
   // Create couverture
-  createCouverture: async (): Promise<CouvertureType> => {
+  createCouverture: async (): Promise<Couverture> => {
     const { data, error } = await supabase
       .from(COUVERTURE_TABLE)
       .insert([
@@ -42,17 +35,27 @@ export const couvertureService = {
 
   // Update couverture
   updateCouverture: async (
-    couverture: Omit<CouvertureType, "id">
-  ): Promise<CouvertureType> => {
-    // Comme nous n'avons qu'une seule entrée, nous mettons à jour la première
+    couverture: Partial<Couverture>,
+  ): Promise<Couverture> => {
+    // Récupérer d'abord les données existantes
+    const { data: existingData } = await supabase
+      .from(COUVERTURE_TABLE)
+      .select("*")
+      .single();
+
+    if (!existingData) {
+      throw new Error("Aucune donnée de couverture trouvée");
+    }
+
+    // Mettre à jour avec les nouvelles données
     const { data, error } = await supabase
       .from(COUVERTURE_TABLE)
       .update({
-        photo: couverture.photo,
-        titre: couverture.titre,
-        description: couverture.description,
+        photo: couverture.photo || existingData.photo,
+        titre: couverture.titre || existingData.titre,
+        description: couverture.description || existingData.description,
       })
-      .eq("id", 1) // Nous supposons que l'ID est 1 pour la seule entrée
+      .eq("id", existingData.id)
       .select()
       .single();
 
