@@ -147,8 +147,6 @@ const PharmacyList: React.FC = () => {
             duration: 3000,
           });
           return;
-        } finally {
-          setIsAddDialogOpen(false);
         }
       }
 
@@ -170,7 +168,7 @@ const PharmacyList: React.FC = () => {
         newData.horaires || []
       );
 
-      fetchPharmacies();
+      await fetchPharmacies();
       setIsAddDialogOpen(false);
       toast.success("Nouvelle pharmacie", {
         description: "La pharmacie a été ajoutée avec succès",
@@ -178,10 +176,17 @@ const PharmacyList: React.FC = () => {
       });
     } catch (error) {
       console.error("Error adding pharmacy:", error);
-      toast.error("Erreur", {
-        description: "Impossible d'ajouter la pharmacie",
-        duration: 3000,
-      });
+      if (error instanceof Error) {
+        toast.error("Erreur", {
+          description: error.message,
+          duration: 3000,
+        });
+      } else {
+        toast.error("Erreur", {
+          description: "Impossible d'ajouter la pharmacie",
+          duration: 3000,
+        });
+      }
     }
   };
 
