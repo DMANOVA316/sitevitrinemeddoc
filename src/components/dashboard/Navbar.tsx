@@ -41,10 +41,10 @@ export default function Navbar() {
       <div className="flex h-16 items-center px-4">
         {/* <SiteLogo to="/dashboard" className="mr-4" /> */}
         <div className="flex-1">
-          <div className="relative w-full max-w-sm">
+          {/* <div className="relative w-full max-w-sm">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Rechercher..." className="pl-8" />
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" className="relative">

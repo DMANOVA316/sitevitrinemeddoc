@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Trash2, Plus } from "lucide-react";
 import LocationSelector from "../LocationSelector/LocationSelector";
-import ServiceList from "@/pages/Dashboard/Services/ServiceList";
 import ServicesList from "./ServicesList";
 
 interface PharmacyContact {
@@ -69,6 +68,36 @@ export default function AddPharmacy({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.nom_pharmacie.trim()) {
+      newErrors.nom_pharmacie = "Le nom de la pharmacie est obligatoire";
+    }
+
+    if (!formData.address.trim()) {
+      newErrors.address = "L'adresse est obligatoire";
+    }
+
+    if (contacts.length === 0 || contacts.some(contact => !contact.numero.trim())) {
+      newErrors.contacts = "Au moins un numéro de contact valide est requis";
+    } else {
+      const phoneRegex = /^(\+261|0)(32|33|34|38|39)[0-9]{7}$/;
+      if (contacts.some(contact => !phoneRegex.test(contact.numero.trim()))) {
+        newErrors.contacts = "Format de numéro invalide. Ex: +261XXXXXXXXX ou 03XXXXXXXX";
+      }
+    }
+
+    if (horaires.length === 0 || horaires.some(h => !h.heure_debut || !h.heure_fin)) {
+      newErrors.horaires = "Les horaires d'ouverture sont requis";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleLocationChange = (location: {
     province: string;
     region?: string;
@@ -93,7 +122,8 @@ export default function AddPharmacy({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSubmit) {
+
+    if (validateForm()) {
       const formattedContacts = contacts.map(({ numero }) => ({ numero }));
       const formattedHoraires = horaires.map(({ heure_debut, heure_fin }) => ({
         heure_debut,
@@ -106,7 +136,7 @@ export default function AddPharmacy({
           contacts: formattedContacts,
           horaires: formattedHoraires,
         },
-        selectedFile || undefined,
+        selectedFile || undefined
       );
     }
   };
@@ -170,8 +200,13 @@ export default function AddPharmacy({
                 onChange={(e) =>
                   setFormData({ ...formData, nom_pharmacie: e.target.value })
                 }
-                className="w-full"
+                className={`w-full ${
+                  errors.nom_pharmacie ? "border-red-500 focus:ring-red-500" : ""
+                }`}
               />
+              {errors.nom_pharmacie && (
+                <p className="text-sm text-red-500 mt-1">{errors.nom_pharmacie}</p>
+              )}
             </div>
 
             <div>
