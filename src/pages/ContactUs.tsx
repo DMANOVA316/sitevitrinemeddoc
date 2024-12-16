@@ -57,7 +57,7 @@ const ContactUs = () => {
         message: data.message,
       };
 
-      await contactService.addContact(contactData);
+      await contactService.createContact(contactData);
       toast.success("Nous vous remercions pour votre message.");
       reset();
     } catch (error) {
@@ -70,7 +70,7 @@ const ContactUs = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
+      <h2 className="text-3xl font-bold mb-6 text-center text-meddoc-primary">
         Nous Contacter
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -104,12 +104,8 @@ const ContactUs = () => {
                     <SelectItem value="professionnel de santé">
                       Professionnel de santé
                     </SelectItem>
-                    <SelectItem value="patient">
-                      Patient
-                    </SelectItem>
-                    <SelectItem value="autres">
-                      Autres
-                    </SelectItem>
+                    <SelectItem value="patient">Patient</SelectItem>
+                    <SelectItem value="autres">Autres</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -120,22 +116,29 @@ const ContactUs = () => {
         <Label className="font-semibold mb-4 block text-sm text-gray-700">
           Service
         </Label>
-        <Select {...register("service")}>
-          <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
-            <SelectValue placeholder="Service" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem key="service1" value={"service1"}>
-              Solutions Numériques
-            </SelectItem>
-            <SelectItem key="service2" value="service2">
-              Community Management
-            </SelectItem>
-            <SelectItem key="service3" value="service3">
-              Services de Conseil
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        <Controller
+          name="service"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value}>
+              <SelectTrigger className="bg-gray-100 w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring focus:ring-white-200">
+                <SelectValue placeholder="Service" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Solutions Numériques">
+                  Solutions Numériques
+                </SelectItem>
+                <SelectItem value="Community Management">
+                  Community Management
+                </SelectItem>
+                <SelectItem value="Services de Conseil">
+                  Services de Conseil
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
         {/* Contact Information Section  */}
         <Label className="font-semibold mb-4 block text-sm text-gray-700">
           Contact Information
@@ -179,11 +182,7 @@ const ContactUs = () => {
             <p className="text-red-500 text-xs">{errors.message.message}</p>
           )}
         </div>
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Envoi en cours..." : "Envoyer"}
         </Button>
       </form>

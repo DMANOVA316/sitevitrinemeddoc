@@ -1,9 +1,24 @@
 import React, { useEffect } from "react";
 import useContactRedux from "@/hooks/use-contact-redux";
 import { formatTimestamp } from "@/utils/dateUtils";
-import { CheckCircle, User, Mail } from "lucide-react";
+import {
+  MoreVertical,
+  User,
+  Mail,
+  CheckCircle,
+  MessageSquare,
+} from "lucide-react";
 import ContactFilter from "./ContactFilter";
 import ContactMessage from "./ContactMessage";
+import RemoveContact from "./RemoveContact";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import EmptyData from "@/components/EmptyData";
 
 export default function ContactsUs() {
   const {
@@ -18,112 +33,96 @@ export default function ContactsUs() {
 
   useEffect(() => {
     loadContacts();
-    console.log(contacts[0]);
-  }, [filter]);
+  }, [loadContacts]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-meddoc-primary"></div>
+      </div>
+    );
+  }
 
   if (error) {
-    return <div className="text-red-500">Erreur: {error}</div>;
+    return (
+      <div className="text-center text-red-500 p-4">
+        Une erreur est survenue lors du chargement des messages.
+      </div>
+    );
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <div className="w-full max-w-full overflow-hidden">
       <ContactFilter currentFilter={filter} onFilterChange={setFilterType} />
 
-      <div className="grid gap-6 sm:gap-8">
-        {isLoading ? (
-          // Skeleton loading state
-          <>
-            {[1, 2, 3].map((index) => (
-              <div
-                key={index}
-                className="p-4 sm:p-6 rounded-lg shadow-lg bg-white animate-pulse"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4 sm:gap-0">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-200"></div>
-                    <div className="space-y-2">
-                      <div className="h-5 sm:h-6 bg-gray-200 rounded w-32"></div>
-                      <div className="h-4 sm:h-5 bg-gray-200 rounded w-48"></div>
-                    </div>
-                  </div>
-                  <div className="h-8 bg-gray-200 rounded w-24"></div>
-                </div>
-                <div className="space-y-4">
-                  <div className="h-20 bg-gray-200 rounded w-full"></div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="h-4 bg-gray-200 rounded w-full"
-                      ></div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </>
+      <div className="grid gap-3 sm:gap-4">
+        {contacts.length === 0 ? (
+          <EmptyData
+            className="flex flex-col items-center justify-center h-[200px]"
+            text="Aucun message trouve"
+            tips="Attendez que les utilisateurs nous contactent"
+          />
         ) : (
           contacts.map((contact) => (
             <div
               key={contact.id}
-              className={`p-4 sm:p-6 rounded-lg shadow-lg ${
-                contact.vue
-                  ? "bg-white"
-                  : "bg-gray-50 border-l-4 border-meddoc-primary"
-              } transition transform hover:scale-[1.02] duration-200`}
+              className="group relative p-3 sm:p-4 rounded-lg shadow-lg bg-white transition transform hover:scale-[1.02] duration-200 overflow-hidden"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4 sm:gap-0">
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-300 flex items-center justify-center">
-                    <User className="w-6 h-6 text-gray-600" />
+              <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="flex items-start gap-3 min-w-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-300 flex items-center justify-center shrink-0">
+                    <User className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />
                   </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
-                      {contact.nom}
-                    </h3>
-                    <p className="text-sm text-gray-600">{contact.email}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start sm:items-center justify-between gap-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
+                        {contact.nom}
+                      </h3>
+                      {!contact.vue && (
+                        <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full shrink-0">
+                          Nouveau
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-500 mt-0.5 truncate">
+                      {formatTimestamp(contact.date_envoye)}
+                    </p>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <a
-                    href={`mailto:${contact.email}?subject=Re: Message de contact - ${contact.nom}`}
-                    className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-2"
-                  >
-                    <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="hidden sm:inline">Répondre</span>
-                  </a>
-                  {!contact.vue && (
-                    <button
-                      onClick={() => markAsViewed(contact.id)}
-                      className="px-3 sm:px-4 py-2 bg-meddoc-primary text-white rounded-lg hover:bg-meddoc-primary/90 transition flex items-center gap-2"
-                    >
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="sm:hidden">Marquer comme lu</span>
-                    </button>
-                  )}
+
+                <div className="flex items-center justify-end sm:justify-start gap-2 shrink-0">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      {!contact.vue && (
+                        <DropdownMenuItem
+                          onClick={() => markAsViewed(contact.id)}
+                          className="cursor-pointer flex"
+                        >
+                          <CheckCircle className="mr-2 h-4 w-4" />
+                          Marquer comme lu
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem
+                        className="cursor-pointer flex"
+                        onClick={() =>
+                          (window.location.href = `mailto:${contact.email}?subject=Re: Message de contact - ${contact.nom}`)
+                        }
+                      >
+                        <MessageSquare className="mr-2 h-4 w-4" />
+                        Répondre
+                      </DropdownMenuItem>
+                      <RemoveContact contact={contact} />
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
-              <div className="space-y-4">
-                <div className="mt-4 sm:mt-6">
-                  <ContactMessage message={contact.message} />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 text-sm text-gray-600">
-                  <span className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <strong className="sm:min-w-[100px]">Contact:</strong>
-                    {contact.contact}
-                  </span>
-                  <span className="flex flex-col ml-auto sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    {contact.vous_ete || "Status non spécifié"}
-                  </span>
-                  <span className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <strong className="sm:min-w-[100px]">Service:</strong>
-                    {contact.service}
-                  </span>
-                  <span className="flex flex-col items-start ml-auto sm:flex-row sm:items-center sm:gap-2">
-                    le {formatTimestamp(contact.date_envoye) || "Non spécifié"}
-                  </span>
-                </div>
-              </div>
+
+              <ContactMessage contact={contact} />
             </div>
           ))
         )}
