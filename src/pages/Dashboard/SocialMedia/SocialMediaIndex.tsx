@@ -24,9 +24,9 @@ export default function SocialMediaIndex() {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col shadow-lg rounded-lg overflow-hidden">
+      <div className="shadow-lg rounded-lg overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-white border-b">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 p-4 bg-white border-b">
           <div className="flex gap-4 flex-1">
             <Input
               type="text"
@@ -38,7 +38,7 @@ export default function SocialMediaIndex() {
           </div>
           <Button
             onClick={() => showAddSocialMediaModal(true)}
-            className="bg-blue-600 hover:bg-blue-500"
+            className="w-full md:w-auto bg-blue-600 hover:bg-blue-500"
           >
             Ajouter un reseau social
           </Button>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ServiceType } from "@/types";
 import { serviceService } from "@/services/serviceService";
 
 export default function useService() {

@@ -124,30 +124,32 @@ const AmbulanceList: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <input
-              type="text"
-              placeholder="Rechercher une ambulance..."
-              className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-meddoc-primary/20 focus:border-meddoc-primary"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+      <div className='rounded-lg overflow-hidden'>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 p-4 bg-white border-b">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Rechercher une ambulance..."
+                className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-meddoc-primary/20 focus:border-meddoc-primary"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </div>
+          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className='w-full md:w-auto'>Ajouter une ambulance</Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Ajouter une nouvelle ambulance</DialogTitle>
+              </DialogHeader>
+              <AddAmbulance onSubmit={handleAddAmbulance} />
+            </DialogContent>
+          </Dialog>
         </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>Ajouter une ambulance</Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Ajouter une nouvelle ambulance</DialogTitle>
-            </DialogHeader>
-            <AddAmbulance onSubmit={handleAddAmbulance} />
-          </DialogContent>
-        </Dialog>
       </div>
 
       <div className="grid grid-cols-1 gap-6">

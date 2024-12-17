@@ -1,5 +1,4 @@
 import supabase from "@/utils/supabase";
-import { ServiceType } from "@/types";
 
 const SERVICES_TABLE = "services";
 

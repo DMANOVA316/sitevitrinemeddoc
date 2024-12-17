@@ -1,4 +1,3 @@
-import { PartnerType } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 

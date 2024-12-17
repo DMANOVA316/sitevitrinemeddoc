@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { PartnerType } from "@/types";
 import { partnerService } from "@/services/partnerService";
 
 interface PartnerState {

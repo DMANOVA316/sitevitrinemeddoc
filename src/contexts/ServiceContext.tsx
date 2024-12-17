@@ -1,5 +1,4 @@
 import useService from "@/hooks/use-service";
-import { ServiceType } from "@/types";
 import { createContext, ReactNode, useContext } from "react";
 
 interface UseServiceProps {

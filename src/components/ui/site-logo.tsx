@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Info_page_meddoc } from "@/types";
 import { infoMeddocService } from "@/services/infoMeddocService";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getPublicUrl } from "@/utils/supabase";
