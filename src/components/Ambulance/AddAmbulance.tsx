@@ -14,6 +14,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Ambulance } from '@/store/ambulanceSlice';
 import { Plus, Trash2 } from 'lucide-react';
+import LocationSelector from '@/components/LocationSelector/LocationSelector';
+import { Label } from '../ui/label';
 
 const contactSchema = z.object({
   numero: z.string().min(8, 'Le numéro doit contenir au moins 8 caractères'),
@@ -55,6 +57,18 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
     name: 'contacts',
   });
 
+  const handleLocationChange = (location: {
+    province: string;
+    region?: string;
+    district?: string;
+    commune: string;
+  }) => {
+    form.setValue('province', location.province);
+    form.setValue('region', location.region || '');
+    form.setValue('district', location.district || '');
+    form.setValue('commune', location.commune);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -87,108 +101,62 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="province"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Province*</FormLabel>
-                <FormControl>
-                  <Input placeholder="Province" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="col-span-2">
+            <LocationSelector
+              onLocationChange={handleLocationChange}
+              initialValues={{
+                province: form.getValues('province'),
+                region: form.getValues('region'),
+                district: form.getValues('district'),
+                commune: form.getValues('commune'),
+              }}
+            />
+          </div>
 
-          <FormField
-            control={form.control}
-            name="region"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Région</FormLabel>
-                <FormControl>
-                  <Input placeholder="Région" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="district"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>District</FormLabel>
-                <FormControl>
-                  <Input placeholder="District" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="commune"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Commune*</FormLabel>
-                <FormControl>
-                  <Input placeholder="Commune" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium">Contacts</h3>
+          <div className="col-span-2">
+            <Label className="block mb-2">Contacts*</Label>
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex gap-4 mb-4">
+                <FormField
+                  control={form.control}
+                  name={`contacts.${index}.numero`}
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormControl>
+                        <Input placeholder="Numéro de téléphone" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => remove(index)}
+                  className="shrink-0"
+                  disabled={index === 0}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => append({ numero: '' })}
+              className="mt-2"
             >
               <Plus className="h-4 w-4 mr-2" />
               Ajouter un contact
             </Button>
           </div>
-
-          {fields.map((field, index) => (
-            <div key={field.id} className="flex items-end gap-4">
-              <FormField
-                control={form.control}
-                name={`contacts.${index}.numero`}
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Numéro {index + 1}</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Numéro de téléphone" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                className="h-10 w-10"
-                onClick={() => remove(index)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
         </div>
 
         <div className="flex justify-end">
           <Button type="submit">
-            {ambulance ? 'Modifier' : 'Ajouter'} l'ambulance
+            {ambulance ? 'Modifier' : 'Ajouter'}
           </Button>
         </div>
       </form>
