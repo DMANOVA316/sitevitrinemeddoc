@@ -7,6 +7,7 @@ import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 
 const Pharmacies = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [displayCount, setDisplayCount] = useState(10);
   const { getPharmacies, pharmacies, isLoading } = usePharmacyRedux();
 
   useEffect(() => {
@@ -26,6 +27,9 @@ const Pharmacies = () => {
       pharmacy.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pharmacy.district.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  const displayedPharmacies = filteredPharmacies.slice(0, displayCount);
+  const hasMore = displayedPharmacies.length < filteredPharmacies.length;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -81,14 +85,26 @@ const Pharmacies = () => {
                     }}
                   >
                     {filteredPharmacies.length > 0 ? (
-                      filteredPharmacies.map((pharmacy) => (
-                        <div
-                          key={pharmacy.id}
-                          className="w-full flex justify-center"
-                        >
-                          <PharmacyCard pharmacy={pharmacy} />
-                        </div>
-                      ))
+                      <>
+                        {displayedPharmacies.map((pharmacy) => (
+                          <div
+                            key={pharmacy.id}
+                            className="w-full flex justify-center"
+                          >
+                            <PharmacyCard pharmacy={pharmacy} />
+                          </div>
+                        ))}
+                        {hasMore && (
+                          <div className="col-span-full flex justify-center mt-8">
+                            <button
+                              onClick={() => setDisplayCount((prev) => prev + 10)}
+                              className="px-6 py-2 bg-meddoc-primary text-white rounded-md hover:bg-meddoc-primary/90 transition-colors"
+                            >
+                              Voir plus
+                            </button>
+                          </div>
+                        )}
+                      </>
                     ) : (
                       <div className="col-span-full text-center py-12">
                         <Building2 className="h-12 w-12 text-gray-400 mx-auto mb-4" />

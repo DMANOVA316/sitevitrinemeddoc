@@ -92,7 +92,7 @@ const PharmacyCard = ({
               <p className="text-gray-700">{pharmacy.address}</p>
               <p className="text-sm text-gray-500">
                 {pharmacy.province && pharmacy.province + ", "}
-                {pharmacy.region && pharmacy.region + ","}
+                {pharmacy.region && pharmacy.region + ", "}
                 {pharmacy.district && pharmacy.district}
               </p>
             </div>
@@ -103,11 +103,14 @@ const PharmacyCard = ({
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-gray-500 mt-1" />
               <div className="flex-1">
-                {pharmacy.contacts.map((contact, index) => (
-                  <p key={index} className="text-gray-700">
-                    {contact.numero}
-                  </p>
-                ))}
+                {pharmacy.contacts.map((contact, index) => {
+                  return (
+                    <span key={contact.id} className="text-gray-700">
+                      {contact.numero}
+                      {index < pharmacy.contacts.length - 1 ? " / " : ""}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           )}
