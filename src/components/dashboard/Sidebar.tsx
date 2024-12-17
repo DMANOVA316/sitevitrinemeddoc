@@ -104,11 +104,6 @@ const Sidebar = ({ className }: SidebarProps) => {
           icon: Share2,
           href: "/dashboard/reseaux-sociaux",
         },
-        {
-          title: "Couverture",
-          icon: Image,
-          href: "/dashboard/couverture",
-        },
       ],
     },
     {
