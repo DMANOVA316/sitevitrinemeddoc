@@ -33,9 +33,9 @@ const TableRowPharmacy = ({
           <Building2 className="w-8 h-8 text-meddoc-primary" />
         )}
       </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap truncate max-w-[200px]">
+      <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         <div className="flex flex-col justify-start items-start">
-          <h3 className="text-xl font-semibold text-gray-900">
+          <h3 className="truncate max-w-[150px] text-xl font-semibold text-gray-900">
             {pharmacy.nom_pharmacie}
           </h3>
           {pharmacy.de_garde && (
@@ -45,8 +45,8 @@ const TableRowPharmacy = ({
           )}
         </div>
       </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap truncate max-w-[200px]">
-        <p className="text-gray-700">{pharmacy.service}</p>
+      <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
+        <p className="truncate text-gray-700">{pharmacy.service}</p>
       </TableCell>
       <TableCell className="px-6 py-4 whitespace-nowrap">
         {pharmacy.horaires && pharmacy.horaires.length > 0 && (
@@ -61,24 +61,24 @@ const TableRowPharmacy = ({
           </div>
         )}
       </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap truncate max-w-[200px]">
+      <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         {pharmacy.contacts && pharmacy.contacts.length > 0 && (
           <div className="flex items-center gap-3">
             <div className="flex-1">
-              {pharmacy.contacts.map((contact, index) => (
-                <p key={index} className="text-gray-700">
-                  {contact.numero}
-                </p>
-              ))}
+              <p className="max-w-[150px] truncate text-gray-700">
+                {pharmacy.contacts.map((contact, index) => (
+                    index < pharmacy.contacts.length - 1 ? contact.numero + ", " : contact.numero
+                ))}
+              </p>
             </div>
           </div>
         )}
       </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap truncate max-w-[200px]">
+      <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         <div className="flex items-start gap-3">
           <div className="flex-1">
-            <p className="text-gray-700">{pharmacy.address}</p>
-            <p className="text-sm text-gray-500">
+            <p className="max-w-[150px] truncate text-gray-700">{pharmacy.address}</p>
+            <p className="max-w-[150px] truncate text-sm text-gray-500">
               {pharmacy.province && pharmacy.province + ", "}
               {pharmacy.region && pharmacy.region + ","}
               {pharmacy.district && pharmacy.district}
