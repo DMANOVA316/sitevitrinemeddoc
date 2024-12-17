@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Info_page_meddoc } from "@/types";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";

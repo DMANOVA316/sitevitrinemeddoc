@@ -1,5 +1,4 @@
 import { usePartnerRedux } from "@/hooks/use-partner-redux";
-import { PartnerType } from "@/types";
 
 interface PartnerProps {
   partner: PartnerType;

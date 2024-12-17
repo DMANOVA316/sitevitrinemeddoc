@@ -1,5 +1,4 @@
 import supabase from "@/utils/supabase";
-import { Info_page_meddoc } from "@/types";
 import { uploadService } from "./uploadService";
 
 const INFO_TABLE = "Info_page_meddoc";

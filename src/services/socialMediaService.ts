@@ -1,5 +1,4 @@
 import supabase from "@/utils/supabase";
-import { SocialMedia } from "@/types";
 
 const SOCIAL_MEDIA_TABLE = "reseaux_sociaux_meddoc";
 

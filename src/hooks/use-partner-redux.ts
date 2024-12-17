@@ -12,7 +12,6 @@ import {
   setIsLoading,
   setError,
 } from "@/store/partnerSlice";
-import { PartnerType } from "@/types";
 import { uploadService } from "@/services/uploadService";
 import { getFileSize } from "@/utils/fileUtils";
 

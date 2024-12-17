@@ -10,7 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { usePartnerRedux } from "@/hooks/use-partner-redux";
-import { PartnerType } from "@/types";
 
 type NewPartnerData = Omit<PartnerType, "id">;
 

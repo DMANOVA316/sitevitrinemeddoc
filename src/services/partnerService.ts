@@ -1,5 +1,4 @@
 import supabase from "@/utils/supabase";
-import { PartnerType } from "@/types";
 import { uploadService } from "./uploadService";
 
 const PARTNERS_TABLE = "partenaire";

@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
-import { Info_page_meddoc } from "@/types";
 
 const EditHeader = () => {
   const {

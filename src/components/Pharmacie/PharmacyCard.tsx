@@ -92,7 +92,7 @@ const PharmacyCard = ({
               <p className="text-gray-700">{pharmacy.address}</p>
               <p className="text-sm text-gray-500">
                 {pharmacy.province && pharmacy.province + ", "}
-                {pharmacy.region && pharmacy.region + ","}
+                {pharmacy.region && pharmacy.region + ", "}
                 {pharmacy.district && pharmacy.district}
               </p>
             </div>

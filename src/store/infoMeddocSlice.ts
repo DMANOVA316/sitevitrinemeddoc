@@ -1,5 +1,4 @@
 import infoMeddocService from "@/services/infoMeddocService";
-import { Info_page_meddoc } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InfoMeddocState {

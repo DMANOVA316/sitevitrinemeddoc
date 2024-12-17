@@ -39,6 +39,7 @@ export default function EditLandingPage() {
   useEffect(() => {
     if (couverture) {
       setFormData(couverture);
+      setPhotoPreview(couverture.photo);
     }
   }, [couverture]);
 

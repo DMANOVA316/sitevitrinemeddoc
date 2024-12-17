@@ -34,7 +34,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const { toast } = useToast();
   const [info, setInfo] = useState<Info_page_meddoc | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -103,11 +103,6 @@ const Sidebar = ({ className }: SidebarProps) => {
           title: "Réseaux sociaux",
           icon: Share2,
           href: "/dashboard/reseaux-sociaux",
-        },
-        {
-          title: "Couverture",
-          icon: Image,
-          href: "/dashboard/couverture",
         },
       ],
     },
