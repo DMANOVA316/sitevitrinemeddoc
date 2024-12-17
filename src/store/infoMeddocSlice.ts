@@ -3,7 +3,7 @@ import { Info_page_meddoc } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InfoMeddocState {
-  infoMeddoc: Info_page_meddoc;
+  infoMeddoc: Info_page_meddoc | null;
   isLoading: boolean;
   error: string | null;
   isEditInformationOpen: boolean;

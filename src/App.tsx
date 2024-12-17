@@ -26,6 +26,7 @@ import AmbulanceList from "./pages/Dashboard/AmbulanceList";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
+import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -33,51 +34,51 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <TooltipProvider>
-            <ServiceProvider>
-              <Toaster richColors />
-              <BrowserRouter>
-                <Routes>
-                  {/* Routes publiques */}
-                  <Route
-                    path="/"
-                    element={
-                      <PublicLayout>
-                        <Index />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/login"
-                    element={
-                      <PublicLayout>
-                        <Login />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/pharmacies"
-                    element={
-                      <PublicLayout>
-                        <Pharmacies />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/contact"
-                    element={
-                      <PublicLayout>
-                        <ContactUs />
-                      </PublicLayout>
-                    }
-                  />
-                  <Route
-                    path="/apropos"
-                    element={
-                      <PublicLayout>
-                        <About />
-                      </PublicLayout>
-                    }
-                  />
+          <ServiceProvider>
+            <Toaster richColors />
+            <BrowserRouter>
+              <Routes>
+                {/* Routes publiques */}
+                <Route
+                  path="/"
+                  element={
+                    <PublicLayout>
+                      <Index />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <PublicLayout>
+                      <Login />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/pharmacies"
+                  element={
+                    <PublicLayout>
+                      <Pharmacies />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/contact"
+                  element={
+                    <PublicLayout>
+                      <ContactUs />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/apropos"
+                  element={
+                    <PublicLayout>
+                      <About />
+                    </PublicLayout>
+                  }
+                />
                 {/* Routes des services */}
                 <Route
                   path="/services/community"
@@ -134,6 +135,10 @@ const App = () => (
                     <Route path="/dashboard/services" element={<Services />} />
                     <Route
                       path="/dashboard/contact-meddoc"
+                      element={<ContactsUs />}
+                    />
+                    <Route
+                      path="/dashboard/contacts"
                       element={<NumberList />}
                     />
                     <Route

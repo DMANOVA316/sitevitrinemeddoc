@@ -90,6 +90,11 @@
   }
 }
 
+.m {
+  transform: translateX(105%);
+  margin-top: .8rem;
+}
+
 @layer base {
   * {
     @apply border-border;

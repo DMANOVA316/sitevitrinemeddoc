@@ -10,17 +10,14 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  couvertureService,
-  CouvertureType,
-} from "@/services/couvertureService";
+import { couvertureService } from "@/services/couvertureService";
 import { toast } from "sonner";
 import PartnerCard from "@/components/PartnerCard";
 import { usePartnerRedux } from "@/hooks/use-partner-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Index = () => {
-  const [couverture, setCouverture] = useState<CouvertureType | null>(null);
+  const [couverture, setCouverture] = useState<Couverture | null>(null);
   const [isLoadingCouverture, setIsLoadingCouverture] = useState(true);
   const {
     partners,
@@ -55,10 +52,7 @@ const Index = () => {
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
-            backgroundImage: `url(${
-              couverture?.photo ||
-              "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
-            })`,
+            backgroundImage: `url(${couverture?.photo})`,
           }}
         ></div>
         <div className="container mx-auto px-4 relative">

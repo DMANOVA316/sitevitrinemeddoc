@@ -6,6 +6,8 @@ import socialMediaReducer from "./socialMediaSlice";
 import infoMeddocReducer from "./infoMeddocSlice";
 import ambulanceReducer from "./ambulanceSlice";
 import locationReducer from "./locationSlice.ts";
+import contactReducer from "./contactSlice";
+import couvertureReducer from "./couvertureSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
     socialMedia: socialMediaReducer,
     infoMedoc: infoMeddocReducer,
     ambulance: ambulanceReducer,
+    contact: contactReducer,
+    couverture: couvertureReducer,
   },
 });
 

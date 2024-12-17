@@ -5,7 +5,7 @@ export function ContactsSection() {
   const navigate = useNavigate();
 
   const numberLists = () => {
-    navigate("/dashboard/contact-meddoc");
+    navigate("/dashboard/contacts");
   };
 
   return (

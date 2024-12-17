@@ -1,12 +1,14 @@
 export default function EmptyData({
   text = "Aucune donnee a afficher",
   tips = "Commencer pas en ajouter",
+  className = "",
 }: {
   text: string;
   tips: string;
+  className?: string;
 }) {
   return (
-    <>
+    <div className={className}>
       <svg
         className="w-16 h-16 mb-4 text-gray-400"
         fill="none"
@@ -28,6 +30,6 @@ export default function EmptyData({
       </svg>
       <p className="text-lg">{text}</p>
       <p className="text-sm">{tips}</p>
-    </>
+    </div>
   );
 }
