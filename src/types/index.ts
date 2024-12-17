@@ -1,18 +1,18 @@
 declare global {
-  export type Province = {
+  type Province = {
     "@id": string;
     "@type": string;
     name: string;
   };
 
-  export type Region = {
+  type Region = {
     "@id": string;
     "@type": string;
     name: string;
     province: Province;
   };
 
-  export type District = {
+  type District = {
     "@id": string;
     "@type": string;
     id: string;
@@ -20,7 +20,7 @@ declare global {
     region: Region;
   };
 
-  export type Commune = {
+  type Commune = {
     "@id": string;
     "@type": string;
     id: string;
@@ -54,20 +54,20 @@ declare global {
     onSelectProvince: (provinceId: string) => void;
   };
 
-  export interface PharmacyContact {
+  type PharmacyContact = {
     id?: number;
     id_pharmacie?: number;
     numero: string;
   }
 
-  export interface PharmacySchedule {
+  type PharmacySchedule = {
     id?: number;
     id_pharmacie?: number;
     heure_debut: string;
     heure_fin: string;
   }
 
-  export interface Pharmacy {
+  type Pharmacy = {
     id?: number;
     nom_pharmacie: string;
     photo_profil?: string;
@@ -83,17 +83,17 @@ declare global {
     horaires?: PharmacySchedule[];
   }
 
-  export interface Numero_meddoc {
+  type Numero_meddoc = {
     id: number;
     numero: string;
   }
 
-  export interface SocialMedia {
+  type SocialMedia = {
     id: number;
     nom: string;
     lien: string;
   }
-  export interface LocationSelectorProps {
+  type LocationSelectorProps = {
     /**
      * Callback pour notifier un changement de localisation.
      * Fournit un objet décrivant la localisation sélectionnée.
@@ -116,14 +116,14 @@ declare global {
       commune?: string;
     };
   }
-  export interface locationData {
+  type locationData = {
     provinces: Province[];
     regions: Region[];
     districts: District[];
     communes: Commune[];
   }
-
-  export interface contactez_nous {
+  
+  type contactez_nous = {
     id: number;
     nom: string;
     email: string;
@@ -134,79 +134,77 @@ declare global {
     date_envoye: string;
     vue: boolean;
   }
-
-  export interface Couverture {
+  type Couverture = {
     id: number;
     photo: string;
     titre: string;
     description: string;
   }
-}
-
-export interface PartnerType {
-  id: number;
-  nom_partenaire: string;
-  lien: string;
-  logo: string;
-}
-
-export interface ServiceType {
-  id: number;
-  nom: string;
-  description: string;
-  lien: string;
-}
-
-export interface usePartnerProps {
-  partners: PartnerType[];
-  currentPartner: PartnerType | null;
-  isAddPartnerOpen: boolean;
-  isEditPartnerOpen: boolean;
-  isRemovePartnerOpen: boolean;
-  isLoading: boolean;
-  error: string | null;
-  setIsAddPartnerOpen: (isOpen: boolean) => void;
-  setIsEditPartnerOpen: (isOpen: boolean) => void;
-  setIsRemovePartnerOpen: (isOpen: boolean) => void;
-  handleAddPartner: (
-    partner: Omit<PartnerType, "id">,
-    file?: File,
-  ) => Promise<void>;
-  handleEditPartner: (
-    partner: PartnerType,
-    file?: File | null,
-  ) => Promise<void>;
-  handleRemovePartner: (id: number) => Promise<void>;
-  handleSelectPartner: (partner: PartnerType) => void;
-  setCurrentPartner: (partner: PartnerType | null) => void;
-}
-
-export interface useSocialMediaProps {
-  socialMedias: SocialMedia[];
-  isAddSocialMediaOpen: boolean;
-  isEditSocialMediaOpen: boolean;
-  isRemoveSocialMediaOpen: boolean;
-  isLoading: boolean;
-  error: string | null;
-  setIsAddSocialMediaOpen: (isOpen: boolean) => void;
-  setIsEditSocialMediaOpen: (isOpen: boolean) => void;
-  setIsRemoveSocialMediaOpen: (isOpen: boolean) => void;
-  handleAddSocialMedia: (socialMedia: Omit<SocialMedia, "id">) => void;
-  handleEditSocialMedia: (socialMedia: SocialMedia) => void;
-  handleRemoveSocialMedia: (id: number) => void;
-  currentSocialMedia: SocialMedia | null;
-  setCurrentSocialMedia: (socialMedia: SocialMedia | null) => void;
-  handleSelectSocialMedia: (socialMedia: SocialMedia) => void;
-}
-
-export interface Info_page_meddoc {
-  id: number;
-  titre_site: string;
-  favicon: string;
-  logo: string;
-  email: string;
-  addresse: string;
-  copyrigth: string;
+  type PartnerType = {
+    id: number;
+    nom_partenaire: string;
+    lien: string;
+    logo: string;
+  }
+  
+  type ServiceType = {
+    id: number;
+    nom: string;
+    description: string;
+    lien: string;
+  }
+  
+  type usePartnerProps = {
+    partners: PartnerType[];
+    currentPartner: PartnerType | null;
+    isAddPartnerOpen: boolean;
+    isEditPartnerOpen: boolean;
+    isRemovePartnerOpen: boolean;
+    isLoading: boolean;
+    error: string | null;
+    setIsAddPartnerOpen: (isOpen: boolean) => void;
+    setIsEditPartnerOpen: (isOpen: boolean) => void;
+    setIsRemovePartnerOpen: (isOpen: boolean) => void;
+    handleAddPartner: (
+      partner: Omit<PartnerType, "id">,
+      file?: File
+    ) => Promise<void>;
+    handleEditPartner: (
+      partner: PartnerType,
+      file?: File | null
+    ) => Promise<void>;
+    handleRemovePartner: (id: number) => Promise<void>;
+    handleSelectPartner: (partner: PartnerType) => void;
+    setCurrentPartner: (partner: PartnerType | null) => void;
+  }
+  
+  type useSocialMediaProps = {
+    socialMedias: SocialMedia[];
+    isAddSocialMediaOpen: boolean;
+    isEditSocialMediaOpen: boolean;
+    isRemoveSocialMediaOpen: boolean;
+    isLoading: boolean;
+    error: string | null;
+    setIsAddSocialMediaOpen: (isOpen: boolean) => void;
+    setIsEditSocialMediaOpen: (isOpen: boolean) => void;
+    setIsRemoveSocialMediaOpen: (isOpen: boolean) => void;
+    handleAddSocialMedia: (socialMedia: Omit<SocialMedia, "id">) => void;
+    handleEditSocialMedia: (socialMedia: SocialMedia) => void;
+    handleRemoveSocialMedia: (id: number) => void;
+    currentSocialMedia: SocialMedia | null;
+    setCurrentSocialMedia: (socialMedia: SocialMedia | null) => void;
+    handleSelectSocialMedia: (socialMedia: SocialMedia) => void;
+  }
+  
+  type Info_page_meddoc = {
+    id: number;
+    titre_site: string;
+    favicon: string;
+    logo: string;
+    email: string;
+    addresse: string;
+    copyrigth: string;
+  }
 }
 
 export {};

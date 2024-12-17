@@ -10,12 +10,14 @@ export default function Services() {
   const { setIsAddServiceOpen } = useServiceContext();
 
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gestion des Services</h1>
+    <div className="container max-w-screen-lg mx-auto py-4 px-4 md:px-6">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h1 className="text-xl md:text-2xl font-bold text-center md:text-left">
+          Gestion des Services
+        </h1>
         <Button
           onClick={() => setIsAddServiceOpen(true)}
-          className="bg-green-500 hover:bg-green-600"
+          className="w-full md:w-auto bg-green-500 hover:bg-green-600"
         >
           <Plus className="mr-2 h-4 w-4" />
           Ajouter un service

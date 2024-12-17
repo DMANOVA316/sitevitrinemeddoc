@@ -5,8 +5,8 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Trash2, Plus } from "lucide-react";
 import LocationSelector from "../LocationSelector/LocationSelector";
-import ServiceList from "@/pages/Dashboard/Services/ServiceList";
 import ServicesList from "./ServicesList";
+import { toast } from "sonner";
 
 interface PharmacyContact {
   numero: string;
@@ -36,6 +36,9 @@ interface AddPharmacyProps {
   onSubmit: (data: Pharmacy, file?: File) => void;
   pharmacy?: Pharmacy;
   isEdit?: boolean;
+}
+export interface LocationSelectorRef {
+  reset: () => void;
 }
 
 export default function AddPharmacy({
@@ -70,6 +73,56 @@ export default function AddPharmacy({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const locationSelectorRef = useRef<LocationSelectorRef>(null);
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.nom_pharmacie.trim()) {
+      newErrors.nom_pharmacie = "Le nom de la pharmacie est obligatoire";
+      toast.error("Le nom de la pharmacie est obligatoire");
+    }
+
+    if (!formData.address.trim()) {
+      newErrors.address = "L'adresse est obligatoire";
+      toast.error("L'adresse est obligatoire");
+    }
+
+    if (!formData.province || !formData.commune) {
+      newErrors.location = "La province et la commune sont obligatoires";
+      toast.error("La province et la commune sont obligatoires");
+    }
+
+    if (contacts.length === 0 || contacts.some(contact => !contact.numero.trim())) {
+      newErrors.contacts = "Au moins un numéro de contact valide est requis";
+      toast.error("Au moins un numéro de contact valide est requis");
+    } else {
+      const phoneRegex = /^(\+261|0)(32|33|34|38|39)[0-9]{7}$/;
+      const invalidContacts = contacts.filter(contact => !phoneRegex.test(contact.numero.trim()));
+      if (invalidContacts.length > 0) {
+        newErrors.contacts = "Format de numéro invalide. Ex: +261XXXXXXXXX ou 03XXXXXXXX";
+        toast.error("Format de numéro invalide. Ex: +261XXXXXXXXX ou 03XXXXXXXX");
+      }
+    }
+
+    if (horaires.length === 0 || horaires.some(h => !h.heure_debut || !h.heure_fin)) {
+      newErrors.horaires = "Les horaires d'ouverture sont requis";
+      toast.error("Les horaires d'ouverture sont requis");
+    } else {
+      for (let i = 0; i < horaires.length; i++) {
+        const { heure_debut, heure_fin } = horaires[i];
+        if (heure_debut >= heure_fin) {
+          newErrors.horaires = "L'heure de fin doit être après l'heure de début";
+          toast.error("L'heure de fin doit être après l'heure de début");
+          break;
+        }
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleLocationChange = (location: {
     province: string;
     region?: string;
@@ -94,24 +147,22 @@ export default function AddPharmacy({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSubmit) {
+    
+    if (validateForm()) {
       const formattedContacts = contacts.map(({ numero }) => ({ numero }));
       const formattedHoraires = horaires.map(({ heure_debut, heure_fin }) => ({
         heure_debut,
         heure_fin,
       }));
 
-      const updatedFormData = {
-        ...formData,
-        contacts: formattedContacts,
-        horaires: formattedHoraires,
-      };
-
-      onSubmit(updatedFormData, selectedFile || undefined);
-
-      if (!isEdit) {
-        locationSelectorRef.current?.reset();
-      }
+      onSubmit(
+        {
+          ...formData,
+          contacts: formattedContacts,
+          horaires: formattedHoraires,
+        },
+        selectedFile || undefined
+      );
     }
   };
 
@@ -174,8 +225,13 @@ export default function AddPharmacy({
                 onChange={(e) =>
                   setFormData({ ...formData, nom_pharmacie: e.target.value })
                 }
-                className="w-full"
+                className={`w-full ${
+                  errors.nom_pharmacie ? "border-red-500 focus:ring-red-500" : ""
+                }`}
               />
+              {errors.nom_pharmacie && (
+                <p className="text-sm text-red-500 mt-1">{errors.nom_pharmacie}</p>
+              )}
             </div>
 
             <div>

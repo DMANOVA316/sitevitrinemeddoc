@@ -50,6 +50,7 @@ const LocationSelector = forwardRef<LocationSelectorRef, LocationSelectorProps>(
   const filteredRegions = useSelector(selectFilteredRegions);
   const filteredDistricts = useSelector(selectFilteredDistricts);
   const filteredCommunes = useSelector(selectFilteredCommunes);
+  const locationNames = useSelector(selectLocationNames);
 
   // Charger les données au montage du composant
   useEffect(() => {
@@ -66,16 +67,14 @@ const LocationSelector = forwardRef<LocationSelectorRef, LocationSelectorProps>(
   // Mettre à jour le parent quand la sélection change
   useEffect(() => {
     if (selectedProvince && selectedCommune) {
-      const locationNames = selectLocationNames({ location: locationState });
-      onLocationChange(locationNames);
+      onLocationChange({
+        province: locationNames.province,
+        region: locationNames.region,
+        district: locationNames.district,
+        commune: locationNames.commune
+      });
     }
-  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune, locationState]);
-
-  useImperativeHandle(ref, () => ({
-    reset: () => {
-      dispatch(resetLocations());
-    }
-  }));
+  }, [selectedProvince, selectedRegion, selectedDistrict, selectedCommune, onLocationChange, locationNames]);
 
   return (
     <div className="space-y-4">
