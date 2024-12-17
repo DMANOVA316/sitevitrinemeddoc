@@ -66,9 +66,11 @@ const TableRowPharmacy = ({
           <div className="flex items-center gap-3">
             <div className="flex-1">
               <p className="max-w-[150px] truncate text-gray-700">
-                {pharmacy.contacts.map((contact, index) => (
-                    index < pharmacy.contacts.length - 1 ? contact.numero + ", " : contact.numero
-                ))}
+                {pharmacy.contacts.map((contact, index) =>
+                  index < pharmacy.contacts.length - 1
+                    ? contact.numero + " / "
+                    : contact.numero,
+                )}
               </p>
             </div>
           </div>
@@ -77,7 +79,9 @@ const TableRowPharmacy = ({
       <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         <div className="flex items-start gap-3">
           <div className="flex-1">
-            <p className="max-w-[150px] truncate text-gray-700">{pharmacy.address}</p>
+            <p className="max-w-[150px] truncate text-gray-700">
+              {pharmacy.address}
+            </p>
             <p className="max-w-[150px] truncate text-sm text-gray-500">
               {pharmacy.province && pharmacy.province + ", "}
               {pharmacy.region && pharmacy.region + ","}
