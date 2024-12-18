@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Building2 } from "lucide-react";
+import { MapPin, Clock, Phone, Building2, Wrench } from "lucide-react";
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
   isEditable?: boolean;
@@ -84,6 +84,16 @@ const PharmacyCard = ({
               </div>
             )}
           </div>
+            {/* Service pharmacie */}
+            <div className="flex items-start gap-3">
+            <Wrench className="w-5 h-5 text-gray-500 mt-1" />
+            <div className="flex-1">
+              <p className="text-gray-700">{pharmacy.service}</p>
+             
+        
+            </div>
+          </div>
+
 
           {/* Adresse */}
           <div className="flex items-start gap-3">
