@@ -27,7 +27,7 @@ export default function useContactRedux() {
   }, [dispatch]);
 
   const setFilterType = useCallback(
-    (filterType: "all" | "read" | "unread") => {
+    (filterType: "all" | "unviewed" | "viewed") => {
       dispatch(setFilter(filterType));
     },
     [dispatch],
