@@ -12,13 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 export default function useContactRedux() {
   const dispatch = useDispatch<AppDispatch>();
   const { contacts, filter, status, error } = useSelector(
-    (state: RootState) => state.contact
+    (state: RootState) => state.contact,
   );
 
   const filteredContacts = useMemo(() => {
     if (filter === "all") return contacts;
     return contacts.filter((contact) =>
-      filter === "read" ? contact.vue : !contact.vue
+      filter === "unviewed" ? contact.vue : !contact.vue,
     );
   }, [contacts, filter]);
 
@@ -30,28 +30,28 @@ export default function useContactRedux() {
     (filterType: "all" | "read" | "unread") => {
       dispatch(setFilter(filterType));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const markAsViewed = useCallback(
     async (id: number) => {
       await dispatch(markContactAsViewed(id)).unwrap();
     },
-    [dispatch]
+    [dispatch],
   );
 
   const removeContact = useCallback(
     async (id: number) => {
       await dispatch(deleteContact(id)).unwrap();
     },
-    [dispatch]
+    [dispatch],
   );
 
   const addContact = useCallback(
     async (contact: Omit<contactez_nous, "id" | "date_envoye" | "vue">) => {
       await dispatch(createContact(contact)).unwrap();
     },
-    [dispatch]
+    [dispatch],
   );
 
   return {
