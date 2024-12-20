@@ -19,7 +19,7 @@ export const fetchContacts = createAsyncThunk(
   "contact/fetchContacts",
   async (_, { rejectWithValue }) => {
     try {
-      return await contactService.getAllContacts();
+      return await contactService.getAll();
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -33,7 +33,7 @@ export const createContact = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      return await contactService.createContact(contact);
+      return await contactService.create(contact);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -44,7 +44,7 @@ export const deleteContact = createAsyncThunk(
   "contact/deleteContact",
   async (id: number, { rejectWithValue }) => {
     try {
-      await contactService.deleteContact(id);
+      await contactService.delete(id);
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
