@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import EmptyData from "@/components/EmptyData";
+import supabase from "@/utils/supabase";
 
 export default function ContactsUs() {
   const {
@@ -33,6 +34,34 @@ export default function ContactsUs() {
 
   useEffect(() => {
     loadContacts();
+  }, [loadContacts]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("notification")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "contactez_nous" },
+        (payload) => {
+          console.log("Received realtime update:", payload);
+          // Recharger les contacts quand il y a un changement
+          loadContacts();
+        }
+      )
+      .subscribe((status) => {
+        console.log("Subscription status:", status);
+        if (status === "SUBSCRIBED") {
+          console.log("Successfully subscribed to realtime updates");
+        }
+        if (status === "CHANNEL_ERROR") {
+          console.error("Failed to subscribe to realtime updates");
+        }
+      });
+
+    return () => {
+      console.log("Cleaning up Supabase subscription");
+      supabase.removeChannel(channel);
+    };
   }, [loadContacts]);
 
   if (isLoading) {

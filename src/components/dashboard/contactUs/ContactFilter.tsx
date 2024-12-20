@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type FilterType = "all" | "unread" | "read";
+type FilterType = "all" | "unread" | "read" | "viewed";
 
 interface ContactFilterProps {
   currentFilter: FilterType;
@@ -18,6 +18,7 @@ const filterOptions = [
   { value: "all", label: "Tous les messages" },
   { value: "unread", label: "Non lus" },
   { value: "read", label: "Lus" },
+  { value: "viewed", label: "Vus" },
 ];
 
 export default function ContactFilter({

@@ -1,5 +1,3 @@
-import { Bell, Search, User } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,14 +7,42 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import useContactRedux from "@/hooks/use-contact-redux";
 import supabase from "@/utils/supabase";
-import { SiteLogo } from "@/components/ui/site-logo";
+import { User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { NotificationPopover } from "./Notifications/NotificationPopover";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+
+  // Use the existing contact hook
+  const {
+    contacts: notifications,
+    loadContacts,
+    markAsViewed,
+    removeContact,
+  } = useContactRedux();
+
+  // Load contacts on component mount
+  useEffect(() => {
+    loadContacts();
+  }, [loadContacts]);
+
+  // Filter unread notifications
+  const unreadNotifications = notifications.filter((n) => !n.vue);
+
+  const handleMarkAsRead = async (id: string) => {
+    await markAsViewed(Number(id));
+  };
+
+  const handleClearNotification = async (id: string) => {
+    await removeContact(Number(id));
+  };
 
   const handleLogout = async () => {
     try {
@@ -47,12 +73,18 @@ export default function Navbar() {
           </div> */}
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-              2
-            </span>
-          </Button>
+          <NotificationPopover
+            notifications={notifications.map((n) => ({
+              id: n.id.toString(),
+              title: `Message de ${n.nom}`,
+              description: n.message,
+              timestamp: new Date(n.date_envoye),
+              read: n.vue,
+            }))}
+            onMarkAsRead={handleMarkAsRead}
+            onClearNotification={handleClearNotification}
+          />
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
