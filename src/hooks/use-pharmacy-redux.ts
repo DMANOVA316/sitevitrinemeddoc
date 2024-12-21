@@ -14,8 +14,14 @@ import {
   setRemovePartnerOpen,
 } from "@/store/partnerSlice";
 
+/**
+ * Hook Redux pour la gestion complète des pharmacies
+ * Fournit des actions CRUD et la gestion des états modaux
+ */
 export const usePharmacyRedux = () => {
   const dispatch = useDispatch<AppDispatch>();
+  
+  // Sélection de l'état global des pharmacies
   const {
     pharmacies,
     currentPharmacy,
@@ -26,11 +32,12 @@ export const usePharmacyRedux = () => {
     isRemovePharmacyOpen,
   } = useSelector((state: RootState) => state.pharmacy);
 
+  // Récupérer la liste des pharmacies
   const getPharmacies = () => {
     dispatch(fetchPharmacies());
   };
 
-  // Modales
+  // Gestion des modales (ouverture/fermeture)
   const showAddPharmacyModal = (open: boolean) => {
     dispatch(setModalState({ modalType: "add", isOpen: open }));
   };
@@ -43,10 +50,12 @@ export const usePharmacyRedux = () => {
     dispatch(setModalState({ modalType: "remove", isOpen: open }));
   };
 
+  // Sélectionner une pharmacie courante
   const selectCurrentPharmacy = (pharmacy: Pharmacy) => {
     dispatch(setCurrentPharmacy(pharmacy));
   };
 
+  // Ajouter une nouvelle pharmacie avec ses contacts et horaires
   const handleAddPharmacy = async (
     pharmacyData: Omit<Pharmacy, "id" | "contacts" | "horaires">,
     contacts: Omit<PharmacyContact, "id" | "id_pharmacie">[],
@@ -63,6 +72,7 @@ export const usePharmacyRedux = () => {
     }
   };
 
+  // Mettre à jour une pharmacie existante
   const handleUpdatePharmacy = async (
     id: number,
     pharmacyData: Partial<Omit<Pharmacy, "id" | "contacts" | "horaires">>,
@@ -80,6 +90,7 @@ export const usePharmacyRedux = () => {
     }
   };
 
+  // Supprimer une pharmacie
   const handleDeletePharmacy = async (id: number) => {
     try {
       await dispatch(deletePharmacy(id)).unwrap();
@@ -90,6 +101,7 @@ export const usePharmacyRedux = () => {
     }
   };
 
+  // Retourne les états et actions liés aux pharmacies
   return {
     pharmacies,
     currentPharmacy,

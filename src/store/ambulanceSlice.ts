@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Structure de l'état pour les ambulances
 export interface Contact {
   id?: number;
   id_ambulance?: number;
@@ -19,6 +20,7 @@ export interface Ambulance {
   contacts?: Contact[];
 }
 
+// Etat initial
 interface AmbulanceState {
   ambulances: Ambulance[];
   loading: boolean;
@@ -31,30 +33,42 @@ const initialState: AmbulanceState = {
   error: null,
 };
 
+/**
+ * Slice de gestion des ambulances
+ * Gère les états et actions liés aux ambulances
+ */
 const ambulanceSlice = createSlice({
-  name: 'ambulance',
+  name: "ambulance",
   initialState,
   reducers: {
+    // Actions
     setAmbulances: (state, action: PayloadAction<Ambulance[]>) => {
       state.ambulances = action.payload;
       state.loading = false;
       state.error = null;
     },
+    // CRUD ambulances pour nos etats redux
     addAmbulance: (state, action: PayloadAction<Ambulance>) => {
       state.ambulances.push(action.payload);
     },
     updateAmbulance: (state, action: PayloadAction<Ambulance>) => {
-      const index = state.ambulances.findIndex(amb => amb.id === action.payload.id);
+      const index = state.ambulances.findIndex(
+        (amb) => amb.id === action.payload.id
+      );
       if (index !== -1) {
         state.ambulances[index] = action.payload;
       }
     },
     deleteAmbulance: (state, action: PayloadAction<number>) => {
-      state.ambulances = state.ambulances.filter(amb => amb.id !== action.payload);
+      state.ambulances = state.ambulances.filter(
+        (amb) => amb.id !== action.payload
+      );
     },
+    // Gestion des chargements
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    // Gestion des erreurs
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.loading = false;

@@ -5,18 +5,24 @@ import supabase from "@/utils/supabase";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+/**
+ * Hook de gestion des notifications de contacts en temps réel
+ * Écoute et réagit aux changements de la table des contacts
+ */
 export const useNotifications = () => {
   const dispatch = useDispatch<AppDispatch>();
+  
+  // Sélection de l'état des contacts
   const { contacts, status, error } = useSelector(
     (state: RootState) => state.contact
   );
   const { toast } = useToast();
 
-  // Calculer les contacts non lus avec gestion d'erreurs
+  // Calculer le nombre de contacts non lus
   const unreadContacts = contacts.filter((contact) => !contact.vue).length;
 
+  // Gestion des erreurs de chargement des contacts
   useEffect(() => {
-    // Gestion des erreurs de chargement des contacts
     if (status === "failed") {
       toast({
         title: "Erreur de chargement",
@@ -26,8 +32,8 @@ export const useNotifications = () => {
     }
   }, [status, error, toast]);
 
+  // Écoute des changements en temps réel via Supabase
   useEffect(() => {
-    // Écoute des changements en temps réel pour les contacts
     const channel = supabase
       .channel("contact-notifications")
       .on(
@@ -96,12 +102,13 @@ export const useNotifications = () => {
     // Charger initialement les contacts
     dispatch(fetchContacts());
 
-    // Nettoyage
+    // Nettoyage du canal Supabase
     return () => {
       supabase.removeChannel(channel);
     };
   }, [dispatch, toast]);
 
+  // Retourne les informations de notification
   return {
     unreadContacts,
     totalUnread: unreadContacts,

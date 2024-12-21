@@ -11,21 +11,33 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+/**
+ * Hook personnalisé pour gérer l'état des numéros via Redux
+ * 
+ * @returns {Object} Un ensemble de méthodes et de données liées aux numéros
+ * @description Fournit des fonctionnalités complètes de gestion des numéros :
+ * - Chargement et récupération des numéros
+ * - Gestion des modales (ajout, modification, suppression)
+ * - Gestion des erreurs
+ * - Sélection et manipulation des numéros
+ */
 export default function useNumberRedux() {
+  // Obtenir la fonction dispatch de Redux pour déclencher des actions
   const dispatch = useDispatch<AppDispatch>();
 
-  // Sélecteurs pour accéder à l'état
+  // Sélecteurs pour accéder à l'état global des numéros
   const {
-    numeros,
-    isLoading,
-    error,
-    currentNumber,
-    isAddNumberOpen,
-    isEditNumberOpen,
-    isRemoveNumberOpen,
+    numeros,           // Liste des numéros
+    isLoading,         // État de chargement
+    error,             // Messages d'erreur
+    currentNumber,     // Numéro actuellement sélectionné
+    isAddNumberOpen,   // État de la modale d'ajout
+    isEditNumberOpen,  // État de la modale d'édition
+    isRemoveNumberOpen // État de la modale de suppression
   } = useSelector((state: RootState) => state.number);
 
-  // Gestion de l'ouverture/fermeture des modales
+  // Méthodes de gestion des états des modales
+  // Contrôle l'ouverture et la fermeture des différentes modales
   const showAddNumberModal = (open: boolean) => {
     dispatch(setModalState({ modalType: "add", isOpen: open }));
   };
@@ -38,11 +50,13 @@ export default function useNumberRedux() {
     dispatch(setModalState({ modalType: "remove", isOpen: open }));
   };
 
+  // Méthode utilitaire pour définir des messages d'erreur
   const setErrorMessage = (value: string) => {
     dispatch(setError(value));
   };
 
-  // Action : Ajouter un numéro
+  // Action : Ajouter un nouveau numéro
+  // Gère la création avec une gestion d'erreur intégrée
   const createNumber = async (newNumber: Omit<Numero_meddoc, "id">) => {
     try {
       await dispatch(addNumber(newNumber)).unwrap();
@@ -55,7 +69,8 @@ export default function useNumberRedux() {
     }
   };
 
-  // Action : Mettre à jour un numéro
+  // Action : Mettre à jour un numéro existant
+  // Permet des mises à jour partielles avec gestion d'erreur
   const updateNumber = async (data: Partial<Numero_meddoc>) => {
     try {
       if (currentNumber) {
@@ -74,11 +89,12 @@ export default function useNumberRedux() {
     }
   };
 
+  // Action : Récupérer tous les numéros
   const getNumbers = async () => {
     await dispatch(fetchNumbers());
   };
 
-  // Action : Supprimer un numéro
+  // Action : Supprimer le numéro actuellement sélectionné
   const deleteNumber = async () => {
     try {
       if (currentNumber) {
@@ -95,12 +111,13 @@ export default function useNumberRedux() {
     }
   };
 
-  // Action : Sélectionner un numéro actuel
+  // Action : Sélectionner un numéro comme numéro actuel
   const selectCurrentNumber = (number: Numero_meddoc | null) => {
     dispatch(setCurrentNumber(number));
   };
 
-  // Retourne les états et actions pour utilisation dans les composants
+  // Retourne un ensemble complet de données et méthodes
+  // Permet aux composants d'interagir avec l'état des numéros
   return {
     numeros,
     isLoading,

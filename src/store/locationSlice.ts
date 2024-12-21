@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { locationService } from "@/services/locationService";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./index";
 
+// Structure de l'état pour la couverture (landing page)
 interface LocationState {
   provinces: Province[];
   regions: Region[];
@@ -15,6 +16,7 @@ interface LocationState {
   error: string | null;
 }
 
+// Etat initial
 const initialState: LocationState = {
   provinces: [],
   regions: [],
@@ -28,7 +30,11 @@ const initialState: LocationState = {
   error: null,
 };
 
-// Thunks
+// Gestion des actions asynchrones
+/**
+ * Recupere les données de localisation
+ * @returns Les données de localisation
+ */
 export const fetchLocations = createAsyncThunk(
   "location/fetchLocations",
   async (_, { rejectWithValue }) => {
@@ -48,6 +54,11 @@ export const fetchLocations = createAsyncThunk(
   }
 );
 
+/**
+ * Initialise les données de localisation à partir des noms des éléments
+ * @param locations Les noms des éléments de localisation
+ * @returns Les données de localisation initialisées
+ */
 export const initializeFromNames = createAsyncThunk(
   "location/initializeFromNames",
   async (
@@ -62,6 +73,7 @@ export const initializeFromNames = createAsyncThunk(
     const state = getState() as RootState;
     const { provinces, regions, districts, communes } = state.location;
 
+    // Rechercher les IDs des éléments de localisation par leurs noms
     return {
       provinceId:
         provinces.find((p) => p.name === locations.province)?.["@id"] || "",
@@ -74,10 +86,15 @@ export const initializeFromNames = createAsyncThunk(
   }
 );
 
+/**
+ * Gestion des actions de modification de localisation
+ */
 const locationSlice = createSlice({
   name: "location",
   initialState,
   reducers: {
+    // Actions de modification
+    // Mettre à jour les informations de province, region, district et commune selectionnées
     setSelectedProvince: (state, action: PayloadAction<string>) => {
       state.selectedProvince = action.payload;
       state.selectedRegion = "";
@@ -102,6 +119,7 @@ const locationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Gestion des actions asynchrones
       .addCase(fetchLocations.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -126,7 +144,7 @@ const locationSlice = createSlice({
   },
 });
 
-// Selectors
+// Operations de filtres pour avoir la bonne information
 export const selectLocationState = (state: RootState) => state.location;
 
 export const selectFilteredRegions = (state: RootState) =>
@@ -156,6 +174,7 @@ export const selectLocationNames = (state: RootState) => {
     selectedCommune,
   } = state.location;
 
+  // Rechercher les noms des éléments de localisation par leurs IDs
   return {
     province: provinces.find((p) => p["@id"] === selectedProvince)?.name || "",
     region: regions.find((r) => r["@id"] === selectedRegion)?.name || "",
