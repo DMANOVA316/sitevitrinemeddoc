@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Phone } from 'lucide-react';
-import { Ambulance } from '@/store/ambulanceSlice';
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Phone } from "lucide-react";
+import { Ambulance } from "@/store/ambulanceSlice";
 
 interface AmbulanceCardProps {
   ambulance: Ambulance;
@@ -18,9 +18,7 @@ const AmbulanceCard: React.FC<AmbulanceCardProps> = ({ ambulance }) => {
             </h3>
             <div className="flex items-center text-gray-500 gap-1">
               <MapPin className="h-4 w-4" />
-              <span className="text-sm">
-                {ambulance.address}
-              </span>
+              <span className="text-sm">{ambulance.address}</span>
             </div>
 
             {ambulance.contacts && ambulance.contacts.length > 0 && (
@@ -28,7 +26,10 @@ const AmbulanceCard: React.FC<AmbulanceCardProps> = ({ ambulance }) => {
                 <Phone className="h-4 w-4" />
                 <span className="text-sm">
                   {ambulance.contacts.map((contact, index) => (
-                    <span key={index}>{contact.numero}{index < ambulance.contacts.length - 1 ? ', ' : ''}</span>
+                    <span key={index}>
+                      {contact.numero}
+                      {index < ambulance.contacts.length - 1 ? ", " : ""}
+                    </span>
                   ))}
                 </span>
               </div>

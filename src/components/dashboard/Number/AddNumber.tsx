@@ -42,10 +42,10 @@ export default function AddNumber() {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Une erreur s'est produite lors de l'ajout du numéro.",
+          : "Une erreur s'est produite lors de l'ajout du numéro."
       );
       setLocalError(
-        error || "Une erreur s'est produite lors de l'ajout du numéro.",
+        error || "Une erreur s'est produite lors de l'ajout du numéro."
       );
     }
   };

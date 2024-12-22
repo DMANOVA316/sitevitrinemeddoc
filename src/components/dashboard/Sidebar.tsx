@@ -24,6 +24,8 @@ import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
 import { infoMeddocService } from "@/services/infoMeddocService";
 import { Skeleton } from "@/components/ui/skeleton";
+import { NotificationCount } from "@/components/dashboard/NotificationCount";
+import { useNotifications } from "@/hooks/useNotifications";
 
 interface SidebarProps {
   className?: string;
@@ -35,6 +37,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const [info, setInfo] = useState<Info_page_meddoc | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const { unreadContacts, unreadMessages, totalUnread } = useNotifications();
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -130,7 +133,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         className={cn(
           "fixed top-0 left-0 z-40 h-full bg-white shadow-lg transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          "md:translate-x-0 md:relative md:block"
+          "md:translate-x-0 md:relative md:block",
         )}
       >
         <div className={cn("pb-12 min-h-screen", className)}>
@@ -170,12 +173,18 @@ const Sidebar = ({ className }: SidebarProps) => {
                                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
                                   isActive
                                     ? "bg-primary/10 text-primary"
-                                    : "text-muted-foreground hover:bg-primary/5"
+                                    : "text-muted-foreground hover:bg-primary/5",
                                 )
                               }
                             >
                               <subItem.icon className="h-4 w-4" />
                               {subItem.title}
+                              {subItem.href.includes("/contact-meddoc") && (
+                                <NotificationCount count={unreadContacts} />
+                              )}
+                              {subItem.href.includes("/messages") && (
+                                <NotificationCount count={unreadMessages} />
+                              )}
                             </NavLink>
                           ))}
                         </div>
@@ -188,7 +197,7 @@ const Sidebar = ({ className }: SidebarProps) => {
                             "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
                             isActive
                               ? "bg-primary/10 text-primary"
-                              : "text-muted-foreground hover:bg-primary/5"
+                              : "text-muted-foreground hover:bg-primary/5",
                           )
                         }
                       >

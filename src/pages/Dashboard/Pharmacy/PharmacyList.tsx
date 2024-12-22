@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AddPharmacy from "@/components/Pharmacie/AddPharmacy";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import AddPharmacy from "@/components/dashboard/Pharmacy/AddPharmacy";
 import { pharmacyService } from "@/services/pharmacyService";
 import { uploadService } from "@/services/uploadService";
 import { Button } from "@/components/ui/button";
@@ -14,7 +7,7 @@ import { Clock, MapPin, Phone, Search, Wrench } from "lucide-react";
 import { Table, TableBody, TableHead, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
-import TableRowPharmacy from "@/components/Pharmacie/TableRowPharmacy";
+import TableRowPharmacy from "@/components/dashboard/Pharmacy/TableRowPharmacy";
 
 const PharmacyList: React.FC = () => {
   const [data, setData] = useState<Pharmacy[]>([]);
@@ -241,18 +234,11 @@ const PharmacyList: React.FC = () => {
               De garde
             </Button>
           </div>
-        
-          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="w-full md:w-auto">Ajouter une pharmacie</Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Ajouter une nouvelle pharmacie</DialogTitle>
-              </DialogHeader>
-              <AddPharmacy onSubmit={handleAddPharmacy} />
-            </DialogContent>
-          </Dialog>
+          <AddPharmacy
+            onSubmit={handleAddPharmacy}
+            isAddDialogOpen={isAddDialogOpen}
+            setIsAddDialogOpen={setIsAddDialogOpen}
+          />
         </div>
       </div>
 
@@ -325,19 +311,15 @@ const PharmacyList: React.FC = () => {
               ))}
             </TableBody>
           </Table>
-          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Modifier la pharmacie</DialogTitle>
-              </DialogHeader>
-              {editingPharmacy && (
-                <AddPharmacy
-                  pharmacy={editingPharmacy}
-                  onSubmit={handleUpdatePharmacy}
-                />
-              )}
-            </DialogContent>
-          </Dialog>
+          {editingPharmacy && (
+            <AddPharmacy
+              pharmacy={editingPharmacy}
+              onSubmit={handleUpdatePharmacy}
+              isEdit={true}
+              isAddDialogOpen={isEditDialogOpen}
+              setIsAddDialogOpen={setIsEditDialogOpen}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Building2, Pencil, Trash2 } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const TableRowPharmacy = ({
   key,
@@ -69,7 +69,7 @@ const TableRowPharmacy = ({
                 {pharmacy.contacts.map((contact, index) =>
                   index < pharmacy.contacts.length - 1
                     ? contact.numero + " / "
-                    : contact.numero,
+                    : contact.numero
                 )}
               </p>
             </div>

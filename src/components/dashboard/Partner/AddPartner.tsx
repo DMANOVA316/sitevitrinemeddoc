@@ -74,7 +74,7 @@ export default function AddPartner() {
     } catch (err) {
       console.error("Error adding partner:", err);
       toast.error(
-        err instanceof Error ? err.message : "Erreur lors de l'ajout",
+        err instanceof Error ? err.message : "Erreur lors de l'ajout"
       );
     }
   };

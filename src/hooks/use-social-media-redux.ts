@@ -10,7 +10,12 @@ import {
   setError,
 } from "@/store/socialMediaSlice";
 
+/**
+ * Hook Redux pour la gestion des réseaux sociaux
+ * Fournit des actions CRUD et la gestion des états modaux
+ */
 export default function useSocialMediaRedux() {
+  // Sélection de l'état global des réseaux sociaux
   const {
     socialMedias,
     isLoading,
@@ -20,9 +25,10 @@ export default function useSocialMediaRedux() {
     isEditSocialMediaOpen,
     isRemoveSocialMediaOpen,
   } = useSelector((state: RootState) => state.socialMedia);
+  
   const dispatch = useDispatch<AppDispatch>();
 
-  // Modals
+  // Gestion des modales (ouverture/fermeture)
   const showRemoveSocialMediaModal = (open: boolean) => {
     dispatch(setModalState({ modalType: "remove", isOpen: open }));
   };
@@ -35,7 +41,7 @@ export default function useSocialMediaRedux() {
     dispatch(setModalState({ modalType: "add", isOpen: open }));
   };
 
-  // Actions
+  // Créer un nouveau réseau social
   const createSocialMedia = async (newSocialMedia: Omit<SocialMedia, "id">) => {
     try {
       await dispatch(addSocialMediaAction(newSocialMedia)).unwrap();
@@ -48,10 +54,12 @@ export default function useSocialMediaRedux() {
     }
   };
 
+  // Récupérer la liste des réseaux sociaux
   const getSocialMedias = () => {
     dispatch(fetchSocialMedias());
   };
 
+  // Mettre à jour un réseau social existant
   const updateSocialMedia = async (data: Partial<SocialMedia>) => {
     if (currentSocialMedia) {
       await dispatch(
@@ -63,6 +71,7 @@ export default function useSocialMediaRedux() {
     }
   };
 
+  // Supprimer le réseau social courant
   const deleteSocialMedia = async () => {
     try {
       if (currentSocialMedia) {
@@ -79,10 +88,12 @@ export default function useSocialMediaRedux() {
     }
   };
 
+  // Sélectionner un réseau social courant
   const selectCurrentSocialMedia = (socialMedia: SocialMedia) => {
     dispatch(setCurrentSocialMedia(socialMedia));
   };
 
+  // Retourne les états et actions liés aux réseaux sociaux
   return {
     socialMedias,
     isLoading,

@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { contactService } from "@/services/contactService";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface ContactState {
   contacts: contactez_nous[];
@@ -8,6 +8,7 @@ interface ContactState {
   error: string | null;
 }
 
+// Valeur par defaut
 const initialState: ContactState = {
   contacts: [],
   filter: "all",
@@ -15,17 +16,28 @@ const initialState: ContactState = {
   error: null,
 };
 
+// Fonctions utiles pour la gestion des contacts
+/**
+ * Recupere les contacts
+ * @returns Les contacts
+ */
 export const fetchContacts = createAsyncThunk(
   "contact/fetchContacts",
   async (_, { rejectWithValue }) => {
     try {
-      return await contactService.getAllContacts();
+      return await contactService.getAll();
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+/**
+ * Cree un nouveau contact
+ * A noter que le nombre de contacts est limité dans la fonction de service
+ * @param contact Les informations du nouveau contact
+ * @returns Le nouveau contact
+ */
 export const createContact = createAsyncThunk(
   "contact/createContact",
   async (
@@ -33,18 +45,23 @@ export const createContact = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      return await contactService.createContact(contact);
+      return await contactService.create(contact);
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+/**
+ * Supprime un contact
+ * @param id L'ID du contact à supprimer
+ * @returns L'ID du contact supprimé
+ */
 export const deleteContact = createAsyncThunk(
   "contact/deleteContact",
   async (id: number, { rejectWithValue }) => {
     try {
-      await contactService.deleteContact(id);
+      await contactService.delete(id);
       return id;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -52,6 +69,11 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
+/**
+ * Marque un contact comme vu
+ * @param id L'ID du contact à marquer comme vu
+ * @returns Le contact marqué comme vu
+ */
 export const markContactAsViewed = createAsyncThunk(
   "contact/markAsViewed",
   async (id: number, { rejectWithValue }) => {
@@ -63,10 +85,15 @@ export const markContactAsViewed = createAsyncThunk(
   }
 );
 
+/**
+ * Slice Redux pour la gestion des contacts
+ * Gère les états et actions liés aux contacts
+ */
 const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
+    // Appliquer un filtre
     setFilter(state, action) {
       state.filter = action.payload;
     },
@@ -86,17 +113,17 @@ const contactSlice = createSlice({
         state.status = "failed";
         state.error = action.payload as string;
       })
-      // Create Contact
+      // Créer un contact
       .addCase(createContact.fulfilled, (state, action) => {
         state.contacts.unshift(action.payload);
       })
-      // Delete Contact
+      // Supprimer un contact
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.contacts = state.contacts.filter(
           (contact) => contact.id !== action.payload
         );
       })
-      // Mark as Viewed
+      // Marquer comme vu
       .addCase(markContactAsViewed.fulfilled, (state, action) => {
         const index = state.contacts.findIndex(
           (contact) => contact.id === action.payload.id

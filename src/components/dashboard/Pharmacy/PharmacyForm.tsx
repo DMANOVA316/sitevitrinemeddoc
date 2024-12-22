@@ -1,212 +1,32 @@
-import { useState, useRef } from "react";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 import { Trash2, Plus } from "lucide-react";
-import LocationSelector from "../LocationSelector/LocationSelector";
+import LocationSelector from "@/components/LocationSelector/LocationSelector";
 import ServicesList from "./ServicesList";
-import { toast } from "sonner";
 
-interface PharmacyContact {
-  numero: string;
-}
-
-interface PharmacySchedule {
-  heure_debut: string;
-  heure_fin: string;
-}
-
-interface Pharmacy {
-  id?: number;
-  nom_pharmacie: string;
-  photo_profil?: string;
-  address: string;
-  province: string;
-  region?: string;
-  district?: string;
-  commune: string;
-  service: string;
-  de_garde: boolean;
-  contacts?: PharmacyContact[];
-  horaires?: PharmacySchedule[];
-}
-
-interface AddPharmacyProps {
-  onSubmit: (data: Pharmacy, file?: File) => void;
-  pharmacy?: Pharmacy;
-  isEdit?: boolean;
-}
-export interface LocationSelectorRef {
-  reset: () => void;
-}
-
-export default function AddPharmacy({
-  onSubmit,
+const PharmacyForm = ({
+  handleSubmit,
+  formData,
+  setFormData,
+  errors,
+  fileInputRef,
+  handleFileChange,
+  locationSelectorRef,
+  handleLocationChange,
+  handleServiceChange,
+  contacts,
+  updateContact,
+  removeContact,
+  addContact,
+  horaires,
+  updateHoraire,
+  removeHoraire,
+  addHoraire,
   pharmacy,
-  isEdit = false,
-}: AddPharmacyProps) {
-  const [formData, setFormData] = useState<Pharmacy>({
-    id: pharmacy?.id,
-    nom_pharmacie: pharmacy?.nom_pharmacie || "",
-    photo_profil: pharmacy?.photo_profil || "",
-    address: pharmacy?.address || "",
-    province: pharmacy?.province || "",
-    region: pharmacy?.region || "",
-    district: pharmacy?.district || "",
-    commune: pharmacy?.commune || "",
-    service: pharmacy?.service || "",
-    de_garde: pharmacy?.de_garde || false,
-    contacts: pharmacy?.contacts || [{ numero: "" }],
-    horaires: pharmacy?.horaires || [{ heure_debut: "", heure_fin: "" }],
-  });
-
-  const [contacts, setContacts] = useState<PharmacyContact[]>(
-    formData.contacts
-  );
-
-  const [horaires, setHoraires] = useState<PharmacySchedule[]>(
-    formData.horaires
-  );
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const locationSelectorRef = useRef<LocationSelectorRef>(null);
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validateForm = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.nom_pharmacie.trim()) {
-      newErrors.nom_pharmacie = "Le nom de la pharmacie est obligatoire";
-      toast.error("Le nom de la pharmacie est obligatoire");
-    }
-
-    if (!formData.address.trim()) {
-      newErrors.address = "L'adresse est obligatoire";
-      toast.error("L'adresse est obligatoire");
-    }
-
-    if (!formData.province || !formData.commune) {
-      newErrors.location = "La province et la commune sont obligatoires";
-      toast.error("La province et la commune sont obligatoires");
-    }
-
-    if (contacts.length === 0 || contacts.some(contact => !contact.numero.trim())) {
-      newErrors.contacts = "Au moins un numéro de contact valide est requis";
-      toast.error("Au moins un numéro de contact valide est requis");
-    } else {
-      const phoneRegex = /^(\+261|0)(32|33|34|38|39)[0-9]{7}$/;
-      const invalidContacts = contacts.filter(contact => !phoneRegex.test(contact.numero.trim()));
-      if (invalidContacts.length > 0) {
-        newErrors.contacts = "Format de numéro invalide. Ex: +261XXXXXXXXX ou 03XXXXXXXX";
-        toast.error("Format de numéro invalide. Ex: +261XXXXXXXXX ou 03XXXXXXXX");
-      }
-    }
-
-    if (horaires.length === 0 || horaires.some(h => !h.heure_debut || !h.heure_fin)) {
-      newErrors.horaires = "Les horaires d'ouverture sont requis";
-      toast.error("Les horaires d'ouverture sont requis");
-    } else {
-      for (let i = 0; i < horaires.length; i++) {
-        const { heure_debut, heure_fin } = horaires[i];
-        if (heure_debut >= heure_fin) {
-          newErrors.horaires = "L'heure de fin doit être après l'heure de début";
-          toast.error("L'heure de fin doit être après l'heure de début");
-          break;
-        }
-      }
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleLocationChange = (location: {
-    province: string;
-    region?: string;
-    district?: string;
-    commune: string;
-  }) => {
-    setFormData((prev) => ({
-      ...prev,
-      province: location.province,
-      region: location.region || "",
-      district: location.district || "",
-      commune: location.commune,
-    }));
-  };
-
-  const handleServiceChange = (val: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      service: val,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (validateForm()) {
-      const formattedContacts = contacts.map(({ numero }) => ({ numero }));
-      const formattedHoraires = horaires.map(({ heure_debut, heure_fin }) => ({
-        heure_debut,
-        heure_fin,
-      }));
-
-      onSubmit(
-        {
-          ...formData,
-          contacts: formattedContacts,
-          horaires: formattedHoraires,
-        },
-        selectedFile || undefined
-      );
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-      // Create a preview URL for the image
-      const previewUrl = URL.createObjectURL(e.target.files[0]);
-      setFormData((prev) => ({ ...prev, photo_profil: previewUrl }));
-    }
-  };
-
-  const addContact = () => {
-    setContacts([...contacts, { numero: "" }]);
-  };
-
-  const removeContact = (index: number) => {
-    setContacts(contacts.filter((_, i) => i !== index));
-  };
-
-  const updateContact = (index: number, numero: string) => {
-    const newContacts = [...contacts];
-    newContacts[index] = { numero };
-    setContacts(newContacts);
-  };
-
-  const addHoraire = () => {
-    setHoraires([...horaires, { heure_debut: "", heure_fin: "" }]);
-  };
-
-  const removeHoraire = (index: number) => {
-    setHoraires(horaires.filter((_, i) => i !== index));
-  };
-
-  const updateHoraire = (
-    index: number,
-    field: keyof PharmacySchedule,
-    value: string
-  ) => {
-    const newHoraires = [...horaires];
-    newHoraires[index] = { ...newHoraires[index], [field]: value };
-    setHoraires(newHoraires);
-  };
-
+  isEdit,
+}) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -226,14 +46,17 @@ export default function AddPharmacy({
                   setFormData({ ...formData, nom_pharmacie: e.target.value })
                 }
                 className={`w-full ${
-                  errors.nom_pharmacie ? "border-red-500 focus:ring-red-500" : ""
+                  errors.nom_pharmacie
+                    ? "border-red-500 focus:ring-red-500"
+                    : ""
                 }`}
               />
               {errors.nom_pharmacie && (
-                <p className="text-sm text-red-500 mt-1">{errors.nom_pharmacie}</p>
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.nom_pharmacie}
+                </p>
               )}
             </div>
-
             <div>
               <Label className="text-sm font-medium text-gray-700">
                 Photo de profil
@@ -255,7 +78,6 @@ export default function AddPharmacy({
                 />
               </div>
             </div>
-
             <div>
               <Label className="text-sm font-medium text-gray-700">
                 Adresse
@@ -268,7 +90,6 @@ export default function AddPharmacy({
                 className="w-full"
               />
             </div>
-
             <LocationSelector
               ref={locationSelectorRef}
               onLocationChange={handleLocationChange}
@@ -283,7 +104,6 @@ export default function AddPharmacy({
                   : undefined
               }
             />
-
             <div>
               <ServicesList
                 value={formData.service}
@@ -291,7 +111,6 @@ export default function AddPharmacy({
               />
             </div>
           </div>
-
           {/* Colonne de droite */}
           <div className="space-y-6">
             <div>
@@ -332,7 +151,6 @@ export default function AddPharmacy({
                 </Button>
               </div>
             </div>
-
             <div>
               <Label className="text-sm font-medium text-gray-700">
                 Horaires d'ouverture
@@ -382,7 +200,6 @@ export default function AddPharmacy({
                 </Button>
               </div>
             </div>
-
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="de_garde"
@@ -401,7 +218,6 @@ export default function AddPharmacy({
           </div>
         </div>
       </div>
-
       <div className="flex justify-end pt-4 mt-auto border-t">
         <Button type="submit" className="w-full md:w-auto">
           Enregistrer
@@ -409,4 +225,6 @@ export default function AddPharmacy({
       </div>
     </form>
   );
-}
+};
+
+export default PharmacyForm;

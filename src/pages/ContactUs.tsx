@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin } from "lucide-react";
 import { contactService } from "@/services/contactService";
 import { toast } from "sonner";
 import useContactRedux from "@/hooks/use-contact-redux";
@@ -33,8 +30,8 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const ContactUs = () => {
+  const { addContact } = useContactRedux();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { contacts, status, error } = useContactRedux();
   const {
     register,
     handleSubmit,

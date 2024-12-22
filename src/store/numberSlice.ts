@@ -1,6 +1,7 @@
 import numberService from "@/services/numberService";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Structure de l'état pour les numéros
 interface NumberState {
   numeros: Numero_meddoc[];
   currentNumber: Numero_meddoc | null;
@@ -11,6 +12,7 @@ interface NumberState {
   isRemoveNumberOpen: boolean;
 }
 
+// État initial des numéros
 const initialState: NumberState = {
   numeros: [],
   currentNumber: null,
@@ -21,22 +23,31 @@ const initialState: NumberState = {
   isRemoveNumberOpen: false,
 };
 
+// Actions asynchrones pour la gestion des numéros
 export const fetchNumbers = createAsyncThunk(
   "number/fetchNumbers",
   async () => {
     const response = await numberService.getAllNumber();
     return response;
-  },
+  }
 );
 
+/**
+ * @returns Le numéro ajouté
+ */
 export const addNumber = createAsyncThunk(
   "number/addNumber",
   async (number: Omit<Numero_meddoc, "id">) => {
     const response = await numberService.createNumber(number);
     return response;
-  },
+  }
 );
 
+/**
+ * @param id - L'ID du numéro à mettre à jour
+ * @param data - Les données à mettre à jour avec les nouvelles valeurs
+ * @returns Le numéro mis à jour
+ */
 export const updateNumber = createAsyncThunk(
   "number/updateNumber",
   async ({
@@ -48,9 +59,13 @@ export const updateNumber = createAsyncThunk(
   }) => {
     const response = await numberService.updateNumber(id, data);
     return response;
-  },
+  }
 );
 
+/*
+ * @param id - L'ID du numéro à supprimer
+ * @returns L'ID du numéro supprimé
+ */
 export const deleteNumber = createAsyncThunk(
   "number/deleteNumber",
   async ({ id }: { id: number }) => {
@@ -60,22 +75,28 @@ export const deleteNumber = createAsyncThunk(
     await numberService.deleteNumber(id);
 
     return id; // Retourne l'ID supprimé
-  },
+  }
 );
 
+/**
+ * Slice Redux pour la gestion des numéros
+ * Gère les états et actions liés aux numéros de contact
+ */
 const numberSlice = createSlice({
   name: "number",
   initialState,
   reducers: {
+    // Définir le numéro courant
     setCurrentNumber: (state, action: PayloadAction<Numero_meddoc | null>) => {
       state.currentNumber = action.payload;
     },
+    // Contrôler l'état des modales
     setModalState: (
       state,
       action: PayloadAction<{
         modalType: "add" | "edit" | "remove";
         isOpen: boolean;
-      }>,
+      }>
     ) => {
       const { modalType, isOpen } = action.payload;
       if (modalType == "add") {
@@ -88,15 +109,19 @@ const numberSlice = createSlice({
         state.isRemoveNumberOpen = isOpen;
       }
     },
+    // Définir l'état de chargement
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    // Définir un message d'erreur
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
   },
+  // Gestion des actions asynchrones
   extraReducers: (builder) => {
     builder
+      // Récupération des numéros
       .addCase(fetchNumbers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -109,6 +134,7 @@ const numberSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Une erreur s'est produite";
       })
+      // Ajout de numéro
       .addCase(addNumber.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -122,6 +148,7 @@ const numberSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Une erreur s'est produite";
       })
+      // Mise à jour de numéro
       .addCase(updateNumber.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -129,7 +156,7 @@ const numberSlice = createSlice({
       .addCase(updateNumber.fulfilled, (state, action) => {
         const index = state.numeros.findIndex(
           (num) => num.id === action.payload.id,
-          (state.isEditNumberOpen = false),
+          (state.isEditNumberOpen = false)
         );
         if (index !== -1) state.numeros[index] = action.payload;
         state.isEditNumberOpen = false;
@@ -139,13 +166,14 @@ const numberSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Une erreur s'est produite";
       })
+      // Suppression de numéro
       .addCase(deleteNumber.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(deleteNumber.fulfilled, (state, action) => {
         state.numeros = state.numeros.filter(
-          (num) => num.id !== action.payload,
+          (num) => num.id !== action.payload
         );
         state.currentNumber = null;
         state.isRemoveNumberOpen = false;

@@ -1,43 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
 import {
   setAmbulances,
   addAmbulance,
   updateAmbulance,
   deleteAmbulance,
   Ambulance,
-} from '@/store/ambulanceSlice';
-import AddAmbulance from '@/components/Ambulance/AddAmbulance';
-import AmbulanceCard from '@/components/Ambulance/AmbulanceCard';
+} from "@/store/ambulanceSlice";
+import AddAmbulance from "@/components/dashboard/Ambulance/AddAmbulance";
+import AmbulanceCard from "@/components/dashboard/Ambulance/AmbulanceCard";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Search, Pencil, Trash2 } from 'lucide-react';
-import { ambulanceService } from '@/services/ambulanceService';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
+} from "@/components/ui/dialog";
+import { Search, Pencil, Trash2 } from "lucide-react";
+import { ambulanceService } from "@/services/ambulanceService";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const AmbulanceList: React.FC = () => {
   const dispatch = useDispatch();
-  const ambulances = useSelector((state: RootState) => state.ambulance.ambulances);
+  const ambulances = useSelector(
+    (state: RootState) => state.ambulance.ambulances
+  );
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [editingAmbulance, setEditingAmbulance] = useState<Ambulance | null>(null);
-  const [search, setSearch] = useState('');
+  const [editingAmbulance, setEditingAmbulance] = useState<Ambulance | null>(
+    null
+  );
+  const [search, setSearch] = useState("");
 
   const fetchAmbulances = async () => {
     try {
       const data = await ambulanceService.getAmbulances();
       dispatch(setAmbulances(data));
     } catch (error) {
-      console.error('Error fetching ambulances:', error);
-      toast.error('Erreur', {
-        description: 'Impossible de récupérer les ambulances',
+      console.error("Error fetching ambulances:", error);
+      toast.error("Erreur", {
+        description: "Impossible de récupérer les ambulances",
         duration: 3000,
       });
     }
@@ -51,13 +55,13 @@ const AmbulanceList: React.FC = () => {
     try {
       await ambulanceService.deleteAmbulance(id);
       dispatch(deleteAmbulance(id));
-      toast.success('Ambulance supprimée', {
+      toast.success("Ambulance supprimée", {
         description: "L'ambulance a été supprimée avec succès",
         duration: 3000,
       });
     } catch (error) {
-      console.error('Error deleting ambulance:', error);
-      toast.error('Erreur', {
+      console.error("Error deleting ambulance:", error);
+      toast.error("Erreur", {
         description: "Impossible de supprimer l'ambulance",
         duration: 3000,
       });
@@ -83,13 +87,13 @@ const AmbulanceList: React.FC = () => {
       dispatch(updateAmbulance(response));
       setIsEditDialogOpen(false);
       setEditingAmbulance(null);
-      toast.success('Ambulance modifiée', {
-        description: 'Les modifications ont été enregistrées avec succès',
+      toast.success("Ambulance modifiée", {
+        description: "Les modifications ont été enregistrées avec succès",
         duration: 3000,
       });
     } catch (error) {
-      console.error('Error updating ambulance:', error);
-      toast.error('Erreur', {
+      console.error("Error updating ambulance:", error);
+      toast.error("Erreur", {
         description: "Impossible de modifier l'ambulance",
         duration: 3000,
       });
@@ -102,13 +106,13 @@ const AmbulanceList: React.FC = () => {
 
       dispatch(addAmbulance(response));
       setIsAddDialogOpen(false);
-      toast.success('Nouvelle ambulance', {
+      toast.success("Nouvelle ambulance", {
         description: "L'ambulance a été ajoutée avec succès",
         duration: 3000,
       });
     } catch (error) {
-      console.error('Error adding ambulance:', error);
-      toast.error('Erreur', {
+      console.error("Error adding ambulance:", error);
+      toast.error("Erreur", {
         description: "Impossible d'ajouter l'ambulance",
         duration: 3000,
       });
@@ -124,7 +128,7 @@ const AmbulanceList: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className='rounded-lg overflow-hidden'>
+      <div className="rounded-lg overflow-hidden">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 p-4 bg-white border-b">
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -140,7 +144,9 @@ const AmbulanceList: React.FC = () => {
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button className='w-full md:w-auto'>Ajouter une ambulance</Button>
+              <Button className="w-full md:w-auto">
+                Ajouter une ambulance
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
