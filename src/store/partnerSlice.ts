@@ -1,16 +1,19 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+// Gestion des partenaires de l'application
 import { partnerService } from "@/services/partnerService";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Structure de l'état pour les partenaires
 interface PartnerState {
   partners: PartnerType[];
-  currentPartner: PartnerType | null;
-  isLoading: boolean;
-  error: string | null;
-  isAddPartnerOpen: boolean;
-  isEditPartnerOpen: boolean;
-  isRemovePartnerOpen: boolean;
+  currentPartner: PartnerType | null; // Utiles pour les operations d'edition et de suppression
+  isLoading: boolean; // Utile pour la gestion des chargements
+  error: string | null; // Utile pour la gestion des erreurs
+  isAddPartnerOpen: boolean; // Afficher la modale d'ajout ou non
+  isEditPartnerOpen: boolean; // Afficher la modale d'edition ou non
+  isRemovePartnerOpen: boolean; // Afficher la modale de suppression ou non
 }
 
+// Valeur initiale
 const initialState: PartnerState = {
   partners: [],
   currentPartner: null,
@@ -21,22 +24,39 @@ const initialState: PartnerState = {
   isRemovePartnerOpen: false,
 };
 
+// Fonctions utiles pour la gestion des partenaires
+/**
+ * Recupere la liste des partenaires
+ * @returns La liste des partenaires
+ */
 export const fetchPartners = createAsyncThunk(
   "partner/fetchPartners",
   async () => {
     const response = await partnerService.getAllPartners();
     return response;
-  },
+  }
 );
 
+/**
+ * Ajoute un nouveau partenaire
+ * A noter qu'une partenaire a une logo a uploader au serveur
+ * @param partner Les informations du nouveau partenaire
+ * @returns Le nouveau partenaire
+ */
 export const addPartner = createAsyncThunk(
   "partner/addPartner",
   async (partner: Omit<PartnerType, "id">) => {
     const response = await partnerService.createPartner(partner);
     return response;
-  },
+  }
 );
 
+/**
+ * Met à jour un partenaire existant
+ * @param id L'identifiant du partenaire à mettre à jour
+ * @param partner Les informations du partenaire à mettre à jour
+ * @returns Le partenaire mis à jour
+ */
 export const updatePartner = createAsyncThunk(
   "partner/updatePartner",
   async ({
@@ -48,21 +68,28 @@ export const updatePartner = createAsyncThunk(
   }) => {
     const response = await partnerService.updatePartner(id, partner);
     return response;
-  },
+  }
 );
 
+/**
+ * Supprime un partenaire
+ * Il faut aussi supprimer le logo du serveur
+ * @param id L'identifiant du partenaire à supprimer
+ */
 export const deletePartner = createAsyncThunk(
   "partner/deletePartner",
   async (id: number) => {
     await partnerService.deletePartner(id);
     return id;
-  },
+  }
 );
 
+// Slice Redux pour la gestion des partenaires
 const partnerSlice = createSlice({
   name: "partner",
   initialState,
   reducers: {
+    // Partenaire actuellement selectionné pour les operations d'edition et de suppression
     setCurrentPartner: (state, action: PayloadAction<PartnerType | null>) => {
       state.currentPartner = action.payload;
     },

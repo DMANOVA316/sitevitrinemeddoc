@@ -15,10 +15,17 @@ import {
 import { uploadService } from "@/services/uploadService";
 import { getFileSize } from "@/utils/fileUtils";
 
+// Taille maximale du logo de partenaire
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
+/**
+ * Hook Redux pour la gestion complète des partenaires
+ * Gère les opérations CRUD et la gestion des états modaux
+ */
 export const usePartnerRedux = () => {
   const dispatch = useDispatch<AppDispatch>();
+
+  // Sélection de l'état global des partenaires
   const {
     partners,
     currentPartner,
@@ -29,18 +36,22 @@ export const usePartnerRedux = () => {
     isRemovePartnerOpen,
   } = useSelector((state: RootState) => state.partner);
 
+  // Récupérer la liste des partenaires
   const getPartners = () => {
     dispatch(fetchPartners());
   };
 
+  // Définir l'état de chargement
   const setIsLoadingData = (val: boolean) => {
     dispatch(setIsLoading(val));
   };
 
+  // Sélectionner un partenaire courant
   const selectCurrentPartner = (newCurrent: PartnerType) => {
     dispatch(setCurrentPartner(newCurrent));
   };
 
+  // Gestion des modales
   const showAddPartnerModal = (value: boolean) => {
     dispatch(setAddPartnerOpen(value));
   };
@@ -53,10 +64,12 @@ export const usePartnerRedux = () => {
     dispatch(setRemovePartnerOpen(value));
   };
 
+  // Définir un message d'erreur
   const setErrorMessage = (value: string) => {
     dispatch(setError(value));
   };
 
+  // Ajouter un nouveau partenaire avec gestion de logo
   const handleAddPartner = async (
     newPartner: Omit<PartnerType, "id">,
     file?: File,
@@ -89,6 +102,7 @@ export const usePartnerRedux = () => {
     }
   };
 
+  // Mettre à jour un partenaire existant avec gestion de logo
   const handleUpdatePartner = async (
     id: number,
     partner: Partial<Omit<PartnerType, "id">>,
@@ -124,6 +138,7 @@ export const usePartnerRedux = () => {
     }
   };
 
+  // Supprimer un partenaire
   const handleDeletePartner = async (id: number) => {
     try {
       setIsLoadingData(true);
@@ -144,12 +159,12 @@ export const usePartnerRedux = () => {
     }
   };
 
+  // Retourne les états et actions liés aux partenaires
   return {
     partners,
     currentPartner,
     selectCurrentPartner,
     isLoading,
-    // setIsLoadingData,
     error,
     isAddPartnerOpen,
     isEditPartnerOpen,

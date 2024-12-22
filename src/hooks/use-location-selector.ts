@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { locationService } from '@/services/locationService';
 
+// Interfaces pour la structure des données de localisation
 interface LocationSelectorState {
   provinces: Province[];
   regions: Region[];
@@ -19,7 +20,12 @@ interface LocationSelectorInitialValues {
   commune?: string;
 }
 
+/**
+ * Hook personnalisé pour la sélection hiérarchique de localités
+ * Gère la sélection et le filtrage des provinces, régions, districts et communes
+ */
 export const useLocationSelector = (initialValues?: LocationSelectorInitialValues) => {
+  // État pour stocker les données de localisation
   const [data, setData] = useState<LocationSelectorState>({
     provinces: [],
     regions: [],
@@ -31,7 +37,7 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
     selectedCommune: '',
   });
 
-  // Charger les données initiales
+  // Charger les données initiales de localisation
   useEffect(() => {
     const loadData = async () => {
       const [provinces, regions, districts, communes] = await Promise.all([
@@ -49,7 +55,7 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
         communes,
       }));
 
-      // Si nous avons des valeurs initiales, trouvons les IDs correspondants
+      // Initialiser avec des valeurs prédéfinies si disponibles
       if (initialValues) {
         const provinceId = provinces.find(p => p.name === initialValues.province)?.['@id'] || '';
         const regionId = regions.find(r => r.name === initialValues.region)?.['@id'] || '';
@@ -69,27 +75,28 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
     loadData();
   }, [initialValues]);
 
-  // Filtrer les régions en fonction de la province sélectionnée
+  // Filtrer les régions par province sélectionnée
   const filteredRegions = useMemo(() => {
     return data.regions.filter(
       (region) => region.province['@id'] === data.selectedProvince
     );
   }, [data.regions, data.selectedProvince]);
 
-  // Filtrer les districts en fonction de la région sélectionnée
+  // Filtrer les districts par région sélectionnée
   const filteredDistricts = useMemo(() => {
     return data.districts.filter(
       (district) => district.region['@id'] === data.selectedRegion
     );
   }, [data.districts, data.selectedRegion]);
 
-  // Filtrer les communes en fonction du district sélectionné
+  // Filtrer les communes par district sélectionné
   const filteredCommunes = useMemo(() => {
     return data.communes.filter(
       (commune) => commune.district['@id'] === data.selectedDistrict
     );
   }, [data.communes, data.selectedDistrict]);
 
+  // Méthodes de sélection pour chaque niveau de localité
   const setSelectedProvince = (provinceId: string) => {
     setData(prev => ({
       ...prev,
@@ -124,7 +131,7 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
     }));
   };
 
-  // Obtenir les noms au lieu des IDs
+  // Convertir les IDs sélectionnés en noms de localités
   const getLocationNames = () => {
     const province = data.provinces.find(p => p['@id'] === data.selectedProvince)?.name || '';
     const region = data.regions.find(r => r['@id'] === data.selectedRegion)?.name || '';
@@ -139,6 +146,7 @@ export const useLocationSelector = (initialValues?: LocationSelectorInitialValue
     };
   };
 
+  // Retourne les données et méthodes de sélection de localités
   return {
     provinces: data.provinces,
     filteredRegions,

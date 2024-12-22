@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import partnerReducer from "./partnerSlice";
-import pharmacyReducer from "./pharmacySlice";
-import numberReducer from "./numberSlice";
-import socialMediaReducer from "./socialMediaSlice";
-import infoMeddocReducer from "./infoMeddocSlice";
 import ambulanceReducer from "./ambulanceSlice";
-import locationReducer from "./locationSlice.ts";
 import contactReducer from "./contactSlice";
 import couvertureReducer from "./couvertureSlice.ts";
+import infoMeddocReducer from "./infoMeddocSlice";
+import locationReducer from "./locationSlice.ts";
+import numberReducer from "./numberSlice";
+import partnerReducer from "./partnerSlice";
+import pharmacyReducer from "./pharmacySlice";
+import socialMediaReducer from "./socialMediaSlice";
 
+// Configuration du store
 export const store = configureStore({
   reducer: {
     location: locationReducer,

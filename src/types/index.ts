@@ -58,14 +58,14 @@ declare global {
     id?: number;
     id_pharmacie?: number;
     numero: string;
-  }
+  };
 
   type PharmacySchedule = {
     id?: number;
     id_pharmacie?: number;
     heure_debut: string;
     heure_fin: string;
-  }
+  };
 
   type Pharmacy = {
     id?: number;
@@ -81,7 +81,7 @@ declare global {
     // localisation?: { x: number; y: number };
     contacts?: PharmacyContact[];
     horaires?: PharmacySchedule[];
-  }
+  };
 
   type ContactAmbulance = {
     id?: number;
@@ -105,13 +105,13 @@ declare global {
   type Numero_meddoc = {
     id: number;
     numero: string;
-  }
+  };
 
   type SocialMedia = {
     id: number;
     nom: string;
     lien: string;
-  }
+  };
   type LocationSelectorProps = {
     /**
      * Callback pour notifier un changement de localisation.
@@ -134,14 +134,14 @@ declare global {
       district?: string;
       commune?: string;
     };
-  }
+  };
   type locationData = {
     provinces: Province[];
     regions: Region[];
     districts: District[];
     communes: Commune[];
-  }
-  
+  };
+
   type contactez_nous = {
     id: number;
     nom: string;
@@ -152,27 +152,27 @@ declare global {
     message: string;
     date_envoye: string;
     vue: boolean;
-  }
+  };
   type Couverture = {
     id: number;
     photo: string;
     titre: string;
     description: string;
-  }
+  };
   type PartnerType = {
     id: number;
     nom_partenaire: string;
     lien: string;
     logo: string;
-  }
-  
+  };
+
   type ServiceType = {
     id: number;
     nom: string;
     description: string;
     lien: string;
-  }
-  
+  };
+
   type usePartnerProps = {
     partners: PartnerType[];
     currentPartner: PartnerType | null;
@@ -186,17 +186,17 @@ declare global {
     setIsRemovePartnerOpen: (isOpen: boolean) => void;
     handleAddPartner: (
       partner: Omit<PartnerType, "id">,
-      file?: File
+      file?: File,
     ) => Promise<void>;
     handleEditPartner: (
       partner: PartnerType,
-      file?: File | null
+      file?: File | null,
     ) => Promise<void>;
     handleRemovePartner: (id: number) => Promise<void>;
     handleSelectPartner: (partner: PartnerType) => void;
     setCurrentPartner: (partner: PartnerType | null) => void;
-  }
-  
+  };
+
   type useSocialMediaProps = {
     socialMedias: SocialMedia[];
     isAddSocialMediaOpen: boolean;
@@ -213,8 +213,8 @@ declare global {
     currentSocialMedia: SocialMedia | null;
     setCurrentSocialMedia: (socialMedia: SocialMedia | null) => void;
     handleSelectSocialMedia: (socialMedia: SocialMedia) => void;
-  }
-  
+  };
+
   type Info_page_meddoc = {
     id: number;
     titre_site: string;

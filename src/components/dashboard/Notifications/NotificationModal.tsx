@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogDescription 
-} from '@/components/ui/dialog';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from '@/components/ui/dropdown-menu';
-import { Bell, Check, X, MoreVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Bell, Check, X, MoreVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Define the structure of a notification
-interface Notification {
+// Definition de la structure des notifications
+type Notification = {
   id: string;
   title: string;
   description: string;
   timestamp: Date;
   read: boolean;
-}
+};
 
 interface NotificationModalProps {
   isOpen: boolean;
@@ -38,9 +38,9 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
   onOpenChange,
   notifications,
   onMarkAsRead,
-  onClearNotification
+  onClearNotification,
 }) => {
-  // Sort notifications with unread first, then by most recent
+  // Non lu en premier
   const sortedNotifications = [...notifications].sort((a, b) => {
     if (a.read !== b.read) {
       return a.read ? 1 : -1;
@@ -57,21 +57,21 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
             Notifications
           </DialogTitle>
           <DialogDescription>
-            {notifications.length === 0 
-              ? "Vous n'avez pas de nouvelles notifications" 
+            {notifications.length === 0
+              ? "Vous n'avez pas de nouvelles notifications"
               : `Vous avez ${notifications.length} notifications`}
           </DialogDescription>
         </DialogHeader>
-        
+
         {notifications.length > 0 ? (
           <ScrollArea className="h-[300px] pr-4">
             <div className="space-y-3">
               {sortedNotifications.map((notification) => (
-                <div 
-                  key={notification.id} 
+                <div
+                  key={notification.id}
                   className={`
                     p-3 rounded-lg border 
-                    ${!notification.read ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200'}
+                    ${!notification.read ? "bg-blue-50 border-blue-200" : "bg-gray-50 border-gray-200"}
                     flex justify-between items-start
                   `}
                 >
@@ -87,14 +87,20 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
                   <div className="flex items-center space-x-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-48">
                         {!notification.read && (
                           <DropdownMenuItem
-                            onClick={() => onMarkAsRead && onMarkAsRead(notification.id)}
+                            onClick={() =>
+                              onMarkAsRead && onMarkAsRead(notification.id)
+                            }
                             className="cursor-pointer flex"
                           >
                             <Check className="mr-2 h-4 w-4" />
@@ -103,7 +109,10 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
                         )}
                         <DropdownMenuItem
                           className="cursor-pointer flex text-red-600"
-                          onClick={() => onClearNotification && onClearNotification(notification.id)}
+                          onClick={() =>
+                            onClearNotification &&
+                            onClearNotification(notification.id)
+                          }
                         >
                           <X className="mr-2 h-4 w-4" />
                           Supprimer
@@ -125,3 +134,4 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
     </Dialog>
   );
 };
+

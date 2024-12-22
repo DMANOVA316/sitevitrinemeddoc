@@ -1,19 +1,26 @@
 import { AppDispatch, RootState } from "@/store";
 import {
-  setIsEditInfoModal,
   fetchInformations,
+  setIsEditInfoModal,
   updateInfos,
 } from "@/store/infoMeddocSlice";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
+/**
+ * Hook Redux pour la gestion des informations MeDDoc
+ * Fournit des actions de récupération et de mise à jour
+ */
 export default function useInfoMeddocRedux() {
   const dispatch = useDispatch<AppDispatch>();
+
+  // Sélection de l'état global des informations
   const { infoMeddoc, isLoading, error, isEditInformationOpen } = useSelector(
     (state: RootState) => state.infoMedoc
   );
 
+  // Récupérer les informations
   const getInformations = useCallback(async () => {
     try {
       await dispatch(fetchInformations()).unwrap();
@@ -26,6 +33,7 @@ export default function useInfoMeddocRedux() {
     }
   }, [dispatch]);
 
+  // Contrôler la modale d'édition
   const showEditInformationModal = useCallback(
     (open: boolean) => {
       dispatch(setIsEditInfoModal(open));
@@ -33,6 +41,7 @@ export default function useInfoMeddocRedux() {
     [dispatch]
   );
 
+  // Mettre à jour les informations
   const updateInformations = useCallback(
     async (
       newInfos: Partial<Info_page_meddoc>,
@@ -63,11 +72,13 @@ export default function useInfoMeddocRedux() {
     [dispatch, infoMeddoc]
   );
 
+  // Charger les informations au montage du composant
   useEffect(() => {
     getInformations();
     console.log("RENDER");
   }, [getInformations]);
 
+  // Retourne les états et actions liés aux informations
   return {
     infoMeddoc,
     isLoading,
