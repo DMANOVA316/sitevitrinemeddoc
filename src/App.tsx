@@ -8,8 +8,8 @@ import Login from "./pages/Login";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import PrivateRoute from "@/components/PrivateRoute";
 import DashboardIndex from "./pages/Dashboard/Index";
-import DashboardPharmacies from "./pages/Dashboard/PharmacyList";
-import Pharmacies from "./pages/Pharmacies";
+import DashboardPharmacies from "./pages/Dashboard/Pharmacy/PharmacyList";
+import Pharmacy from "./pages/Pharmacy";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
 import Digital from "./pages/services/Digital";
@@ -22,7 +22,7 @@ import { ServiceProvider } from "./contexts/ServiceContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
 import About from "./pages/About"; // Added import statement
 
-import AmbulanceList from "./pages/Dashboard/AmbulanceList";
+import AmbulanceList from "./pages/Dashboard/Ambulance/AmbulanceList";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
@@ -59,7 +59,7 @@ const App = () => (
                   path="/pharmacies"
                   element={
                     <PublicLayout>
-                      <Pharmacies />
+                      <Pharmacy />
                     </PublicLayout>
                   }
                 />

@@ -8,9 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Search } from "lucide-react";
-import AddNumber from "@/components/dashboard/AddNumber";
-import EditNumber from "@/components/dashboard/EditNumber";
-import RemoveNumber from "@/components/dashboard/RemoveNumber";
+import AddNumber from "@/components/dashboard/Number/AddNumber";
+import EditNumber from "@/components/dashboard/Number/EditNumber";
+import RemoveNumber from "@/components/dashboard/Number/RemoveNumber";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo, useEffect } from "react";
@@ -26,7 +26,7 @@ export default function NumberList() {
   const filteredNumbers = useMemo(() => {
     if (!numeros) return [];
     return numeros.filter((number) =>
-      number.numero.toLowerCase().includes(searchQuery.toLowerCase()),
+      number.numero.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [numeros, searchQuery]);
 

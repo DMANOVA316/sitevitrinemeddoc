@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import Partner from "./Partner";
-import AddPartner from "@/components/dashboard/AddPartner";
-import EditPartner from "@/components/dashboard/EditPartner";
-import RemovePartner from "@/components/dashboard/RemovePartner";
+import AddPartner from "@/components/dashboard/Partner/AddPartner";
+import EditPartner from "@/components/dashboard/Partner/EditPartner";
+import RemovePartner from "@/components/dashboard/Partner/RemovePartner";
 import { usePartnerRedux } from "@/hooks/use-partner-redux";
 import EmptyData from "@/components/EmptyData";
 
@@ -21,7 +21,7 @@ export default function PartnerList() {
       partner.nom_partenaire
         .toLowerCase()
         .includes(researchVal.toLowerCase()) ||
-      partner.lien.toLowerCase().includes(researchVal.toLowerCase()),
+      partner.lien.toLowerCase().includes(researchVal.toLowerCase())
   );
 
   return (

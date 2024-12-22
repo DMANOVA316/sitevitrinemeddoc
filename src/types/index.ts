@@ -83,6 +83,25 @@ declare global {
     horaires?: PharmacySchedule[];
   }
 
+  type ContactAmbulance = {
+    id?: number;
+    id_ambulance?: number;
+    numero: string;
+  }
+
+  type Ambulance = {
+    id?: number;
+    nom: string;
+    contact?: string;
+    address: string;
+    province: string;
+    region?: string;
+    district?: string;
+    commune: string;
+    // localisation?: { x: number; y: number };
+    contacts?: ContactAmbulance[];
+  }
+
   type Numero_meddoc = {
     id: number;
     numero: string;
@@ -204,6 +223,10 @@ declare global {
     email: string;
     addresse: string;
     copyrigth: string;
+  }
+
+  interface LocationSelectorRef {
+    reset: () => void; // Fonction de réinitialisation
   }
 }
 

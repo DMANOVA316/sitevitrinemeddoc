@@ -1,8 +1,8 @@
-import React from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,24 +10,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Ambulance } from '@/store/ambulanceSlice';
-import { Plus, Trash2 } from 'lucide-react';
-import LocationSelector from '@/components/LocationSelector/LocationSelector';
-import { Label } from '../ui/label';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Ambulance } from "@/store/ambulanceSlice";
+import { Plus, Trash2 } from "lucide-react";
+import LocationSelector from "@/components/LocationSelector/LocationSelector";
+import { Label } from "@/components/ui/label";
 
 const contactSchema = z.object({
-  numero: z.string().min(8, 'Le numéro doit contenir au moins 8 caractères'),
+  numero: z.string().min(8, "Le numéro doit contenir au moins 8 caractères"),
 });
 
 const ambulanceSchema = z.object({
-  nom: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
+  nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
   address: z.string().min(5, "L'adresse doit contenir au moins 5 caractères"),
-  province: z.string().min(2, 'La province est requise'),
+  province: z.string().min(2, "La province est requise"),
   region: z.string().optional(),
   district: z.string().optional(),
-  commune: z.string().min(2, 'La commune est requise'),
+  commune: z.string().min(2, "La commune est requise"),
   contacts: z.array(contactSchema),
 });
 
@@ -42,19 +42,19 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
   const form = useForm<AmbulanceFormData>({
     resolver: zodResolver(ambulanceSchema),
     defaultValues: {
-      nom: ambulance?.nom || '',
-      address: ambulance?.address || '',
-      province: ambulance?.province || '',
-      region: ambulance?.region || '',
-      district: ambulance?.district || '',
-      commune: ambulance?.commune || '',
-      contacts: ambulance?.contacts || [{ numero: '' }],
+      nom: ambulance?.nom || "",
+      address: ambulance?.address || "",
+      province: ambulance?.province || "",
+      region: ambulance?.region || "",
+      district: ambulance?.district || "",
+      commune: ambulance?.commune || "",
+      contacts: ambulance?.contacts || [{ numero: "" }],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'contacts',
+    name: "contacts",
   });
 
   const handleLocationChange = (location: {
@@ -63,10 +63,10 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
     district?: string;
     commune: string;
   }) => {
-    form.setValue('province', location.province);
-    form.setValue('region', location.region || '');
-    form.setValue('district', location.district || '');
-    form.setValue('commune', location.commune);
+    form.setValue("province", location.province);
+    form.setValue("region", location.region || "");
+    form.setValue("district", location.district || "");
+    form.setValue("commune", location.commune);
   };
 
   return (
@@ -105,10 +105,10 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
             <LocationSelector
               onLocationChange={handleLocationChange}
               initialValues={{
-                province: form.getValues('province'),
-                region: form.getValues('region'),
-                district: form.getValues('district'),
-                commune: form.getValues('commune'),
+                province: form.getValues("province"),
+                region: form.getValues("region"),
+                district: form.getValues("district"),
+                commune: form.getValues("commune"),
               }}
             />
           </div>
@@ -145,7 +145,7 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => append({ numero: '' })}
+              onClick={() => append({ numero: "" })}
               className="mt-2"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -155,9 +155,7 @@ const AddAmbulance: React.FC<AddAmbulanceProps> = ({ ambulance, onSubmit }) => {
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit">
-            {ambulance ? 'Modifier' : 'Ajouter'}
-          </Button>
+          <Button type="submit">{ambulance ? "Modifier" : "Ajouter"}</Button>
         </div>
       </form>
     </Form>

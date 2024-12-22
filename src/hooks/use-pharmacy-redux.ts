@@ -8,11 +8,6 @@ import {
   setCurrentPharmacy,
   setModalState,
 } from "@/store/pharmacySlice";
-import {
-  setAddPartnerOpen,
-  setEditPartnerOpen,
-  setRemovePartnerOpen,
-} from "@/store/partnerSlice";
 
 export const usePharmacyRedux = () => {
   const dispatch = useDispatch<AppDispatch>();
