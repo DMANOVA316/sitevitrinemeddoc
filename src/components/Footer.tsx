@@ -7,6 +7,7 @@ import { useEffect } from "react";
 const Footer = () => {
   const { infoMeddoc, isLoading: isLoadingInfos } = useInfoMeddocRedux();
   const { numeros, isLoading: isLoadingNumbers, getNumbers } = useNumberRedux();
+  const date = new Date().getFullYear();
 
   useEffect(() => {
     getNumbers();
@@ -86,7 +87,9 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-gray-400">© 2024 {infoMeddoc?.copyrigth}</p>
+          <p className="text-gray-400">
+            © {date} {infoMeddoc?.copyrigth}
+          </p>
         </div>
       </div>
     </footer>
