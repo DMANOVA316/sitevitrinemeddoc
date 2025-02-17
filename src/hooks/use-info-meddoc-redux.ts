@@ -65,7 +65,7 @@ export default function useInfoMeddocRedux() {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Erreur lors de la mise à jour des informations"
+            : "Erreur lors de la mise à jour des informations dans hooks"
         );
       }
     },

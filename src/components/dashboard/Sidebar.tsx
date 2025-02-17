@@ -150,9 +150,9 @@ const Sidebar = ({ className }: SidebarProps) => {
                     className="h-12 object-contain"
                   />
                 ) : null}
-                <h2 className="text-2xl font-bold text-center text-meddoc-primary">
+                {/* <h2 className="text-2xl font-bold text-center text-meddoc-primary">
                   MEDDoC
-                </h2>
+                </h2> */}
               </div>
               {/* Liste des éléments du menu */}
               <ScrollArea className="h-[calc(100vh-12rem)]">

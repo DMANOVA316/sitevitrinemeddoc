@@ -51,11 +51,11 @@ export function SiteLogo({
               className={imgClassName}
             />
           )}
-          {showText && (
+          {/* {showText && (
             <span className={textClassName}>
               {info?.titre_site || "MEDDoC"}
             </span>
-          )}
+          )} */}
         </>
       )}
     </div>
