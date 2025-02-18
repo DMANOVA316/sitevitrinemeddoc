@@ -25,9 +25,8 @@ function PageTitle({ isDashboard }: PageTitleProps) {
         // Mise à jour du favicon
         if (data?.favicon) {
           const faviconUrl = getPublicUrl(data.favicon);
-          const link =
-            document.querySelector("link[rel*='icon']") ||
-            document.createElement("link");
+          const link = (document.querySelector("link[rel*='icon']") ||
+            document.createElement("link")) as HTMLLinkElement;
           link.type = "image/x-icon";
           link.rel = "shortcut icon";
           link.href = faviconUrl;
@@ -39,7 +38,7 @@ function PageTitle({ isDashboard }: PageTitleProps) {
     };
 
     updateInfo();
-  }, [infoMeddoc]);
+  }, [infoMeddoc, isDashboard]);
 
   return null;
 }

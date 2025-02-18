@@ -22,6 +22,7 @@ export function EditPagesProvider({ children }: { children: ReactNode }) {
       value={{
         isHeaderModalOpen,
         isLandingPageModalOpen,
+        isFooterModalOpen,
         setIsHeaderModalOpen,
         setIsLandingPageModalOpen,
       }}
@@ -31,6 +32,7 @@ export function EditPagesProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useEditPagesContext() {
   const context = useContext(EditPagesContext);
   if (context === undefined) {

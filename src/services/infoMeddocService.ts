@@ -25,7 +25,7 @@ export const infoMeddocService = {
     files?: { logo: File | null; favicon: File | null }
   ): Promise<Info_page_meddoc> => {
     try {
-      let updatedInfo = { ...info };
+      const updatedInfo = { ...info };
 
       // Upload new logo if provided
       if (files?.logo) {
@@ -59,7 +59,7 @@ export const infoMeddocService = {
     files?: { logo: File | null; favicon: File | null }
   ): Promise<Info_page_meddoc> => {
     try {
-      let newInfo = { ...info };
+      const newInfo = { ...info };
 
       // Upload logo if provided
       if (files?.logo) {
