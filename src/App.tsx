@@ -27,6 +27,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
 import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
+import Formations from "./pages/services/Formations";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -105,6 +106,14 @@ const App = () => (
                   }
                 />
 
+<Route
+                  path="/services/formations"
+                  element={
+                    <PublicLayout>
+                      <Formations />
+                    </PublicLayout>
+                  }
+                />
                 {/* Routes protégées pour le tableau de bord */}
                 <Route element={<PrivateRoute />}>
                   <Route element={<DashboardLayout />}>
