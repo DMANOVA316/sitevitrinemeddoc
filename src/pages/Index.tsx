@@ -58,7 +58,7 @@ const Index = () => {
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl animate-fade-up">
             <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
-              La première entreprise 360° santé à Madagascar
+              A vos marques, prêt, santé !
             </span>
             <h1 className="mb-6 text-6xl font-bold leading-tight text-white">
               {isLoadingCouverture ? (
@@ -113,8 +113,8 @@ const Index = () => {
               Nos Services
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Des solutions complètes pour répondre aux besoins du secteur de la
-              santé
+            C’est une vision 360° de la santé : humaine, technologique, accessible.
+
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
@@ -149,7 +149,21 @@ const Index = () => {
                 </div>
               </Card>
             </Link>
+            <Link to="/services/consulting" className="group">
+              <Card className="p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <Stethoscope className="mb-6 h-12 w-12 text-meddoc-primary" />
+                <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-meddoc-primary transition-colors">
+                Formations 
+                </h3>
+                <p className="text-slate-600 mb-6">
+                Des formations pratiques et ciblées pour renforcer les compétences de vos équipes sur le terrain : gestion, finance, outils numériques, communication, services de santé, etc.
 
+                </p>
+                <div className="flex items-center text-meddoc-primary">
+                  En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+                </div>
+              </Card>
+            </Link>
             <Link to="/services/consulting" className="group">
               <Card className="p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <Stethoscope className="mb-6 h-12 w-12 text-meddoc-primary" />

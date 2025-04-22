@@ -45,6 +45,11 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-6">
           <NavigationMenu>
             <NavigationMenuList>
+
+            <NavigationMenuItem>
+                  <a href="https://app-meddoc.vercel.app/" className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition">APP MEDDoC</a>
+               
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-lg font-semibold text-gray-700 hover:text-blue-600 transition">
                   Nos Services
@@ -101,6 +106,14 @@ const Header = () => {
                   className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
                 >
                   A propos
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  to="/contact"
+                  className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
+                >
+                  Contacter Nous
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
