@@ -14,6 +14,11 @@ import {
   Briefcase,
   Lightbulb,
   Heart,
+  Facebook,
+  Instagram,
+  Twitter,
+  MessageCircle,
+  Linkedin,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -62,6 +67,56 @@ const Index = () => {
             backgroundImage: `url(${couverture?.photo})`,
           }}
         ></div>
+
+        {/* Social Media Icons */}
+        <div className="absolute top-57 right-8 z-20 flex flex-col gap-3">
+          <a
+            href="https://www.facebook.com/meddoc.mg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            aria-label="Facebook"
+          >
+            <Facebook className="h-6 w-6 text-white" />
+          </a>
+          <a
+            href="https://www.instagram.com/meddoc.mg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-6 w-6 text-white" />
+          </a>
+          <a
+            href="https://twitter.com/meddoc_mg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            aria-label="X (Twitter)"
+          >
+            <Twitter className="h-6 w-6 text-white" />
+          </a>
+          <a
+            href="https://wa.me/261340000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            aria-label="WhatsApp"
+          >
+            <MessageCircle className="h-6 w-6 text-white" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/meddoc-mg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="h-6 w-6 text-white" />
+          </a>
+        </div>
+
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl animate-fade-up">
             <span className="text-xl inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
@@ -74,7 +129,7 @@ const Index = () => {
                   <Skeleton className="w-1/2 h-[50px]" />
                 </div>
               ) : (
-                couverture?.titre || "Des Solutions Innovantes pour la Santé"
+                couverture?.titre || "La première entreprise 360° santé à Madagascar"
               )}
             </h1>
             <p className="mb-8 text-xl text-white/90 leading-relaxed">
