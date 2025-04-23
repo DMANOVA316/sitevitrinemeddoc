@@ -1,27 +1,29 @@
 import { ArrowRight, BarChart4, Building2, CheckCircle2, FileText, MessageCircle, PenTool, Share2, Target, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import communityImage from "../../assets/serivces-images/community.jpg";
 
 const Community = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec effet parallaxe */}
-      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/90 to-meddoc-secondary/90 bg-fixed bg-cover"
+      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
-          backgroundBlendMode: "overlay"
+          backgroundImage: `url(${communityImage})`,
+          backgroundBlendMode: "overlay",
+          backgroundPosition: "center"
         }}>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Community Management<span className="text-yellow-300">.</span>
+              Community Management Médical <span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Aujourd'hui, la présence digitale est un atout incontournable pour les structures de santé. MEDDoC accompagne les professionnels du secteur dans la gestion stratégique et créative de leurs réseaux sociaux.
             </p>
             <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
@@ -42,7 +44,7 @@ const Community = () => {
             <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
               Nos services de community management sont spécialement conçus pour les acteurs du secteur de la santé à Madagascar
             </p>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Client 1 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
@@ -57,7 +59,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Client 2 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -71,7 +73,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Client 3 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -100,7 +102,7 @@ const Community = () => {
             <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
               Une approche complète pour développer et gérer votre présence en ligne de manière professionnelle
             </p>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Service 1 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
@@ -115,7 +117,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Service 2 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -129,7 +131,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Service 3 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -143,7 +145,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Service 4 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -157,7 +159,7 @@ const Community = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Service 5 */}
               <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
@@ -188,7 +190,7 @@ const Community = () => {
                 <p className="text-gray-600 mb-8">
                   Notre approche stratégique et créative vous permet d'obtenir des résultats concrets et mesurables pour votre structure de santé.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-meddoc-primary flex-shrink-0 mt-0.5" />
@@ -197,7 +199,7 @@ const Community = () => {
                       <p className="text-gray-600">Augmentez votre notoriété et atteignez une audience plus large</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-meddoc-primary flex-shrink-0 mt-0.5" />
                     <div>
@@ -205,7 +207,7 @@ const Community = () => {
                       <p className="text-gray-600">Développez une relation de confiance avec votre communauté</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="h-6 w-6 text-meddoc-primary flex-shrink-0 mt-0.5" />
                     <div>
@@ -215,7 +217,7 @@ const Community = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="md:w-1/2 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3 opacity-20"></div>
                 <img
@@ -236,13 +238,13 @@ const Community = () => {
             <div className="relative p-8 md:p-12">
               <div className="absolute top-0 right-0 -mt-12 -mr-12 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-              
+
               <div className="relative z-10 text-white">
                 <h2 className="text-3xl font-bold mb-6">Prêt à transformer votre présence en ligne ?</h2>
                 <p className="text-xl text-white/90 mb-8">
                   💬 Contactez-nous pour mettre en place une communication professionnelle et efficace adaptée à votre structure de santé.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
                     Demander un audit gratuit

@@ -1,11 +1,17 @@
 import { ArrowRight, Code, Database, Globe, MapPin, Shield, Smartphone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import digitaleImage from "../../assets/serivces-images/digitale.jpg";
 
 const Digital = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section avec fond dégradé et motif */}
-      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
+      {/* Hero Section avec image de fond et dégradé */}
+      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
+        style={{
+          backgroundImage: `url(${digitaleImage})`,
+          backgroundBlendMode: "overlay",
+          backgroundPosition: "center"
+        }}>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
 
@@ -14,10 +20,10 @@ const Digital = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Solutions Digitales Santé<span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Des outils numériques au service de la santé à Madagascar
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Chez MEDDoC, nous croyons que la technologie peut révolutionner l'accès aux soins. Nos solutions digitales sont conçues pour simplifier le quotidien des professionnels de santé et améliorer la qualité des services offerts à la population.
             </p>
             <a href="#services">

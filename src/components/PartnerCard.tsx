@@ -18,9 +18,9 @@ export default function PartnerCard({ partner }: { partner: PartnerType }) {
               className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </div>
-          <h3 className="text-2xl font-semibold  text-meddoc-primary transition-colors text-center">
+          {/* <h3 className="text-2xl font-semibold  text-meddoc-primary transition-colors text-center">
             {partner.nom_partenaire}
-          </h3>
+          </h3> */}
         </div>
       </Card>
     </Link>

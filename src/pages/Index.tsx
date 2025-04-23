@@ -12,7 +12,17 @@ import {
   Target,
   GraduationCap,
   Briefcase,
+  Lightbulb,
+  Heart,
 } from "lucide-react";
+
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TwitterIcon,
+  MessageCircleIcon,
+  LinkedinIcon,
+} from "./SocialIcons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { couvertureService } from "@/services/couvertureService";
@@ -53,13 +63,66 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-meddoc-primary via-sky-500 to-meddoc-secondary py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-meddoc-primary via-sky-500 to-meddoc-secondary py-20 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
             backgroundImage: `url(${couverture?.photo})`,
           }}
         ></div>
+
+        {/* Social Media Icons */}
+        <div className="absolute top-8 right-8 z-20 flex flex-col gap-3 md:gap-4 lg:top-10 lg:right-10 sm:flex-row md:flex-col">
+          {/* Sur mobile (< 640px): vertical à droite */}
+          {/* Sur tablette (640px - 768px): horizontal à droite */}
+          {/* Sur desktop (> 768px): vertical à droite */}
+          <a
+            href="https://www.facebook.com/MEDDOCHC"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            aria-label="Facebook"
+          >
+            <FacebookIcon />
+          </a>
+          <a
+            href="https://www.instagram.com/meddoc.healthcare/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            aria-label="Instagram"
+          >
+            <InstagramIcon />
+          </a>
+          <a
+            href="https://twitter.com/meddoc_mg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            aria-label="X (Twitter)"
+          >
+            <TwitterIcon />
+          </a>
+          <a
+            href="https://wa.me/261340000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            aria-label="WhatsApp"
+          >
+            <MessageCircleIcon />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/meddochealthcare/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            aria-label="LinkedIn"
+          >
+            <LinkedinIcon />
+          </a>
+        </div>
+
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl animate-fade-up">
             <span className="text-xl inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
@@ -72,7 +135,7 @@ const Index = () => {
                   <Skeleton className="w-1/2 h-[50px]" />
                 </div>
               ) : (
-                couverture?.titre || "Des Solutions Innovantes pour la Santé"
+                couverture?.titre || "La première entreprise 360° santé à Madagascar"
               )}
             </h1>
             <p className="mb-8 text-xl text-white/90 leading-relaxed">
@@ -111,7 +174,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
+      <section className="py-10 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -121,7 +184,7 @@ const Index = () => {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos Services</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               C'est une vision 360° de la santé : humaine, technologique, accessible.
             </p>
           </div>
@@ -227,49 +290,58 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-32 bg-gradient-to-br from-white to-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
+      <section className="py-10 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3 group-hover:rotate-1 transition-transform duration-500"></div>
-              <img
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-                alt="Medical Professional"
-                className="relative rounded-2xl shadow-xl w-full h-[400px] object-cover group-hover:scale-[1.02] transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl flex items-end">
-                <div className="p-6 text-white">
-                  <p className="font-medium">Une équipe engagée pour la santé à Madagascar</p>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 inline-block relative">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
+                <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
+                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Target className="h-8 w-8 text-meddoc-primary" />
                 </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Objectif</h3>
+                <p className="text-slate-600 text-center">
+                  Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-secondary md:mt-8">
+                <div className="w-16 h-16 rounded-full bg-meddoc-secondary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Lightbulb className="h-8 w-8 text-meddoc-secondary" />
+                </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Vision</h3>
+                <p className="text-slate-600 text-center">
+                  Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
+                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Heart className="h-8 w-8 text-meddoc-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Nos Valeurs</h3>
+                <p className="text-slate-600 text-center">
+                  Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
+                </p>
               </div>
             </div>
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-4xl font-bold mb-6 inline-block relative">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
-                  <div className="absolute w-24 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-0 -mb-2 rounded-full"></div>
-                </h2>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  MEDDoC s'engage à faciliter l'accès aux soins de santé pour la
-                  population malagasy tout en améliorant la qualité des services
-                  offerts aux professionnels de la santé.
-                </p>
-              </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-meddoc-primary">
-                <p className="text-slate-700 italic">
-                  "Notre vision est de transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale."
-                </p>
-              </div>
-
+            <div className="mt-8 text-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6"
+                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 rounded-full"
               >
-                En savoir plus
+                En savoir plus sur nous
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
@@ -278,7 +350,7 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
+      <section className="py-4 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -348,17 +420,17 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+      <section className="py-8 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Ils nous soutiennent</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               Des partenaires de confiance qui nous accompagnent dans notre mission de transformation de la santé à Madagascar
             </p>
           </div>
@@ -388,21 +460,18 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
+      <section className="py-10 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-slate-100 rounded-full -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-100 rounded-full -ml-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl p-8 md:p-12 shadow-xl">
             <div className="text-center">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                Prêt à améliorer vos services de santé<span className="text-yellow-300">?</span>
+                Parlons de votre projet dès maintenant<span className="text-yellow-300"> !</span>
               </h2>
               <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed">
-                Contactez-nous dès aujourd'hui pour découvrir comment nous pouvons
-                vous aider à optimiser vos services et transformer la santé à Madagascar.
+                📩 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button

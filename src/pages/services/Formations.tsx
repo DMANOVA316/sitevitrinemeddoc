@@ -1,11 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import formationsImage from "../../assets/serivces-images/formations.jpg";
 const Formations = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section avec fond dégradé et motif */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
+      {/* Hero Section avec image de fond et dégradé */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
+        style={{
+          backgroundImage: `url(${formationsImage})`,
+          backgroundBlendMode: "overlay",
+          backgroundPosition: "center"
+        }}>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform skew-y-1"></div>
 
@@ -14,10 +19,10 @@ const Formations = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Formations<span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Renforcez les compétences de vos équipes sur le terrain
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Les formations MEDDoC sont conçues pour répondre aux besoins réels des professionnels et structures du secteur santé. Courtes, pratiques et adaptées, elles permettent d'améliorer immédiatement la qualité des services rendus.
             </p>
           </div>
