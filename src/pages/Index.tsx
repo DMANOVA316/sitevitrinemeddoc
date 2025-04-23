@@ -62,7 +62,7 @@ const Index = () => {
         ></div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl animate-fade-up">
-            <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
+            <span className="text-xl inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
               A vos marques, prêt, santé !
             </span>
             <h1 className="mb-6 text-6xl font-bold leading-tight text-white">
