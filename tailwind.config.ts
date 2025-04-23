@@ -20,8 +20,9 @@ export default {
     extend: {
       colors: {
         meddoc: {
-          primary: "#0EA5E9",
-          secondary: "#0284C7",
+          // primary: "#0EA5E9",
+          primary:"#27aae1",
+          secondary: "#27aae1",
           light: "#F1F5F9",
         },
         border: "hsl(var(--border))",
