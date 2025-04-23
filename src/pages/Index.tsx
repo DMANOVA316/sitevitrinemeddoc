@@ -14,12 +14,15 @@ import {
   Briefcase,
   Lightbulb,
   Heart,
-  Facebook,
-  Instagram,
-  Twitter,
-  MessageCircle,
-  Linkedin,
 } from "lucide-react";
+
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TwitterIcon,
+  MessageCircleIcon,
+  LinkedinIcon,
+} from "./SocialIcons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { couvertureService } from "@/services/couvertureService";
@@ -69,51 +72,54 @@ const Index = () => {
         ></div>
 
         {/* Social Media Icons */}
-        <div className="absolute top-57 right-8 z-20 flex flex-col gap-3">
+        <div className="absolute top-8 right-8 z-20 flex flex-col gap-3 md:gap-4 lg:top-10 lg:right-10 sm:flex-row md:flex-col">
+          {/* Sur mobile (< 640px): vertical à droite */}
+          {/* Sur tablette (640px - 768px): horizontal à droite */}
+          {/* Sur desktop (> 768px): vertical à droite */}
           <a
-            href="https://www.facebook.com/meddoc.mg"
+            href="https://www.facebook.com/MEDDOCHC"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
             aria-label="Facebook"
           >
-            <Facebook className="h-6 w-6 text-white" />
+            <FacebookIcon />
           </a>
           <a
-            href="https://www.instagram.com/meddoc.mg"
+            href="https://www.instagram.com/meddoc.healthcare/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
             aria-label="Instagram"
           >
-            <Instagram className="h-6 w-6 text-white" />
+            <InstagramIcon />
           </a>
           <a
             href="https://twitter.com/meddoc_mg"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
             aria-label="X (Twitter)"
           >
-            <Twitter className="h-6 w-6 text-white" />
+            <TwitterIcon />
           </a>
           <a
             href="https://wa.me/261340000000"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
             aria-label="WhatsApp"
           >
-            <MessageCircle className="h-6 w-6 text-white" />
+            <MessageCircleIcon />
           </a>
           <a
-            href="https://www.linkedin.com/company/meddoc-mg"
+            href="https://www.linkedin.com/company/meddochealthcare/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
             aria-label="LinkedIn"
           >
-            <Linkedin className="h-6 w-6 text-white" />
+            <LinkedinIcon />
           </a>
         </div>
 
