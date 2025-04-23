@@ -6,19 +6,20 @@ const Digital = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}
-      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
-        style={{
-          backgroundImage: `url(${digitaleImage})`,
-          backgroundBlendMode: "overlay",
-          backgroundPosition: "center"
-        }}>
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: `url(${digitaleImage})`,
+          }}
+        ></div>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Solutions Digitales Santé<span className="text-yellow-300">.</span>
+              SOLUTIONS DIGITALES SANTE<span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Des outils numériques au service de la santé à Madagascar
@@ -37,7 +38,7 @@ const Digital = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-white" id="services">
+      <section className="py-10 bg-white" id="services">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -115,7 +116,7 @@ const Digital = () => {
       </section>
 
       {/* Avantages Section */}
-      <section className="py-24 bg-gradient-to-br from-sky-50 to-slate-100">
+      <section className="py-10 bg-gradient-to-br from-sky-50 to-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Pourquoi choisir nos solutions<span className="text-sky-500">?</span></h2>

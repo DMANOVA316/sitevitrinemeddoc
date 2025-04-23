@@ -16,7 +16,7 @@ const Consulting = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Consulting Santé<span className="text-yellow-300">.</span>
+              CONSULTING SANTE<span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Un accompagnement sur mesure pour vos projets de santé
@@ -139,7 +139,7 @@ const Consulting = () => {
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="md:w-1/2">
                 <h2 className="text-3xl font-bold mb-6">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Pourquoi nous choisir ?</span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">POURQUOI NOUS CHOISIR ?</span>
                 </h2>
                 <p className="text-gray-600 mb-8">
                   MEDDoC se distingue par son approche unique et sa connaissance approfondie du secteur de la santé à Madagascar. Notre équipe d'experts vous accompagne à chaque étape de votre projet.

@@ -6,19 +6,20 @@ const Community = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec effet parallaxe */}
-      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
-        style={{
-          backgroundImage: `url(${communityImage})`,
-          backgroundBlendMode: "overlay",
-          backgroundPosition: "center"
-        }}>
+      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: `url(${communityImage})`,
+          }}
+        ></div>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Community Management Médical <span className="text-yellow-300">.</span>
+              COMMUNITYMANGEMENT MEDICAL <span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne
@@ -35,11 +36,11 @@ const Community = () => {
       </section>
 
       {/* Section Pour qui */}
-      <section className="py-24 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Pour qui ?</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">Pour qui ?</span>
             </h2>
             <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
               Nos services de community management sont spécialement conçus pour les acteurs du secteur de la santé à Madagascar
@@ -93,11 +94,11 @@ const Community = () => {
       </section>
 
       {/* Section Services avec design moderne */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Ce que nous proposons</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">CE QUE NOUS PROPOSONS</span>
             </h2>
             <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
               Une approche complète pour développer et gérer votre présence en ligne de manière professionnelle
@@ -185,7 +186,7 @@ const Community = () => {
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="md:w-1/2">
                 <h2 className="text-3xl font-bold mb-6">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Résultats attendus</span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">RESULTATS ATTENDUS</span>
                 </h2>
                 <p className="text-gray-600 mb-8">
                   Notre approche stratégique et créative vous permet d'obtenir des résultats concrets et mesurables pour votre structure de santé.

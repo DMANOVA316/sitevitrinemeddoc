@@ -63,7 +63,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-meddoc-primary via-sky-500 to-meddoc-secondary py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce py-20 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
@@ -181,8 +181,8 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos Services</span>
-              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              <span className="bg-clip-text text-meddoc-fonce">NO SERVICES</span>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-secondary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               C'est une vision 360° de la santé : humaine, technologique, accessible.
@@ -299,7 +299,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-4">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 inline-block relative">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
+                <span className="text-meddoc-fonce">NOTRE MISSION</span>
                 <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
               </h2>
             </div>
@@ -358,7 +358,7 @@ const Index = () => {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-6 inline-block relative">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Pourquoi choisir MEDDoC ?</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">POURQUOI CHOISIR MEDDoC ?</span>
                 <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-6">
@@ -427,7 +427,7 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Ils nous soutiennent</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">ILS NOUS SOUTIENNENT</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
