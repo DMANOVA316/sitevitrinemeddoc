@@ -7,6 +7,11 @@ import {
   Users,
   Phone,
   ArrowUpRight,
+  MapPin,
+  Layers,
+  Target,
+  GraduationCap,
+  Briefcase,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -57,8 +62,8 @@ const Index = () => {
         ></div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl animate-fade-up">
-            <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
-              La première entreprise 360° santé à Madagascar
+            <span className="text-xl inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
+              A vos marques, prêt, santé !
             </span>
             <h1 className="mb-6 text-6xl font-bold leading-tight text-white">
               {isLoadingCouverture ? (
@@ -82,7 +87,7 @@ const Index = () => {
               )}
             </p>
             <div className="flex gap-4">
-              <Link to="#services" className="block">
+              <a href="#services" className="block">
                 <Button
                   size="lg"
                   className="bg-white text-meddoc-primary hover:bg-white/90"
@@ -90,7 +95,7 @@ const Index = () => {
                   Découvrir nos services
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-              </Link>
+              </a>
               <Link to="/contact" className="block">
                 <Button
                   size="lg"
@@ -106,143 +111,318 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 bg-slate-50">
-        <div className="container mx-auto px-4">
+      <section className="py-32 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              Nos Services
+            <h2 className="text-4xl font-bold mb-6 inline-block relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos Services</span>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Des solutions complètes pour répondre aux besoins du secteur de la
-              santé
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+              C'est une vision 360° de la santé : humaine, technologique, accessible.
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            {/* Service 1 */}
             <Link to="/services/digital" className="group">
-              <Card className="p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <Code className="mb-6 h-12 w-12 text-meddoc-primary" />
-                <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-meddoc-primary transition-colors">
-                  Solutions Numériques
-                </h3>
-                <p className="text-slate-600 mb-6">
-                  Développement d'outils innovants pour optimiser la gestion des
-                  services de santé.
-                </p>
-                <div className="flex items-center text-meddoc-primary">
-                  En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
+                <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
+                <div className="p-8">
+                  <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <Code className="h-8 w-8 text-meddoc-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                    Solutions digitales santé
+                  </h3>
+                  <p className="text-slate-600 mb-6">
+                    Conception et développement d'applications mobiles, de plateformes web et de logiciels sur mesure pour moderniser la gestion, la communication et le suivi médical.
+                  </p>
+                  <div className="text-slate-500 mb-6 text-sm">
+                    Accessibles, performantes, pensées pour les professionnels de santé à Madagascar.
+                  </div>
+                  <div className="flex items-center text-meddoc-primary font-semibold">
+                    En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </div>
                 </div>
-              </Card>
+              </div>
             </Link>
 
+            {/* Service 2 */}
             <Link to="/services/community" className="group">
-              <Card className="p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <Users className="mb-6 h-12 w-12 text-meddoc-primary" />
-                <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-meddoc-primary transition-colors">
-                  Community Management
-                </h3>
-                <p className="text-slate-600 mb-6">
-                  Gestion professionnelle de votre présence en ligne dans le
-                  secteur médical.
-                </p>
-                <div className="flex items-center text-meddoc-primary">
-                  En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
+                <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
+                <div className="p-8">
+                  <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <Users className="h-8 w-8 text-meddoc-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                    Community management médical
+                  </h3>
+                  <p className="text-slate-600 mb-6">
+                    Valorisez votre image et touchez votre public ! Nous gérons votre présence en ligne (Facebook, Instagram, LinkedIn, TikTok) avec des contenus adaptés à vos services.
+                  </p>
+                  <div className="text-slate-500 mb-6 text-sm">
+                    Stratégie, création de contenus, animation… on s'occupe de tout !
+                  </div>
+                  <div className="flex items-center text-meddoc-primary font-semibold">
+                    En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </div>
                 </div>
-              </Card>
+              </div>
             </Link>
 
-            <Link to="/services/consulting" className="group">
-              <Card className="p-8 h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <Stethoscope className="mb-6 h-12 w-12 text-meddoc-primary" />
-                <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-meddoc-primary transition-colors">
-                  Services de Conseil
-                </h3>
-                <p className="text-slate-600 mb-6">
-                  Expertise et accompagnement pour optimiser vos services de
-                  santé.
-                </p>
-                <div className="flex items-center text-meddoc-primary">
-                  En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+            {/* Service 3 */}
+            <Link to="/services/formations" className="group">
+              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
+                <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
+                <div className="p-8">
+                  <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <GraduationCap className="h-8 w-8 text-meddoc-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                    Formations
+                  </h3>
+                  <p className="text-slate-600 mb-6">
+                    Des formations pratiques et ciblées pour renforcer les compétences de vos équipes sur le terrain : gestion, finance, outils numériques, communication, services de santé.
+                  </p>
+                  <div className="text-slate-500 mb-6 text-sm">
+                    Un vrai levier pour améliorer la qualité et l'impact de vos interventions.
+                  </div>
+                  <div className="flex items-center text-meddoc-primary font-semibold">
+                    En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </div>
                 </div>
-              </Card>
+              </div>
+            </Link>
+
+            {/* Service 4 */}
+            <Link to="/services/consulting" className="group">
+              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
+                <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
+                <div className="p-8">
+                  <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <Briefcase className="h-8 w-8 text-meddoc-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                    Consulting santé
+                  </h3>
+                  <p className="text-slate-600 mb-6">
+                    Bénéficiez de notre expertise sectorielle pour structurer, améliorer et innover dans vos services de santé à Madagascar.
+                  </p>
+                  <div className="text-slate-500 mb-6 text-sm">
+                    Diagnostic, stratégie, suivi de projet… MEDDoC est votre partenaire de confiance.
+                  </div>
+                  <div className="flex items-center text-meddoc-primary font-semibold">
+                    En savoir plus <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </div>
+                </div>
+              </div>
             </Link>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-32 bg-gradient-to-br from-white to-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3"></div>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3 group-hover:rotate-1 transition-transform duration-500"></div>
               <img
                 src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
                 alt="Medical Professional"
-                className="relative rounded-2xl shadow-xl w-full object-cover"
+                className="relative rounded-2xl shadow-xl w-full h-[400px] object-cover group-hover:scale-[1.02] transition-all duration-500"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl flex items-end">
+                <div className="p-6 text-white">
+                  <p className="font-medium">Une équipe engagée pour la santé à Madagascar</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Notre Mission
-              </h2>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                MEDDoC s'engage à faciliter l'accès aux soins de santé pour la
-                population malagasy tout en améliorant la qualité des services
-                offerts aux professionnels de la santé.
-              </p>
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-4xl font-bold mb-6 inline-block relative">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
+                  <div className="absolute w-24 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-0 -mb-2 rounded-full"></div>
+                </h2>
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  MEDDoC s'engage à faciliter l'accès aux soins de santé pour la
+                  population malagasy tout en améliorant la qualité des services
+                  offerts aux professionnels de la santé.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-meddoc-primary">
+                <p className="text-slate-700 italic">
+                  "Notre vision est de transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale."
+                </p>
+              </div>
+
               <Button
                 size="lg"
-                className="bg-meddoc-primary hover:bg-meddoc-secondary"
+                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6"
               >
                 En savoir plus
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Why Choose Us Section */}
+      <section className="py-24 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-6 inline-block relative">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Pourquoi choisir MEDDoC ?</span>
+                <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-6">
+                Nous combinons expertise locale et vision innovante pour transformer le secteur de la santé à Madagascar
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16 items-center">
+              <div>
+                <div className="space-y-8">
+                  <div className="flex items-start gap-5">
+                    <div className="w-12 h-12 rounded-lg bg-meddoc-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Users className="h-6 w-6 text-meddoc-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">Une équipe locale engagée et à l'écoute</h3>
+                      <p className="text-gray-600">Notre équipe malgache comprend les réalités du terrain et s'engage à répondre à vos besoins avec réactivité et professionnalisme.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-5">
+                    <div className="w-12 h-12 rounded-lg bg-meddoc-primary/10 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="h-6 w-6 text-meddoc-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">Des solutions concrètes adaptées au contexte malgache</h3>
+                      <p className="text-gray-600">Nous développons des solutions qui tiennent compte des spécificités locales, des contraintes et des opportunités propres à Madagascar.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="space-y-8">
+                  <div className="flex items-start gap-5">
+                    <div className="w-12 h-12 rounded-lg bg-meddoc-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Layers className="h-6 w-6 text-meddoc-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">Une approche globale</h3>
+                      <p className="text-gray-600">Du digital à la stratégie, en passant par la formation, nous offrons un accompagnement complet pour répondre à tous vos besoins.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-5">
+                    <div className="w-12 h-12 rounded-lg bg-meddoc-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Target className="h-6 w-6 text-meddoc-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">Un objectif commun</h3>
+                      <p className="text-gray-600">Nous partageons avec nos clients et partenaires une vision : transformer la santé à Madagascar pour un avenir meilleur et plus équitable.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Partners Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Nos Partenaires
-          </h2>
+      <section className="py-24 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6 inline-block relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Ils nous soutiennent</span>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+              Des partenaires de confiance qui nous accompagnent dans notre mission de transformation de la santé à Madagascar
+            </p>
+          </div>
+
           {isLoadingPartner ? (
-            <div className="flex justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="flex justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-4 border-meddoc-primary/20 border-t-meddoc-primary"></div>
             </div>
           ) : partners && partners.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {partners.map((partner) => (
-                <PartnerCard key={partner.id} partner={partner} />
-              ))}
+            <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12">
+                {partners.map((partner) => (
+                  <div key={partner.id} className="transform hover:scale-105 transition-all duration-300">
+                    <PartnerCard partner={partner} />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
-            <p className="text-center text-gray-500">
-              Aucun partenaire disponible
-            </p>
+            <div className="bg-white rounded-xl shadow-md p-8 text-center">
+              <p className="text-gray-500 italic">
+                Aucun partenaire disponible pour le moment
+              </p>
+            </div>
           )}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">
-            Prêt à améliorer vos services de santé ?
-          </h2>
-          <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto">
-            Contactez-nous dès aujourd'hui pour découvrir comment nous pouvons
-            vous aider à optimiser vos services.
-          </p>
-          <Button
-            size="lg"
-            className="bg-white text-meddoc-primary hover:bg-white/90"
-          >
-            <Phone className="mr-2 h-4 w-4" />
-            Prendre rendez-vous
-          </Button>
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl">
+            <div className="text-center">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Prêt à améliorer vos services de santé<span className="text-yellow-300">?</span>
+              </h2>
+              <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed">
+                Contactez-nous dès aujourd'hui pour découvrir comment nous pouvons
+                vous aider à optimiser vos services et transformer la santé à Madagascar.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold"
+                >
+                  <Phone className="mr-2 h-5 w-5" />
+                  Prendre rendez-vous
+                </Button>
+                <Link to="/contact">
+                  <Button
+                    size="lg"
+                    className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold"
+                  >
+                    Nous contacter
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

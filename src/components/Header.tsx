@@ -45,6 +45,11 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-6">
           <NavigationMenu>
             <NavigationMenuList>
+
+            <NavigationMenuItem>
+                  <a href="https://app-meddoc.vercel.app/" className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition">APP MEDDoC</a>
+               
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-lg font-semibold text-gray-700 hover:text-blue-600 transition">
                   Nos Services
@@ -56,7 +61,7 @@ const Header = () => {
                       className="block p-4 hover:bg-blue-100 rounded-lg transition"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                        Solutions Numériques
+                      Solutions digitales
                       </div>
                       <p className="text-sm text-gray-500">
                         Développement d'outils innovants
@@ -67,10 +72,21 @@ const Header = () => {
                       className="block p-4 hover:bg-blue-100 rounded-lg transition"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                        Community Management
+                      Community management médical
                       </div>
                       <p className="text-sm text-gray-500">
                         Gestion de votre présence en ligne
+                      </p>
+                    </Link>
+                    <Link
+                      to="/services/formations"
+                      className="block p-4 hover:bg-blue-100 rounded-lg transition"
+                    >
+                      <div className="text-lg font-semibold text-gray-800">
+                        Formations
+                      </div>
+                      <p className="text-sm text-gray-500">           
+                        Expertise et accompagnement     
                       </p>
                     </Link>
                     <Link
@@ -78,10 +94,10 @@ const Header = () => {
                       className="block p-4 hover:bg-blue-100 rounded-lg transition"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                        Services de Conseil
+                      Consulting santé
                       </div>
                       <p className="text-sm text-gray-500">
-                        Expertise et accompagnement
+                        Bénéficiez de notre expertise sectorielle pour structurer, améliorer et innover dans vos services.
                       </p>
                     </Link>
                   </div>
@@ -101,6 +117,14 @@ const Header = () => {
                   className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
                 >
                   A propos
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  to="/contact"
+                  className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
+                >
+                  Contacter Nous
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
