@@ -6,7 +6,7 @@ const Digital = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}
-      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{
