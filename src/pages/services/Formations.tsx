@@ -19,10 +19,10 @@ const Formations = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Formations<span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Renforcez les compétences de vos équipes sur le terrain
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Les formations MEDDoC sont conçues pour répondre aux besoins réels des professionnels et structures du secteur santé. Courtes, pratiques et adaptées, elles permettent d'améliorer immédiatement la qualité des services rendus.
             </p>
           </div>

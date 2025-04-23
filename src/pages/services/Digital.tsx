@@ -20,10 +20,10 @@ const Digital = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Solutions Digitales Santé<span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Des outils numériques au service de la santé à Madagascar
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Chez MEDDoC, nous croyons que la technologie peut révolutionner l'accès aux soins. Nos solutions digitales sont conçues pour simplifier le quotidien des professionnels de santé et améliorer la qualité des services offerts à la population.
             </p>
             <a href="#services">

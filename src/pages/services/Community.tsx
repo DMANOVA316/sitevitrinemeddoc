@@ -20,10 +20,10 @@ const Community = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Community Management Médical <span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Aujourd'hui, la présence digitale est un atout incontournable pour les structures de santé. MEDDoC accompagne les professionnels du secteur dans la gestion stratégique et créative de leurs réseaux sociaux.
             </p>
             <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">

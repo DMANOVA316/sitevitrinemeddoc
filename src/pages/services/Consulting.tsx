@@ -18,10 +18,10 @@ const Consulting = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
               Consulting Santé<span className="text-yellow-300">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white/90 mb-6">
+            <p className="text-2xl font-semibold text-white mb-6">
               Un accompagnement sur mesure pour vos projets de santé
             </p>
-            <p className="text-lg text-white/80 mb-8">
+            <p className="text-lg text-white mb-8">
               Vous développez une initiative, gérez une structure médicale ou lancez un nouveau service ? MEDDoC vous accompagne de manière stratégique et opérationnelle pour maximiser votre impact.
             </p>
             <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
