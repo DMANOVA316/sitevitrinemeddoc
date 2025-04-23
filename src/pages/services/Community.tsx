@@ -16,7 +16,7 @@ const Community = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Community Management<span className="text-yellow-300">.</span>
+              Community Management Médical <span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white/90 mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne

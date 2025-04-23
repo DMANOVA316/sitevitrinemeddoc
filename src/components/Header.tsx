@@ -164,19 +164,25 @@ const Header = () => {
               to="/services/digital"
               className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
             >
-              Solutions Numériques
+             Solutions digitales
             </Link>
             <Link
               to="/services/community"
               className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
             >
-              Community Management
+              Community management médical
+            </Link>
+            <Link
+              to="/services/formations"
+              className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
+            >
+              Formations
             </Link>
             <Link
               to="/services/consulting"
               className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
             >
-              Services de Conseil
+              Consulting santé
             </Link>
             <Link
               to="/pharmacies"

@@ -12,6 +12,8 @@ import {
   Target,
   GraduationCap,
   Briefcase,
+  Lightbulb,
+  Heart,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -227,49 +229,58 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-32 bg-gradient-to-br from-white to-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
+      <section className="py-32 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3 group-hover:rotate-1 transition-transform duration-500"></div>
-              <img
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-                alt="Medical Professional"
-                className="relative rounded-2xl shadow-xl w-full h-[400px] object-cover group-hover:scale-[1.02] transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl flex items-end">
-                <div className="p-6 text-white">
-                  <p className="font-medium">Une équipe engagée pour la santé à Madagascar</p>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 inline-block relative">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
+                <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
+                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Target className="h-8 w-8 text-meddoc-primary" />
                 </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Objectif</h3>
+                <p className="text-slate-600 text-center">
+                  Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-secondary md:mt-8">
+                <div className="w-16 h-16 rounded-full bg-meddoc-secondary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Lightbulb className="h-8 w-8 text-meddoc-secondary" />
+                </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Vision</h3>
+                <p className="text-slate-600 text-center">
+                  Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
+                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
+                  <Heart className="h-8 w-8 text-meddoc-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Nos Valeurs</h3>
+                <p className="text-slate-600 text-center">
+                  Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
+                </p>
               </div>
             </div>
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-4xl font-bold mb-6 inline-block relative">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
-                  <div className="absolute w-24 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-0 -mb-2 rounded-full"></div>
-                </h2>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  MEDDoC s'engage à faciliter l'accès aux soins de santé pour la
-                  population malagasy tout en améliorant la qualité des services
-                  offerts aux professionnels de la santé.
-                </p>
-              </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-meddoc-primary">
-                <p className="text-slate-700 italic">
-                  "Notre vision est de transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale."
-                </p>
-              </div>
-
+            <div className="mt-16 text-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6"
+                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 rounded-full"
               >
-                En savoir plus
+                En savoir plus sur nous
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
@@ -388,21 +399,18 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-slate-100 rounded-full -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-100 rounded-full -ml-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="max-w-4xl mx-auto bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl p-8 md:p-12 shadow-xl">
             <div className="text-center">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                Prêt à améliorer vos services de santé<span className="text-yellow-300">?</span>
+                Parlons de votre projet dès maintenant<span className="text-yellow-300"> !</span>
               </h2>
               <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed">
-                Contactez-nous dès aujourd'hui pour découvrir comment nous pouvons
-                vous aider à optimiser vos services et transformer la santé à Madagascar.
+                📩 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
