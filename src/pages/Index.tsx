@@ -63,7 +63,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-meddoc-primary via-sky-500 to-meddoc-secondary py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-meddoc-primary via-sky-500 to-meddoc-secondary py-20 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
@@ -174,7 +174,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
+      <section className="py-10 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -184,7 +184,7 @@ const Index = () => {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos Services</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               C'est une vision 360° de la santé : humaine, technologique, accessible.
             </p>
           </div>
@@ -290,14 +290,14 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-32 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
+      <section className="py-10 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
+            <div className="text-center mb-4">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 inline-block relative">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Notre Mission</span>
                 <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
@@ -336,7 +336,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="mt-16 text-center">
+            <div className="mt-8 text-center">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 rounded-full"
@@ -350,7 +350,7 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
+      <section className="py-4 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -420,17 +420,17 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+      <section className="py-8 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Ils nous soutiennent</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               Des partenaires de confiance qui nous accompagnent dans notre mission de transformation de la santé à Madagascar
             </p>
           </div>
@@ -460,7 +460,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-slate-50 relative overflow-hidden">
+      <section className="py-10 bg-slate-50 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-slate-100 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-100 rounded-full -ml-48 -mb-48"></div>
 
