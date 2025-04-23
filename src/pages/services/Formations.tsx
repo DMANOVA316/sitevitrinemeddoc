@@ -1,11 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import formationsImage from "../../assets/serivces-images/formations.jpg";
 const Formations = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section avec fond dégradé et motif */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
+      {/* Hero Section avec image de fond et dégradé */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
+        style={{
+          backgroundImage: `url(${formationsImage})`,
+          backgroundBlendMode: "overlay",
+          backgroundPosition: "center"
+        }}>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform skew-y-1"></div>
 
