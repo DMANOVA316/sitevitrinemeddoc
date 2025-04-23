@@ -23,7 +23,7 @@ export default {
           // primary: "#0EA5E9",
           primary:"#27aae1",
           secondary: "#27aae1",
-          fonce: "0b294b",
+          fonce: "#0b294b",
           light: "#F1F5F9",
         },
         border: "hsl(var(--border))",

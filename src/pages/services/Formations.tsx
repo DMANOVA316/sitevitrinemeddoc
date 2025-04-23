@@ -5,19 +5,20 @@ const Formations = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-primary/80 to-meddoc-secondary/80 bg-fixed bg-cover"
-        style={{
-          backgroundImage: `url(${formationsImage})`,
-          backgroundBlendMode: "overlay",
-          backgroundPosition: "center"
-        }}>
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: `url(${formationsImage})`,
+          }}
+        ></div>
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
         <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform skew-y-1"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Formations<span className="text-yellow-300">.</span>
+              FORMATIONS<span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Renforcez les compétences de vos équipes sur le terrain
@@ -30,11 +31,11 @@ const Formations = () => {
       </section>
 
       {/* Domaines de formation avec design moderne */}
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos domaines de formation</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS DOMAINES DE FORMATIONS</span>
               <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
             </h2>
 
@@ -89,11 +90,11 @@ const Formations = () => {
       </section>
 
       {/* Nos atouts avec design amélioré */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos atouts</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS ATOUTS</span>
               <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
             </h2>
 
