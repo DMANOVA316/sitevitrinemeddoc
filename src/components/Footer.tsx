@@ -18,20 +18,20 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">MEDDoC</h3>
+           <a href="https://app-meddoc.vercel.app/"> <h3 className="text-xl font-bold mb-4"> APP MEDDoC</h3></a>
             <p className="text-gray-400">
-              La première entreprise 360° santé à Madagascar.
+              Vous voulez rejoindre la santé de demain ?
             </p>
+            <p className="text-gray-400 mt-2 mb-6">Rejoignez notre communauté d’utilisateurs et de professionnels de santé.</p>
 
-            <br />
-            <Link to="/login">
+            <a href="https://app-meddoc.vercel.app">
               <Button
                 size="lg"
-                className="bg-meddoc-primary hover:bg-meddoc-secondary"
+                className="bg-meddoc-primary hover:bg-meddoc-secondary mr-2"
               >
-                Se Connecter
+                Inscrivez-vous maintenant
               </Button>
-            </Link>
+            </a>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
@@ -50,6 +50,14 @@ const Footer = () => {
                   className="text-gray-400 hover:text-white"
                 >
                   Community Management
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/formations"
+                  className="text-gray-400 hover:text-white"
+                >
+                  Formations
                 </Link>
               </li>
               <li>
@@ -83,6 +91,15 @@ const Footer = () => {
                   ))}
               </p>
               {infoMeddoc?.addresse}
+            
+            <Link to="/login">
+              <Button
+                size="lg"
+                className="bg-meddoc-primary hover:bg-meddoc-secondary mt-4"
+              >
+                Se Connecter
+              </Button>
+            </Link>
             </div>
           </div>
         </div>
