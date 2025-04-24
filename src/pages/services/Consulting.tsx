@@ -1,6 +1,7 @@
 import { ArrowRight, BarChart4, Building, CheckCircle2, HandshakeIcon, HeartPulse, MessageCircle, PieChart, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { Link } from "react-router-dom";
 
 const Consulting = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -20,7 +21,7 @@ const Consulting = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              CONSULTING SANTÉ<span className="text-yellow-300">.</span>
+              CONSULTING SANTÉ<span className="text-meddoc-secondary">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Un accompagnement sur mesure pour vos projets de santé
@@ -28,7 +29,7 @@ const Consulting = () => {
             <p className="text-lg text-white mb-8">
               Vous développez une initiative, gérez une structure médicale ou lancez un nouveau service ? MEDDoC vous accompagne de manière stratégique et opérationnelle pour maximiser votre impact.
             </p>
-            <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
+            <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold">
               Découvrir nos services
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -37,7 +38,7 @@ const Consulting = () => {
       </section>
 
       {/* Section Prestations avec design moderne */}
-      <section className="py-24 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-4">
@@ -200,18 +201,18 @@ const Consulting = () => {
               <div className="relative z-10 text-white">
                 <h2 className="text-3xl font-bold mb-6">Discutons ensemble de votre projet</h2>
                 <p className="text-xl text-white/90 mb-8">
-                  📞 MEDDoC est là pour faire grandir votre initiative et maximiser son impact sur la santé à Madagascar.
+                   MEDDoC est là pour faire grandir votre initiative et maximiser son impact sur la santé à Madagascar.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
-                    Prendre rendez-vous
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
-                    <MessageCircle className="mr-2 h-5 w-5" />
-                    Nous contacter
-                  </Button>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/contact">
+                      <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
+                      <MessageCircle className="mr-2 h-5 w-5" />
+                      Nous contacter
+                    </Button>
+                  </Link>
+               
+                  
                 </div>
               </div>
             </div>

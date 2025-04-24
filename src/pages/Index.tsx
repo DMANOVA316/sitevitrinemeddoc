@@ -188,8 +188,8 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
-              <span className="bg-clip-text text-meddoc-fonce">NO SERVICES</span>
-              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-secondary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              <span className="bg-clip-text text-meddoc-fonce">NOS SERVICES</span>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               C'est une vision 360° de la santé : humaine, technologique, accessible.
@@ -205,7 +205,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Code className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Solutions digitales santé
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -229,7 +229,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Users className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Community management médical
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -253,7 +253,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <GraduationCap className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Formations
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -277,7 +277,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Briefcase className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Consulting santé
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -297,7 +297,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-10 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
+      <section className="py-10 bg-gradient-to-br from-meddoc-primary/20 to-meddoc-secondary/25 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
@@ -316,7 +316,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
                   <Target className="h-8 w-8 text-meddoc-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Objectif</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Objectif</h3>
                 <p className="text-slate-600 text-center">
                   Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
                 </p>
@@ -326,7 +326,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-secondary/10 flex items-center justify-center mb-6 mx-auto">
                   <Lightbulb className="h-8 w-8 text-meddoc-secondary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Vision</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Vision</h3>
                 <p className="text-slate-600 text-center">
                   Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
                 </p>
@@ -336,7 +336,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
                   <Heart className="h-8 w-8 text-meddoc-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Nos Valeurs</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Nos Valeurs</h3>
                 <p className="text-slate-600 text-center">
                   Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
                 </p>
@@ -357,7 +357,7 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-4 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
+      <section className="py-6 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -427,26 +427,25 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-16 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+      <section className="py-10 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48 blur-xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48 blur-xl"></div>
         <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-100/20 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            
-            <h2 className="text-4xl font-bold mb-6 inline-block relative">
+          <div className="text-center mb-4">
+            <h2 className="text-4xl font-bold mb-4 inline-block relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">ILS NOUS SOUTIENNENT</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               Des partenaires de confiance qui nous accompagnent dans notre mission de transformation de la santé à Madagascar
             </p>
           </div>
 
           {isLoadingPartner ? (
-            <div className="flex justify-center py-4">
+            <div className="flex justify-center py-2">
               <div className="animate-spin rounded-full h-12 w-12 border-4 border-meddoc-primary/20 border-t-meddoc-primary"></div>
             </div>
           ) : partners && partners.length > 0 ? (
@@ -459,7 +458,7 @@ const Index = () => {
 
               <Swiper
                 modules={[Autoplay, Pagination]}
-                spaceBetween={40}
+                spaceBetween={30}
                 slidesPerView={1}
                 breakpoints={{
                   640: { slidesPerView: 2 },
@@ -475,16 +474,17 @@ const Index = () => {
                   bulletActiveClass: 'swiper-pagination-bullet-active bg-meddoc-primary',
                   bulletClass: 'swiper-pagination-bullet bg-gray-300 opacity-70'
                 }}
+
                 loop={true}
-                className="py-10 px-4"
+                className="py-14 px-4"
               >
                 {partners.map((partner, index) => (
                   <SwiperSlide key={partner.id}>
                     <div
-                      className="flex justify-center items-center h-full transform hover:scale-110 transition-all duration-500 px-4 py-2"
+                      className="flex justify-center items-center h-full transform hover:scale-110 transition-all duration-500 px-4 py-1"
                       style={{ transitionDelay: `${index * 50}ms` }}
                     >
-                      <div className="p-6 rounded-xl w-full h-full flex items-center justify-center">
+                      <div className="rounded-xl w-full h-full flex items-center justify-center">
                         <PartnerCard partner={partner} />
                       </div>
                     </div>
@@ -514,24 +514,19 @@ const Index = () => {
                 Parlons de votre projet dès maintenant<span className="text-yellow-300"> !</span>
               </h2>
               <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed">
-                📩 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
+                Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact">
                 <Button
                   size="lg"
                   className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold"
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  Prendre rendez-vous
+                  Nous contacter
                 </Button>
-                <Link to="/contact">
-                  <Button
-                    size="lg"
-                    className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold"
-                  >
-                    Nous contacter
-                  </Button>
                 </Link>
+               
               </div>
             </div>
           </div>

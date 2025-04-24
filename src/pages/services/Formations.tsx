@@ -2,6 +2,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import formationsImage from "../../assets/serivces-images/formations.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { Link } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 const Formations = () => {
   // Défilement automatique vers le haut lors du chargement de la page
   useScrollToTop();
@@ -22,7 +24,7 @@ const Formations = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              FORMATIONS<span className="text-yellow-300">.</span>
+              FORMATIONS<span className="text-meddoc-secondary">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Renforcez les compétences de vos équipes sur le terrain
@@ -40,8 +42,9 @@ const Formations = () => {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS DOMAINES DE FORMATIONS</span>
-              <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
+
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-5 border-l-4 border-meddoc-primary">
@@ -99,7 +102,7 @@ const Formations = () => {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS ATOUTS</span>
-              <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -154,9 +157,15 @@ const Formations = () => {
                   Demander un catalogue
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button className="bg-transparent border-2 border-meddoc-primary text-meddoc-primary hover:bg-meddoc-primary/10 px-8 py-6 text-lg">
-                  Nous contacter
-                </Button>
+                <Link to="/contact">
+                      <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 text-lg">
+                      <MessageCircle className="mr-2 h-5 w-5" />
+                      Nous contacter
+                    </Button>
+                  </Link>
+               
+                
+                
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import tailwindcssAnimate from "tailwindcss-animate";
 export default {
   darkMode: ["class"],
   content: [
@@ -22,7 +22,7 @@ export default {
         meddoc: {
           // primary: "#0EA5E9",
           primary:"#27aae1",
-          secondary: "#27aae1",
+          secondary: "#027f3b",
           fonce: "#0b294b",
           light: "#F1F5F9",
         },
@@ -81,5 +81,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
