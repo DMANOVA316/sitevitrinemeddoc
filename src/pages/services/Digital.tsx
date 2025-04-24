@@ -23,7 +23,7 @@ const Digital = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              SOLUTIONS DIGITALES SANTÉ<span className="text-yellow-300">.</span>
+              SOLUTIONS DIGITALES SANTÉ<span className="text-meddoc-secondary">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Des outils numériques au service de la santé à Madagascar
