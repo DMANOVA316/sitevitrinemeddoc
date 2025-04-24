@@ -95,7 +95,7 @@ const Footer = () => {
             <Link to="/login">
               <Button
                 size="lg"
-                className="bg-meddoc-primary hover:bg-meddoc-secondary mt-4"
+                className="bg-meddoc-primary hover:bg-meddoc-secondary mt-8"
               >
                 Se Connecter
               </Button>
