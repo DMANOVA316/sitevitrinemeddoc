@@ -188,7 +188,7 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
-              <span className="bg-clip-text text-meddoc-fonce">NO SERVICES</span>
+              <span className="bg-clip-text text-meddoc-fonce">NOS SERVICES</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-secondary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
@@ -297,7 +297,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-10 bg-gradient-to-br from-meddoc-primary/5 to-meddoc-secondary/5 relative overflow-hidden">
+      <section className="py-10 bg-gradient-to-br from-meddoc-primary/20 to-meddoc-secondary/25 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
@@ -357,7 +357,7 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-4 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
+      <section className="py-6 bg-gradient-to-br from-slate-50 to-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
@@ -514,24 +514,19 @@ const Index = () => {
                 Parlons de votre projet dès maintenant<span className="text-yellow-300"> !</span>
               </h2>
               <p className="text-xl mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed">
-                📩 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
+                Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact">
                 <Button
                   size="lg"
                   className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold"
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  Prendre rendez-vous
+                  Nous contacter
                 </Button>
-                <Link to="/contact">
-                  <Button
-                    size="lg"
-                    className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold"
-                  >
-                    Nous contacter
-                  </Button>
                 </Link>
+               
               </div>
             </div>
           </div>
