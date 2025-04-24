@@ -1,7 +1,11 @@
 import { ArrowRight, BarChart4, Building, CheckCircle2, HandshakeIcon, HeartPulse, MessageCircle, PieChart, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Consulting = () => {
+  // Défilement automatique vers le haut lors du chargement de la page
+  useScrollToTop();
+
   return (
     <div className="min-h-screen">
       {/* Hero Section avec effet parallaxe */}

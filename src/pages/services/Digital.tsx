@@ -1,8 +1,12 @@
 import { ArrowRight, Code, Database, Globe, MapPin, Shield, Smartphone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import digitaleImage from "../../assets/serivces-images/digitale.jpg";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Digital = () => {
+  // Défilement automatique vers le haut lors du chargement de la page
+  useScrollToTop();
+
   return (
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}

@@ -1,8 +1,12 @@
 import { ArrowRight, BarChart4, Building2, CheckCircle2, FileText, MessageCircle, PenTool, Share2, Target, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import communityImage from "../../assets/serivces-images/community.jpg";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Community = () => {
+  // Défilement automatique vers le haut lors du chargement de la page
+  useScrollToTop();
+
   return (
     <div className="min-h-screen">
       {/* Hero Section avec effet parallaxe */}
