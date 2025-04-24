@@ -25,6 +25,13 @@ import {
 } from "./SocialIcons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 import { couvertureService } from "@/services/couvertureService";
 import { toast } from "sonner";
 import PartnerCard from "@/components/PartnerCard";
@@ -420,37 +427,73 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <section className="py-8 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48"></div>
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -ml-48 -mt-48 blur-xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -mr-48 -mb-48 blur-xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-100/20 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-8">
+          <div className="text-center mb-12">
+            
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">ILS NOUS SOUTIENNENT</span>
               <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
               Des partenaires de confiance qui nous accompagnent dans notre mission de transformation de la santé à Madagascar
             </p>
           </div>
 
           {isLoadingPartner ? (
-            <div className="flex justify-center py-12">
+            <div className="flex justify-center py-4">
               <div className="animate-spin rounded-full h-12 w-12 border-4 border-meddoc-primary/20 border-t-meddoc-primary"></div>
             </div>
           ) : partners && partners.length > 0 ? (
-            <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12">
-                {partners.map((partner) => (
-                  <div key={partner.id} className="transform hover:scale-105 transition-all duration-300">
-                    <PartnerCard partner={partner} />
-                  </div>
+            <div className="relative">
+              {/* Gradient overlay left */}
+              <div className="absolute left-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-r from-slate-50 to-transparent pointer-events-none"></div>
+
+              {/* Gradient overlay right */}
+              <div className="absolute right-0 top-0 bottom-0 w-16 z-10 bg-gradient-to-l from-slate-50 to-transparent pointer-events-none"></div>
+
+              <Swiper
+                modules={[Autoplay, Pagination]}
+                spaceBetween={40}
+                slidesPerView={1}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                }}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                pagination={{
+                  clickable: true,
+                  bulletActiveClass: 'swiper-pagination-bullet-active bg-meddoc-primary',
+                  bulletClass: 'swiper-pagination-bullet bg-gray-300 opacity-70'
+                }}
+                loop={true}
+                className="py-10 px-4"
+              >
+                {partners.map((partner, index) => (
+                  <SwiperSlide key={partner.id}>
+                    <div
+                      className="flex justify-center items-center h-full transform hover:scale-110 transition-all duration-500 px-4 py-2"
+                      style={{ transitionDelay: `${index * 50}ms` }}
+                    >
+                      <div className="p-6 rounded-xl w-full h-full flex items-center justify-center">
+                        <PartnerCard partner={partner} />
+                      </div>
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </div>
+              </Swiper>
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-md p-8 text-center">
+            <div className="rounded-xl shadow-md p-8 text-center">
               <p className="text-gray-500 italic">
                 Aucun partenaire disponible pour le moment
               </p>

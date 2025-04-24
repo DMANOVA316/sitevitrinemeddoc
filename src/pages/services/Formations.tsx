@@ -1,7 +1,11 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import formationsImage from "../../assets/serivces-images/formations.jpg";
+import useScrollToTop from "../../hooks/useScrollToTop";
 const Formations = () => {
+  // Défilement automatique vers le haut lors du chargement de la page
+  useScrollToTop();
+
   return (
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}
