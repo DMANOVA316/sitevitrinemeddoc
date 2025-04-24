@@ -41,7 +41,7 @@ const Footer = () => {
                   to="/services/digital"
                   className="text-gray-400 hover:text-white"
                 >
-                  Solutions Numériques
+                  Solutions digitales 
                 </Link>
               </li>
               <li>
@@ -49,7 +49,7 @@ const Footer = () => {
                   to="/services/community"
                   className="text-gray-400 hover:text-white"
                 >
-                  Community Management
+                  Community management médical
                 </Link>
               </li>
               <li>
@@ -57,7 +57,7 @@ const Footer = () => {
                   to="/services/formations"
                   className="text-gray-400 hover:text-white"
                 >
-                  Formations
+                  Formations santé
                 </Link>
               </li>
               <li>
@@ -65,7 +65,7 @@ const Footer = () => {
                   to="/services/consulting"
                   className="text-gray-400 hover:text-white"
                 >
-                  Services de Conseil
+                  Consulting santé et stratégie
                 </Link>
               </li>
             </ul>
