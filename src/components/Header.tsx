@@ -83,7 +83,7 @@ const Header = () => {
                       className="block p-4 hover:bg-blue-100 rounded-lg transition"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                        Formations
+                        Formations santé
                       </div>
                       <p className="text-sm text-gray-500">           
                         Expertise et accompagnement     
@@ -94,7 +94,7 @@ const Header = () => {
                       className="block p-4 hover:bg-blue-100 rounded-lg transition"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                      Consulting santé
+                      Consulting santé et stratégie
                       </div>
                       <p className="text-sm text-gray-500">
                         Bénéficiez de notre expertise sectorielle pour structurer, améliorer et innover dans vos services.
@@ -176,13 +176,13 @@ const Header = () => {
               to="/services/formations"
               className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
             >
-              Formations
+              Formations santé
             </Link>
             <Link
               to="/services/consulting"
               className="pl-4 block text-md text-gray-800 hover:bg-blue-100 py-2 rounded-lg transition"
             >
-              Consulting santé
+              Consulting santé et stratégie
             </Link>
             <Link
               to="/pharmacies"
