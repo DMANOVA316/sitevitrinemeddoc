@@ -2,7 +2,7 @@ import { ArrowRight, BarChart4, Building2, CheckCircle2, FileText, MessageCircle
 import { Button } from "@/components/ui/button";
 import communityImage from "../../assets/serivces-images/community.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
-
+import communityImage2 from "../../assets/serivces-images/community-2.jpg";
 const Community = () => {
   // Défilement automatique vers le haut lors du chargement de la page
   useScrollToTop();
@@ -23,7 +23,7 @@ const Community = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              COMMUNITY MANAGEMENT MEDICAL <span className="text-yellow-300">.</span>
+              COMMUNITY MANAGEMENT MÉDICAL <span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne
@@ -226,7 +226,7 @@ const Community = () => {
               <div className="md:w-1/2 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl transform rotate-3 opacity-20"></div>
                 <img
-                  src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src= {communityImage}
                   alt="Community Management Médical"
                   className="relative rounded-2xl shadow-xl w-full h-full object-cover"
                 />

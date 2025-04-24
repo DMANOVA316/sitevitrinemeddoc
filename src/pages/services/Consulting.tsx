@@ -20,7 +20,7 @@ const Consulting = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-up">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              CONSULTING SANTE<span className="text-yellow-300">.</span>
+              CONSULTING SANTÉ<span className="text-yellow-300">.</span>
             </h1>
             <p className="text-2xl font-semibold text-white mb-6">
               Un accompagnement sur mesure pour vos projets de santé
@@ -41,7 +41,7 @@ const Consulting = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-primary to-meddoc-secondary">Nos prestations</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS PRESTATIONS</span>
             </h2>
             <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
               Des services de conseil adaptés aux besoins spécifiques du secteur de la santé à Madagascar
