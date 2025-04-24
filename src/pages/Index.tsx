@@ -189,7 +189,7 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6 inline-block relative">
               <span className="bg-clip-text text-meddoc-fonce">NOS SERVICES</span>
-              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-secondary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-2">
               C'est une vision 360° de la santé : humaine, technologique, accessible.
@@ -205,7 +205,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Code className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Solutions digitales santé
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -229,7 +229,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Users className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Community management médical
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -253,7 +253,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <GraduationCap className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Formations
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -277,7 +277,7 @@ const Index = () => {
                   <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 group-hover:bg-meddoc-primary/20 transition-all duration-300">
                     <Briefcase className="h-8 w-8 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-meddoc-primary transition-colors">
+                  <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
                     Consulting santé
                   </h3>
                   <p className="text-slate-600 mb-6">
@@ -316,7 +316,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
                   <Target className="h-8 w-8 text-meddoc-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Objectif</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Objectif</h3>
                 <p className="text-slate-600 text-center">
                   Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
                 </p>
@@ -326,7 +326,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-secondary/10 flex items-center justify-center mb-6 mx-auto">
                   <Lightbulb className="h-8 w-8 text-meddoc-secondary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Notre Vision</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Vision</h3>
                 <p className="text-slate-600 text-center">
                   Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
                 </p>
@@ -336,7 +336,7 @@ const Index = () => {
                 <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
                   <Heart className="h-8 w-8 text-meddoc-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-center text-slate-900 mb-4">Nos Valeurs</h3>
+                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Nos Valeurs</h3>
                 <p className="text-slate-600 text-center">
                   Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
                 </p>

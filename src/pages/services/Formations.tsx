@@ -40,8 +40,9 @@ const Formations = () => {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS DOMAINES DE FORMATIONS</span>
-              <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
+
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-5 border-l-4 border-meddoc-primary">
@@ -99,7 +100,7 @@ const Formations = () => {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">NOS ATOUTS</span>
-              <div className="absolute w-24 h-1 bg-meddoc-primary left-1/2 transform -translate-x-1/2 bottom-0 mt-4 rounded-full"></div>
+              <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
