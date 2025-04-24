@@ -47,11 +47,11 @@ const Header = () => {
             <NavigationMenuList>
 
             <NavigationMenuItem>
-                  <a href="https://app-meddoc.vercel.app/" className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition">APP MEDDoC</a>
+                  <a href="https://app-meddoc.vercel.app/" className="text-lg font-semibold text-meddoc-fonce hover:text-blue-600 px-4 py-2 transition">APP MEDDoC</a>
                
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-lg font-semibold text-gray-700 hover:text-blue-600 transition">
+                <NavigationMenuTrigger className="text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary transition">
                   Nos Services
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -106,7 +106,7 @@ const Header = () => {
               <NavigationMenuItem>
                 <Link
                   to="/pharmacies"
-                  className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
+                  className="text-lg font-semibold text-meddoc-fonce hover:text-blue-600 px-4 py-2 transition"
                 >
                   Pharmacies
                 </Link>
@@ -114,7 +114,7 @@ const Header = () => {
               <NavigationMenuItem>
                 <Link
                   to="/apropos"
-                  className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
+                  className="text-lg font-semibold text-meddoc-fonce hover:text-blue-600 px-4 py-2 transition"
                 >
                   A propos
                 </Link>
@@ -122,7 +122,7 @@ const Header = () => {
               <NavigationMenuItem>
                 <Link
                   to="/contact"
-                  className="text-lg text-gray-700 hover:text-blue-600 px-4 py-2 transition"
+                  className="text-lg text-gray-700 font-semibold text-meddoc-fonce hover:text-blue-600 px-4 py-2 transition"
                 >
                   Contacter Nous
                 </Link>
