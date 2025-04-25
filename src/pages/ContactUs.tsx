@@ -71,7 +71,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary py-16">
+    <div className="py-10 min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="md:flex">
@@ -96,7 +96,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <p className="text-sm opacity-75">Téléphone</p>
-                    <p className="font-medium">+261 34 00 000 00</p>
+                    <p className="font-medium">+261389655544</p>
                   </div>
                 </div>
 
