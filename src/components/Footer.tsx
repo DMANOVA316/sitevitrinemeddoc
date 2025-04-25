@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-           <a href="https://app-meddoc.vercel.app/"> <h3 className="text-xl font-bold mb-4"> APP MEDDoC</h3></a>
+            <Link to={"/app-meddoc"} ><h3 className="text-xl font-bold mb-4">APP MEDDoC</h3></Link>
             <p className="text-gray-400">
               Vous voulez rejoindre la santé de demain ?
             </p>

@@ -28,6 +28,8 @@ import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
 import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
 import Formations from "./pages/services/Formations";
+import AppMeddoc from "./pages/AppMeddoc";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -53,6 +55,14 @@ const App = () => (
                   element={
                     <PublicLayout>
                       <Login />
+                    </PublicLayout>
+                  }
+                />
+                <Route
+                  path="/app-meddoc"
+                  element={
+                    <PublicLayout>
+                      <AppMeddoc />
                     </PublicLayout>
                   }
                 />
