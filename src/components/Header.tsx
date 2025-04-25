@@ -47,8 +47,7 @@ const Header = () => {
             <NavigationMenuList>
 
             <NavigationMenuItem>
-                  <a href="https://app-meddoc.vercel.app/" className="text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-4 py-2 transition">APP MEDDoC</a>
-               
+              <Link to={"/app-meddoc"} className="text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-4 py-2 transition"> APP MEDDoC</Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary transition">
