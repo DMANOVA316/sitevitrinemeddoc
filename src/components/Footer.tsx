@@ -14,7 +14,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-gray-800 text-white py-12">
+    <footer className="bg-meddoc-fonce text-white py-6">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -104,7 +104,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-4 text-center">
           <p className="text-gray-400">
             © {date} {infoMeddoc?.copyrigth}
           </p>
