@@ -297,49 +297,78 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-10 bg-gradient-to-br from-meddoc-primary/20 to-meddoc-secondary/25 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-5"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-48 -mt-48"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-48 -mb-48"></div>
-
+      <section className="py-10 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 inline-block relative">
                 <span className="text-meddoc-fonce">NOTRE MISSION</span>
                 <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
-                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
-                  <Target className="h-8 w-8 text-meddoc-primary" />
+            <div className="overflow-hidden rounded-xl shadow-lg">
+              {/* Premier bloc - Objectif */}
+              <div className="flex flex-col md:flex-row bg-meddoc-fonce text-white">
+                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOTRE OBJECTIF</h3>
                 </div>
-                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Objectif</h3>
-                <p className="text-slate-600 text-center">
-                  Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
-                </p>
+                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
+                  <div>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-3 mt-1">
+                          <Target className="h-5 w-5 text-sky-400" />
+                        </div>
+                        <p className="text-white/90">
+                          Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-secondary md:mt-8">
-                <div className="w-16 h-16 rounded-full bg-meddoc-secondary/10 flex items-center justify-center mb-6 mx-auto">
-                  <Lightbulb className="h-8 w-8 text-meddoc-secondary" />
+              {/* Deuxième bloc - Vision */}
+              <div className="flex flex-col md:flex-row bg-sky-500 text-white">
+                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOTRE VISION</h3>
                 </div>
-                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Notre Vision</h3>
-                <p className="text-slate-600 text-center">
-                  Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
-                </p>
+                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
+                  <div>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-3 mt-1">
+                          <Lightbulb className="h-5 w-5 text-white" />
+                        </div>
+                        <p className="text-white/90">
+                          Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-8 transform hover:-translate-y-2 transition-all duration-300 border-t-4 border-meddoc-primary">
-                <div className="w-16 h-16 rounded-full bg-meddoc-primary/10 flex items-center justify-center mb-6 mx-auto">
-                  <Heart className="h-8 w-8 text-meddoc-primary" />
+              {/* Troisième bloc - Valeurs */}
+              <div className="flex flex-col md:flex-row bg-meddoc-secondary/25 text-meddoc-fonce">
+                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOS VALEURS</h3>
                 </div>
-                <h3 className="text-xl font-bold text-center text-meddoc-fonce mb-4">Nos Valeurs</h3>
-                <p className="text-slate-600 text-center">
-                  Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
-                </p>
+                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
+                  <div>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-3 mt-1">
+                          <Heart className="h-5 w-5 text-meddoc-primary" />
+                        </div>
+                        <p className="text-meddoc-fonce/90">
+                          Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -526,7 +555,7 @@ const Index = () => {
                   Nous contacter
                 </Button>
                 </Link>
-               
+
               </div>
             </div>
           </div>

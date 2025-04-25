@@ -14,8 +14,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-gray-800 text-white py-12">
-      <div className="container mx-auto px-4">
+    <footer className="bg-meddoc-fonce text-white py-6">
+      <div className="container mx-auto px-4 mt-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link to={"/app-meddoc"} ><h3 className="text-xl font-bold mb-4">APP MEDDoC</h3></Link>
@@ -24,14 +24,15 @@ const Footer = () => {
             </p>
             <p className="text-gray-400 mt-2 mb-6">Rejoignez notre communauté d’utilisateurs et de professionnels de santé.</p>
 
-            <a href="https://app-meddoc.vercel.app">
-              <Button
+            <Link to={"/app-meddoc"} >
+            <Button
                 size="lg"
                 className="bg-meddoc-primary hover:bg-meddoc-secondary mr-2"
               >
                 Inscrivez-vous maintenant
               </Button>
-            </a>
+            </Link>
+              
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
@@ -103,7 +104,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-4 text-center">
           <p className="text-gray-400">
             © {date} {infoMeddoc?.copyrigth}
           </p>
