@@ -24,14 +24,15 @@ const Footer = () => {
             </p>
             <p className="text-gray-400 mt-2 mb-6">Rejoignez notre communauté d’utilisateurs et de professionnels de santé.</p>
 
-            <a href="https://app-meddoc.vercel.app">
-              <Button
+            <Link to={"/app-meddoc"} >
+            <Button
                 size="lg"
                 className="bg-meddoc-primary hover:bg-meddoc-secondary mr-2"
               >
                 Inscrivez-vous maintenant
               </Button>
-            </a>
+            </Link>
+              
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
