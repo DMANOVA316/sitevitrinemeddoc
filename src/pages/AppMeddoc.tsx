@@ -168,7 +168,7 @@ const AppMeddoc = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-meddoc-primary/10 mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-meddoc-primary/10 mb-5">
                 <UserCheck className="h-8 w-8 text-meddoc-primary" />
               </div>
               <h2 className="text-3xl font-bold mb-4 text-meddoc-fonce">Rejoignez notre communauté !</h2>
