@@ -39,7 +39,7 @@ const AppMeddoc = () => {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
               <span className="inline-flex items-center">
 
-              REJOIGNEZ LA SANTÉ DE DEMAIN AVEC L'APP MEDDOC
+              REJOIGNEZ LA SANTÉ DE DEMAIN <span className="text-yellow-300 ml-2"> !</span>
               </span>
             </h1>
 
@@ -56,10 +56,7 @@ const AppMeddoc = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
-                <Download className="mr-2 h-5 w-5" />
-                Télécharger bientôt
-              </Button>
+             
               <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
                 <Mail className="mr-2 h-5 w-5" />
                 M'inscrire pour le lancement
@@ -276,13 +273,10 @@ const AppMeddoc = () => {
             <h2 className="text-3xl font-bold mb-8 text-meddoc-fonce">Prêt à rejoindre la révolution de la santé digitale ?</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 text-lg font-semibold">
-                <Download className="mr-2 h-5 w-5" />
-                Télécharger bientôt
-              </Button>
-              <Button className="bg-gray-100 text-gray-800 hover:bg-gray-200 px-8 py-6 text-lg font-semibold">
-                <Mail className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-5 w-5" />
                 M'inscrire pour le lancement
               </Button>
+              
             </div>
           </div>
         </div>
