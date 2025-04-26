@@ -310,17 +310,17 @@ const Index = () => {
             <div className="overflow-hidden rounded-xl shadow-lg">
               {/* Premier bloc - Objectif */}
               <div className="flex flex-col md:flex-row bg-meddoc-fonce text-white">
-                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOTRE OBJECTIF</h3>
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">NOTRE OBJECTIF</h3>
                 </div>
-                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
-                  <div>
-                    <ul className="space-y-4">
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
                       <li className="flex items-start">
-                        <div className="flex-shrink-0 mr-3 mt-1">
-                          <Target className="h-5 w-5 text-sky-400" />
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Target className="h-4 w-4 md:h-5 md:w-5 text-sky-400" />
                         </div>
-                        <p className="text-white/90">
+                        <p className="text-white/90 text-sm sm:text-base">
                           Faciliter l'accès aux soins de santé pour la population malagasy tout en améliorant la qualité des services offerts.
                         </p>
                       </li>
@@ -331,17 +331,17 @@ const Index = () => {
 
               {/* Deuxième bloc - Vision */}
               <div className="flex flex-col md:flex-row bg-sky-500 text-white">
-                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOTRE VISION</h3>
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">NOTRE VISION</h3>
                 </div>
-                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
-                  <div>
-                    <ul className="space-y-4">
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
                       <li className="flex items-start">
-                        <div className="flex-shrink-0 mr-3 mt-1">
-                          <Lightbulb className="h-5 w-5 text-white" />
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Lightbulb className="h-4 w-4 md:h-5 md:w-5 text-white" />
                         </div>
-                        <p className="text-white/90">
+                        <p className="text-white/90 text-sm sm:text-base">
                           Transformer le secteur de la santé à Madagascar grâce à l'innovation, la formation et l'expertise locale.
                         </p>
                       </li>
@@ -352,17 +352,17 @@ const Index = () => {
 
               {/* Troisième bloc - Valeurs */}
               <div className="flex flex-col md:flex-row bg-meddoc-secondary/25 text-meddoc-fonce">
-                <div className="md:w-1/3 p-8 md:p-10 flex flex-col justify-center">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4">NOS VALEURS</h3>
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">NOS VALEURS</h3>
                 </div>
-                <div className="md:w-2/3 p-8 md:p-10 flex items-center">
-                  <div>
-                    <ul className="space-y-4">
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
                       <li className="flex items-start">
-                        <div className="flex-shrink-0 mr-3 mt-1">
-                          <Heart className="h-5 w-5 text-meddoc-primary" />
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Heart className="h-4 w-4 md:h-5 md:w-5 text-meddoc-primary" />
                         </div>
-                        <p className="text-meddoc-fonce/90">
+                        <p className="text-meddoc-fonce/90 text-sm sm:text-base">
                           Excellence, innovation, engagement local et accessibilité pour tous les Malgaches, où qu'ils soient.
                         </p>
                       </li>

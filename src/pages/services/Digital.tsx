@@ -121,48 +121,103 @@ const Digital = () => {
       </section>
 
       {/* Avantages Section */}
-      <section className="py-10 bg-gradient-to-br from-sky-50 to-slate-100">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-meddoc-fonce mb-4">Pourquoi choisir nos solutions<span className="text-sky-500">?</span></h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Des outils conçus par des Malgaches pour des Malgaches, avec une attention particulière à vos besoins spécifiques.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Avantage 1 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 transform hover:-translate-y-2">
-              <div className="h-12 w-12 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <MapPin className="h-6 w-6 text-sky-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-meddoc-fonce mb-3">Adaptées au terrain malgache</h3>
-              <p className="text-slate-600">Nos solutions sont conçues spécifiquement pour répondre aux défis uniques du secteur de la santé à Madagascar.</p>
+      <section className="py-10 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold mb-6 inline-block relative">
+                <span className="text-meddoc-fonce">POURQUOI CHOISIR NOS SOLUTIONS</span>
+                <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-4">
+                Des outils conçus par des Malgaches pour des Malgaches, avec une attention particulière à vos besoins spécifiques.
+              </p>
             </div>
 
-            {/* Avantage 2 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 transform hover:-translate-y-2">
-              <div className="h-12 w-12 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <Shield className="h-6 w-6 text-sky-600" />
+            <div className="overflow-hidden rounded-xl shadow-lg">
+              {/* Premier bloc - Adaptées au terrain malgache */}
+              <div className="flex flex-col md:flex-row bg-meddoc-fonce text-white">
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">ADAPTÉES AU TERRAIN</h3>
+                </div>
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <MapPin className="h-4 w-4 md:h-5 md:w-5 text-sky-400" />
+                        </div>
+                        <p className="text-white/90 text-sm sm:text-base">
+                          Nos solutions sont conçues spécifiquement pour répondre aux défis uniques du secteur de la santé à Madagascar.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-meddoc-fonce mb-3">Sécurisées et intuitives</h3>
-              <p className="text-slate-600">Protection des données garantie et interfaces simples qui ne nécessitent pas de compétences techniques avancées.</p>
-            </div>
 
-            {/* Avantage 3 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 transform hover:-translate-y-2">
-              <div className="h-12 w-12 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-sky-600" />
+              {/* Deuxième bloc - Sécurisées et intuitives */}
+              <div className="flex flex-col md:flex-row bg-sky-500 text-white">
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">SÉCURISÉES ET INTUITIVES</h3>
+                </div>
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Shield className="h-4 w-4 md:h-5 md:w-5 text-white" />
+                        </div>
+                        <p className="text-white/90 text-sm sm:text-base">
+                          Protection des données garantie et interfaces simples qui ne nécessitent pas de compétences techniques avancées.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-meddoc-fonce mb-3">Équipe locale réactive</h3>
-              <p className="text-slate-600">Développées à Madagascar par une équipe disponible pour vous accompagner et répondre rapidement à vos besoins.</p>
-            </div>
 
-            {/* Avantage 4 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 transform hover:-translate-y-2">
-              <div className="h-12 w-12 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <Smartphone className="h-6 w-6 text-sky-600" />
+              {/* Troisième bloc - Équipe locale réactive */}
+              <div className="flex flex-col md:flex-row bg-blue-100 text-meddoc-fonce">
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">ÉQUIPE LOCALE RÉACTIVE</h3>
+                </div>
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Users className="h-4 w-4 md:h-5 md:w-5 text-meddoc-primary" />
+                        </div>
+                        <p className="text-meddoc-fonce/90 text-sm sm:text-base">
+                          Développées à Madagascar par une équipe disponible pour vous accompagner et répondre rapidement à vos besoins.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-meddoc-fonce mb-3">Multi-plateformes</h3>
-              <p className="text-slate-600">Accessibles sur tous vos appareils, que ce soit sur ordinateur, tablette ou smartphone, pour une flexibilité maximale.</p>
+
+              {/* Quatrième bloc - Multi-plateformes */}
+              <div className="flex flex-col md:flex-row bg-slate-50 text-meddoc-fonce">
+                <div className="md:w-1/3 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center md:text-left">MULTI-PLATEFORMES</h3>
+                </div>
+                <div className="md:w-2/3 p-6 sm:p-8 md:p-10 flex items-center">
+                  <div className="w-full">
+                    <ul className="space-y-2 md:space-y-4">
+                      <li className="flex items-start">
+                        <div className="flex-shrink-0 mr-2 md:mr-3 mt-1">
+                          <Smartphone className="h-4 w-4 md:h-5 md:w-5 text-meddoc-primary" />
+                        </div>
+                        <p className="text-meddoc-fonce/90 text-sm sm:text-base">
+                          Accessibles sur tous vos appareils, que ce soit sur ordinateur, tablette ou smartphone, pour une flexibilité maximale.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
