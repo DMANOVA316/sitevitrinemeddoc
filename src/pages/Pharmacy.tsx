@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PharmacyCard from "@/components/dashboard/Pharmacy/PharmacyCard";
-import { Building2, Search, MapPin, Clock, AlertCircle } from "lucide-react";
+import { Building2, Search, MapPin, Clock, AlertCircle, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import "../styles/pharmacy.css";
+import { Button } from "@/components/ui/button";
+import ScrollToTopButton from "@/components/ui/scroll-to-top-button";
 
 const Pharmacy: React.FC = () => {
   // Défilement automatique vers le haut lors du chargement de la page
   useScrollToTop();
 
-  // État local pour gérer le terme de recherche et le nombre de pharmacies affichées
+  // État local pour gérer le terme de recherche et la pagination
   const [searchTerm, setSearchTerm] = useState("");
-  const [displayCount, setDisplayCount] = useState(12);
   const [activeTab, setActiveTab] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   // Récupération des données depuis le store Redux
   const { getPharmacies, pharmacies, isLoading } = usePharmacyRedux();
@@ -24,6 +27,11 @@ const Pharmacy: React.FC = () => {
     getPharmacies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Réinitialiser la page courante lors d'une recherche
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, activeTab]);
 
   // Mettre à jour le terme de recherche
   const handleSearch = (term: string) => {
@@ -41,19 +49,74 @@ const Pharmacy: React.FC = () => {
       pharmacy.district.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Sélectionner les pharmacies à afficher
-  const displayedPharmacies = filteredPharmacies.slice(0, displayCount);
-
-  // Déterminer s'il y a d'autres pharmacies à afficher
-  const hasMore = displayedPharmacies.length < filteredPharmacies.length;
-
   // Pharmacies de garde
   const dutyPharmacies = filteredPharmacies.filter((pharmacy) => pharmacy.de_garde);
-  const displayedDutyPharmacies = dutyPharmacies.slice(0, displayCount);
-  const hasMoreDuty = displayedDutyPharmacies.length < dutyPharmacies.length;
+
+  // Déterminer le tableau de pharmacies à utiliser en fonction de l'onglet actif
+  const currentPharmacies = activeTab === "all" ? filteredPharmacies : dutyPharmacies;
+
+  // Calculer le nombre total de pages
+  const totalPages = Math.ceil(currentPharmacies.length / itemsPerPage);
+
+  // Calculer les indices de début et de fin pour la pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // Obtenir les pharmacies pour la page courante
+  const currentItems = currentPharmacies.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Fonction pour changer de page
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Défilement vers le haut de la section des résultats
+    document.getElementById("pharmacy-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // Générer les numéros de page à afficher
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5; // Nombre maximum de pages à afficher
+
+    if (totalPages <= maxPagesToShow) {
+      // Si le nombre total de pages est inférieur ou égal au maximum, afficher toutes les pages
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // Sinon, afficher un sous-ensemble de pages avec des ellipses
+      if (currentPage <= 3) {
+        // Si la page courante est proche du début
+        for (let i = 1; i <= 4; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push("ellipsis");
+        pageNumbers.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        // Si la page courante est proche de la fin
+        pageNumbers.push(1);
+        pageNumbers.push("ellipsis");
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        // Si la page courante est au milieu
+        pageNumbers.push(1);
+        pageNumbers.push("ellipsis");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push("ellipsis");
+        pageNumbers.push(totalPages);
+      }
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50/30 pharmacy-pattern">
+      {/* Bouton de retour en haut */}
+      <ScrollToTopButton />
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/pharmacy-pattern.svg')] opacity-10"></div>
@@ -127,8 +190,8 @@ const Pharmacy: React.FC = () => {
               className="w-full custom-tabs"
               onValueChange={(value) => {
                 setActiveTab(value);
-                // Reset display count when switching tabs
-                setDisplayCount(12);
+                // Reset to first page when switching tabs
+                setCurrentPage(1);
               }}
             >
               {/* Tabs Navigation */}
@@ -157,13 +220,36 @@ const Pharmacy: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  {/* All Pharmacies Tab */}
-                  <TabsContent value="all" className="mt-6 animate-fade-in">
+                  {/* Shared Content for Both Tabs */}
+                  <TabsContent value="all" className="mt-6 animate-fade-in" id="pharmacy-results">
                     <div className="flex flex-col items-center">
                       {filteredPharmacies.length > 0 ? (
                         <>
+                          {/* Results Summary */}
+                          <div className="w-full mb-6 flex justify-between items-center">
+                            <p className="text-gray-600">
+                              Affichage de <span className="font-medium text-gray-800">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredPharmacies.length)}</span> sur <span className="font-medium text-gray-800">{filteredPharmacies.length}</span> pharmacies
+                            </p>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm text-gray-600">Pharmacies par page:</span>
+                              <select
+                                className="bg-white border border-gray-200 rounded-md text-sm px-2 py-1"
+                                value={itemsPerPage}
+                                onChange={(e) => {
+                                  setItemsPerPage(Number(e.target.value));
+                                  setCurrentPage(1);
+                                }}
+                              >
+                                <option value={12}>12</option>
+                                <option value={24}>24</option>
+                                <option value={36}>36</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          {/* Pharmacy Grid */}
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                            {displayedPharmacies.map((pharmacy, index) => (
+                            {currentItems.map((pharmacy, index) => (
                               <div
                                 key={pharmacy.id}
                                 className="w-full pharmacy-card animate-fade-in"
@@ -174,15 +260,62 @@ const Pharmacy: React.FC = () => {
                             ))}
                           </div>
 
-                          {/* Load More Button */}
-                          {hasMore && (
-                            <div className="flex justify-center mt-12 animate-fade-in">
-                              <button
-                                onClick={() => setDisplayCount((prev) => prev + 12)}
-                                className="px-8 py-3 bg-white border border-meddoc-primary text-meddoc-primary rounded-lg hover:bg-meddoc-primary hover:text-white transition-colors duration-300 shadow-sm font-medium btn-primary"
-                              >
-                                Voir plus de pharmacies
-                              </button>
+                          {/* Pagination */}
+                          {totalPages > 1 && (
+                            <div className="mt-12 flex flex-col items-center space-y-4 animate-fade-in">
+                              {/* Page Info */}
+                              <p className="text-sm text-gray-500">
+                                Page {currentPage} sur {totalPages}
+                              </p>
+
+                              {/* Pagination Controls */}
+                              <div className="flex items-center space-x-2">
+                                {/* Previous Page Button */}
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => paginate(currentPage - 1)}
+                                  disabled={currentPage === 1}
+                                  className="h-10 w-10 rounded-lg border-gray-200 text-gray-500 hover:text-meddoc-primary hover:border-meddoc-primary disabled:opacity-50"
+                                >
+                                  <ChevronLeft className="h-5 w-5" />
+                                </Button>
+
+                                {/* Page Numbers */}
+                                <div className="flex items-center space-x-1">
+                                  {getPageNumbers().map((number, index) => (
+                                    number === "ellipsis" ? (
+                                      <div key={`ellipsis-${index}`} className="h-10 w-10 flex items-center justify-center text-gray-500">
+                                        <MoreHorizontal className="h-5 w-5" />
+                                      </div>
+                                    ) : (
+                                      <Button
+                                        key={`page-${number}`}
+                                        variant={currentPage === number ? "default" : "outline"}
+                                        onClick={() => paginate(number as number)}
+                                        className={`h-10 w-10 rounded-lg ${
+                                          currentPage === number
+                                            ? "bg-meddoc-primary text-white hover:bg-meddoc-primary/90"
+                                            : "border-gray-200 text-gray-700 hover:border-meddoc-primary hover:text-meddoc-primary"
+                                        }`}
+                                      >
+                                        {number}
+                                      </Button>
+                                    )
+                                  ))}
+                                </div>
+
+                                {/* Next Page Button */}
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => paginate(currentPage + 1)}
+                                  disabled={currentPage === totalPages}
+                                  className="h-10 w-10 rounded-lg border-gray-200 text-gray-500 hover:text-meddoc-primary hover:border-meddoc-primary disabled:opacity-50"
+                                >
+                                  <ChevronRight className="h-5 w-5" />
+                                </Button>
+                              </div>
                             </div>
                           )}
                         </>
@@ -200,12 +333,35 @@ const Pharmacy: React.FC = () => {
                   </TabsContent>
 
                   {/* Duty Pharmacies Tab */}
-                  <TabsContent value="duty" className="mt-6 animate-fade-in">
+                  <TabsContent value="duty" className="mt-6 animate-fade-in" id="pharmacy-results">
                     <div className="flex flex-col items-center">
                       {dutyPharmacies.length > 0 ? (
                         <>
+                          {/* Results Summary */}
+                          <div className="w-full mb-6 flex justify-between items-center">
+                            <p className="text-gray-600">
+                              Affichage de <span className="font-medium text-gray-800">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, dutyPharmacies.length)}</span> sur <span className="font-medium text-gray-800">{dutyPharmacies.length}</span> pharmacies de garde
+                            </p>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm text-gray-600">Pharmacies par page:</span>
+                              <select
+                                className="bg-white border border-gray-200 rounded-md text-sm px-2 py-1"
+                                value={itemsPerPage}
+                                onChange={(e) => {
+                                  setItemsPerPage(Number(e.target.value));
+                                  setCurrentPage(1);
+                                }}
+                              >
+                                <option value={12}>12</option>
+                                <option value={24}>24</option>
+                                <option value={36}>36</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          {/* Pharmacy Grid */}
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                            {displayedDutyPharmacies.map((pharmacy, index) => (
+                            {currentItems.map((pharmacy, index) => (
                               <div
                                 key={pharmacy.id}
                                 className="w-full pharmacy-card animate-fade-in"
@@ -216,15 +372,62 @@ const Pharmacy: React.FC = () => {
                             ))}
                           </div>
 
-                          {/* Load More Button */}
-                          {hasMoreDuty && (
-                            <div className="flex justify-center mt-12 animate-fade-in">
-                              <button
-                                onClick={() => setDisplayCount((prev) => prev + 12)}
-                                className="px-8 py-3 bg-white border border-meddoc-primary text-meddoc-primary rounded-lg hover:bg-meddoc-primary hover:text-white transition-colors duration-300 shadow-sm font-medium btn-primary"
-                              >
-                                Voir plus de pharmacies de garde
-                              </button>
+                          {/* Pagination */}
+                          {totalPages > 1 && (
+                            <div className="mt-12 flex flex-col items-center space-y-4 animate-fade-in">
+                              {/* Page Info */}
+                              <p className="text-sm text-gray-500">
+                                Page {currentPage} sur {totalPages}
+                              </p>
+
+                              {/* Pagination Controls */}
+                              <div className="flex items-center space-x-2">
+                                {/* Previous Page Button */}
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => paginate(currentPage - 1)}
+                                  disabled={currentPage === 1}
+                                  className="h-10 w-10 rounded-lg border-gray-200 text-gray-500 hover:text-meddoc-primary hover:border-meddoc-primary disabled:opacity-50"
+                                >
+                                  <ChevronLeft className="h-5 w-5" />
+                                </Button>
+
+                                {/* Page Numbers */}
+                                <div className="flex items-center space-x-1">
+                                  {getPageNumbers().map((number, index) => (
+                                    number === "ellipsis" ? (
+                                      <div key={`ellipsis-${index}`} className="h-10 w-10 flex items-center justify-center text-gray-500">
+                                        <MoreHorizontal className="h-5 w-5" />
+                                      </div>
+                                    ) : (
+                                      <Button
+                                        key={`page-${number}`}
+                                        variant={currentPage === number ? "default" : "outline"}
+                                        onClick={() => paginate(number as number)}
+                                        className={`h-10 w-10 rounded-lg ${
+                                          currentPage === number
+                                            ? "bg-meddoc-primary text-white hover:bg-meddoc-primary/90"
+                                            : "border-gray-200 text-gray-700 hover:border-meddoc-primary hover:text-meddoc-primary"
+                                        }`}
+                                      >
+                                        {number}
+                                      </Button>
+                                    )
+                                  ))}
+                                </div>
+
+                                {/* Next Page Button */}
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  onClick={() => paginate(currentPage + 1)}
+                                  disabled={currentPage === totalPages}
+                                  className="h-10 w-10 rounded-lg border-gray-200 text-gray-500 hover:text-meddoc-primary hover:border-meddoc-primary disabled:opacity-50"
+                                >
+                                  <ChevronRight className="h-5 w-5" />
+                                </Button>
+                              </div>
                             </div>
                           )}
                         </>
