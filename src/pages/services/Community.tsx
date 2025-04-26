@@ -10,84 +10,93 @@ const Community = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section avec effet parallaxe */}
-      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
+        {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{
             backgroundImage: `url(${communityImage})`,
           }}
         ></div>
-        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
-        <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center animate-fade-up">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:30px_30px] sm:bg-[size:40px_40px]"></div>
+        <div className="absolute -bottom-6 left-0 right-0 h-8 sm:h-10 md:h-12 bg-white transform -skew-y-1"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-32 -mt-32"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-32 -mb-32"></div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto text-center animate-fade-up">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight">
               COMMUNITY MANAGEMENT MÉDICAL <span className="text-meddoc-secondary">.</span>
             </h1>
-            <p className="text-2xl font-semibold text-white mb-6">
+            <p className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6">
               Boostez votre visibilité, affirmez votre présence en ligne
             </p>
-            <p className="text-lg text-white mb-8">
+            <p className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto">
               Aujourd'hui, la présence digitale est un atout incontournable pour les structures de santé. MEDDoC accompagne les professionnels du secteur dans la gestion stratégique et créative de leurs réseaux sociaux.
             </p>
-            <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold">
-              Découvrir nos services
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <a href="#services" className="block w-full sm:w-auto sm:inline-block">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold">
+                Découvrir nos services
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Section Pour qui */}
-      <section className="py-10 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">Pour qui ?</span>
-            </h2>
-            <p className="text-lg text-center text-gray-600 mb-16 max-w-3xl mx-auto">
-              Nos services de community management sont spécialement conçus pour les acteurs du secteur de la santé à Madagascar
-            </p>
+      <section className="py-8 sm:py-10 md:py-12 bg-white" id="services">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl mx-auto">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">Pour qui ?</span>
+              </h2>
+              <p className="text-base sm:text-lg text-center text-gray-600 mb-8 sm:mb-12 md:mb-16 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto">
+                Nos services de community management sont spécialement conçus pour les acteurs du secteur de la santé à Madagascar
+              </p>
+            </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {/* Client 1 */}
-              <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <div className="group relative bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
-                <div className="p-6">
-                  <div className="w-14 h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
-                    <Building2 className="h-7 w-7 text-meddoc-primary" />
+                <div className="p-4 sm:p-5 md:p-6">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-3 sm:mb-4 md:mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <Building2 className="h-6 w-6 sm:h-7 sm:w-7 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">Cliniques & Cabinets</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Cliniques & Cabinets</h3>
+                  <p className="text-sm sm:text-base text-gray-600">
                     Valorisez votre expertise et vos services auprès de vos patients actuels et potentiels.
                   </p>
                 </div>
               </div>
 
               {/* Client 2 */}
-              <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <div className="group relative bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
-                <div className="p-6">
-                  <div className="w-14 h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
-                    <FileText className="h-7 w-7 text-meddoc-primary" />
+                <div className="p-4 sm:p-5 md:p-6">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-3 sm:mb-4 md:mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <FileText className="h-6 w-6 sm:h-7 sm:w-7 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">Pharmacies & Laboratoires</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Pharmacies & Laboratoires</h3>
+                  <p className="text-sm sm:text-base text-gray-600">
                     Communiquez sur vos produits, services et horaires pour améliorer votre visibilité locale.
                   </p>
                 </div>
               </div>
 
               {/* Client 3 */}
-              <div className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <div className="group relative bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary transform origin-left transition-all duration-300 group-hover:h-2"></div>
-                <div className="p-6">
-                  <div className="w-14 h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
-                    <Users className="h-7 w-7 text-meddoc-primary" />
+                <div className="p-4 sm:p-5 md:p-6">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-meddoc-primary/10 flex items-center justify-center mb-3 sm:mb-4 md:mb-5 group-hover:bg-meddoc-primary/20 transition-all duration-300">
+                    <Users className="h-6 w-6 sm:h-7 sm:w-7 text-meddoc-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">ONG & Associations</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">ONG & Associations</h3>
+                  <p className="text-sm sm:text-base text-gray-600">
                     Amplifiez l'impact de vos actions et mobilisez votre communauté autour de vos causes.
                   </p>
                 </div>
@@ -237,26 +246,27 @@ const Community = () => {
       </section>
 
       {/* CTA Section avec design moderne */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-2xl shadow-xl overflow-hidden">
-            <div className="relative p-8 md:p-12">
-              <div className="absolute top-0 right-0 -mt-12 -mr-12 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+      <section className="py-10 sm:py-14 md:py-16 lg:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto bg-gradient-to-br from-meddoc-primary to-meddoc-secondary rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl overflow-hidden">
+            <div className="relative p-6 sm:p-8 md:p-10 lg:p-12">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 -mt-8 -mr-8 sm:-mt-12 sm:-mr-12 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full blur-2xl sm:blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 -mb-8 -ml-8 sm:-mb-12 sm:-ml-12 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full blur-2xl sm:blur-3xl"></div>
 
-              <div className="relative z-10 text-white">
-                <h2 className="text-3xl font-bold mb-6">Prêt à transformer votre présence en ligne ?</h2>
-                <p className="text-xl text-white/90 mb-8">
-                  💬 Contactez-nous pour mettre en place une communication professionnelle et efficace adaptée à votre structure de santé.
+              <div className="relative z-10 text-white text-center sm:text-left">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Prêt à transformer votre présence en ligne ?</h2>
+                <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl">
+                  Contactez-nous pour mettre en place une communication professionnelle et efficace adaptée à votre structure de santé.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start">
+                  <Button className="w-full sm:w-auto bg-white text-meddoc-primary hover:bg-white/90 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold">
                     Demander un audit gratuit
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
                   </Button>
-                  <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
-                    <MessageCircle className="mr-2 h-5 w-5" />
+                  <Button className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white/10 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold">
+                    <MessageCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
                     Nous contacter
                   </Button>
                 </div>
