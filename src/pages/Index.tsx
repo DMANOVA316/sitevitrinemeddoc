@@ -70,7 +70,8 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+        {/* Background Image with Overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{
@@ -78,8 +79,12 @@ const Index = () => {
           }}
         ></div>
 
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/20 rounded-full blur-3xl -ml-32 -mt-32"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/20 rounded-full blur-3xl -mr-32 -mb-32"></div>
+
         {/* Social Media Icons */}
-        <div className="absolute top-8 right-8 z-20 flex flex-col gap-3 md:gap-4 lg:top-10 lg:right-10 sm:flex-row md:flex-col">
+        <div className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 md:right-8 lg:right-10 z-20 flex flex-col gap-2 sm:gap-3 md:gap-4 sm:flex-row md:flex-col">
           {/* Sur mobile (< 640px): vertical à droite */}
           {/* Sur tablette (640px - 768px): horizontal à droite */}
           {/* Sur desktop (> 768px): vertical à droite */}
@@ -87,7 +92,7 @@ const Index = () => {
             href="https://www.facebook.com/MEDDOCHC"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
             aria-label="Facebook"
           >
             <FacebookIcon />
@@ -96,7 +101,7 @@ const Index = () => {
             href="https://www.instagram.com/meddoc.healthcare/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
             aria-label="Instagram"
           >
             <InstagramIcon />
@@ -105,7 +110,7 @@ const Index = () => {
             href="https://twitter.com/meddoc_mg"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
             aria-label="X (Twitter)"
           >
             <TwitterIcon />
@@ -114,7 +119,7 @@ const Index = () => {
             href="https://wa.me/261340000000"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
             aria-label="WhatsApp"
           >
             <MessageCircleIcon />
@@ -123,54 +128,54 @@ const Index = () => {
             href="https://www.linkedin.com/company/meddochealthcare/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
             aria-label="LinkedIn"
           >
             <LinkedinIcon />
           </a>
         </div>
 
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-3xl animate-fade-up">
-            <span className="text-xl inline-block bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm mb-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto md:mx-0 animate-fade-up">
+            <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm md:text-base mb-4 sm:mb-6">
               A vos marques, prêt, santé !
             </span>
-            <h1 className="mb-6 text-6xl font-bold leading-tight text-white">
+            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
               {isLoadingCouverture ? (
                 <div className="flex flex-col gap-1">
-                  <Skeleton className="w-full h-[50px]" />
-                  <Skeleton className="w-1/2 h-[50px]" />
+                  <Skeleton className="w-full h-[30px] sm:h-[40px] md:h-[50px]" />
+                  <Skeleton className="w-1/2 h-[30px] sm:h-[40px] md:h-[50px]" />
                 </div>
               ) : (
                 couverture?.titre || "La première entreprise 360° santé à Madagascar"
               )}
             </h1>
-            <p className="mb-8 text-xl text-white/90 leading-relaxed">
+            <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
               {isLoadingCouverture ? (
                 <div className="flex flex-col gap-1">
-                  <Skeleton className="w-full h-[40px]" />
-                  <Skeleton className="w-1/2 h-[40px]" />
+                  <Skeleton className="w-full h-[24px] sm:h-[30px] md:h-[40px]" />
+                  <Skeleton className="w-1/2 h-[24px] sm:h-[30px] md:h-[40px]" />
                 </div>
               ) : (
                 couverture?.description ||
                 "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."
               )}
             </p>
-            <div className="flex gap-4">
-              <a href="#services" className="block">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a href="#services" className="block w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="bg-white text-meddoc-primary hover:bg-white/90"
+                  className="w-full sm:w-auto bg-white text-meddoc-primary hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
                 >
                   Découvrir nos services
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </a>
-              <Link to="/contact" className="block">
+              <Link to="/contact" className="block w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="bg-transparent border-white text-white hover:bg-white/10"
+                  className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
                 >
                   Nous contacter
                 </Button>
