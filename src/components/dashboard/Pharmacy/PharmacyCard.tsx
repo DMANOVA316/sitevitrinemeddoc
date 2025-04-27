@@ -1,57 +1,106 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Building2, Wrench } from "lucide-react";
+import { MapPin, Clock, Phone, Building2, Wrench, ExternalLink } from "lucide-react";
+
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
 }
 
 const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
   return (
-    <Card className="w-full h-full animate-fade-up group hover:shadow-lg transition-all duration-300 overflow-hidden">
-      <CardContent className="p-6">
+    <Card className="w-full h-full group hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-100 rounded-xl">
+      {/* Status Bar - Green for duty pharmacies */}
+      {pharmacy.de_garde && (
+        <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-500 w-full"></div>
+      )}
+
+      {/* Regular Bar for non-duty pharmacies */}
+      {!pharmacy.de_garde && (
+        <div className="h-1.5 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary w-full"></div>
+      )}
+
+      <CardContent className="p-5 sm:p-6">
         <div className="space-y-4">
-          {/* Nom de la pharmacie */}
-          <div className="flex items-center gap-6">
-            {pharmacy.photo_profil ? (
-              <img
-                src={pharmacy.photo_profil}
-                alt={pharmacy.nom_pharmacie}
-                className="w-12 h-12 object-cover rounded-full"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = "none";
-                  target.parentElement?.classList.add("fallback-icon");
-                }}
-              />
-            ) : (
-              <Building2 className="w-8 h-8 text-meddoc-primary" />
-            )}
-            <div className="flex flex-col justify-start items-start">
-              <h3 className="text-xl font-semibold text-gray-900">
-                {pharmacy.nom_pharmacie}
-              </h3>
+          {/* Pharmacy Header with Logo and Name */}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              {pharmacy.photo_profil ? (
+                <div className="w-14 h-14 rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                  <img
+                    src={pharmacy.photo_profil}
+                    alt={pharmacy.nom_pharmacie}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = "none";
+                      target.parentElement?.classList.add("bg-blue-50");
+                      target.parentElement?.classList.add("flex");
+                      target.parentElement?.classList.add("items-center");
+                      target.parentElement?.classList.add("justify-center");
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="w-14 h-14 rounded-lg bg-blue-50 flex items-center justify-center shadow-sm border border-gray-100">
+                  <Building2 className="w-8 h-8 text-meddoc-primary" />
+                </div>
+              )}
+
+              {/* Duty Badge */}
               {pharmacy.de_garde && (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
-                  De garde
+                <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs">
+                  <Clock className="w-3 h-3" />
                 </span>
               )}
             </div>
-          </div>
-          {/* Service pharmacie */}
-          <div className="flex items-start gap-3">
-            <Wrench className="w-5 h-5 text-gray-500 mt-1" />
+
             <div className="flex-1">
-              <p className="text-gray-700">{pharmacy.service}</p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                    {pharmacy.nom_pharmacie}
+                  </h3>
+                  {pharmacy.de_garde && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                      De garde
+                    </span>
+                  )}
+                </div>
+
+                {/* External Link Button */}
+                <button className="text-gray-400 hover:text-meddoc-primary transition-colors p-1 rounded-full hover:bg-gray-50">
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Adresse */}
+          {/* Divider */}
+          <div className="h-px bg-gray-100 w-full"></div>
+
+          {/* Service */}
+          {pharmacy.service && (
+            <div className="flex items-start gap-3">
+              <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+                <Wrench className="w-full h-full" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-700">{pharmacy.service}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Address */}
           <div className="flex items-start gap-3">
-            <MapPin className="w-5 h-5 text-gray-500 mt-1" />
+            <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+              <MapPin className="w-full h-full" />
+            </div>
             <div className="flex-1">
-              <p className="text-gray-700">{pharmacy.address}</p>
-              <p className="text-sm text-gray-500">
-                {pharmacy.province && pharmacy.province + ", "}
-                {pharmacy.region && pharmacy.region + ", "}
+              <p className="text-sm text-gray-700 font-medium">{pharmacy.address}</p>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {pharmacy.province && pharmacy.province}
+                {pharmacy.region && pharmacy.province && ", "}
+                {pharmacy.region && pharmacy.region}
+                {pharmacy.district && (pharmacy.province || pharmacy.region) && ", "}
                 {pharmacy.district && pharmacy.district}
               </p>
             </div>
@@ -59,31 +108,46 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
 
           {/* Contacts */}
           {pharmacy.contacts && pharmacy.contacts.length > 0 && (
-            <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-gray-500 mt-1" />
+            <div className="flex items-start gap-3">
+              <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+                <Phone className="w-full h-full" />
+              </div>
               <div className="flex-1">
-                {pharmacy.contacts.map((contact, index) => {
-                  return (
-                    <span key={contact.id} className="text-gray-700">
+                <div className="flex flex-wrap gap-2">
+                  {pharmacy.contacts.map((contact) => (
+                    <a
+                      key={contact.id}
+                      href={`tel:${contact.numero}`}
+                      className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 text-meddoc-primary text-xs font-medium hover:bg-blue-100 transition-colors"
+                    >
                       {contact.numero}
-                      {index < pharmacy.contacts.length - 1 ? " / " : ""}
-                    </span>
-                  );
-                })}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
-          {/* Horaires */}
+          {/* Hours */}
           {pharmacy.horaires && pharmacy.horaires.length > 0 && (
-            <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 text-gray-500" />
-              <div className="flex-1 space-y-1">
-                {pharmacy.horaires.map((horaire, index) => (
-                  <p key={index} className="text-sm text-gray-600">
-                    {horaire.heure_debut} - {horaire.heure_fin}
-                  </p>
-                ))}
+            <div className="flex items-start gap-3">
+              <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+                <Clock className="w-full h-full" />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-medium text-gray-500 mb-1">Horaires d'ouverture</p>
+                <div className="grid grid-cols-1 gap-1">
+                  {pharmacy.horaires.map((horaire, index) => (
+                    <div key={index} className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600 text-xs">
+                        {horaire.jour || "Tous les jours"}
+                      </span>
+                      <span className="text-gray-800 text-xs font-medium bg-gray-50 px-2 py-0.5 rounded">
+                        {horaire.heure_debut} - {horaire.heure_fin}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}

@@ -243,7 +243,7 @@ const AppMeddoc = () => {
       </section>
 
       {/* Security Section */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-6 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-8">
