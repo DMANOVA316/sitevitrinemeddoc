@@ -70,10 +70,10 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         {/* Background Image with Overlay */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
+          className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{
             backgroundImage: `url(${couverture?.photo})`,
           }}
