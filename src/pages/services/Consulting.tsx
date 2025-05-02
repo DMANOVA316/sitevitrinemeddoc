@@ -29,16 +29,56 @@ const Consulting = () => {
             <p className="text-lg text-white mb-8">
               Vous développez une initiative, gérez une structure médicale ou lancez un nouveau service ? MEDDoC vous accompagne de manière stratégique et opérationnelle pour maximiser votre impact.
             </p>
-            <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold">
-              Découvrir nos services
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <button
+              onClick={() => {
+                // Utilisation d'une animation plus fluide avec requestAnimationFrame
+                const targetElement = document.getElementById('prestations');
+                if (targetElement) {
+                  const startPosition = window.scrollY;
+                  const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                  const distance = targetPosition - startPosition;
+                  const duration = 100; // Durée légèrement plus courte pour une animation plus dynamique
+
+                  // Fonction d'easing pour une animation plus naturelle
+                  const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
+
+                  let startTime: number | null = null;
+
+                  function animation(currentTime: number): void {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const easedProgress = easeOutQuart(progress);
+
+                    window.scrollTo(0, startPosition + distance * easedProgress);
+
+                    if (timeElapsed < duration) {
+                      requestAnimationFrame(animation);
+                    } else {
+                      // Ajouter un effet de surbrillance à la fin de l'animation
+                      targetElement.classList.add('highlight-section');
+                      setTimeout(() => {
+                        targetElement.classList.remove('highlight-section');
+                      }, 100);
+                    }
+                  }
+
+                  requestAnimationFrame(animation);
+                }
+              }}
+              className="inline-block"
+            >
+              <Button className="group bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                Découvrir nos services
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </button>
           </div>
         </div>
       </section>
 
       {/* Section Prestations avec design moderne */}
-      <section className="py-10 bg-white">
+      <section className="py-10 bg-white transition-all duration-700 scroll-mt-20" id="prestations">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-4">
@@ -211,8 +251,8 @@ const Consulting = () => {
                       Nous contacter
                     </Button>
                   </Link>
-               
-                  
+
+
                 </div>
               </div>
             </div>

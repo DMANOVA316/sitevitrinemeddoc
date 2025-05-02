@@ -164,7 +164,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
-                onClick={() => scrollToElement('services', 80, 1200)}
+                onClick={() => scrollToElement('services', 80, 100)}
                 className="block w-full sm:w-auto"
               >
                 <Button

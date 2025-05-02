@@ -144,3 +144,26 @@ section:target,
     box-shadow: none;
   }
 }
+
+/* Animation spécifique pour la page Consulting */
+#prestations.highlight-section {
+  animation: highlight-consulting 1.2s ease-out;
+}
+
+@keyframes highlight-consulting {
+  0% {
+    background-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+    transform: scale(1.01);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+    transform: scale(1.005);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+    transform: scale(1);
+  }
+}
