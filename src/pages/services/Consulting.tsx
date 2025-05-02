@@ -70,7 +70,7 @@ const Consulting = () => {
             >
               <Button className="group bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                 Découvrir nos services
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
               </Button>
             </button>
           </div>
