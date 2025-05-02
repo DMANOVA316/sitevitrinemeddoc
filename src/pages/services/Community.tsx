@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import communityImage from "../../assets/serivces-images/community.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import communityImage2 from "../../assets/serivces-images/community-2.jpg";
+import { scrollToElement } from "@/utils/scrollUtils";
 const Community = () => {
   // Défilement automatique vers le haut lors du chargement de la page
   useScrollToTop();
@@ -36,12 +37,15 @@ const Community = () => {
             <p className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto">
               Aujourd'hui, la présence digitale est un atout incontournable pour les structures de santé. MEDDoC accompagne les professionnels du secteur dans la gestion stratégique et créative de leurs réseaux sociaux.
             </p>
-            <a href="#services" className="block w-full sm:w-auto sm:inline-block">
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold">
+            <button
+              onClick={() => scrollToElement('services', 80, 100)}
+              className="block w-full sm:w-auto sm:inline-block"
+            >
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                 Découvrir nos services
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
               </Button>
-            </a>
+            </button>
           </div>
         </div>
       </section>

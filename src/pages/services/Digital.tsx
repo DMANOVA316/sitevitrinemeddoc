@@ -2,6 +2,7 @@ import { ArrowRight, Code, Database, Globe, MapPin, Shield, Smartphone, Users } 
 import { Button } from "@/components/ui/button";
 import digitaleImage from "../../assets/serivces-images/digitale.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { scrollToElement } from "@/utils/scrollUtils";
 
 const Digital = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -36,12 +37,15 @@ const Digital = () => {
             <p className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto">
               Chez MEDDoC, nous croyons que la technologie peut révolutionner l'accès aux soins. Nos solutions digitales sont conçues pour simplifier le quotidien des professionnels de santé et améliorer la qualité des services offerts à la population.
             </p>
-            <a href="#services" className="block w-full sm:w-auto sm:inline-block">
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold">
+            <button
+              onClick={() => scrollToElement('services', 80, 100)}
+              className="block w-full sm:w-auto sm:inline-block"
+            >
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
                 Découvrir nos solutions
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
               </Button>
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -50,7 +54,7 @@ const Digital = () => {
       <section className="py-8 sm:py-10 md:py-12 bg-white" id="services">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
-            <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12" id="services">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-meddoc-fonce mb-3 sm:mb-4">
                 Nos services <span className="text-sky-500">digitaux</span>
               </h2>

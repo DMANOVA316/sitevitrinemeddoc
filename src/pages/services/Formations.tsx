@@ -4,6 +4,7 @@ import formationsImage from "../../assets/serivces-images/formations.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Link } from "react-router-dom";
 import { MessageCircle } from "lucide-react";
+import { scrollToElement } from "@/utils/scrollUtils";
 const Formations = () => {
   // Défilement automatique vers le haut lors du chargement de la page
   useScrollToTop();
@@ -32,12 +33,21 @@ const Formations = () => {
             <p className="text-lg text-white mb-8">
               Les formations MEDDoC sont conçues pour répondre aux besoins réels des professionnels et structures du secteur santé. Courtes, pratiques et adaptées, elles permettent d'améliorer immédiatement la qualité des services rendus.
             </p>
+            <button
+              onClick={() => scrollToElement('domaines', 80, 100)}
+              className="inline-block"
+            >
+              <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-6 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Découvrir nos domaines de formation
+                <ArrowRight className="ml-2 h-5 w-5 animate-bounce-right" />
+              </Button>
+            </button>
           </div>
         </div>
       </section>
 
       {/* Domaines de formation avec design moderne */}
-      <section className="py-10 bg-white">
+      <section className="py-10 bg-white transition-all duration-700" id="domaines">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-16 relative">
@@ -163,9 +173,9 @@ const Formations = () => {
                       Nous contacter
                     </Button>
                   </Link>
-               
-                
-                
+
+
+
               </div>
             </div>
           </div>

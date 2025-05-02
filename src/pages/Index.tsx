@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { scrollToElement } from "@/utils/scrollUtils";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -162,20 +163,23 @@ const Index = () => {
               )}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a href="#services" className="block w-full sm:w-auto">
+              <button
+                onClick={() => scrollToElement('services', 80, 100)}
+                className="block w-full sm:w-auto"
+              >
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto bg-white text-meddoc-primary hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
+                  className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary text-white hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg hover:bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 transition-all duration-300 transform hover:scale-105"
                 >
                   Découvrir nos services
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-4 w-4 animate-bounce-right" />
                 </Button>
-              </a>
+              </button>
               <Link to="/contact" className="block w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
+                  className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 hover:text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
                 >
                   Nous contacter
                 </Button>
@@ -186,7 +190,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-10 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden" id="services">
+      <section className="py-10 bg-gradient-to-br from-slate-50 to-white relative overflow-hidden transition-all duration-700" id="services">
         <div className="absolute top-0 right-0 w-96 h-96 bg-meddoc-primary/5 rounded-full -mr-48 -mt-48"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-meddoc-secondary/5 rounded-full -ml-48 -mb-48"></div>
 
