@@ -18,22 +18,30 @@ const Footer = () => {
       <div className="container mx-auto px-4 mt-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Link to={"/app-meddoc"} ><h3 className="text-xl font-bold mb-4">APP MEDDoC</h3></Link>
-            <p className="text-gray-400">
-              Vous voulez rejoindre la santé de demain ?
-            </p>
-            <p className="text-gray-400 mt-2 mb-6">Rejoignez notre communauté d’utilisateurs et de professionnels de santé.</p>
-
-            <Link to={"/app-meddoc"} >
-            <Button
-                size="lg"
-                className="bg-meddoc-primary hover:bg-meddoc-secondary mr-2"
-              >
-                Inscrivez-vous maintenant
-              </Button>
+            <Link to={"/app-meddoc"}>
+              <h3 className="text-xl font-bold mb-4">APP MEDDoC</h3>
             </Link>
-              
+            <div className="space-y-2 mb-4">
+              <p className="text-gray-400">
+                Vous voulez rejoindre la santé de demain ?
+              </p>
+              <p className="text-gray-400">
+                Rejoignez notre communauté d'utilisateurs et de professionnels de santé.
+              </p>
+            </div>
+            
+            <div className="mt-6">
+              <Link to={"/app-meddoc"}>
+                <Button
+                  size="lg"
+                  className="bg-meddoc-primary hover:bg-meddoc-secondary"
+                >
+                  Inscrivez-vous maintenant
+                </Button>
+              </Link>
+            </div>
           </div>
+          
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
             <ul className="space-y-2">
@@ -71,39 +79,40 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+          
           <div>
             <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <div className="text-gray-400">
-              Email: {infoMeddoc?.email}
+            <div className="text-gray-400 space-y-2">
+              <p>Email: {infoMeddoc?.email}</p>
               <p>
-                Tél:
-                {!isLoadingNumbers &&
+                Tél: {!isLoadingNumbers &&
                   (numeros.length > 0 ? (
-                    numeros.map((num, index) => {
-                      return (
-                        <span key={num.id}>
-                          {num.numero}
-                          {index < numeros.length - 1 ? " / " : ""}
-                        </span>
-                      );
-                    })
+                    numeros.map((num, index) => (
+                      <span key={num.id}>
+                        {num.numero}
+                        {index < numeros.length - 1 ? " / " : ""}
+                      </span>
+                    ))
                   ) : (
-                    <span>Aucun numero disponible pour le moment</span>
+                    <span>Aucun numéro disponible pour le moment</span>
                   ))}
               </p>
-              {infoMeddoc?.addresse}
-            
-            <Link to="/login">
-              <Button
-                size="lg"
-                className="bg-meddoc-primary hover:bg-meddoc-secondary mt-8"
-              >
-                Se Connecter
-              </Button>
-            </Link>
+              <p>{infoMeddoc?.addresse}</p>
+              
+              <div className="mt-6">
+                <Link to="/login">
+                  <Button
+                    size="lg"
+                    className="bg-meddoc-primary hover:bg-meddoc-secondary"
+                  >
+                    Se Connecter
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
+        
         <div className="border-t border-gray-700 mt-8 pt-4 text-center">
           <p className="text-gray-400">
             © {date} {infoMeddoc?.copyrigth}
