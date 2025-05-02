@@ -104,3 +104,43 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Animations personnalisées */
+@keyframes bounce-right {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-bounce-right {
+  animation: bounce-right 1s ease-in-out infinite;
+}
+
+/* Animation de défilement fluide */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Effet de surbrillance pour les sections */
+section:target,
+.highlight-section {
+  animation: highlight 1.5s ease-out;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
