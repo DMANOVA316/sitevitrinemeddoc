@@ -19,7 +19,11 @@ export default function Number({ number }: { number: Numero_meddoc }) {
 
   return (
     <TableRow>
-      <TableCell>{number.numero}</TableCell>
+      <TableCell>
+        {number.numero && number.numero.startsWith('+261')
+          ? number.numero.replace(/(\+261)(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4 $5')
+          : number.numero}
+      </TableCell>
       <TableCell>
         <div className="flex space-x-2">
           <Button variant="outline" size="icon" onClick={() => handleEdit()}>
