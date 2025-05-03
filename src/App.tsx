@@ -1,7 +1,7 @@
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import PublicLayout from "@/components/PublicLayout";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -20,8 +20,8 @@ import Services from "./pages/Dashboard/Services";
 import NumberList from "./pages/Dashboard/Numbers/NumberList";
 import { ServiceProvider } from "./contexts/ServiceContext";
 import SocialMediaIndex from "./pages/Dashboard/SocialMedia/SocialMediaIndex";
-import About from "./pages/About"; // Added import statement
-
+import About from "./pages/About";
+import { useEffect } from "react";
 import AmbulanceList from "./pages/Dashboard/Ambulance/AmbulanceList";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -32,147 +32,193 @@ import AppMeddoc from "./pages/AppMeddoc";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <TooltipProvider>
-          <ServiceProvider>
-            <Toaster richColors />
-            <BrowserRouter>
-              <Routes>
-                {/* Routes publiques */}
-                <Route
-                  path="/"
-                  element={
-                    <PublicLayout>
-                      <Index />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/login"
-                  element={
-                    <PublicLayout>
-                      <Login />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/app-meddoc"
-                  element={
-                    <PublicLayout>
-                      <AppMeddoc />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/pharmacies"
-                  element={
-                    <PublicLayout>
-                      <Pharmacy />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/contact"
-                  element={
-                    <PublicLayout>
-                      <ContactUs />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/apropos"
-                  element={
-                    <PublicLayout>
-                      <About />
-                    </PublicLayout>
-                  }
-                />
-                {/* Routes des services */}
-                <Route
-                  path="/services/community"
-                  element={
-                    <PublicLayout>
-                      <Community />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/services/consulting"
-                  element={
-                    <PublicLayout>
-                      <Consulting />
-                    </PublicLayout>
-                  }
-                />
-                <Route
-                  path="/services/digital"
-                  element={
-                    <PublicLayout>
-                      <Digital />
-                    </PublicLayout>
-                  }
-                />
+// Composant pour gérer le défilement vers les ancres
+const ScrollToAnchor = () => {
+  const { hash, pathname } = useLocation();
 
-<Route
-                  path="/services/formations"
-                  element={
-                    <PublicLayout>
-                      <Formations />
-                    </PublicLayout>
-                  }
-                />
-                {/* Routes protégées pour le tableau de bord */}
-                <Route element={<PrivateRoute />}>
-                  <Route element={<DashboardLayout />}>
-                    <Route path="/dashboard" element={<DashboardIndex />} />
-                    <Route
-                      path="/dashboard/pharmacies"
-                      element={<DashboardPharmacies />}
-                    />
-                    {/* Edition de page */}
-                    <Route
-                      path="/dashboard/page-meddoc/"
-                      element={<EditPageIndex />}
-                    />
-                    <Route
-                      path="/dashboard/partenaires"
-                      element={<PartnerIndex />}
-                    >
-                      <Route
-                        path="/dashboard/partenaires/list"
-                        element={<PartnerList />}
-                      />
-                    </Route>
+  useEffect(() => {
+    // Si un hash est présent dans l'URL
+    if (hash) {
+      // Attendre que le DOM soit complètement chargé
+      setTimeout(() => {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          const offset = 80; // Offset pour tenir compte du header fixe
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - offset,
+            behavior: 'smooth'
+          });
 
-                    <Route
-                      path="/dashboard/reseaux-sociaux"
-                      element={<SocialMediaIndex />}
-                    />
-                    <Route path="/dashboard/services" element={<Services />} />
-                    <Route
-                      path="/dashboard/contact-meddoc"
-                      element={<ContactsUs />}
-                    />
-                    <Route
-                      path="/dashboard/contacts"
-                      element={<NumberList />}
-                    />
-                    <Route
-                      path="/dashboard/ambulances"
-                      element={<AmbulanceList />}
-                    />
-                  </Route>
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </ServiceProvider>
-        </TooltipProvider>
-      </Provider>
-    </QueryClientProvider>
-  </Provider>
-);
+          // Ajouter un effet de surbrillance
+          element.classList.add('highlight-section');
+          setTimeout(() => {
+            element.classList.remove('highlight-section');
+          }, 1500);
+        }
+      }, 100);
+    } else {
+      // Défiler vers le haut lors d'un changement de page sans hash
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]); // Réagir aux changements de pathname et hash
+
+  return null;
+};
+
+// Wrapper pour utiliser le hook useLocation
+const AppContent = () => {
+  return (
+    <>
+      <ScrollToAnchor />
+      <Routes>
+        {/* Routes publiques */}
+        <Route
+          path="/"
+          element={
+            <PublicLayout>
+              <Index />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicLayout>
+              <Login />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/app-meddoc"
+          element={
+            <PublicLayout>
+              <AppMeddoc />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/pharmacies"
+          element={
+            <PublicLayout>
+              <Pharmacy />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <PublicLayout>
+              <ContactUs />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/apropos"
+          element={
+            <PublicLayout>
+              <About />
+            </PublicLayout>
+          }
+        />
+        {/* Routes des services */}
+        <Route
+          path="/services/community"
+          element={
+            <PublicLayout>
+              <Community />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/services/consulting"
+          element={
+            <PublicLayout>
+              <Consulting />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/services/digital"
+          element={
+            <PublicLayout>
+              <Digital />
+            </PublicLayout>
+          }
+        />
+        <Route
+          path="/services/formations"
+          element={
+            <PublicLayout>
+              <Formations />
+            </PublicLayout>
+          }
+        />
+        {/* Routes protégées pour le tableau de bord */}
+        <Route element={<PrivateRoute />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<DashboardIndex />} />
+            <Route
+              path="/dashboard/pharmacies"
+              element={<DashboardPharmacies />}
+            />
+            {/* Edition de page */}
+            <Route
+              path="/dashboard/page-meddoc/"
+              element={<EditPageIndex />}
+            />
+            <Route
+              path="/dashboard/partenaires"
+              element={<PartnerIndex />}
+            >
+              <Route
+                path="/dashboard/partenaires/list"
+                element={<PartnerList />}
+              />
+            </Route>
+            <Route
+              path="/dashboard/reseaux-sociaux"
+              element={<SocialMediaIndex />}
+            />
+            <Route path="/dashboard/services" element={<Services />} />
+            <Route
+              path="/dashboard/contact-meddoc"
+              element={<ContactsUs />}
+            />
+            <Route
+              path="/dashboard/contacts"
+              element={<NumberList />}
+            />
+            <Route
+              path="/dashboard/ambulances"
+              element={<AmbulanceList />}
+            />
+          </Route>
+        </Route>
+      </Routes>
+    </>
+  );
+};
+
+// Composant principal de l'application
+const App = () => {
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <TooltipProvider>
+            <ServiceProvider>
+              <Toaster richColors />
+              <BrowserRouter>
+                <AppContent />
+              </BrowserRouter>
+            </ServiceProvider>
+          </TooltipProvider>
+        </Provider>
+      </QueryClientProvider>
+    </Provider>
+  );
+};
 
 export default App;
