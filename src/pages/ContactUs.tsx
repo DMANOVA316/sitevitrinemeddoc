@@ -97,8 +97,8 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm opacity-75">Téléphone</p>
-                    <p className="text-sm sm:text-base font-medium">+261389655544</p>
-                    <p className="text-sm sm:text-base font-medium">+261326503158</p>
+                    <p className="text-sm sm:text-base font-medium">+261 38 96 555 44</p>
+                    <p className="text-sm sm:text-base font-medium">+261 32 65 031 58</p>
                   </div>
                 </div>
 

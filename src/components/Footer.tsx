@@ -29,7 +29,7 @@ const Footer = () => {
                 Rejoignez notre communauté d'utilisateurs et de professionnels de santé.
               </p>
             </div>
-            
+
             <div className="mt-6">
               <Link to={"/app-meddoc"}>
                 <Button
@@ -41,7 +41,7 @@ const Footer = () => {
               </Link>
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-xl font-bold mb-4">Nos Services</h3>
             <ul className="space-y-2">
@@ -50,7 +50,7 @@ const Footer = () => {
                   to="/services/digital"
                   className="text-gray-400 hover:text-white"
                 >
-                  Solutions digitales 
+                  Solutions digitales santé
                 </Link>
               </li>
               <li>
@@ -79,9 +79,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="text-xl font-bold mb-4">Contact</h3>
+            <h3 className="text-xl font-bold mb-4">Contacts</h3>
             <div className="text-gray-400 space-y-2">
               <p>Email: {infoMeddoc?.email}</p>
               <p>
@@ -89,7 +89,11 @@ const Footer = () => {
                   (numeros.length > 0 ? (
                     numeros.map((num, index) => (
                       <span key={num.id}>
-                        {num.numero}
+                        {num.numero && num.numero.startsWith('0')
+                          ? `+261${num.numero.substring(1)}`
+                          : num.numero.startsWith('+261')
+                            ? num.numero
+                            : `+261${num.numero}`}
                         {index < numeros.length - 1 ? " / " : ""}
                       </span>
                     ))
@@ -98,7 +102,7 @@ const Footer = () => {
                   ))}
               </p>
               <p>{infoMeddoc?.addresse}</p>
-              
+
               <div className="mt-6">
                 <Link to="/login">
                   <Button
@@ -112,7 +116,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-700 mt-8 pt-4 text-center">
           <p className="text-gray-400">
             © {date} {infoMeddoc?.copyrigth}

@@ -169,7 +169,7 @@ const Header = () => {
                   to="/apropos"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
-                  Qui somme nous ?
+                  Qui sommes-nous ?
                 </Link>
               </NavigationMenuItem>
 
@@ -178,7 +178,7 @@ const Header = () => {
                   to="/contact"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
-                  Contact
+                  Contacts
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>

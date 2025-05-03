@@ -36,14 +36,33 @@ export default function EditNumber() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.numero.match(/^\d+$/)) {
+
+    // Nettoyer le numéro (enlever espaces, tirets, etc.)
+    let cleanNumber = formData.numero.replace(/\s+|-|\(|\)|\+/g, '');
+
+    // Vérifier que le numéro ne contient que des chiffres
+    if (!cleanNumber.match(/^\d+$/)) {
       setLocalError("Le numéro doit contenir uniquement des chiffres.");
       return;
     }
+
+    // Si le numéro commence par 0, le remplacer par +261
+    if (cleanNumber.startsWith('0')) {
+      cleanNumber = cleanNumber.substring(1);
+    }
+
+    // Si le numéro ne commence pas par 261, l'ajouter
+    if (!cleanNumber.startsWith('261')) {
+      cleanNumber = '261' + cleanNumber;
+    }
+
+    // Formater le numéro avec +261
+    const formattedNumber = '+' + cleanNumber;
+
     try {
       if (currentNumber) {
-        await updateNumber(formData).then(() => {
-          if (!localError) toast.success("Mise a jours reussi");
+        await updateNumber({ numero: formattedNumber }).then(() => {
+          if (!localError) toast.success("Mise à jour réussie");
         });
       }
     } catch (error) {
@@ -51,7 +70,7 @@ export default function EditNumber() {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Erreur lors de la mise a jours du contact",
+            : "Erreur lors de la mise à jour du contact",
         );
       }
     }
@@ -72,9 +91,12 @@ export default function EditNumber() {
               onChange={(e) =>
                 setFormData({ ...formData, numero: e.target.value })
               }
-              placeholder="Entrez le numéro"
+              placeholder="Entrez le numéro (ex: 032 65 031 58)"
               required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Format accepté: 032 65 031 58, 0326503158, +261 32 65 031 58, etc. Le numéro sera automatiquement formaté au format international (+261).
+            </p>
           </div>
           {(error || localError) && (
             <p className="text-red-500 text-sm">{localError || error}</p>
