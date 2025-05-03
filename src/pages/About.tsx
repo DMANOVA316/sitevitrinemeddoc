@@ -1,6 +1,9 @@
 import React from 'react';
+import useScrollToTop from "../hooks/useScrollToTop";    
 
 const About: React.FC = () => {
+    useScrollToTop();     // Défilement automatique vers le haut lors du chargement de la page
+    
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4">
             <h1 className="text-4xl font-bold text-center text-blue-600 mb-4">À Propos</h1>

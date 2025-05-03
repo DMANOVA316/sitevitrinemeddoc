@@ -117,7 +117,7 @@ const Index = () => {
             <TwitterIcon />
           </a>
           <a
-            href="https://wa.me/261340000000"
+            href="https://wa.me/261326503158"
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
@@ -263,7 +263,7 @@ const Index = () => {
                     <GraduationCap className="h-8 w-8 text-meddoc-primary" />
                   </div>
                   <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
-                    Formations
+                    Formations santé
                   </h3>
                   <p className="text-slate-600 mb-6">
                     Des formations pratiques et ciblées pour renforcer les compétences de vos équipes sur le terrain : gestion, finance, outils numériques, communication, services de santé.
@@ -287,7 +287,8 @@ const Index = () => {
                     <Briefcase className="h-8 w-8 text-meddoc-primary" />
                   </div>
                   <h3 className="text-2xl font-bold text-meddoc-fonce mb-4 group-hover:text-meddoc-primary transition-colors">
-                    Consulting santé
+                    Consulting santé et stratégie
+
                   </h3>
                   <p className="text-slate-600 mb-6">
                     Bénéficiez de notre expertise sectorielle pour structurer, améliorer et innover dans vos services de santé à Madagascar.

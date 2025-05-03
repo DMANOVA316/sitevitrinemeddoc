@@ -103,7 +103,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 transition">
-                  Nos Services
+                  Nos services
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid gap-2 p-4 md:p-6 w-[300px] md:w-[400px] bg-white shadow-lg rounded-md">
@@ -169,7 +169,7 @@ const Header = () => {
                   to="/apropos"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
-                  A propos
+                  Qui somme nous ?
                 </Link>
               </NavigationMenuItem>
 
