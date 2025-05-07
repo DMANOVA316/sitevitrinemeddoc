@@ -166,6 +166,15 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
+                  to="/bibliotheque"
+                  className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
+                >
+                  Bibliothèque
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link
                   to="/apropos"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
@@ -279,6 +288,14 @@ const Header = () => {
                     onClick={() => setMenuOpen(false)}
                   >
                     Pharmacies
+                  </Link>
+
+                  <Link
+                    to="/bibliotheque"
+                    className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Bibliothèque
                   </Link>
 
                   <Link

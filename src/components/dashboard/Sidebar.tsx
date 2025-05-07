@@ -16,6 +16,7 @@ import {
   Contact,
   Menu,
   X,
+  Library,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -121,6 +122,11 @@ const Sidebar = ({ className }: SidebarProps) => {
           title: "Ambulances",
           icon: Ambulance,
           href: "/dashboard/ambulances",
+        },
+        {
+          title: "Bibliothèque",
+          icon: Library,
+          href: "/dashboard/bibliotheque",
         },
       ],
     },
