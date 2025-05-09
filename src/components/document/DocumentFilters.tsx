@@ -25,23 +25,32 @@ const DocumentFilters: React.FC<DocumentFiltersProps> = ({
 
   // Gérer le changement de catégorie
   const handleCategoryChange = (value: string) => {
-    const category = value === "all" ? null : (value as DocumentCategory);
-    setSelectedCategory(category);
-    onCategoryChange(category);
+    // Utiliser un setTimeout pour éviter les mises à jour en boucle
+    setTimeout(() => {
+      const category = value === "all" ? null : (value as DocumentCategory);
+      setSelectedCategory(category);
+      onCategoryChange(category);
+    }, 0);
   };
 
   // Gérer le changement de type de fichier
   const handleFileTypeChange = (value: string) => {
-    const fileType = value === "all" ? null : (value as DocumentFileType);
-    setSelectedFileType(fileType);
-    onFileTypeChange(fileType);
+    // Utiliser un setTimeout pour éviter les mises à jour en boucle
+    setTimeout(() => {
+      const fileType = value === "all" ? null : (value as DocumentFileType);
+      setSelectedFileType(fileType);
+      onFileTypeChange(fileType);
+    }, 0);
   };
 
   // Réinitialiser les filtres
   const handleReset = () => {
-    setSelectedCategory(null);
-    setSelectedFileType(null);
-    onReset();
+    // Utiliser un setTimeout pour éviter les mises à jour en boucle
+    setTimeout(() => {
+      setSelectedCategory(null);
+      setSelectedFileType(null);
+      onReset();
+    }, 0);
   };
 
   // Vérifier si des filtres sont actifs
@@ -73,7 +82,7 @@ const DocumentFilters: React.FC<DocumentFiltersProps> = ({
         <div className="space-y-3">
           <Label className="text-base font-medium">Catégorie</Label>
           <RadioGroup
-            value={selectedCategory || "all"}
+            value={selectedCategory === null ? "all" : selectedCategory}
             onValueChange={handleCategoryChange}
             className="space-y-1.5"
           >
@@ -120,7 +129,7 @@ const DocumentFilters: React.FC<DocumentFiltersProps> = ({
         <div className="space-y-3">
           <Label className="text-base font-medium">Type de fichier</Label>
           <RadioGroup
-            value={selectedFileType || "all"}
+            value={selectedFileType === null ? "all" : selectedFileType}
             onValueChange={handleFileTypeChange}
             className="space-y-1.5"
           >

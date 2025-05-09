@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import documentService from "@/services/documentService";
 import { Document, CreateDocumentDTO, UpdateDocumentDTO, AccessStat } from "@/types/document";
 import { RootState } from "./index";
@@ -17,7 +17,7 @@ interface DocumentState {
   filter: {
     category: string | null;
     fileType: string | null;
-    isPublicOnly: boolean;
+    isPublicOnly: boolean | null;
   };
 }
 
@@ -35,16 +35,18 @@ const initialState: DocumentState = {
   filter: {
     category: null,
     fileType: null,
-    isPublicOnly: false,
+    isPublicOnly: null,
   },
 };
 
 // Thunks pour les opérations asynchrones
 export const fetchDocuments = createAsyncThunk(
   "document/fetchDocuments",
-  async (isPublicOnly: boolean = false, { rejectWithValue }) => {
+  async (isPublicOnly: boolean | null = null, { rejectWithValue }) => {
     try {
-      return await documentService.getAllDocuments(isPublicOnly);
+      // Si isPublicOnly est null, on récupère tous les documents
+      // Sinon, on filtre selon la valeur booléenne
+      return await documentService.getAllDocuments(isPublicOnly === true);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -161,7 +163,7 @@ const documentSlice = createSlice({
       action: PayloadAction<{
         category?: string | null;
         fileType?: string | null;
-        isPublicOnly?: boolean;
+        isPublicOnly?: boolean | null;
       }>
     ) => {
       state.filter = {
@@ -174,7 +176,7 @@ const documentSlice = createSlice({
       state.filter = {
         category: null,
         fileType: null,
-        isPublicOnly: false,
+        isPublicOnly: null,
       };
     },
   },
@@ -283,23 +285,33 @@ export const selectAccessStats = (state: RootState) => state.document.accessStat
 export const selectIsLoading = (state: RootState) => state.document.isLoading;
 export const selectError = (state: RootState) => state.document.error;
 export const selectFilter = (state: RootState) => state.document.filter;
-export const selectFilteredDocuments = (state: RootState) => {
-  const { documents, filter } = state.document;
-  return documents.filter((doc) => {
-    // Filtrer par catégorie
-    if (filter.category && doc.category !== filter.category) {
-      return false;
-    }
-    // Filtrer par type de fichier
-    if (filter.fileType && doc.file_type !== filter.fileType) {
-      return false;
-    }
-    // Filtrer par visibilité
-    if (filter.isPublicOnly && !doc.is_public) {
-      return false;
-    }
-    return true;
-  });
-};
+
+// Utilisation de createSelector pour mémoriser le résultat
+
+export const selectFilteredDocuments = createSelector(
+  [(state: RootState) => state.document.documents, (state: RootState) => state.document.filter],
+  (documents, filter) => {
+    return documents.filter((doc) => {
+      // Filtrer par catégorie
+      if (filter.category && doc.category !== filter.category) {
+        return false;
+      }
+      // Filtrer par type de fichier
+      if (filter.fileType && doc.file_type !== filter.fileType) {
+        return false;
+      }
+      // Filtrer par visibilité
+      if (filter.isPublicOnly === true && !doc.is_public) {
+        return false;
+      }
+      // Filtrer pour les documents privés uniquement
+      if (filter.isPublicOnly === false && doc.is_public) {
+        return false;
+      }
+      // Si isPublicOnly est null, on affiche tous les documents
+      return true;
+    });
+  }
+);
 
 export default documentSlice.reducer;

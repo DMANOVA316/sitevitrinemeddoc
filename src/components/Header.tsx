@@ -79,13 +79,11 @@ const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center">
-            {isLoading ? (
-              <Skeleton className="h-6 w-24 sm:h-8 sm:w-32" />
-            ) : (
-              <SiteLogo className="h-8 sm:h-10" />
-            )}
-          </Link>
+          {isLoading ? (
+            <Skeleton className="h-6 w-24 sm:h-8 sm:w-32" />
+          ) : (
+            <SiteLogo className="h-8 sm:h-10" to="/" />
+          )}
         </div>
 
         {/* Desktop Navigation Menu */}
@@ -219,7 +217,7 @@ const Header = () => {
           >
             <div className="flex flex-col h-full">
               <div className="flex items-center justify-between p-4 border-b">
-                <SiteLogo className="h-8" />
+                <SiteLogo className="h-8" to="/" />
                 <button
                   className="p-2 text-gray-700 hover:bg-gray-100 rounded-md"
                   onClick={() => setMenuOpen(false)}
@@ -240,13 +238,13 @@ const Header = () => {
 
                   {/* Services Dropdown */}
                   <div className="relative">
-                    <button
-                      className="flex items-center justify-between w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
+                    <div
+                      className="flex items-center justify-between w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition cursor-pointer"
                       onClick={() => setServicesOpen(!servicesOpen)}
                     >
                       <span>Nos Services</span>
                       <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
-                    </button>
+                    </div>
 
                     {servicesOpen && (
                       <div className="pl-4 mt-1 space-y-1 border-l-2 border-blue-100 ml-3">

@@ -39,7 +39,7 @@ export const useDocumentRedux = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const filter = useSelector(selectFilter);
-  
+
   // États des modales depuis Redux
   const isAddDocumentOpen = useSelector((state: RootState) => state.document.isAddDocumentOpen);
   const isEditDocumentOpen = useSelector((state: RootState) => state.document.isEditDocumentOpen);
@@ -64,7 +64,7 @@ export const useDocumentRedux = () => {
   };
 
   // Charger tous les documents
-  const loadDocuments = async (isPublicOnly: boolean = false) => {
+  const loadDocuments = async (isPublicOnly: boolean | null = null) => {
     try {
       setIsLoadingData(true);
       await dispatch(fetchDocuments(isPublicOnly)).unwrap();
@@ -160,7 +160,7 @@ export const useDocumentRedux = () => {
   };
 
   // Appliquer des filtres
-  const applyFilter = (filterOptions: { category?: string | null; fileType?: string | null; isPublicOnly?: boolean }) => {
+  const applyFilter = (filterOptions: { category?: string | null; fileType?: string | null; isPublicOnly?: boolean | null }) => {
     dispatch(setFilter(filterOptions));
   };
 
@@ -178,19 +178,19 @@ export const useDocumentRedux = () => {
     isLoading: isLoading || isLoadingData,
     error: error || errorMessage,
     filter,
-    
+
     // États des modales
     isAddDocumentOpen,
     isEditDocumentOpen,
     isRemoveDocumentOpen,
     isViewStatsOpen,
-    
+
     // Contrôle des modales
     showAddDocumentModal,
     showEditDocumentModal,
     showRemoveDocumentModal,
     showViewStatsModal,
-    
+
     // Actions
     loadDocuments,
     loadDocumentById,
@@ -201,7 +201,7 @@ export const useDocumentRedux = () => {
     loadDocumentStats,
     handleSelectDocument,
     setCurrentDocument: (document: Document | null) => dispatch(setCurrentDocument(document)),
-    
+
     // Filtres
     applyFilter,
     clearFilters,

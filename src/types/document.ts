@@ -20,7 +20,7 @@ export type AccessAction = 'view' | 'download';
 /**
  * Document de la bibliothèque numérique
  */
-export interface Document {
+export interface LibraryDocument {
   id: number;
   title: string;
   file_url: string;
@@ -30,6 +30,9 @@ export interface Document {
   created_at: string;
   user_id?: string; // ID de l'utilisateur qui a créé le document
 }
+
+// Alias pour la rétrocompatibilité
+export type Document = LibraryDocument;
 
 /**
  * Statistique d'accès à un document
@@ -44,12 +47,12 @@ export interface AccessStat {
 /**
  * Type pour la création d'un nouveau document (sans id)
  */
-export type CreateDocumentDTO = Omit<Document, 'id' | 'created_at'>;
+export type CreateDocumentDTO = Omit<LibraryDocument, 'id' | 'created_at'>;
 
 /**
  * Type pour la mise à jour d'un document existant
  */
-export type UpdateDocumentDTO = Partial<Omit<Document, 'id' | 'created_at'>>;
+export type UpdateDocumentDTO = Partial<Omit<LibraryDocument, 'id' | 'created_at'>>;
 
 /**
  * Type pour la création d'une statistique d'accès (sans id)

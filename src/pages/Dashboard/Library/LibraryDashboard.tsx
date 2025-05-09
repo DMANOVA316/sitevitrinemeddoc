@@ -7,7 +7,7 @@ import AddDocumentDialog from "@/components/document/AddDocumentDialog";
 import EditDocumentDialog from "@/components/document/EditDocumentDialog";
 import DeleteDocumentDialog from "@/components/document/DeleteDocumentDialog";
 import DocumentStatsDialog from "@/components/document/DocumentStatsDialog";
-import DocumentViewerDialog from "@/components/document/DocumentViewerDialog";
+import DocumentViewer from "@/components/document/DocumentViewer";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, RefreshCw } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -33,7 +33,7 @@ const LibraryDashboard: React.FC = () => {
     handleRecordAccess,
     loadDocumentStats,
     handleSelectDocument,
-    setCurrentDocument,
+    // setCurrentDocument, // Non utilisé
     showAddDocumentModal,
     showEditDocumentModal,
     showRemoveDocumentModal,
@@ -47,7 +47,9 @@ const LibraryDashboard: React.FC = () => {
 
   // Charger les documents au montage du composant
   useEffect(() => {
-    loadDocuments();
+    // Charger tous les documents (sans filtre)
+    loadDocuments(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Gérer les erreurs
@@ -61,14 +63,23 @@ const LibraryDashboard: React.FC = () => {
 
   // Filtrer les documents en fonction de l'onglet actif
   useEffect(() => {
-    if (activeTab === "public") {
-      applyFilter({ isPublicOnly: true });
-    } else if (activeTab === "private") {
-      applyFilter({ isPublicOnly: false });
-    } else {
-      clearFilters();
-    }
-  }, [activeTab]);
+    // Utiliser un setTimeout pour éviter les mises à jour en boucle
+    const timer = setTimeout(() => {
+      if (activeTab === "public") {
+        // Pour les documents publics, on définit isPublicOnly à true
+        applyFilter({ isPublicOnly: true });
+      } else if (activeTab === "private") {
+        // Pour les documents privés, on définit isPublicOnly à false
+        // Cela filtrera pour ne montrer que les documents privés
+        applyFilter({ isPublicOnly: false });
+      } else {
+        // Pour tous les documents, on réinitialise les filtres
+        clearFilters();
+      }
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [activeTab, applyFilter, clearFilters]);
 
   // Gérer la visualisation d'un document
   const handleViewDocument = (document: Document) => {
@@ -141,22 +152,24 @@ const LibraryDashboard: React.FC = () => {
             <PlusCircle className="mr-2 h-4 w-4" />
             Ajouter un document
           </Button>
-          <Button variant="outline" onClick={() => loadDocuments()} disabled={isLoading}>
+          <Button variant="outline" onClick={() => loadDocuments(null)} disabled={isLoading}>
             <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
             Actualiser
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-        <div className="lg:col-span-1">
-          <DocumentFilters
-            onCategoryChange={handleCategoryFilter}
-            onFileTypeChange={handleFileTypeFilter}
-            onReset={handleResetFilters}
-          />
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mb-8">
+        <div className="md:col-span-1 order-2 md:order-1">
+          <div className="sticky top-4">
+            <DocumentFilters
+              onCategoryChange={handleCategoryFilter}
+              onFileTypeChange={handleFileTypeFilter}
+              onReset={handleResetFilters}
+            />
+          </div>
         </div>
-        <div className="lg:col-span-3">
+        <div className="md:col-span-2 lg:col-span-3 xl:col-span-4 order-1 md:order-2">
           <Tabs
             defaultValue="all"
             value={activeTab}
@@ -170,11 +183,11 @@ const LibraryDashboard: React.FC = () => {
             </TabsList>
             <TabsContent value="all" className="mt-0">
               {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {Array(6)
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+                  {Array(10)
                     .fill(0)
                     .map((_, index) => (
-                      <Skeleton key={index} className="h-[200px] w-full rounded-lg" />
+                      <Skeleton key={index} className="h-[280px] w-full rounded-lg" />
                     ))}
                 </div>
               ) : filteredDocuments.length > 0 ? (
@@ -202,11 +215,11 @@ const LibraryDashboard: React.FC = () => {
             <TabsContent value="public" className="mt-0">
               {/* Contenu identique, géré par le filtrage */}
               {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {Array(6)
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
+                  {Array(10)
                     .fill(0)
                     .map((_, index) => (
-                      <Skeleton key={index} className="h-[200px] w-full rounded-lg" />
+                      <Skeleton key={index} className="h-[280px] w-full rounded-lg" />
                     ))}
                 </div>
               ) : filteredDocuments.length > 0 ? (
@@ -234,11 +247,11 @@ const LibraryDashboard: React.FC = () => {
             <TabsContent value="private" className="mt-0">
               {/* Contenu identique, géré par le filtrage */}
               {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {Array(6)
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
+                  {Array(10)
                     .fill(0)
                     .map((_, index) => (
-                      <Skeleton key={index} className="h-[200px] w-full rounded-lg" />
+                      <Skeleton key={index} className="h-[280px] w-full rounded-lg" />
                     ))}
                 </div>
               ) : filteredDocuments.length > 0 ? (
@@ -287,7 +300,10 @@ const LibraryDashboard: React.FC = () => {
             isOpen={isRemoveDocumentOpen}
             onClose={() => showRemoveDocumentModal(false)}
             document={currentDocument}
-            onDelete={() => handleDeleteDocument(currentDocument.id)}
+            onDelete={async () => {
+              await handleDeleteDocument(currentDocument.id);
+              // Convertir le retour en void
+            }}
           />
 
           <DocumentStatsDialog
@@ -296,10 +312,11 @@ const LibraryDashboard: React.FC = () => {
             document={currentDocument}
           />
 
-          <DocumentViewerDialog
+          <DocumentViewer
             isOpen={isViewerOpen}
             onClose={() => setIsViewerOpen(false)}
             document={currentDocument}
+            onDownload={handleDownloadDocument}
           />
         </>
       )}

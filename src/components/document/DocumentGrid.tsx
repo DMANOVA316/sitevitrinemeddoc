@@ -43,13 +43,13 @@ const DocumentGrid: React.FC<DocumentGridProps> = ({
 
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 sm:gap-3 md:gap-4"
       variants={container}
       initial="hidden"
       animate="show"
     >
       {documents.map((document) => (
-        <motion.div key={document.id} variants={item}>
+        <motion.div key={document.id} variants={item} className="h-full">
           <DocumentCard
             document={document}
             onView={onView}

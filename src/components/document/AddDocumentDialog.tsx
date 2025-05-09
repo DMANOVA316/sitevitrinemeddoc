@@ -216,7 +216,7 @@ const AddDocumentDialog: React.FC<AddDocumentDialogProps> = ({ isOpen, onClose, 
                 type="button"
                 variant="outline"
                 size="icon"
-                onClick={() => document.getElementById("file")?.click()}
+                onClick={() => window.document.getElementById("file")?.click()}
                 title="Sélectionner un fichier"
               >
                 <FileUp className="h-4 w-4" />

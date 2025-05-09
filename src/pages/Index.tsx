@@ -151,30 +151,28 @@ const Index = () => {
                 couverture?.titre || "La première entreprise 360° santé à Madagascar"
               )}
             </h1>
-            <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
-              {isLoadingCouverture ? (
-                <div className="flex flex-col gap-1">
-                  <Skeleton className="w-full h-[24px] sm:h-[30px] md:h-[40px]" />
-                  <Skeleton className="w-1/2 h-[24px] sm:h-[30px] md:h-[40px]" />
-                </div>
-              ) : (
-                couverture?.description ||
-                "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."
-              )}
-            </p>
+            {isLoadingCouverture ? (
+              <div className="mb-6 sm:mb-8 flex flex-col gap-1">
+                <Skeleton className="w-full h-[24px] sm:h-[30px] md:h-[40px]" />
+                <Skeleton className="w-1/2 h-[24px] sm:h-[30px] md:h-[40px]" />
+              </div>
+            ) : (
+              <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
+                {couverture?.description ||
+                "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."}
+              </p>
+            )}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button
-                onClick={() => scrollToElement('services', 80, 100)}
-                className="block w-full sm:w-auto"
-              >
+              <div className="block w-full sm:w-auto">
                 <Button
                   size="lg"
                   className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary text-white hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg hover:bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 transition-all duration-300 transform hover:scale-105"
+                  onClick={() => scrollToElement('services', 80, 100)}
                 >
                   Découvrir nos services
                   <ArrowRight className="ml-2 h-4 w-4 animate-bounce-right" />
                 </Button>
-              </button>
+              </div>
               <Link to="/contact" className="block w-full sm:w-auto">
                 <Button
                   size="lg"
