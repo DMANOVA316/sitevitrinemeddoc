@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import ambulanceReducer from "./ambulanceSlice";
 import contactReducer from "./contactSlice";
 import couvertureReducer from "./couvertureSlice.ts";
+import documentReducer from "./documentSlice";
 import infoMeddocReducer from "./infoMeddocSlice";
 import locationReducer from "./locationSlice.ts";
 import numberReducer from "./numberSlice";
@@ -21,6 +22,7 @@ export const store = configureStore({
     ambulance: ambulanceReducer,
     contact: contactReducer,
     couverture: couvertureReducer,
+    document: documentReducer,
   },
 });
 

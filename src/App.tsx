@@ -13,6 +13,8 @@ import Pharmacy from "./pages/Pharmacy";
 import Community from "./pages/services/Community";
 import Consulting from "./pages/services/Consulting";
 import Digital from "./pages/services/Digital";
+import DigitalLibrary from "./pages/DigitalLibrary";
+import LibraryDashboard from "./pages/Dashboard/Library/LibraryDashboard";
 import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
 import PartnerIndex from "./pages/Dashboard/Partners/PartnerIndex";
 import PartnerList from "./pages/Dashboard/Partners/PartnerList";
@@ -122,6 +124,14 @@ const AppContent = () => {
             </PublicLayout>
           }
         />
+        <Route
+          path="/bibliotheque"
+          element={
+            <PublicLayout>
+              <DigitalLibrary />
+            </PublicLayout>
+          }
+        />
         {/* Routes des services */}
         <Route
           path="/services/community"
@@ -193,6 +203,10 @@ const AppContent = () => {
             <Route
               path="/dashboard/ambulances"
               element={<AmbulanceList />}
+            />
+            <Route
+              path="/dashboard/bibliotheque"
+              element={<LibraryDashboard />}
             />
           </Route>
         </Route>
