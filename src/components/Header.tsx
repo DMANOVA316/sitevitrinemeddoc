@@ -309,7 +309,7 @@ const Header = () => {
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Contact
+                    Contacts
                   </Link>
                 </div>
               </div>
