@@ -323,13 +323,13 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
               />
             ) : document.file_type === "pdf" ? (
               <div className="w-full h-[70vh] flex flex-col">
-                <div className="bg-gray-100 p-2 rounded-t-md flex justify-between items-center">
-                  <span className="font-medium text-gray-700">Prévisualisation PDF</span>
+                <div className="py-5 bg-gray-100 p-4 rounded-t-md flex justify-between items-center">
+                  <span className="font-medium text-gray-700 mt-3">Prévisualisation PDF</span>
                   <a
                     href={document.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                    className="text-blue-600 hover:text-blue-800 text-sm flex items-center mt-3"
                   >
                     Ouvrir dans un nouvel onglet
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
