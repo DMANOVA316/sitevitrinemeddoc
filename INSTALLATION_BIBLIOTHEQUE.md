@@ -119,22 +119,22 @@ WITH CHECK (true);
 
 #### Politique SELECT (lecture)
 - Nom: "Tout le monde peut lire les fichiers"
-- Définition: `true`
+- Définition: `((bucket_id = 'documents'::text) AND true)`
 - Rôles: anon, authenticated
 
 #### Politique INSERT (création)
 - Nom: "Les utilisateurs authentifiés peuvent uploader des fichiers"
-- Définition: `auth.role() = 'authenticated'`
+- Définition: `((bucket_id = 'documents'::text) AND (auth.role() = 'authenticated'::text))`
 - Rôles: authenticated
 
 #### Politique UPDATE (mise à jour)
 - Nom: "Les utilisateurs authentifiés peuvent mettre à jour des fichiers"
-- Définition: `auth.role() = 'authenticated'`
+- Définition: `((bucket_id = 'documents'::text) AND (auth.role() = 'authenticated'::text))`
 - Rôles: authenticated
 
 #### Politique DELETE (suppression)
 - Nom: "Les utilisateurs authentifiés peuvent supprimer des fichiers"
-- Définition: `auth.role() = 'authenticated'`
+- Définition: `((bucket_id = 'documents'::text) AND (auth.role() = 'authenticated'::text))`
 - Rôles: authenticated
 
 ## 4. Mise à jour des documents existants

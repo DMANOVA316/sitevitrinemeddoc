@@ -15,7 +15,7 @@ export const documentUploadService = {
    */
   getFileType: (fileName: string): "pdf" | "audio" | "video" | "image" | "other" => {
     const extension = fileName.split(".").pop()?.toLowerCase() || "";
-    
+
     if (["pdf"].includes(extension)) {
       return "pdf";
     } else if (["mp3", "wav", "ogg", "aac"].includes(extension)) {
@@ -32,13 +32,13 @@ export const documentUploadService = {
   /**
    * Uploader un fichier dans le bucket de documents
    * @param file Fichier à uploader
-   * @returns URL publique du fichier
+   * @returns URL signée du fichier (expire après 60 minutes)
    */
   uploadFile: async (file: File): Promise<string> => {
     try {
       // Vérifier si l'utilisateur est authentifié
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session) {
         throw new Error("Vous devez être connecté pour uploader un fichier");
       }
@@ -69,12 +69,16 @@ export const documentUploadService = {
         throw new Error("Erreur lors de l'upload du fichier");
       }
 
-      // Récupérer l'URL publique du fichier
-      const { data: publicUrl } = supabase.storage
+      // Créer une URL signée (valide pendant 60 minutes)
+      const { data: signedUrl } = await supabase.storage
         .from(STORAGE_BUCKET)
-        .getPublicUrl(fileName);
+        .createSignedUrl(fileName, 60 * 60); // 60 minutes en secondes
 
-      return publicUrl.publicUrl;
+      if (!signedUrl || !signedUrl.signedUrl) {
+        throw new Error("Erreur lors de la création de l'URL signée");
+      }
+
+      return signedUrl.signedUrl;
     } catch (error) {
       console.error("Upload error:", error);
       throw error;
@@ -83,20 +87,30 @@ export const documentUploadService = {
 
   /**
    * Supprimer un fichier du bucket de documents
-   * @param fileUrl URL du fichier à supprimer
+   * @param fileUrl URL du fichier à supprimer ou nom du fichier
    */
   deleteFile: async (fileUrl: string): Promise<void> => {
     try {
       // Vérifier si l'utilisateur est authentifié
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session) {
         throw new Error("Vous devez être connecté pour supprimer un fichier");
       }
 
       // Extraire le nom du fichier de l'URL
-      const fileName = fileUrl.split("/").pop();
-      
+      // Pour les URLs signées, le format est différent et contient des paramètres de requête
+      let fileName: string | null = null;
+
+      if (fileUrl.includes('?')) {
+        // C'est probablement une URL signée, extraire le chemin avant les paramètres
+        const urlWithoutParams = fileUrl.split('?')[0];
+        fileName = urlWithoutParams.split('/').pop();
+      } else {
+        // URL normale ou nom de fichier direct
+        fileName = fileUrl.split('/').pop();
+      }
+
       if (!fileName) {
         throw new Error("Impossible de déterminer le nom du fichier à partir de l'URL");
       }
@@ -112,6 +126,66 @@ export const documentUploadService = {
       }
     } catch (error) {
       console.error("Delete error:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Extraire le nom du fichier à partir d'une URL (publique ou signée)
+   * @param fileUrl URL du fichier
+   * @returns Nom du fichier
+   */
+  extractFileName: (fileUrl: string): string => {
+    if (!fileUrl) {
+      throw new Error("URL du fichier non spécifiée");
+    }
+
+    let fileName: string | null = null;
+
+    if (fileUrl.includes('?')) {
+      // C'est probablement une URL signée, extraire le chemin avant les paramètres
+      const urlWithoutParams = fileUrl.split('?')[0];
+      fileName = urlWithoutParams.split('/').pop();
+    } else {
+      // URL normale ou nom de fichier direct
+      fileName = fileUrl.split('/').pop();
+    }
+
+    if (!fileName) {
+      throw new Error("Impossible de déterminer le nom du fichier à partir de l'URL");
+    }
+
+    return fileName;
+  },
+
+  /**
+   * Obtenir une URL signée pour un fichier existant
+   * @param fileUrl URL existante du fichier ou nom du fichier
+   * @param expiresIn Durée de validité en secondes (par défaut 60 minutes)
+   * @returns URL signée du fichier
+   */
+  getSignedUrl: async (fileUrl: string, expiresIn: number = 60 * 60): Promise<string> => {
+    try {
+      // Extraire le nom du fichier de l'URL
+      const fileName = documentUploadService.extractFileName(fileUrl);
+
+      // Créer une URL signée
+      const { data, error } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .createSignedUrl(fileName, expiresIn);
+
+      if (error) {
+        console.error("Error creating signed URL:", error.message);
+        throw error;
+      }
+
+      if (!data || !data.signedUrl) {
+        throw new Error("Erreur lors de la création de l'URL signée");
+      }
+
+      return data.signedUrl;
+    } catch (error) {
+      console.error("Error getting signed URL:", error);
       throw error;
     }
   }

@@ -10,15 +10,59 @@ import {
 
 const DOCUMENTS_TABLE = "documents";
 const ACCESS_STATS_TABLE = "access_stats";
+const URL_EXPIRATION_TIME = 60 * 60; // 60 minutes en secondes
 
 /**
  * Service pour gérer les documents de la bibliothèque numérique
  */
 export const documentService = {
   /**
+   * Rafraîchir l'URL signée d'un document
+   * @param document Document dont l'URL doit être rafraîchie
+   * @returns Document avec une URL signée fraîche
+   */
+  refreshDocumentUrl: async (document: Document): Promise<Document> => {
+    try {
+      if (!document.file_url) {
+        return document;
+      }
+
+      // Générer une nouvelle URL signée
+      const signedUrl = await documentUploadService.getSignedUrl(document.file_url, URL_EXPIRATION_TIME);
+
+      return {
+        ...document,
+        file_url: signedUrl
+      };
+    } catch (error) {
+      console.error("Error refreshing document URL:", error);
+      // En cas d'erreur, retourner le document original
+      return document;
+    }
+  },
+
+  /**
+   * Rafraîchir les URLs signées d'une liste de documents
+   * @param documents Liste de documents dont les URLs doivent être rafraîchies
+   * @returns Liste de documents avec des URLs signées fraîches
+   */
+  refreshDocumentUrls: async (documents: Document[]): Promise<Document[]> => {
+    try {
+      const refreshedDocuments = await Promise.all(
+        documents.map(async (doc) => await documentService.refreshDocumentUrl(doc))
+      );
+
+      return refreshedDocuments;
+    } catch (error) {
+      console.error("Error refreshing document URLs:", error);
+      // En cas d'erreur, retourner les documents originaux
+      return documents;
+    }
+  },
+  /**
    * Récupérer tous les documents
    * @param isPublicOnly Si true, ne récupère que les documents publics
-   * @returns Liste des documents
+   * @returns Liste des documents avec des URLs signées fraîches
    */
   getAllDocuments: async (isPublicOnly: boolean = false): Promise<Document[]> => {
     try {
@@ -31,7 +75,10 @@ export const documentService = {
       const { data, error } = await query.order("created_at", { ascending: false });
 
       if (error) throw new Error(error.message);
-      return data || [];
+
+      // Rafraîchir les URLs des documents
+      const documents = data || [];
+      return await documentService.refreshDocumentUrls(documents);
     } catch (error) {
       console.error("Error fetching documents:", error);
       throw error;
@@ -41,7 +88,7 @@ export const documentService = {
   /**
    * Récupérer un document par son ID
    * @param id ID du document
-   * @returns Document ou null si non trouvé
+   * @returns Document avec une URL signée fraîche ou null si non trouvé
    */
   getDocumentById: async (id: number): Promise<Document | null> => {
     try {
@@ -52,7 +99,13 @@ export const documentService = {
         .single();
 
       if (error) throw new Error(error.message);
-      return data;
+
+      // Si le document existe, rafraîchir son URL
+      if (data) {
+        return await documentService.refreshDocumentUrl(data);
+      }
+
+      return null;
     } catch (error) {
       console.error(`Error fetching document with ID ${id}:`, error);
       throw error;
