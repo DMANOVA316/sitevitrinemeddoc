@@ -142,7 +142,7 @@ const ContactUs = () => {
                             </a>
 
                             <a
-                              href="https://twitter.com/meddoc_mg"
+                              href="https://x.com/MEDDoCMG"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
