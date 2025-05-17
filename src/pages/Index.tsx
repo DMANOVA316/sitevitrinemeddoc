@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { scrollToElement } from "@/utils/scrollUtils";
+import { motion } from "framer-motion";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -80,9 +81,19 @@ const Index = () => {
           }}
         ></div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/20 rounded-full blur-3xl -ml-32 -mt-32"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/20 rounded-full blur-3xl -mr-32 -mb-32"></div>
+        {/* Decorative Elements with Animation */}
+        <motion.div
+          className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/20 rounded-full blur-3xl -ml-32 -mt-32"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        ></motion.div>
+        <motion.div
+          className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/20 rounded-full blur-3xl -mr-32 -mb-32"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
+        ></motion.div>
 
         {/* Social Media Icons */}
         <div className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 md:right-8 lg:right-10 z-20 flex flex-col gap-2 sm:gap-3 md:gap-4 sm:flex-row md:flex-col">
@@ -108,7 +119,7 @@ const Index = () => {
             <InstagramIcon />
           </a>
           <a
-            href="https://twitter.com/meddoc_mg"
+            href="https://x.com/MEDDoCMG"
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
@@ -141,48 +152,84 @@ const Index = () => {
             <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm md:text-base mb-4 sm:mb-6">
               A vos marques, prêt, santé !
             </span>
-            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
+            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white overflow-hidden">
               {isLoadingCouverture ? (
-                <div className="flex flex-col gap-1">
-                  <Skeleton className="w-full h-[30px] sm:h-[40px] md:h-[50px]" />
-                  <Skeleton className="w-1/2 h-[30px] sm:h-[40px] md:h-[50px]" />
+                <div className="flex flex-col">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className="w-3 h-3 bg-meddoc-primary rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-meddoc-primary rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+                    <div className="w-3 h-3 bg-meddoc-primary rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+                  </div>
+                  <div className="h-[30px] sm:h-[40px] md:h-[50px] bg-white/10 rounded-md backdrop-blur-sm animate-pulse"></div>
+                  <div className="h-[30px] sm:h-[40px] md:h-[50px] w-1/2 mt-2 bg-white/10 rounded-md backdrop-blur-sm animate-pulse"></div>
                 </div>
               ) : (
-                couverture?.titre || "La première entreprise 360° santé à Madagascar"
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                >
+                  {couverture?.titre || "La première entreprise 360° santé à Madagascar"}
+                </motion.span>
               )}
             </h1>
             {isLoadingCouverture ? (
-              <div className="mb-6 sm:mb-8 flex flex-col gap-1">
-                <Skeleton className="w-full h-[24px] sm:h-[30px] md:h-[40px]" />
-                <Skeleton className="w-1/2 h-[24px] sm:h-[30px] md:h-[40px]" />
+              <div className="mb-6 sm:mb-8">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-2 h-2 bg-meddoc-secondary rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-meddoc-secondary rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+                  <div className="w-2 h-2 bg-meddoc-secondary rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+                </div>
+                <div className="h-[24px] sm:h-[30px] md:h-[40px] bg-white/10 rounded-md backdrop-blur-sm animate-pulse"></div>
+                <div className="h-[24px] sm:h-[30px] md:h-[40px] w-3/4 mt-2 bg-white/10 rounded-md backdrop-blur-sm animate-pulse"></div>
               </div>
             ) : (
-              <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl">
+              <motion.p
+                className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              >
                 {couverture?.description ||
                 "Nous développons des solutions et des services innovants dédiés à la promotion de la santé et à l'amélioration de l'accès aux soins."}
-              </p>
+              </motion.p>
             )}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <div className="block w-full sm:w-auto">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+            >
+              <motion.div
+                className="block w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary text-white hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg hover:bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 transition-all duration-300 transform hover:scale-105"
+                  className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary text-white hover:bg-white/90 py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg hover:bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 transition-all duration-300"
                   onClick={() => scrollToElement('services', 80, 100)}
                 >
                   Découvrir nos services
                   <ArrowRight className="ml-2 h-4 w-4 animate-bounce-right" />
                 </Button>
-              </div>
-              <Link to="/contact" className="block w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 hover:text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
-                >
-                  Nous contacter
-                </Button>
-              </Link>
-            </div>
+              </motion.div>
+              <motion.div
+                className="block w-full sm:w-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link to="/contact" className="block w-full">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10 hover:text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 text-sm sm:text-base md:text-lg"
+                  >
+                    Nous contacter
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>

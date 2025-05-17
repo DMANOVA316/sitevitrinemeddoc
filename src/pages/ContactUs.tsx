@@ -72,7 +72,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="py-8 sm:py-10 md:py-12 lg:py-16 min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
+    <div className="py-8 sm:py-10 md:py-10 lg:py-14 min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
@@ -142,7 +142,7 @@ const ContactUs = () => {
                             </a>
 
                             <a
-                              href="https://twitter.com/meddoc_mg"
+                              href="https://x.com/MEDDoCMG"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
@@ -231,17 +231,17 @@ const ContactUs = () => {
                           <SelectValue placeholder="Sélectionnez un service" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Solutions Numériques">
-                            Solutions Numériques
+                          <SelectItem value="Solutions digitales santé">
+                          Solutions digitales santé
                           </SelectItem>
-                          <SelectItem value="Community Management">
-                            Community Management
+                          <SelectItem value="Community management médical">
+                          Community management médical
                           </SelectItem>
-                          <SelectItem value="Formations">
-                            Formations
+                          <SelectItem value="Formations santé">
+                            Formations santé
                           </SelectItem>
-                          <SelectItem value="Services de Conseil">
-                            Services de Conseil
+                          <SelectItem value="Consulting santé et stratégie">
+                          Consulting santé et stratégie
                           </SelectItem>
                         </SelectContent>
                       </Select>
