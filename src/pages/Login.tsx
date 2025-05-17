@@ -55,7 +55,7 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-6 sm:py-8 md:py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-meddoc-fonce via-sky-500/30 to-meddoc-fonce">
+    <div className="min-h-screen flex items-center justify-center py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-meddoc-fonce via-sky-500/30 to-meddoc-fonce">
       {/* Decorative Elements - Responsive sizes and positions */}
       <div className="absolute top-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-meddoc-primary/20 rounded-full blur-3xl -ml-24 sm:-ml-32 -mt-24 sm:-mt-32"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-meddoc-secondary/20 rounded-full blur-3xl -mr-24 sm:-mr-32 -mb-24 sm:-mb-32"></div>
