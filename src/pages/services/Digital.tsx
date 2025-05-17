@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import digitaleImage from "../../assets/serivces-images/digitale.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { scrollToElement } from "@/utils/scrollUtils";
+import { motion } from "framer-motion";
 
 const Digital = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -12,40 +13,81 @@ const Digital = () => {
     <div className="min-h-screen">
       {/* Hero Section avec image de fond et dégradé */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
+        {/* Background Image with Animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.3 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: `url(${digitaleImage})`,
           }}
-        ></div>
+        ></motion.div>
 
-        {/* Decorative Elements */}
+        {/* Decorative Elements with Animation */}
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:30px_30px] sm:bg-[size:40px_40px]"></div>
-        <div className="absolute -bottom-6 left-0 right-0 h-8 sm:h-10 md:h-12 bg-white transform -skew-y-1"></div>
-        <div className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-32 -mt-32"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-32 -mb-32"></div>
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: "2rem" }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="absolute -bottom-6 left-0 right-0 h-8 sm:h-10 md:h-12 bg-white transform -skew-y-1"
+        ></motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, x: -50 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute top-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-primary/10 rounded-full blur-3xl -ml-32 -mt-32"
+        ></motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, x: 50 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
+          className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-meddoc-secondary/10 rounded-full blur-3xl -mr-32 -mb-32"
+        ></motion.div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto text-center animate-fade-up">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight">
-              SOLUTIONS DIGITALES SANTÉ<span className="text-meddoc-secondary">.</span>
-            </h1>
-            <p className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6">
-              Des outils numériques au service de la santé à Madagascar
-            </p>
-            <p className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto">
-              Chez MEDDoC, nous croyons que la technologie peut révolutionner l'accès aux soins. Nos solutions digitales sont conçues pour simplifier le quotidien des professionnels de santé et améliorer la qualité des services offerts à la population.
-            </p>
-            <button
-              onClick={() => scrollToElement('services', 80, 100)}
-              className="block w-full sm:w-auto sm:inline-block"
+          <div className="max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight"
             >
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                Découvrir nos solutions
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
-              </Button>
-            </button>
+              SOLUTIONS DIGITALES SANTÉ<span className="text-meddoc-secondary">.</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6"
+            >
+              Des outils numériques au service de la santé à Madagascar
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              className="text-base sm:text-lg text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto"
+            >
+              Chez MEDDoC, nous croyons que la technologie peut révolutionner l'accès aux soins. Nos solutions digitales sont conçues pour simplifier le quotidien des professionnels de santé et améliorer la qualité des services offerts à la population.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+            >
+              <motion.button
+                onClick={() => scrollToElement('services', 80, 100)}
+                className="block w-full sm:w-auto sm:inline-block"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button className="w-full sm:w-auto bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold transition-all duration-300">
+                  Découvrir nos solutions
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
+                </Button>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </section>

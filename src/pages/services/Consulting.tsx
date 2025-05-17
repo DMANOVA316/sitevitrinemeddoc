@@ -2,6 +2,7 @@ import { ArrowRight, BarChart4, Building, CheckCircle2, HandshakeIcon, HeartPuls
 import { Button } from "@/components/ui/button";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Consulting = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -15,64 +16,97 @@ const Consulting = () => {
           backgroundImage: "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
           backgroundBlendMode: "overlay"
         }}>
-        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
-        <div className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"></div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"
+        ></motion.div>
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: "3rem" }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="absolute -bottom-6 left-0 right-0 h-12 bg-white transform -skew-y-1"
+        ></motion.div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center animate-fade-up">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              CONSULTING SANTÉ<span className="text-meddoc-secondary">.</span>
-            </h1>
-            <p className="text-2xl font-semibold text-white mb-6">
-              Un accompagnement sur mesure pour vos projets de santé
-            </p>
-            <p className="text-lg text-white mb-8">
-              Vous développez une initiative, gérez une structure médicale ou lancez un nouveau service ? MEDDoC vous accompagne de manière stratégique et opérationnelle pour maximiser votre impact.
-            </p>
-            <button
-              onClick={() => {
-                // Utilisation d'une animation plus fluide avec requestAnimationFrame
-                const targetElement = document.getElementById('prestations');
-                if (targetElement) {
-                  const startPosition = window.scrollY;
-                  const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 80;
-                  const distance = targetPosition - startPosition;
-                  const duration = 100; // Durée légèrement plus courte pour une animation plus dynamique
-
-                  // Fonction d'easing pour une animation plus naturelle
-                  const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
-
-                  let startTime: number | null = null;
-
-                  function animation(currentTime: number): void {
-                    if (startTime === null) startTime = currentTime;
-                    const timeElapsed = currentTime - startTime;
-                    const progress = Math.min(timeElapsed / duration, 1);
-                    const easedProgress = easeOutQuart(progress);
-
-                    window.scrollTo(0, startPosition + distance * easedProgress);
-
-                    if (timeElapsed < duration) {
-                      requestAnimationFrame(animation);
-                    } else {
-                      // Ajouter un effet de surbrillance à la fin de l'animation
-                      targetElement.classList.add('highlight-section');
-                      setTimeout(() => {
-                        targetElement.classList.remove('highlight-section');
-                      }, 100);
-                    }
-                  }
-
-                  requestAnimationFrame(animation);
-                }
-              }}
-              className="inline-block"
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight"
             >
-              <Button className="group bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                Découvrir nos services
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
-              </Button>
-            </button>
+              CONSULTING SANTÉ<span className="text-meddoc-secondary">.</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="text-2xl font-semibold text-white mb-6"
+            >
+              Un accompagnement sur mesure pour vos projets de santé
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              className="text-lg text-white mb-8"
+            >
+              Vous développez une initiative, gérez une structure médicale ou lancez un nouveau service ? MEDDoC vous accompagne de manière stratégique et opérationnelle pour maximiser votre impact.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+            >
+              <motion.button
+                onClick={() => {
+                  // Utilisation d'une animation plus fluide avec requestAnimationFrame
+                  const targetElement = document.getElementById('prestations');
+                  if (targetElement) {
+                    const startPosition = window.scrollY;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                    const distance = targetPosition - startPosition;
+                    const duration = 100; // Durée légèrement plus courte pour une animation plus dynamique
+
+                    // Fonction d'easing pour une animation plus naturelle
+                    const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
+
+                    let startTime: number | null = null;
+
+                    function animation(currentTime: number): void {
+                      if (startTime === null) startTime = currentTime;
+                      const timeElapsed = currentTime - startTime;
+                      const progress = Math.min(timeElapsed / duration, 1);
+                      const easedProgress = easeOutQuart(progress);
+
+                      window.scrollTo(0, startPosition + distance * easedProgress);
+
+                      if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                      } else {
+                        // Ajouter un effet de surbrillance à la fin de l'animation
+                        targetElement.classList.add('highlight-section');
+                        setTimeout(() => {
+                          targetElement.classList.remove('highlight-section');
+                        }, 100);
+                      }
+                    }
+
+                    requestAnimationFrame(animation);
+                  }
+                }}
+                className="inline-block"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button className="group bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 font-semibold transition-all duration-300 hover:shadow-lg">
+                  Découvrir nos services
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 animate-bounce-right" />
+                </Button>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </section>
