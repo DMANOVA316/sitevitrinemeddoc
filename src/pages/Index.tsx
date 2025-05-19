@@ -169,7 +169,7 @@ const Index = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                  {couverture?.titre || "Votre partenaire santé à Madagascar"}
+                  {couverture?.titre || "Votre partenaire santé à Madagascar "}
                 </motion.span>
               )}
             </h1>
