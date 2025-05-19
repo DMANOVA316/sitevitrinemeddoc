@@ -152,7 +152,7 @@ const Index = () => {
             <span className="inline-block bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm md:text-base mb-4 sm:mb-6">
               A vos marques, prêt, santé !
             </span>
-            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white overflow-hidden">
+            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
               {isLoadingCouverture ? (
                 <div className="flex flex-col">
                   <div className="flex items-center space-x-2 mb-2">
@@ -169,7 +169,7 @@ const Index = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                  {couverture?.titre || "La première entreprise 360° santé à Madagascar"}
+                  {couverture?.titre || "Votre partenaire santé à Madagascar"}
                 </motion.span>
               )}
             </h1>
