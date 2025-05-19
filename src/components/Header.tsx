@@ -110,7 +110,7 @@ const Header = () => {
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
-                        Solutions digitales
+                        Solutions digitales santé
                       </div>
                       <p className="text-xs lg:text-sm text-gray-500">
                         Développement d'outils innovants
@@ -253,7 +253,7 @@ const Header = () => {
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >
-                          Solutions digitales
+                          Solutions digitales santé
                         </Link>
                         <Link
                           to="/services/community"
