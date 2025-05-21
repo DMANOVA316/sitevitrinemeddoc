@@ -23,7 +23,7 @@ import { AppDispatch } from "@/store";
 
 interface LocationSelectorProps {
   onLocationChange: (location: {
-    province: string;
+    province?: string;
     region?: string;
     district?: string;
     commune: string;
@@ -60,13 +60,21 @@ const LocationSelector = forwardRef<LocationSelectorRef, LocationSelectorProps>(
   // Initialiser les valeurs si on est en mode édition
   useEffect(() => {
     if (initialValues && provinces.length > 0) {
+      console.log("Initialisation du LocationSelector avec:", initialValues);
       dispatch(initializeFromNames(initialValues));
     }
   }, [dispatch, initialValues, provinces]);
 
+  // Exposer la méthode reset via la ref
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      dispatch(resetLocations());
+    }
+  }));
+
   // Mettre à jour le parent quand la sélection change
   useEffect(() => {
-    if (selectedProvince && selectedCommune) {
+    if (selectedProvince) {
       onLocationChange({
         province: locationNames.province,
         region: locationNames.region,

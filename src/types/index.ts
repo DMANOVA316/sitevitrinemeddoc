@@ -63,24 +63,40 @@ declare global {
   type PharmacySchedule = {
     id?: number;
     id_pharmacie?: number;
+    jour?: string;
     heure_debut: string;
     heure_fin: string;
   };
+
+  type PharmacyGarde = {
+    id?: number;
+    id_pharmacies: number;
+    date_debut: string;
+    date_fin: string;
+  };
+
+  type AssuranceSante = 'aucune' | 'bscs' | 'allianz' | 'saham' | 'autre';
+
+  type MutuelleSante = 'aucune' | 'ostie' | 'amit' | 'afafi' | 'autre';
 
   type Pharmacy = {
     id?: number;
     nom_pharmacie: string;
     photo_profil?: string;
     address: string;
-    province: string;
+    province?: string;
     region?: string;
     district?: string;
-    commune: string;
-    service: string;
-    de_garde: boolean;
-    // localisation?: { x: number; y: number };
+    commune?: string; // Optionnel dans le code, mais une valeur par défaut sera fournie
+    service?: string;
+    assurance_sante?: AssuranceSante;
+    mutuelle_sante?: MutuelleSante;
+    localisation?: { x: number; y: number };
     contacts?: PharmacyContact[];
     horaires?: PharmacySchedule[];
+    de_garde?: boolean; // Propriété calculée, pas stockée en base
+    garde?: PharmacyGarde; // Informations sur la garde en cours
+    gardes?: PharmacyGarde[]; // Toutes les périodes de garde
   };
 
   type ContactAmbulance = {
@@ -118,10 +134,10 @@ declare global {
      * Fournit un objet décrivant la localisation sélectionnée.
      */
     onLocationChange: (location: {
-      province: string;
+      province?: string;
       region?: string;
       district?: string;
-      commune: string;
+      commune?: string;
     }) => void;
 
     /**

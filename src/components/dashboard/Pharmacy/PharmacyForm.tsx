@@ -200,21 +200,7 @@ const PharmacyForm = ({
                 </Button>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="de_garde"
-                checked={formData.de_garde}
-                onCheckedChange={(checked: boolean) =>
-                  setFormData({ ...formData, de_garde: checked })
-                }
-              />
-              <Label
-                htmlFor="de_garde"
-                className="text-sm font-medium text-gray-700"
-              >
-                De garde
-              </Label>
-            </div>
+
           </div>
         </div>
       </div>
