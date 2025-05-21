@@ -8,6 +8,8 @@ import useScrollToTop from "@/hooks/useScrollToTop";
 import "../styles/pharmacy.css";
 import { Button } from "@/components/ui/button";
 import ScrollToTopButton from "@/components/ui/scroll-to-top-button";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 const Pharmacy: React.FC = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -182,8 +184,15 @@ const Pharmacy: React.FC = () => {
     return matchesSearchTerm && matchesProvince && matchesRegion && matchesDistrict && matchesCommune;
   });
 
-  // Pharmacies de garde
-  const dutyPharmacies = filteredPharmacies.filter((pharmacy) => pharmacy.de_garde);
+  // Date actuelle pour vérifier si une pharmacie est de garde
+  const now = new Date().toISOString();
+
+  // Pharmacies de garde (uniquement celles qui sont actuellement de garde selon les dates)
+  const dutyPharmacies = filteredPharmacies.filter((pharmacy) =>
+    pharmacy.garde &&
+    new Date(pharmacy.garde.date_debut) <= new Date(now) &&
+    new Date(pharmacy.garde.date_fin) >= new Date(now)
+  );
 
   // Déterminer le tableau de pharmacies à utiliser en fonction de l'onglet actif
   const currentPharmacies = activeTab === "all" ? filteredPharmacies : dutyPharmacies;
@@ -780,6 +789,18 @@ const Pharmacy: React.FC = () => {
                     <div className="flex flex-col items-center">
                       {dutyPharmacies.length > 0 ? (
                         <>
+                          {/* Grand titre avec les dates de garde */}
+                          {dutyPharmacies.length > 0 && dutyPharmacies[0].garde && (
+                            <div className="w-full mb-8 text-center">
+                              <h1 className="text-2xl md:text-3xl font-bold text-meddoc-primary mb-2">
+                                Pharmacies de garde
+                              </h1>
+                              <p className="text-lg text-gray-600">
+                                Du {format(new Date(dutyPharmacies[0].garde.date_debut), "d MMMM yyyy", { locale: fr })} au {format(new Date(dutyPharmacies[0].garde.date_fin), "d MMMM yyyy", { locale: fr })}
+                              </p>
+                            </div>
+                          )}
+
                           {/* Results Summary */}
                           <div className="w-full mb-6">
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">

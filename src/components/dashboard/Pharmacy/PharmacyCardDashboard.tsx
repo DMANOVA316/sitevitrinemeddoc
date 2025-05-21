@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 interface PharmacyCardDashboardProps {
   pharmacy: Pharmacy;
@@ -16,11 +18,11 @@ interface PharmacyCardDashboardProps {
   toggleDeGarde: (id: number) => void;
 }
 
-const PharmacyCardDashboard = ({ 
-  pharmacy, 
-  handleEdit, 
-  handleDelete, 
-  toggleDeGarde 
+const PharmacyCardDashboard = ({
+  pharmacy,
+  handleEdit,
+  handleDelete,
+  toggleDeGarde
 }: PharmacyCardDashboardProps) => {
   return (
     <motion.div
@@ -47,6 +49,7 @@ const PharmacyCardDashboard = ({
             size="icon"
             className="h-8 w-8 bg-white shadow-sm"
             onClick={() => handleEdit(pharmacy)}
+            title={`Modifier ${pharmacy.nom_pharmacie}`}
           >
             <Pencil className="h-4 w-4 text-meddoc-primary" />
           </Button>
@@ -89,9 +92,16 @@ const PharmacyCardDashboard = ({
 
                 {/* Duty Badge */}
                 {pharmacy.de_garde && (
-                  <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs">
-                    <Clock className="w-3 h-3" />
-                  </span>
+                  <div className="absolute -top-2 -right-2 inline-flex items-center justify-center">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs">
+                      <Clock className="w-3 h-3" />
+                    </span>
+                    {pharmacy.gardes && pharmacy.gardes.length > 1 && (
+                      <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold">
+                        {pharmacy.gardes.length}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
 
@@ -102,9 +112,23 @@ const PharmacyCardDashboard = ({
                       {pharmacy.nom_pharmacie}
                     </h3>
                     {pharmacy.de_garde && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
-                        De garde
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-1">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                            De garde
+                          </span>
+                          {pharmacy.gardes && pharmacy.gardes.length > 1 && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mt-1">
+                              {pharmacy.gardes.length} périodes
+                            </span>
+                          )}
+                        </div>
+                        {pharmacy.garde && (
+                          <span className="text-xs text-gray-500">
+                            {format(new Date(pharmacy.garde.date_debut), "dd/MM/yyyy", { locale: fr })} - {format(new Date(pharmacy.garde.date_fin), "dd/MM/yyyy", { locale: fr })}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
 
@@ -116,13 +140,13 @@ const PharmacyCardDashboard = ({
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => handleEdit(pharmacy)}>
                         <Pencil className="mr-2 h-4 w-4" />
-                        Modifier
+                        Modifier {pharmacy.nom_pharmacie}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => toggleDeGarde(pharmacy.id)}>
                         <Clock className="mr-2 h-4 w-4" />
-                        {pharmacy.de_garde ? "Retirer de garde" : "Marquer de garde"}
+                        Gérer les périodes de garde
                       </DropdownMenuItem>
-                      <DropdownMenuItem 
+                      <DropdownMenuItem
                         onClick={() => handleDelete(pharmacy.id)}
                         className="text-red-600 hover:text-red-700 focus:text-red-700"
                       >
@@ -184,6 +208,37 @@ const PharmacyCardDashboard = ({
                         {contact.numero}
                       </a>
                     ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Périodes de garde */}
+            {pharmacy.gardes && pharmacy.gardes.length > 0 && (
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+                  <Clock className="w-full h-full" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-gray-500 mb-1">Périodes de garde</p>
+                  <div className="grid grid-cols-1 gap-1">
+                    {pharmacy.gardes.slice(0, 2).map((garde, index) => (
+                      <div key={index} className="flex items-center justify-between text-sm">
+                        <span className={`text-xs px-2 py-0.5 rounded ${
+                          new Date(garde.date_debut) <= new Date() && new Date(garde.date_fin) >= new Date()
+                            ? "bg-green-100 text-green-800 font-medium"
+                            : "bg-gray-50 text-gray-600"
+                        }`}>
+                          {format(new Date(garde.date_debut), "dd/MM/yyyy", { locale: fr })}
+                        </span>
+                        <span className="text-gray-800 text-xs font-medium">
+                          {format(new Date(garde.date_fin), "dd/MM/yyyy", { locale: fr })}
+                        </span>
+                      </div>
+                    ))}
+                    {pharmacy.gardes.length > 2 && (
+                      <p className="text-xs text-meddoc-primary">+{pharmacy.gardes.length - 2} autres périodes</p>
+                    )}
                   </div>
                 </div>
               </div>
