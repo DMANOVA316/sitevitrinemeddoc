@@ -45,10 +45,10 @@ const TableRowPharmacy = ({
           )}
         </div>
       </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
+      {/* <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         <p className="truncate text-gray-700">{pharmacy.service}</p>
-      </TableCell>
-      <TableCell className="px-6 py-4 whitespace-nowrap">
+      </TableCell> */}
+      {/* <TableCell className="px-6 py-4 whitespace-nowrap">
         {pharmacy.horaires && pharmacy.horaires.length > 0 && (
           <div className="flex items-center gap-3">
             <div className="flex-1 space-y-1">
@@ -60,7 +60,9 @@ const TableRowPharmacy = ({
             </div>
           </div>
         )}
-      </TableCell>
+      </TableCell> */}
+
+      {/* pharamcies contact */}
       <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
         {pharmacy.contacts && pharmacy.contacts.length > 0 && (
           <div className="flex items-center gap-3">

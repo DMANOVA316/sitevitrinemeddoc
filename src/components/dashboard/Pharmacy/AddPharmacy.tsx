@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import PharmacyForm from "./PharmacyForm";
 import {
@@ -36,6 +36,7 @@ export default function AddPharmacy({
     error,
   } = usePharmacyRedux();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  // Initialiser les états avec des valeurs par défaut
   const [formData, setFormData] = useState<Pharmacy>({
     id: pharmacy?.id,
     nom_pharmacie: pharmacy?.nom_pharmacie || "",
@@ -46,17 +47,48 @@ export default function AddPharmacy({
     district: pharmacy?.district || "",
     commune: pharmacy?.commune || "",
     service: pharmacy?.service || "",
-    de_garde: pharmacy?.de_garde || false,
-    contacts: pharmacy?.contacts || [{ numero: "" }],
-    horaires: pharmacy?.horaires || [{ heure_debut: "", heure_fin: "" }],
+    contacts: [],
+    horaires: [],
   });
+
   // États pour les contacts, horaires et erreurs
-  const [contacts, setContacts] = useState<PharmacyContact[]>(
-    formData.contacts
-  );
-  const [horaires, setHoraires] = useState<PharmacySchedule[]>(
-    formData.horaires
-  );
+  const [contacts, setContacts] = useState<PharmacyContact[]>([{ numero: "" }]);
+  const [horaires, setHoraires] = useState<PharmacySchedule[]>([{ heure_debut: "", heure_fin: "" }]);
+
+  // Mettre à jour les états lorsque la prop pharmacy change
+  useEffect(() => {
+    if (pharmacy) {
+      console.log("Mise à jour des données avec la pharmacie:", pharmacy);
+
+      // Nettoyer les contacts et horaires
+      const cleanContacts = pharmacy.contacts?.map(contact => ({ numero: contact.numero })) || [{ numero: "" }];
+      const cleanHoraires = pharmacy.horaires?.map(horaire => ({
+        heure_debut: horaire.heure_debut,
+        heure_fin: horaire.heure_fin,
+        jour: horaire.jour
+      })) || [{ heure_debut: "", heure_fin: "" }];
+
+      console.log("Contacts nettoyés:", cleanContacts);
+
+      // Mettre à jour les états
+      setFormData({
+        id: pharmacy.id,
+        nom_pharmacie: pharmacy.nom_pharmacie || "",
+        photo_profil: pharmacy.photo_profil || "",
+        address: pharmacy.address || "",
+        province: pharmacy.province || "",
+        region: pharmacy.region || "",
+        district: pharmacy.district || "",
+        commune: pharmacy.commune || "",
+        service: pharmacy.service || "",
+        contacts: cleanContacts,
+        horaires: cleanHoraires,
+      });
+
+      setContacts(cleanContacts);
+      setHoraires(cleanHoraires);
+    }
+  }, [pharmacy]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -91,18 +123,55 @@ export default function AddPharmacy({
   // Soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Soumission du formulaire avec les données:", { formData, contacts, horaires });
+
     if (validateForm(formData, contacts, horaires, setErrors)) {
-      onSubmit(
-        {
-          ...formData,
-          contacts: contacts.map(({ numero }) => ({ numero })),
-          horaires: horaires.map(({ heure_debut, heure_fin }) => ({
-            heure_debut,
-            heure_fin,
-          })),
-        },
-        selectedFile || undefined
+      console.log("Formulaire validé, préparation des données...");
+
+      // Filtrer les horaires vides
+      const filteredHoraires = horaires.filter(
+        h => h.heure_debut && h.heure_fin
       );
+      console.log("Horaires filtrés:", filteredHoraires);
+
+      // S'assurer que les contacts et horaires n'ont pas d'ID
+      console.log("Contacts avant nettoyage:", contacts);
+      const cleanContacts = contacts.map(contact => {
+        console.log("Nettoyage du contact:", contact);
+        return { numero: contact.numero };
+      });
+      console.log("Contacts après nettoyage:", cleanContacts);
+
+      console.log("Horaires avant nettoyage:", filteredHoraires);
+      const cleanHoraires = filteredHoraires.map(horaire => {
+        console.log("Nettoyage de l'horaire:", horaire);
+        return {
+          heure_debut: horaire.heure_debut,
+          heure_fin: horaire.heure_fin,
+          jour: horaire.jour
+        };
+      });
+      console.log("Horaires après nettoyage:", cleanHoraires);
+
+      // Préparer les données finales
+      const finalData = {
+        ...formData,
+        contacts: cleanContacts,
+        horaires: cleanHoraires,
+      };
+      console.log("Données finales à soumettre:", finalData);
+
+      // Appeler la fonction de soumission
+      try {
+        onSubmit(
+          finalData,
+          selectedFile || undefined
+        );
+      } catch (error) {
+        console.error("Erreur lors de la soumission:", error);
+      }
+    } else {
+      console.log("Validation du formulaire échouée, erreurs:", errors);
     }
   };
 
@@ -124,6 +193,7 @@ export default function AddPharmacy({
     setContacts(contacts.filter((_, i) => i !== index));
   const updateContact = (index: number, numero: string) => {
     const newContacts = [...contacts];
+    // S'assurer que le contact n'a pas d'ID
     newContacts[index] = { numero };
     setContacts(newContacts);
   };
@@ -142,8 +212,50 @@ export default function AddPharmacy({
     newHoraires[index] = { ...newHoraires[index], [field]: value };
     setHoraires(newHoraires);
   };
+  // Gestionnaire d'événements pour l'ouverture/fermeture du modal
+  const handleOpenChange = (open: boolean) => {
+    setIsAddDialogOpen(open);
+
+    // Si le modal est fermé, réinitialiser les données après un court délai
+    if (!open) {
+      console.log("Modal fermé, réinitialisation des données...");
+      // Attendre que l'animation de fermeture soit terminée
+      setTimeout(() => {
+        if (pharmacy) {
+          console.log("Réinitialisation des données avec la pharmacie:", pharmacy);
+
+          // Nettoyer les contacts et horaires
+          const cleanContacts = pharmacy.contacts?.map(contact => ({ numero: contact.numero })) || [{ numero: "" }];
+          const cleanHoraires = pharmacy.horaires?.map(horaire => ({
+            heure_debut: horaire.heure_debut,
+            heure_fin: horaire.heure_fin,
+            jour: horaire.jour
+          })) || [{ heure_debut: "", heure_fin: "" }];
+
+          // Mettre à jour les états
+          setFormData({
+            id: pharmacy.id,
+            nom_pharmacie: pharmacy.nom_pharmacie || "",
+            photo_profil: pharmacy.photo_profil || "",
+            address: pharmacy.address || "",
+            province: pharmacy.province || "",
+            region: pharmacy.region || "",
+            district: pharmacy.district || "",
+            commune: pharmacy.commune || "",
+            service: pharmacy.service || "",
+            contacts: cleanContacts,
+            horaires: cleanHoraires,
+          });
+
+          setContacts(cleanContacts);
+          setHoraires(cleanHoraires);
+        }
+      }, 300);
+    }
+  };
+
   return (
-    <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+    <Dialog open={isAddDialogOpen} onOpenChange={handleOpenChange}>
       {!isEdit && (
         <DialogTrigger asChild>
           <Button className="w-full md:w-auto">Ajouter une pharmacie</Button>
@@ -151,7 +263,7 @@ export default function AddPharmacy({
       )}
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Ajouter une nouvelle pharmacie</DialogTitle>
+          <DialogTitle>{isEdit ? "Modifier la pharmacie" : "Ajouter une nouvelle pharmacie"}</DialogTitle>
         </DialogHeader>
         <PharmacyForm
           handleSubmit={handleSubmit}
