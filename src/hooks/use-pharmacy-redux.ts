@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/store";
+import { AppDispatch, RootState } from "@/store";
 import {
-  fetchPharmacies,
   addPharmacy,
-  updatePharmacy,
   deletePharmacy,
+  fetchPharmacies,
   setCurrentPharmacy,
   setModalState,
+  updatePharmacy,
 } from "@/store/pharmacySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * Hook Redux pour la gestion complète des pharmacies
@@ -15,7 +15,7 @@ import {
  */
 export const usePharmacyRedux = () => {
   const dispatch = useDispatch<AppDispatch>();
-  
+
   // Sélection de l'état global des pharmacies
   const {
     pharmacies,
@@ -50,16 +50,13 @@ export const usePharmacyRedux = () => {
     dispatch(setCurrentPharmacy(pharmacy));
   };
 
-  // Ajouter une nouvelle pharmacie avec ses contacts et horaires
+  // Ajouter une nouvelle pharmacie avec ses contacts
   const handleAddPharmacy = async (
-    pharmacyData: Omit<Pharmacy, "id" | "contacts" | "horaires">,
-    contacts: Omit<PharmacyContact, "id" | "id_pharmacie">[],
-    horaires: Omit<PharmacySchedule, "id" | "id_pharmacie">[],
+    pharmacyData: Omit<Pharmacy, "id" | "contacts">,
+    contacts: Omit<PharmacyContact, "id" | "id_pharmacie">[]
   ) => {
     try {
-      await dispatch(
-        addPharmacy({ pharmacyData, contacts, horaires }),
-      ).unwrap();
+      await dispatch(addPharmacy({ pharmacyData, contacts })).unwrap();
       dispatch(fetchPharmacies());
     } catch (error) {
       console.error("Error adding pharmacy:", error);
@@ -70,14 +67,11 @@ export const usePharmacyRedux = () => {
   // Mettre à jour une pharmacie existante
   const handleUpdatePharmacy = async (
     id: number,
-    pharmacyData: Partial<Omit<Pharmacy, "id" | "contacts" | "horaires">>,
-    contacts?: Omit<PharmacyContact, "id" | "id_pharmacie">[],
-    horaires?: Omit<PharmacySchedule, "id" | "id_pharmacie">[],
+    pharmacyData: Partial<Omit<Pharmacy, "id" | "contacts">>,
+    contacts?: Omit<PharmacyContact, "id" | "id_pharmacie">[]
   ) => {
     try {
-      await dispatch(
-        updatePharmacy({ id, pharmacyData, contacts, horaires }),
-      ).unwrap();
+      await dispatch(updatePharmacy({ id, pharmacyData, contacts })).unwrap();
       dispatch(fetchPharmacies());
     } catch (error) {
       console.error("Error updating pharmacy:", error);

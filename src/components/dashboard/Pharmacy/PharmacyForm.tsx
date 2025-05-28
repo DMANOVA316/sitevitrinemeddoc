@@ -1,31 +1,35 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { Trash2, Plus } from "lucide-react";
-import LocationSelector from "@/components/LocationSelector/LocationSelector";
+import { Plus, Trash2 } from "lucide-react";
 import ServicesList from "./ServicesList";
 
-const PharmacyForm = ({
+interface PharmacyFormProps {
+  handleSubmit: (e: React.FormEvent) => Promise<void>;
+  formData: Pharmacy;
+  setFormData: React.Dispatch<React.SetStateAction<Pharmacy>>;
+  errors: Record<string, string>;
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleServiceChange: (val: string) => void;
+  contacts: PharmacyContact[];
+  updateContact: (index: number, numero: string) => void;
+  removeContact: (index: number) => void;
+  addContact: () => void;
+}
+
+const PharmacyForm: React.FC<PharmacyFormProps> = ({
   handleSubmit,
   formData,
   setFormData,
   errors,
   fileInputRef,
   handleFileChange,
-  locationSelectorRef,
-  handleLocationChange,
   handleServiceChange,
   contacts,
   updateContact,
   removeContact,
   addContact,
-  horaires,
-  updateHoraire,
-  removeHoraire,
-  addHoraire,
-  pharmacy,
-  isEdit,
 }) => {
   return (
     <form
@@ -90,20 +94,7 @@ const PharmacyForm = ({
                 className="w-full"
               />
             </div>
-            <LocationSelector
-              ref={locationSelectorRef}
-              onLocationChange={handleLocationChange}
-              initialValues={
-                isEdit
-                  ? {
-                      province: pharmacy?.province,
-                      region: pharmacy?.region,
-                      district: pharmacy?.district,
-                      commune: pharmacy?.commune,
-                    }
-                  : undefined
-              }
-            />
+
             <div>
               <ServicesList
                 value={formData.service}
@@ -151,56 +142,6 @@ const PharmacyForm = ({
                 </Button>
               </div>
             </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-700">
-                Horaires d'ouverture
-              </Label>
-              <div className="space-y-2">
-                {horaires.map((horaire, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div className="grid grid-cols-2 gap-2 flex-1">
-                      <Input
-                        type="time"
-                        value={horaire.heure_debut}
-                        onChange={(e) =>
-                          updateHoraire(index, "heure_debut", e.target.value)
-                        }
-                        required
-                      />
-                      <Input
-                        type="time"
-                        value={horaire.heure_fin}
-                        onChange={(e) =>
-                          updateHoraire(index, "heure_fin", e.target.value)
-                        }
-                        required
-                      />
-                    </div>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeHoraire(index)}
-                      className="flex-shrink-0"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="sr-only">Supprimer l'horaire</span>
-                    </Button>
-                  </div>
-                ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={addHoraire}
-                  className="w-full"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Ajouter un horaire
-                </Button>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>

@@ -75,9 +75,9 @@ declare global {
     date_fin: string;
   };
 
-  type AssuranceSante = 'aucune' | 'bscs' | 'allianz' | 'saham' | 'autre';
+  type AssuranceSante = "aucune" | "bscs" | "allianz" | "saham" | "autre";
 
-  type MutuelleSante = 'aucune' | 'ostie' | 'amit' | 'afafi' | 'autre';
+  type MutuelleSante = "aucune" | "ostie" | "amit" | "afafi" | "autre";
 
   type Pharmacy = {
     id?: number;
@@ -85,15 +85,11 @@ declare global {
     photo_profil?: string;
     address: string;
     province?: string;
-    region?: string;
-    district?: string;
-    commune?: string; // Optionnel dans le code, mais une valeur par défaut sera fournie
     service?: string;
     assurance_sante?: AssuranceSante;
     mutuelle_sante?: MutuelleSante;
     localisation?: { x: number; y: number };
     contacts?: PharmacyContact[];
-    horaires?: PharmacySchedule[];
     de_garde?: boolean; // Propriété calculée, pas stockée en base
     garde?: PharmacyGarde; // Informations sur la garde en cours
     gardes?: PharmacyGarde[]; // Toutes les périodes de garde
@@ -103,7 +99,7 @@ declare global {
     id?: number;
     id_ambulance?: number;
     numero: string;
-  }
+  };
 
   type Ambulance = {
     id?: number;
@@ -116,7 +112,7 @@ declare global {
     commune: string;
     // localisation?: { x: number; y: number };
     contacts?: ContactAmbulance[];
-  }
+  };
 
   type Numero_meddoc = {
     id: number;
@@ -202,11 +198,11 @@ declare global {
     setIsRemovePartnerOpen: (isOpen: boolean) => void;
     handleAddPartner: (
       partner: Omit<PartnerType, "id">,
-      file?: File,
+      file?: File
     ) => Promise<void>;
     handleEditPartner: (
       partner: PartnerType,
-      file?: File | null,
+      file?: File | null
     ) => Promise<void>;
     handleRemovePartner: (id: number) => Promise<void>;
     handleSelectPartner: (partner: PartnerType) => void;
@@ -239,7 +235,7 @@ declare global {
     email: string;
     addresse: string;
     copyrigth: string;
-  }
+  };
 
   interface LocationSelectorRef {
     reset: () => void; // Fonction de réinitialisation
