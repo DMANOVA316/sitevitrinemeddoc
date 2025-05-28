@@ -1,5 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Building2, Wrench, ExternalLink } from "lucide-react";
+import {
+  Building2,
+  Clock,
+  ExternalLink,
+  MapPin,
+  Phone,
+  Wrench,
+} from "lucide-react";
 
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
@@ -95,12 +102,16 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
               <MapPin className="w-full h-full" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-gray-700 font-medium">{pharmacy.address}</p>
+              <p className="text-sm text-gray-700 font-medium">
+                {pharmacy.address}
+              </p>
               <p className="text-xs text-gray-500 mt-0.5">
                 {pharmacy.province && pharmacy.province}
                 {pharmacy.region && pharmacy.province && ", "}
                 {pharmacy.region && pharmacy.region}
-                {pharmacy.district && (pharmacy.province || pharmacy.region) && ", "}
+                {pharmacy.district &&
+                  (pharmacy.province || pharmacy.region) &&
+                  ", "}
                 {pharmacy.district && pharmacy.district}
               </p>
             </div>
@@ -122,30 +133,6 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
                     >
                       {contact.numero}
                     </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Hours */}
-          {pharmacy.horaires && pharmacy.horaires.length > 0 && (
-            <div className="flex items-start gap-3">
-              <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
-                <Clock className="w-full h-full" />
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 mb-1">Horaires d'ouverture</p>
-                <div className="grid grid-cols-1 gap-1">
-                  {pharmacy.horaires.map((horaire, index) => (
-                    <div key={index} className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600 text-xs">
-                        {horaire.jour || "Tous les jours"}
-                      </span>
-                      <span className="text-gray-800 text-xs font-medium bg-gray-50 px-2 py-0.5 rounded">
-                        {horaire.heure_debut} - {horaire.heure_fin}
-                      </span>
-                    </div>
                   ))}
                 </div>
               </div>

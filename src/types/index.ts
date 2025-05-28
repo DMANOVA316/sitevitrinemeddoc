@@ -60,14 +60,6 @@ declare global {
     numero: string;
   };
 
-  type PharmacySchedule = {
-    id?: number;
-    id_pharmacie?: number;
-    jour?: string;
-    heure_debut: string;
-    heure_fin: string;
-  };
-
   type PharmacyGarde = {
     id?: number;
     id_pharmacies: number;

@@ -1,15 +1,24 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Building2, Wrench, Pencil, Trash2, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { motion } from "framer-motion";
+import {
+  Building2,
+  Clock,
+  MapPin,
+  MoreHorizontal,
+  Pencil,
+  Phone,
+  Trash2,
+  Wrench,
+} from "lucide-react";
 
 interface PharmacyCardDashboardProps {
   pharmacy: Pharmacy;
@@ -22,7 +31,7 @@ const PharmacyCardDashboard = ({
   pharmacy,
   handleEdit,
   handleDelete,
-  toggleDeGarde
+  toggleDeGarde,
 }: PharmacyCardDashboardProps) => {
   return (
     <motion.div
@@ -125,7 +134,17 @@ const PharmacyCardDashboard = ({
                         </div>
                         {pharmacy.garde && (
                           <span className="text-xs text-gray-500">
-                            {format(new Date(pharmacy.garde.date_debut), "dd/MM/yyyy", { locale: fr })} - {format(new Date(pharmacy.garde.date_fin), "dd/MM/yyyy", { locale: fr })}
+                            {format(
+                              new Date(pharmacy.garde.date_debut),
+                              "dd/MM/yyyy",
+                              { locale: fr }
+                            )}{" "}
+                            -{" "}
+                            {format(
+                              new Date(pharmacy.garde.date_fin),
+                              "dd/MM/yyyy",
+                              { locale: fr }
+                            )}
                           </span>
                         )}
                       </div>
@@ -142,7 +161,9 @@ const PharmacyCardDashboard = ({
                         <Pencil className="mr-2 h-4 w-4" />
                         Modifier {pharmacy.nom_pharmacie}
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => toggleDeGarde(pharmacy.id)}>
+                      <DropdownMenuItem
+                        onClick={() => toggleDeGarde(pharmacy.id)}
+                      >
                         <Clock className="mr-2 h-4 w-4" />
                         Gérer les périodes de garde
                       </DropdownMenuItem>
@@ -180,12 +201,16 @@ const PharmacyCardDashboard = ({
                 <MapPin className="w-full h-full" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-gray-700 font-medium">{pharmacy.address}</p>
+                <p className="text-sm text-gray-700 font-medium">
+                  {pharmacy.address}
+                </p>
                 <p className="text-xs text-gray-500 mt-0.5">
                   {pharmacy.province && pharmacy.province}
                   {pharmacy.region && pharmacy.province && ", "}
                   {pharmacy.region && pharmacy.region}
-                  {pharmacy.district && (pharmacy.province || pharmacy.region) && ", "}
+                  {pharmacy.district &&
+                    (pharmacy.province || pharmacy.region) &&
+                    ", "}
                   {pharmacy.district && pharmacy.district}
                 </p>
               </div>
@@ -220,51 +245,38 @@ const PharmacyCardDashboard = ({
                   <Clock className="w-full h-full" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-500 mb-1">Périodes de garde</p>
+                  <p className="text-xs font-medium text-gray-500 mb-1">
+                    Périodes de garde
+                  </p>
                   <div className="grid grid-cols-1 gap-1">
                     {pharmacy.gardes.slice(0, 2).map((garde, index) => (
-                      <div key={index} className="flex items-center justify-between text-sm">
-                        <span className={`text-xs px-2 py-0.5 rounded ${
-                          new Date(garde.date_debut) <= new Date() && new Date(garde.date_fin) >= new Date()
-                            ? "bg-green-100 text-green-800 font-medium"
-                            : "bg-gray-50 text-gray-600"
-                        }`}>
-                          {format(new Date(garde.date_debut), "dd/MM/yyyy", { locale: fr })}
+                      <div
+                        key={index}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span
+                          className={`text-xs px-2 py-0.5 rounded ${
+                            new Date(garde.date_debut) <= new Date() &&
+                            new Date(garde.date_fin) >= new Date()
+                              ? "bg-green-100 text-green-800 font-medium"
+                              : "bg-gray-50 text-gray-600"
+                          }`}
+                        >
+                          {format(new Date(garde.date_debut), "dd/MM/yyyy", {
+                            locale: fr,
+                          })}
                         </span>
                         <span className="text-gray-800 text-xs font-medium">
-                          {format(new Date(garde.date_fin), "dd/MM/yyyy", { locale: fr })}
+                          {format(new Date(garde.date_fin), "dd/MM/yyyy", {
+                            locale: fr,
+                          })}
                         </span>
                       </div>
                     ))}
                     {pharmacy.gardes.length > 2 && (
-                      <p className="text-xs text-meddoc-primary">+{pharmacy.gardes.length - 2} autres périodes</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Hours - Simplified for dashboard */}
-            {pharmacy.horaires && pharmacy.horaires.length > 0 && (
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
-                  <Clock className="w-full h-full" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-500 mb-1">Horaires d'ouverture</p>
-                  <div className="grid grid-cols-1 gap-1">
-                    {pharmacy.horaires.slice(0, 2).map((horaire, index) => (
-                      <div key={index} className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600 text-xs">
-                          {horaire.jour || "Tous les jours"}
-                        </span>
-                        <span className="text-gray-800 text-xs font-medium bg-gray-50 px-2 py-0.5 rounded">
-                          {horaire.heure_debut} - {horaire.heure_fin}
-                        </span>
-                      </div>
-                    ))}
-                    {pharmacy.horaires.length > 2 && (
-                      <p className="text-xs text-meddoc-primary">+{pharmacy.horaires.length - 2} autres horaires</p>
+                      <p className="text-xs text-meddoc-primary">
+                        +{pharmacy.gardes.length - 2} autres périodes
+                      </p>
                     )}
                   </div>
                 </div>

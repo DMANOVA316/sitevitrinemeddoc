@@ -1,7 +1,7 @@
 import supabase from "@/utils/supabase";
 
 export const pharmacyService = {
-  // Récupérer toutes les pharmacies avec leurs contacts, horaires et périodes de garde
+  // Récupérer toutes les pharmacies avec leurs contacts et périodes de garde
   getPharmacies: async () => {
     const { data: pharmacies, error: pharmaciesError } = await supabase
       .from("pharmacies")
@@ -15,13 +15,6 @@ export const pharmacyService = {
       .select("*");
 
     if (contactsError) throw new Error(contactsError.message);
-
-    // Récupérer les horaires pour toutes les pharmacies
-    const { data: horaires, error: horairesError } = await supabase
-      .from("horaire_ouverture")
-      .select("*");
-
-    if (horairesError) throw new Error(horairesError.message);
 
     // Récupérer toutes les informations de garde
     const { data: gardes, error: gardesError } = await supabase
@@ -56,9 +49,6 @@ export const pharmacyService = {
         ...pharmacy,
         contacts: contacts.filter(
           (contact) => contact.id_pharmacie === pharmacy.id
-        ),
-        horaires: horaires.filter(
-          (horaire) => horaire.id_pharmacie === pharmacy.id
         ),
         // Ajouter une propriété calculée pour indiquer si la pharmacie est de garde
         de_garde: !!gardeEnCours,
