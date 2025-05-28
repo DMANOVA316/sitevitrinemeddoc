@@ -84,7 +84,7 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
             </div>
             <div>
               <Label className="text-sm font-medium text-gray-700">
-                Adresse
+                Adresse *
               </Label>
               <Input
                 value={formData.address}
@@ -92,7 +92,30 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
                   setFormData({ ...formData, address: e.target.value })
                 }
                 className="w-full"
+                required
+                placeholder="Entrez l'adresse"
               />
+              {errors.address && (
+                <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+              )}
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-gray-700">
+                Province *
+              </Label>
+              <Input
+                value={formData.province || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, province: e.target.value })
+                }
+                className="w-full"
+                required
+                placeholder="Entrez la province"
+              />
+              {errors.province && (
+                <p className="text-red-500 text-sm mt-1">{errors.province}</p>
+              )}
             </div>
 
             <div>

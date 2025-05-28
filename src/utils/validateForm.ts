@@ -20,7 +20,11 @@ export const validateForm = (
     toast.error(newErrors.address);
   }
 
-  // La commune n'est pas obligatoire, une valeur par défaut sera fournie si nécessaire
+  // Validation de la province
+  if (!formData.province || !formData.province.trim()) {
+    newErrors.province = "La province est obligatoire";
+    toast.error(newErrors.province);
+  }
 
   // Validation des contacts
   if (

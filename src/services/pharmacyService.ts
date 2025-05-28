@@ -1,4 +1,3 @@
-import type { PharmacyGarde } from "@/types";
 import supabase from "@/utils/supabase";
 
 export const pharmacyService = {
@@ -89,10 +88,17 @@ export const pharmacyService = {
       const { assurance_sante, mutuelle_sante, ...cleanData } =
         pharmacyData as any;
 
+      // Préparer les données à envoyer avec des valeurs par défaut
+      const dataToSend = {
+        ...cleanData,
+        province: cleanData.province || "Non spécifiée", // Province est obligatoire
+        service: cleanData.service || null,
+      };
+
       // Insérer la pharmacie
       const { data: pharmacy, error: pharmacyError } = await supabase
         .from("pharmacies")
-        .insert([cleanData])
+        .insert([dataToSend])
         .select()
         .single();
 
@@ -162,7 +168,7 @@ export const pharmacyService = {
       }
 
       // Insérer la période de garde si fournie
-      let garde: PharmacyGarde | undefined;
+      let garde: any;
       if (gardeData) {
         const { data: gardeResult, error: gardeError } = await supabase
           .from("pharmacies_garde")
@@ -230,7 +236,7 @@ export const pharmacyService = {
       // Préparer les données à envoyer
       const dataToSend = {
         ...cleanData,
-        province: cleanData.province || null,
+        province: cleanData.province || "Non spécifiée", // Province est obligatoire
         service: cleanData.service || null,
       };
       console.log("Données à envoyer:", dataToSend);
