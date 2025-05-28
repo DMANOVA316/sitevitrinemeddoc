@@ -1,3 +1,7 @@
+import {
+  servicesStringToFormArray,
+  validateServices,
+} from "@/utils/servicesUtils";
 import { toast } from "sonner";
 
 // Fonction pour valider le formulaire
@@ -24,6 +28,20 @@ export const validateForm = (
   if (!formData.province || !formData.province.trim()) {
     newErrors.province = "La province est obligatoire";
     toast.error(newErrors.province);
+  }
+
+  // Validation des services (optionnelle)
+  if (formData.service && formData.service.trim() !== "") {
+    // Valider que les services sélectionnés sont valides seulement s'il y en a
+    const servicesArray = servicesStringToFormArray(formData.service);
+    const validation = validateServices(servicesArray);
+
+    if (!validation.isValid) {
+      newErrors.service = `Services invalides: ${validation.invalidServices.join(
+        ", "
+      )}`;
+      toast.error(newErrors.service);
+    }
   }
 
   // Validation des contacts

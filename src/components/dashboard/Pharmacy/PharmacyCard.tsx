@@ -1,5 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  formatServicesForDisplay,
+  servicesStringToFormArray,
+} from "@/utils/servicesUtils";
+import {
   Building2,
   Clock,
   ExternalLink,
@@ -84,14 +88,19 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
           {/* Divider */}
           <div className="h-px bg-gray-100 w-full"></div>
 
-          {/* Service */}
+          {/* Services */}
           {pharmacy.service && (
             <div className="flex items-start gap-3">
               <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
                 <Wrench className="w-full h-full" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-gray-700">{pharmacy.service}</p>
+                <p className="text-sm text-gray-700">
+                  {formatServicesForDisplay(
+                    servicesStringToFormArray(pharmacy.service),
+                    2
+                  )}
+                </p>
               </div>
             </div>
           )}

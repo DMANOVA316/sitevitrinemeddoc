@@ -6,6 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  formatServicesForDisplay,
+  servicesStringToFormArray,
+} from "@/utils/servicesUtils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -183,14 +187,19 @@ const PharmacyCardDashboard = ({
             {/* Divider */}
             <div className="h-px bg-gray-100 w-full"></div>
 
-            {/* Service */}
+            {/* Services */}
             {pharmacy.service && (
               <div className="flex items-start gap-3">
                 <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
                   <Wrench className="w-full h-full" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-gray-700">{pharmacy.service}</p>
+                  <p className="text-sm text-gray-700">
+                    {formatServicesForDisplay(
+                      servicesStringToFormArray(pharmacy.service),
+                      2
+                    )}
+                  </p>
                 </div>
               </div>
             )}

@@ -36,7 +36,7 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
       onSubmit={handleSubmit}
       className="space-y-8 p-4 relative flex flex-col h-[calc(100vh-8rem)]"
     >
-      <div className="flex-1 overflow-y-auto pr-2">
+      <div className="flex-1 pr-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Colonne de gauche */}
           <div className="space-y-4">
@@ -123,6 +123,9 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
                 value={formData.service}
                 onChange={handleServiceChange}
               />
+              {errors.service && (
+                <p className="text-red-500 text-sm mt-1">{errors.service}</p>
+              )}
             </div>
           </div>
           {/* Colonne de droite */}
