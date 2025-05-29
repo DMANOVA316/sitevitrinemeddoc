@@ -44,6 +44,16 @@ export const validateForm = (
     }
   }
 
+  // Validation du lien vers site (optionnelle)
+  if (formData.lien_site && formData.lien_site.trim() !== "") {
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    if (!urlRegex.test(formData.lien_site.trim())) {
+      newErrors.lien_site = "Le format de l'URL n'est pas valide";
+      toast.error(newErrors.lien_site);
+    }
+  }
+
   // Validation des contacts
   if (
     contacts.length === 0 ||

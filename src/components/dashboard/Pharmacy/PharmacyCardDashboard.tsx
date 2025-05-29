@@ -16,6 +16,8 @@ import { motion } from "framer-motion";
 import {
   Building2,
   Clock,
+  ExternalLink,
+  Globe,
   MapPin,
   MoreHorizontal,
   Pencil,
@@ -37,6 +39,21 @@ const PharmacyCardDashboard = ({
   handleDelete,
   toggleDeGarde,
 }: PharmacyCardDashboardProps) => {
+  // Helper function to format URL with protocol
+  const formatUrl = (url: string): string => {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    return `https://${url}`;
+  };
+
+  // Helper function to display URL without protocol
+  const displayUrl = (url: string): string => {
+    if (!url) return "";
+    return url.replace(/^https?:\/\//, "");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -165,6 +182,20 @@ const PharmacyCardDashboard = ({
                         <Pencil className="mr-2 h-4 w-4" />
                         Modifier {pharmacy.nom_pharmacie}
                       </DropdownMenuItem>
+                      {pharmacy.lien_site && (
+                        <DropdownMenuItem
+                          onClick={() =>
+                            window.open(
+                              formatUrl(pharmacy.lien_site),
+                              "_blank",
+                              "noopener,noreferrer"
+                            )
+                          }
+                        >
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Visiter le site web
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuItem
                         onClick={() => toggleDeGarde(pharmacy.id)}
                       >
@@ -215,12 +246,6 @@ const PharmacyCardDashboard = ({
                 </p>
                 <p className="text-xs text-gray-500 mt-0.5">
                   {pharmacy.province && pharmacy.province}
-                  {pharmacy.region && pharmacy.province && ", "}
-                  {pharmacy.region && pharmacy.region}
-                  {pharmacy.district &&
-                    (pharmacy.province || pharmacy.region) &&
-                    ", "}
-                  {pharmacy.district && pharmacy.district}
                 </p>
               </div>
             </div>
@@ -243,6 +268,26 @@ const PharmacyCardDashboard = ({
                       </a>
                     ))}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Website */}
+            {pharmacy.lien_site && (
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
+                  <Globe className="w-full h-full" />
+                </div>
+                <div className="flex-1">
+                  <a
+                    href={formatUrl(pharmacy.lien_site)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-meddoc-primary hover:text-meddoc-primary/80 transition-colors font-medium"
+                  >
+                    {displayUrl(pharmacy.lien_site)}
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
             )}

@@ -107,6 +107,18 @@ const PharmacyList: React.FC = () => {
 
       let photo_profil = updatedData.photo_profil;
 
+      // Handle photo removal (when photo_profil is empty but there was a previous photo)
+      if (!updatedData.photo_profil && editingPharmacy?.photo_profil) {
+        try {
+          console.log("Suppression de l'ancienne image...");
+          await uploadService.deleteImage(editingPharmacy.photo_profil);
+          photo_profil = "";
+        } catch (error) {
+          console.error("Error deleting old image:", error);
+          // Continue with the update even if image deletion fails
+        }
+      }
+
       if (file) {
         try {
           console.log("Traitement de l'image...");
@@ -149,6 +161,7 @@ const PharmacyList: React.FC = () => {
         address: cleanData.address,
         province: cleanData.province,
         service: cleanData.service,
+        lien_site: cleanData.lien_site,
       };
 
       console.log("Appel de updatePharmacy avec:", {
@@ -221,6 +234,7 @@ const PharmacyList: React.FC = () => {
         address: cleanData.address,
         province: cleanData.province,
         service: cleanData.service,
+        lien_site: cleanData.lien_site,
       };
 
       // Nous n'utilisons plus le champ de_garde, la gestion des périodes de garde

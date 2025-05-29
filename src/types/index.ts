@@ -78,6 +78,7 @@ declare global {
     address: string;
     province?: string;
     service?: string;
+    lien_site?: string;
     assurance_sante?: AssuranceSante;
     mutuelle_sante?: MutuelleSante;
     localisation?: { x: number; y: number };

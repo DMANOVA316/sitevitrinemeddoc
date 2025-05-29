@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import PharmacyForm from "./PharmacyForm";
 
 interface AddPharmacyProps {
-  onSubmit: (data: Pharmacy, file?: File) => void; // Fonction de soumission
+  onSubmit: (data: Pharmacy, file?: File) => Promise<void>; // Fonction de soumission
   pharmacy?: Pharmacy; // Données de la pharmacie (en cas d'édition)
   isEdit?: boolean; // Indique si c'est une édition ou une création
   isAddDialogOpen: boolean;
@@ -33,11 +33,13 @@ export default function AddPharmacy({
     address: pharmacy?.address || "",
     province: pharmacy?.province || "",
     service: pharmacy?.service || "",
+    lien_site: pharmacy?.lien_site || "",
     contacts: [],
   });
 
-  // États pour les contacts et erreurs
+  // États pour les contacts, erreurs et loading
   const [contacts, setContacts] = useState<PharmacyContact[]>([{ numero: "" }]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Mettre à jour les états lorsque la prop pharmacy change
   useEffect(() => {
@@ -59,6 +61,7 @@ export default function AddPharmacy({
         address: pharmacy.address || "",
         province: pharmacy.province || "",
         service: pharmacy.service || "",
+        lien_site: pharmacy.lien_site || "",
         contacts: cleanContacts,
       });
 
@@ -89,27 +92,33 @@ export default function AddPharmacy({
 
     if (validateForm(formData, contacts, setErrors)) {
       console.log("Formulaire validé, préparation des données...");
+      setIsLoading(true);
 
-      // S'assurer que les contacts n'ont pas d'ID
-      console.log("Contacts avant nettoyage:", contacts);
-      const cleanContacts = contacts.map((contact) => {
-        console.log("Nettoyage du contact:", contact);
-        return { numero: contact.numero };
-      });
-      console.log("Contacts après nettoyage:", cleanContacts);
-
-      // Préparer les données finales
-      const finalData = {
-        ...formData,
-        contacts: cleanContacts,
-      };
-      console.log("Données finales à soumettre:", finalData);
-
-      // Appeler la fonction de soumission
       try {
-        onSubmit(finalData, selectedFile || undefined);
+        // S'assurer que les contacts n'ont pas d'ID
+        console.log("Contacts avant nettoyage:", contacts);
+        const cleanContacts = contacts.map((contact) => {
+          console.log("Nettoyage du contact:", contact);
+          return { numero: contact.numero };
+        });
+        console.log("Contacts après nettoyage:", cleanContacts);
+
+        // Préparer les données finales
+        const finalData = {
+          ...formData,
+          contacts: cleanContacts,
+        };
+        console.log("Données finales à soumettre:", finalData);
+
+        // Appeler la fonction de soumission
+        await onSubmit(finalData, selectedFile || undefined);
+
+        // Close dialog on success
+        setIsAddDialogOpen(false);
       } catch (error) {
         console.error("Erreur lors de la soumission:", error);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       console.log("Validation du formulaire échouée, erreurs:", errors);
@@ -202,6 +211,7 @@ export default function AddPharmacy({
           updateContact={updateContact}
           removeContact={removeContact}
           addContact={addContact}
+          isLoading={isLoading}
         />
       </DialogContent>
     </Dialog>
