@@ -49,17 +49,11 @@ export const addPharmacy = createAsyncThunk(
   async ({
     pharmacyData,
     contacts,
-    horaires,
   }: {
-    pharmacyData: Omit<Pharmacy, "id" | "contacts" | "horaires">;
+    pharmacyData: Omit<Pharmacy, "id" | "contacts">;
     contacts: Omit<PharmacyContact, "id" | "id_pharmacie">[];
-    horaires: Omit<PharmacySchedule, "id" | "id_pharmacie">[];
   }) => {
-    const response = await pharmacyService.addPharmacy(
-      pharmacyData,
-      contacts,
-      horaires
-    );
+    const response = await pharmacyService.addPharmacy(pharmacyData, contacts);
     return response;
   }
 );
@@ -78,18 +72,15 @@ export const updatePharmacy = createAsyncThunk(
     id,
     pharmacyData,
     contacts,
-    horaires,
   }: {
     id: number;
     pharmacyData: Partial<Pharmacy>;
     contacts?: Omit<PharmacyContact, "id" | "id_pharmacie">[];
-    horaires?: Omit<PharmacySchedule, "id" | "id_pharmacie">[];
   }) => {
     const response = await pharmacyService.updatePharmacy(
       id,
       pharmacyData,
-      contacts,
-      horaires
+      contacts
     );
     return response;
   }

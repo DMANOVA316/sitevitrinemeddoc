@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
 import AddPharmacy from "@/components/dashboard/Pharmacy/AddPharmacy";
-import { pharmacyService } from "@/services/pharmacyService";
-import { uploadService } from "@/services/uploadService";
-import { Button } from "@/components/ui/button";
-import { Search, Plus, CalendarRange, Clock } from "lucide-react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
-import { toast } from "sonner";
+import MultiPharmacyGardeManager from "@/components/dashboard/Pharmacy/MultiPharmacyGardeManager";
 import PharmacyCardDashboard from "@/components/dashboard/Pharmacy/PharmacyCardDashboard";
 import PharmacyGardeManager from "@/components/dashboard/Pharmacy/PharmacyGardeManager";
-import MultiPharmacyGardeManager from "@/components/dashboard/Pharmacy/MultiPharmacyGardeManager";
+import { Button } from "@/components/ui/button";
+import { pharmacyService } from "@/services/pharmacyService";
+import { uploadService } from "@/services/uploadService";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { CalendarRange, Clock, Plus, Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const PharmacyList: React.FC = () => {
   const [data, setData] = useState<Pharmacy[]>([]);
@@ -19,7 +19,9 @@ const PharmacyList: React.FC = () => {
   const [isGardeManagerOpen, setIsGardeManagerOpen] = useState(false);
   const [isMultiGardeManagerOpen, setIsMultiGardeManagerOpen] = useState(false);
   const [editingPharmacy, setEditingPharmacy] = useState<Pharmacy | null>(null);
-  const [selectedPharmacy, setSelectedPharmacy] = useState<Pharmacy | null>(null);
+  const [selectedPharmacy, setSelectedPharmacy] = useState<Pharmacy | null>(
+    null
+  );
 
   const fetchPharmacies = async () => {
     try {
@@ -28,7 +30,10 @@ const PharmacyList: React.FC = () => {
       setData(pharmacies);
 
       // Réinitialiser la page courante si nécessaire
-      if (currentPage > 1 && pharmacies.length <= (currentPage - 1) * itemsPerPage) {
+      if (
+        currentPage > 1 &&
+        pharmacies.length <= (currentPage - 1) * itemsPerPage
+      ) {
         setCurrentPage(1);
       }
     } catch (error) {
@@ -74,32 +79,45 @@ const PharmacyList: React.FC = () => {
   };
 
   const handleEdit = (pharmacy: Pharmacy) => {
-    // Nettoyer les contacts et horaires avant de les passer au composant AddPharmacy
+    // Nettoyer les contacts avant de les passer au composant AddPharmacy
     const cleanedPharmacy = {
       ...pharmacy,
       // Créer de nouveaux objets de contact sans ID
-      contacts: pharmacy.contacts?.map(contact => ({ numero: contact.numero })) || [],
-      // Créer de nouveaux objets d'horaire sans ID
-      horaires: pharmacy.horaires?.map(horaire => ({
-        heure_debut: horaire.heure_debut,
-        heure_fin: horaire.heure_fin,
-        jour: horaire.jour
-      })) || []
+      contacts:
+        pharmacy.contacts?.map((contact) => ({ numero: contact.numero })) || [],
     };
 
-    console.log("Édition de la pharmacie avec contacts nettoyés:", cleanedPharmacy);
+    console.log(
+      "Édition de la pharmacie avec contacts nettoyés:",
+      cleanedPharmacy
+    );
     setEditingPharmacy(cleanedPharmacy);
     setIsEditDialogOpen(true);
   };
 
   const handleUpdatePharmacy = async (updatedData: Pharmacy, file?: File) => {
-    console.log("Début de la mise à jour de la pharmacie avec les données:", updatedData);
+    console.log(
+      "Début de la mise à jour de la pharmacie avec les données:",
+      updatedData
+    );
     try {
       if (!updatedData.id) {
         throw new Error("ID de la pharmacie manquant");
       }
 
       let photo_profil = updatedData.photo_profil;
+
+      // Handle photo removal (when photo_profil is empty but there was a previous photo)
+      if (!updatedData.photo_profil && editingPharmacy?.photo_profil) {
+        try {
+          console.log("Suppression de l'ancienne image...");
+          await uploadService.deleteImage(editingPharmacy.photo_profil);
+          photo_profil = "";
+        } catch (error) {
+          console.error("Error deleting old image:", error);
+          // Continue with the update even if image deletion fails
+        }
+      }
 
       if (file) {
         try {
@@ -127,24 +145,14 @@ const PharmacyList: React.FC = () => {
       // Supprimer les champs qui ne sont pas dans la base de données
       const { assurance_sante, mutuelle_sante, ...cleanData } = updatedData;
 
-      // S'assurer que les contacts et horaires n'ont pas d'ID
+      // S'assurer que les contacts n'ont pas d'ID
       console.log("Contacts avant nettoyage:", updatedData.contacts);
-      const cleanContacts = updatedData.contacts?.map(contact => {
-        console.log("Nettoyage du contact:", contact);
-        return { numero: contact.numero };
-      }) || [];
+      const cleanContacts =
+        updatedData.contacts?.map((contact) => {
+          console.log("Nettoyage du contact:", contact);
+          return { numero: contact.numero };
+        }) || [];
       console.log("Contacts après nettoyage:", cleanContacts);
-
-      console.log("Horaires avant nettoyage:", updatedData.horaires);
-      const cleanHoraires = updatedData.horaires?.map(horaire => {
-        console.log("Nettoyage de l'horaire:", horaire);
-        return {
-          heure_debut: horaire.heure_debut,
-          heure_fin: horaire.heure_fin,
-          jour: horaire.jour
-        };
-      }) || [];
-      console.log("Horaires après nettoyage:", cleanHoraires);
 
       // Créer un objet avec les données de la pharmacie
       const pharmacyData = {
@@ -152,18 +160,15 @@ const PharmacyList: React.FC = () => {
         photo_profil,
         address: cleanData.address,
         province: cleanData.province,
-        region: cleanData.region,
-        district: cleanData.district,
-        commune: cleanData.commune,
         service: cleanData.service,
+        lien_site: cleanData.lien_site,
       };
 
       console.log("Appel de updatePharmacy avec:", {
         id: updatedData.id,
         pharmacyData,
         cleanContacts,
-        cleanHoraires,
-        gardeData
+        gardeData,
       });
 
       try {
@@ -171,7 +176,6 @@ const PharmacyList: React.FC = () => {
           updatedData.id,
           pharmacyData,
           cleanContacts,
-          cleanHoraires,
           gardeData
         );
 
@@ -229,30 +233,19 @@ const PharmacyList: React.FC = () => {
         photo_profil,
         address: cleanData.address,
         province: cleanData.province,
-        region: cleanData.region,
-        district: cleanData.district,
-        commune: cleanData.commune,
         service: cleanData.service,
+        lien_site: cleanData.lien_site,
       };
 
       // Nous n'utilisons plus le champ de_garde, la gestion des périodes de garde
       // se fait maintenant via le composant PharmacyGardeManager
       const gardeData = undefined;
 
-      // S'assurer que les contacts et horaires n'ont pas d'ID
-      const cleanContacts = newData.contacts?.map(contact => ({ numero: contact.numero })) || [];
-      const cleanHoraires = newData.horaires?.map(horaire => ({
-        heure_debut: horaire.heure_debut,
-        heure_fin: horaire.heure_fin,
-        jour: horaire.jour
-      })) || [];
+      // S'assurer que les contacts n'ont pas d'ID
+      const cleanContacts =
+        newData.contacts?.map((contact) => ({ numero: contact.numero })) || [];
 
-      await pharmacyService.addPharmacy(
-        pharmacyData,
-        cleanContacts,
-        cleanHoraires,
-        gardeData
-      );
+      await pharmacyService.addPharmacy(pharmacyData, cleanContacts, gardeData);
 
       await fetchPharmacies();
       setIsAddDialogOpen(false);
@@ -282,7 +275,7 @@ const PharmacyList: React.FC = () => {
   const [itemsPerPage] = useState(9);
 
   const toggleDeGarde = (id: number) => {
-    const pharmacy = data.find(p => p.id === id);
+    const pharmacy = data.find((p) => p.id === id);
     if (!pharmacy) return;
 
     // Ouvrir le gestionnaire de périodes de garde
@@ -299,9 +292,13 @@ const PharmacyList: React.FC = () => {
   const now = new Date().toISOString();
 
   // Calculer le nombre de pharmacies de garde une seule fois
-  const pharmaciesDeGarde = data.filter(p => {
+  const pharmaciesDeGarde = data.filter((p) => {
     // Vérifier si la pharmacie a une période de garde active
-    return p.garde && new Date(p.garde.date_debut) <= new Date(now) && new Date(p.garde.date_fin) >= new Date(now);
+    return (
+      p.garde &&
+      new Date(p.garde.date_debut) <= new Date(now) &&
+      new Date(p.garde.date_fin) >= new Date(now)
+    );
   });
   const nombrePharmaciesDeGarde = pharmaciesDeGarde.length;
 
@@ -312,9 +309,12 @@ const PharmacyList: React.FC = () => {
 
     // Si le filtre "De garde" est activé, ne montrer que les pharmacies de garde actuelles
     if (filterDeGarde) {
-      return matchesSearch && item.garde &&
-             new Date(item.garde.date_debut) <= new Date(now) &&
-             new Date(item.garde.date_fin) >= new Date(now);
+      return (
+        matchesSearch &&
+        item.garde &&
+        new Date(item.garde.date_debut) <= new Date(now) &&
+        new Date(item.garde.date_fin) >= new Date(now)
+      );
     }
 
     // Sinon, montrer toutes les pharmacies qui correspondent à la recherche
@@ -348,7 +348,18 @@ const PharmacyList: React.FC = () => {
             </h1>
             {pharmaciesDeGarde.length > 0 && pharmaciesDeGarde[0].garde && (
               <p className="text-center text-gray-600">
-                Du {format(new Date(pharmaciesDeGarde[0].garde.date_debut), "d MMMM yyyy", { locale: fr })} au {format(new Date(pharmaciesDeGarde[0].garde.date_fin), "d MMMM yyyy", { locale: fr })}
+                Du{" "}
+                {format(
+                  new Date(pharmaciesDeGarde[0].garde.date_debut),
+                  "d MMMM yyyy",
+                  { locale: fr }
+                )}{" "}
+                au{" "}
+                {format(
+                  new Date(pharmaciesDeGarde[0].garde.date_fin),
+                  "d MMMM yyyy",
+                  { locale: fr }
+                )}
               </p>
             )}
           </div>
@@ -381,7 +392,13 @@ const PharmacyList: React.FC = () => {
               <Clock className="h-4 w-4 mr-2" />
               De garde
               {nombrePharmaciesDeGarde > 0 && (
-                <span className={`ml-2 ${filterDeGarde ? 'bg-white text-meddoc-primary' : 'bg-meddoc-primary text-white'} rounded-full px-1.5 py-0.5 text-xs font-semibold`}>
+                <span
+                  className={`ml-2 ${
+                    filterDeGarde
+                      ? "bg-white text-meddoc-primary"
+                      : "bg-meddoc-primary text-white"
+                  } rounded-full px-1.5 py-0.5 text-xs font-semibold`}
+                >
                   {nombrePharmaciesDeGarde}
                 </span>
               )}
@@ -412,16 +429,21 @@ const PharmacyList: React.FC = () => {
               <div className="mx-auto w-16 h-16 flex items-center justify-center mb-4">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-meddoc-primary"></div>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Chargement des pharmacies...</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Chargement des pharmacies...
+              </h3>
             </div>
           ) : filteredData.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 rounded-lg">
               <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                 <Search className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Aucune pharmacie trouvée</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Aucune pharmacie trouvée
+              </h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                Aucune pharmacie ne correspond à votre recherche. Essayez de modifier vos critères de recherche.
+                Aucune pharmacie ne correspond à votre recherche. Essayez de
+                modifier vos critères de recherche.
               </p>
             </div>
           ) : (
@@ -451,13 +473,22 @@ const PharmacyList: React.FC = () => {
                           : "text-gray-700 border-gray-300 hover:bg-gray-50"
                       }`}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </button>
 
                     {Array.from({ length: totalPages }, (_, i) => i + 1)
-                      .filter(page => {
+                      .filter((page) => {
                         // Afficher les 3 premières pages, les 3 dernières pages, et les pages autour de la page courante
                         return (
                           page <= 3 ||
@@ -469,7 +500,10 @@ const PharmacyList: React.FC = () => {
                         // Ajouter des ellipses si nécessaire
                         if (index > 0 && array[index - 1] !== page - 1) {
                           return (
-                            <span key={`ellipsis-${page}`} className="px-3 py-2 text-gray-500">
+                            <span
+                              key={`ellipsis-${page}`}
+                              className="px-3 py-2 text-gray-500"
+                            >
                               ...
                             </span>
                           );
@@ -491,7 +525,9 @@ const PharmacyList: React.FC = () => {
                       })}
 
                     <button
-                      onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                      onClick={() =>
+                        paginate(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                       className={`p-2 rounded-md border ${
                         currentPage === totalPages
@@ -499,8 +535,17 @@ const PharmacyList: React.FC = () => {
                           : "text-gray-700 border-gray-300 hover:bg-gray-50"
                       }`}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </button>
                   </nav>
@@ -509,7 +554,9 @@ const PharmacyList: React.FC = () => {
 
               {/* Résumé des résultats */}
               <div className="mt-4 text-center text-sm text-gray-500">
-                Affichage de {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredData.length)} sur {filteredData.length} pharmacies
+                Affichage de {indexOfFirstItem + 1}-
+                {Math.min(indexOfLastItem, filteredData.length)} sur{" "}
+                {filteredData.length} pharmacies
               </div>
             </>
           )}

@@ -1,51 +1,53 @@
+import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import React, { SetStateAction } from "react";
+  MultiSelect,
+  type MultiSelectOption,
+} from "@/components/ui/multi-select";
+import { PHARMACY_SERVICES } from "@/constants/pharmacy";
+import {
+  servicesFormArrayToString,
+  servicesStringToFormArray,
+} from "@/utils/servicesUtils";
 
-const services = [
-  "Médicaments sur ordonnance",
-  "Médicaments en vente libre",
-  "Préparations magistrales",
-  "Conseils pharmaceutiques",
-  "Éducation thérapeutique",
-  "Planification familiale",
-  "Vaccinations",
-  "Suivi de la tension artérielle et du poids.",
-  "Tests rapides",
-  "Sevrage tabagique",
-  "Cosmétiques et soins",
-  "Produits pour bébés",
-  "Orthopédie",
-  "Équipements médicaux",
-  "Location de matériel médical",
-  "Accompagnement des femmes enceintes",
-  "Recyclage de médicaments",
-];
+// Convert the services array to MultiSelectOption format
+const serviceOptions: MultiSelectOption[] = PHARMACY_SERVICES.map(
+  (service) => ({
+    label: service,
+    value: service,
+  })
+);
+
+interface ServicesListProps {
+  value?: string | null;
+  onChange: (value: string) => void;
+  className?: string;
+}
 
 export default function ServicesList({
   value,
   onChange,
-}: {
-  value: string;
-  onChange: React.Dispatch<SetStateAction<string>>;
-}) {
+  className,
+}: ServicesListProps) {
+  // Convert string value to array for the multi-select component
+  const selectedServices = servicesStringToFormArray(value);
+
+  // Handle changes from the multi-select component
+  const handleSelectionChange = (selectedArray: string[]) => {
+    // Convert array back to string for storage
+    const servicesString = servicesFormArrayToString(selectedArray);
+    onChange(servicesString);
+  };
+
   return (
-    <Select value={value} onValueChange={onChange}>
-      <SelectTrigger>
-        <SelectValue placeholder="Service" />
-      </SelectTrigger>
-      <SelectContent>
-        {services.map((service) => (
-          <SelectItem key={service} value={service}>
-            {service}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className={className}>
+      <Label className="text-sm font-medium text-gray-700">Services</Label>
+      <MultiSelect
+        options={serviceOptions}
+        selected={selectedServices}
+        onChange={handleSelectionChange}
+        placeholder="Sélectionner les services (optionnel)..."
+        className="mt-1"
+      />
+    </div>
   );
 }

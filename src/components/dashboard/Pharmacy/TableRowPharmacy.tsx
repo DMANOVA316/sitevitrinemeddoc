@@ -4,8 +4,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Building2, Pencil, Trash2 } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { Building2, Pencil, Trash2 } from "lucide-react";
 import { Button } from "../../ui/button";
 
 const TableRowPharmacy = ({
@@ -45,22 +45,6 @@ const TableRowPharmacy = ({
           )}
         </div>
       </TableCell>
-      {/* <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
-        <p className="truncate text-gray-700">{pharmacy.service}</p>
-      </TableCell> */}
-      {/* <TableCell className="px-6 py-4 whitespace-nowrap">
-        {pharmacy.horaires && pharmacy.horaires.length > 0 && (
-          <div className="flex items-center gap-3">
-            <div className="flex-1 space-y-1">
-              {pharmacy.horaires.map((horaire, index) => (
-                <p key={index} className="text-sm text-gray-600">
-                  {horaire.heure_debut} - {horaire.heure_fin}
-                </p>
-              ))}
-            </div>
-          </div>
-        )}
-      </TableCell> */}
 
       {/* pharamcies contact */}
       <TableCell className="px-6 py-4 whitespace-nowrap max-w-[150px]">
@@ -85,9 +69,7 @@ const TableRowPharmacy = ({
               {pharmacy.address}
             </p>
             <p className="max-w-[150px] truncate text-sm text-gray-500">
-              {pharmacy.province && pharmacy.province + ", "}
-              {pharmacy.region && pharmacy.region + ","}
-              {pharmacy.district && pharmacy.district}
+              {pharmacy.province}
             </p>
           </div>
         </div>

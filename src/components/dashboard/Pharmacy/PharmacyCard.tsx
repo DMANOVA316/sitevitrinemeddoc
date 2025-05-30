@@ -1,11 +1,48 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Building2, Wrench, ExternalLink } from "lucide-react";
+import {
+  formatServicesForDisplay,
+  servicesStringToFormArray,
+} from "@/utils/servicesUtils";
+import {
+  Building2,
+  Clock,
+  ExternalLink,
+  Globe,
+  MapPin,
+  Phone,
+  Wrench,
+} from "lucide-react";
 
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
 }
 
 const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
+  // Helper function to format URL with protocol
+  const formatUrl = (url: string): string => {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    return `https://${url}`;
+  };
+
+  // Helper function to display URL without protocol
+  const displayUrl = (url: string): string => {
+    if (!url) return "";
+    return url.replace(/^https?:\/\//, "");
+  };
+
+  const handleWebsiteClick = () => {
+    if (pharmacy.lien_site) {
+      window.open(
+        formatUrl(pharmacy.lien_site),
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+  };
+
   return (
     <Card className="w-full h-full group hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-100 rounded-xl">
       {/* Status Bar - Green for duty pharmacies */}
@@ -67,9 +104,15 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
                 </div>
 
                 {/* External Link Button */}
-                <button className="text-gray-400 hover:text-meddoc-primary transition-colors p-1 rounded-full hover:bg-gray-50">
-                  <ExternalLink className="w-4 h-4" />
-                </button>
+                {pharmacy.lien_site && (
+                  <button
+                    onClick={handleWebsiteClick}
+                    className="text-gray-400 hover:text-meddoc-primary transition-colors p-1 rounded-full hover:bg-gray-50"
+                    title="Visiter le site web"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -77,14 +120,19 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
           {/* Divider */}
           <div className="h-px bg-gray-100 w-full"></div>
 
-          {/* Service */}
+          {/* Services */}
           {pharmacy.service && (
             <div className="flex items-start gap-3">
               <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
                 <Wrench className="w-full h-full" />
               </div>
               <div className="flex-1">
-                <p className="text-sm text-gray-700">{pharmacy.service}</p>
+                <p className="text-sm text-gray-700">
+                  {formatServicesForDisplay(
+                    servicesStringToFormArray(pharmacy.service),
+                    2
+                  )}
+                </p>
               </div>
             </div>
           )}
@@ -95,13 +143,11 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
               <MapPin className="w-full h-full" />
             </div>
             <div className="flex-1">
-              <p className="text-sm text-gray-700 font-medium">{pharmacy.address}</p>
+              <p className="text-sm text-gray-700 font-medium">
+                {pharmacy.address}
+              </p>
               <p className="text-xs text-gray-500 mt-0.5">
                 {pharmacy.province && pharmacy.province}
-                {pharmacy.region && pharmacy.province && ", "}
-                {pharmacy.region && pharmacy.region}
-                {pharmacy.district && (pharmacy.province || pharmacy.region) && ", "}
-                {pharmacy.district && pharmacy.district}
               </p>
             </div>
           </div>
@@ -128,26 +174,22 @@ const PharmacyCard = ({ pharmacy }: PharmacyCardProps) => {
             </div>
           )}
 
-          {/* Hours */}
-          {pharmacy.horaires && pharmacy.horaires.length > 0 && (
+          {/* Website */}
+          {pharmacy.lien_site && (
             <div className="flex items-start gap-3">
               <div className="w-5 h-5 mt-0.5 flex-shrink-0 text-meddoc-primary">
-                <Clock className="w-full h-full" />
+                <Globe className="w-full h-full" />
               </div>
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 mb-1">Horaires d'ouverture</p>
-                <div className="grid grid-cols-1 gap-1">
-                  {pharmacy.horaires.map((horaire, index) => (
-                    <div key={index} className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600 text-xs">
-                        {horaire.jour || "Tous les jours"}
-                      </span>
-                      <span className="text-gray-800 text-xs font-medium bg-gray-50 px-2 py-0.5 rounded">
-                        {horaire.heure_debut} - {horaire.heure_fin}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <a
+                  href={formatUrl(pharmacy.lien_site)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-meddoc-primary hover:text-meddoc-primary/80 transition-colors font-medium"
+                >
+                  {displayUrl(pharmacy.lien_site)}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
           )}
