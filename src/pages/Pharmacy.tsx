@@ -1,15 +1,22 @@
-import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PharmacyCard from "@/components/dashboard/Pharmacy/PharmacyCard";
-import { Building2, Search, MapPin, Clock, AlertCircle, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import ScrollToTopButton from "@/components/ui/scroll-to-top-button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePharmacyRedux } from "@/hooks/use-pharmacy-redux";
 import useScrollToTop from "@/hooks/useScrollToTop";
-import "../styles/pharmacy.css";
-import { Button } from "@/components/ui/button";
-import ScrollToTopButton from "@/components/ui/scroll-to-top-button";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import {
+  AlertCircle,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  MoreHorizontal,
+  Search,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import "../styles/pharmacy.css";
 
 const Pharmacy: React.FC = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -22,9 +29,6 @@ const Pharmacy: React.FC = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [filters, setFilters] = useState({
     province: "",
-    region: "",
-    district: "",
-    commune: ""
   });
   const [showFilters, setShowFilters] = useState(false);
   const [isFiltering, setIsFiltering] = useState(false);
@@ -40,7 +44,9 @@ const Pharmacy: React.FC = () => {
 
   // Réinitialiser la page courante lors d'une recherche ou changement de filtre
   useEffect(() => {
-    console.log("Search term, active tab or filters changed - resetting to page 1");
+    console.log(
+      "Search term, active tab or filters changed - resetting to page 1"
+    );
     setCurrentPage(1);
   }, [searchTerm, activeTab, filters]);
 
@@ -52,25 +58,16 @@ const Pharmacy: React.FC = () => {
     const checkFilters = () => {
       const filteredCount = pharmacies.filter((pharmacy) => {
         // Filtrage par province
-        const matchesProvince = filters.province === "" ||
+        const matchesProvince =
+          filters.province === "" ||
           (pharmacy.province && pharmacy.province === filters.province);
 
-        // Filtrage par région
-        const matchesRegion = filters.region === "" ||
-          (pharmacy.region && pharmacy.region === filters.region);
-
-        // Filtrage par district
-        const matchesDistrict = filters.district === "" ||
-          (pharmacy.district && pharmacy.district === filters.district);
-
-        // Filtrage par commune
-        const matchesCommune = filters.commune === "" ||
-          (pharmacy.commune && pharmacy.commune === filters.commune);
-
-        return matchesProvince && matchesRegion && matchesDistrict && matchesCommune;
+        return matchesProvince;
       }).length;
 
-      console.log(`Filtered pharmacies count: ${filteredCount} out of ${pharmacies.length}`);
+      console.log(
+        `Filtered pharmacies count: ${filteredCount} out of ${pharmacies.length}`
+      );
     };
 
     if (pharmacies.length > 0) {
@@ -84,12 +81,15 @@ const Pharmacy: React.FC = () => {
   };
 
   // Mettre à jour les filtres
-  const handleFilterChange = (filterName: keyof typeof filters, value: string) => {
+  const handleFilterChange = (
+    filterName: keyof typeof filters,
+    value: string
+  ) => {
     console.log(`Changing filter ${filterName} to "${value}"`);
-    setFilters(prev => {
+    setFilters((prev) => {
       const newFilters = {
         ...prev,
-        [filterName]: value
+        [filterName]: value,
       };
       console.log("New filters:", newFilters);
       return newFilters;
@@ -101,9 +101,6 @@ const Pharmacy: React.FC = () => {
     console.log("Resetting all filters");
     setFilters({
       province: "",
-      region: "",
-      district: "",
-      commune: ""
     });
     setSearchTerm("");
     console.log("Filters reset complete");
@@ -112,29 +109,14 @@ const Pharmacy: React.FC = () => {
   // Extraire les options uniques pour chaque filtre
   const getUniqueFilterOptions = () => {
     const provinces = new Set<string>();
-    const regions = new Set<string>();
-    const districts = new Set<string>();
-    const communes = new Set<string>();
 
     // Parcourir toutes les pharmacies pour extraire les valeurs uniques
-    pharmacies.forEach(pharmacy => {
+    pharmacies.forEach((pharmacy) => {
       // Vérifier que la pharmacie et ses propriétés existent
       if (pharmacy) {
         // Ajouter seulement les valeurs non vides
         if (pharmacy.province && pharmacy.province.trim() !== "") {
           provinces.add(pharmacy.province.trim());
-        }
-
-        if (pharmacy.region && pharmacy.region.trim() !== "") {
-          regions.add(pharmacy.region.trim());
-        }
-
-        if (pharmacy.district && pharmacy.district.trim() !== "") {
-          districts.add(pharmacy.district.trim());
-        }
-
-        if (pharmacy.commune && pharmacy.commune.trim() !== "") {
-          communes.add(pharmacy.commune.trim());
         }
       }
     });
@@ -142,9 +124,6 @@ const Pharmacy: React.FC = () => {
     // Convertir les ensembles en tableaux triés
     return {
       provinces: Array.from(provinces).sort((a, b) => a.localeCompare(b)),
-      regions: Array.from(regions).sort((a, b) => a.localeCompare(b)),
-      districts: Array.from(districts).sort((a, b) => a.localeCompare(b)),
-      communes: Array.from(communes).sort((a, b) => a.localeCompare(b))
     };
   };
 
@@ -156,46 +135,40 @@ const Pharmacy: React.FC = () => {
     if (!pharmacy) return false;
 
     // Filtrage par terme de recherche
-    const matchesSearchTerm = searchTerm === "" ||
-      (pharmacy.nom_pharmacie && pharmacy.nom_pharmacie.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (pharmacy.address && pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (pharmacy.province && pharmacy.province.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (pharmacy.commune && pharmacy.commune.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (pharmacy.region && pharmacy.region.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (pharmacy.district && pharmacy.district.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearchTerm =
+      searchTerm === "" ||
+      (pharmacy.nom_pharmacie &&
+        pharmacy.nom_pharmacie
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())) ||
+      (pharmacy.address &&
+        pharmacy.address.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (pharmacy.province &&
+        pharmacy.province.toLowerCase().includes(searchTerm.toLowerCase()));
 
     // Filtrage par province
-    const matchesProvince = filters.province === "" ||
+    const matchesProvince =
+      filters.province === "" ||
       (pharmacy.province && pharmacy.province === filters.province);
 
-    // Filtrage par région
-    const matchesRegion = filters.region === "" ||
-      (pharmacy.region && pharmacy.region === filters.region);
-
-    // Filtrage par district
-    const matchesDistrict = filters.district === "" ||
-      (pharmacy.district && pharmacy.district === filters.district);
-
-    // Filtrage par commune
-    const matchesCommune = filters.commune === "" ||
-      (pharmacy.commune && pharmacy.commune === filters.commune);
-
     // Retourner true seulement si tous les critères sont satisfaits
-    return matchesSearchTerm && matchesProvince && matchesRegion && matchesDistrict && matchesCommune;
+    return matchesSearchTerm && matchesProvince;
   });
 
   // Date actuelle pour vérifier si une pharmacie est de garde
   const now = new Date().toISOString();
 
   // Pharmacies de garde (uniquement celles qui sont actuellement de garde selon les dates)
-  const dutyPharmacies = filteredPharmacies.filter((pharmacy) =>
-    pharmacy.garde &&
-    new Date(pharmacy.garde.date_debut) <= new Date(now) &&
-    new Date(pharmacy.garde.date_fin) >= new Date(now)
+  const dutyPharmacies = filteredPharmacies.filter(
+    (pharmacy) =>
+      pharmacy.garde &&
+      new Date(pharmacy.garde.date_debut) <= new Date(now) &&
+      new Date(pharmacy.garde.date_fin) >= new Date(now)
   );
 
   // Déterminer le tableau de pharmacies à utiliser en fonction de l'onglet actif
-  const currentPharmacies = activeTab === "all" ? filteredPharmacies : dutyPharmacies;
+  const currentPharmacies =
+    activeTab === "all" ? filteredPharmacies : dutyPharmacies;
 
   // Calculer le nombre total de pages
   const totalPages = Math.ceil(currentPharmacies.length / itemsPerPage);
@@ -205,13 +178,18 @@ const Pharmacy: React.FC = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // Obtenir les pharmacies pour la page courante
-  const currentItems = currentPharmacies.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = currentPharmacies.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   // Fonction pour changer de page
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     // Défilement vers le haut de la section des résultats
-    document.getElementById("pharmacy-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document
+      .getElementById("pharmacy-results")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   // Générer les numéros de page à afficher
@@ -263,7 +241,10 @@ const Pharmacy: React.FC = () => {
       <section className="relative py-16 md:py-24 bg-gradient-to-r from-meddoc-primary/90 to-meddoc-secondary/90 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/pharmacy-pattern.svg')] opacity-10"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -ml-48 -mt-48 animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mb-48 animate-float" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mb-48 animate-float"
+          style={{ animationDelay: "2s" }}
+        ></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
@@ -271,7 +252,8 @@ const Pharmacy: React.FC = () => {
               Trouvez votre pharmacie
             </h1>
             <p className="text-lg sm:text-xl text-white/90 mb-8 sm:mb-10 max-w-2xl mx-auto">
-              Localisez facilement les pharmacies à Madagascar et accédez aux informations sur les pharmacies de garde
+              Localisez facilement les pharmacies à Madagascar et accédez aux
+              informations sur les pharmacies de garde
             </p>
 
             <div className="max-w-4xl mx-auto">
@@ -290,21 +272,52 @@ const Pharmacy: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`px-4 py-2 bg-white text-gray-700 font-medium rounded-r-lg border-l border-gray-100 hover:bg-gray-50 transition-colors flex items-center ${showFilters ? 'bg-blue-50 text-meddoc-primary' : ''} ${(filters.province || filters.region || filters.district || filters.commune) ? 'ring-2 ring-meddoc-primary/20' : ''}`}
+                    className={`px-4 py-2 bg-white text-gray-700 font-medium rounded-r-lg border-l border-gray-100 hover:bg-gray-50 transition-colors flex items-center ${
+                      showFilters ? "bg-blue-50 text-meddoc-primary" : ""
+                    } ${
+                      filters.province ? "ring-2 ring-meddoc-primary/20" : ""
+                    }`}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                      />
                     </svg>
                     Filtres
-                    {(filters.province || filters.region || filters.district || filters.commune) && (
+                    {filters.province && (
                       <span className="ml-2 bg-meddoc-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {Object.values(filters).filter(Boolean).length}
                       </span>
                     )}
                     {isFiltering && (
-                      <svg className="animate-spin ml-2 h-4 w-4 text-meddoc-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin ml-2 h-4 w-4 text-meddoc-primary"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     )}
                   </button>
@@ -313,24 +326,63 @@ const Pharmacy: React.FC = () => {
 
               {/* Panneau de filtres */}
               {showFilters && (
-                <div className="bg-white rounded-xl shadow-lg p-6 mb-6 animate-fade-in">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Filtrer par localisation</h3>
+                <div className="bg-white rounded-xl shadow-lg p-6 mb-6 animate-fade-in max-w-2xl mx-auto">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+                    <div className="text-center sm:text-left">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                        Filtrer par province
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Sélectionnez une province pour affiner votre recherche
+                      </p>
+                    </div>
                     <button
                       onClick={resetFilters}
-                      className="text-sm text-meddoc-primary hover:underline flex items-center"
+                      className="text-sm text-meddoc-primary hover:text-meddoc-primary/80 hover:underline flex items-center justify-center sm:justify-start transition-colors"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 mr-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
                       </svg>
-                      Réinitialiser les filtres
+                      Réinitialiser
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                    {/* Filtre par province */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Province</label>
+                  <div className="space-y-4">
+                    <div className="max-w-md mx-auto">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 text-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 inline-block mr-2 text-meddoc-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                        Choisir une province
+                      </label>
                       <select
                         value={filters.province}
                         onChange={(e) => {
@@ -338,179 +390,146 @@ const Pharmacy: React.FC = () => {
                           console.log("Province select changed to:", value);
                           handleFilterChange("province", value);
                         }}
-                        className="w-full rounded-md border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring focus:ring-meddoc-primary/20 text-sm p-2 text-meddoc-fonce"
+                        className="w-full rounded-lg border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring-2 focus:ring-meddoc-primary/20 text-base py-3 px-4 text-meddoc-fonce bg-white transition-all duration-200 hover:border-gray-300"
                       >
-                        <option value="" className="text-meddoc-fonce">Toutes les provinces</option>
-                        {filterOptions.provinces.map(province => (
-                          <option key={province} value={province} className="text-meddoc-fonce">{province}</option>
+                        <option value="" className="text-meddoc-fonce">
+                          🌍 Toutes les provinces
+                        </option>
+                        {filterOptions.provinces.map((province) => (
+                          <option
+                            key={province}
+                            value={province}
+                            className="text-meddoc-fonce"
+                          >
+                            📍 {province}
+                          </option>
                         ))}
                       </select>
                     </div>
 
-                    {/* Filtre par région */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Région</label>
-                      <select
-                        value={filters.region}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          console.log("Region select changed to:", value);
-                          handleFilterChange("region", value);
+                    {/* Action Buttons - Simplified */}
+                    <div className="flex justify-center gap-3 pt-2">
+                      <button
+                        onClick={() => {
+                          setIsFiltering(true);
+                          resetFilters();
+                          setTimeout(() => {
+                            setIsFiltering(false);
+                          }, 500);
                         }}
-                        className="w-full rounded-md border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring focus:ring-meddoc-primary/20 text-sm p-2 text-meddoc-fonce"
+                        className="px-6 py-2.5 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                        disabled={isFiltering}
                       >
-                        <option value="" className="text-meddoc-fonce">Toutes les régions</option>
-                        {filterOptions.regions.map(region => (
-                          <option key={region} value={region} className="text-meddoc-fonce">{region}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Filtre par district */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">District</label>
-                      <select
-                        value={filters.district}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          console.log("District select changed to:", value);
-                          handleFilterChange("district", value);
+                        Effacer
+                      </button>
+                      <button
+                        onClick={() => {
+                          console.log("Applying filters:", filters);
+                          setIsFiltering(true);
+                          setFilters({ ...filters });
+                          setTimeout(() => {
+                            setIsFiltering(false);
+                          }, 500);
                         }}
-                        className="w-full rounded-md border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring focus:ring-meddoc-primary/20 text-sm p-2 text-meddoc-fonce"
+                        className="px-6 py-2.5 text-white bg-meddoc-primary hover:bg-meddoc-primary/90 rounded-lg text-sm font-medium transition-colors flex items-center disabled:opacity-50"
+                        disabled={isFiltering}
                       >
-                        <option value="" className="text-meddoc-fonce">Tous les districts</option>
-                        {filterOptions.districts.map(district => (
-                          <option key={district} value={district} className="text-meddoc-fonce">{district}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Filtre par commune */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Commune</label>
-                      <select
-                        value={filters.commune}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          console.log("Commune select changed to:", value);
-                          handleFilterChange("commune", value);
-                        }}
-                        className="w-full rounded-md border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring focus:ring-meddoc-primary/20 text-sm p-2 text-meddoc-fonce"
-                      >
-                        <option value="" className="text-meddoc-fonce">Toutes les communes</option>
-                        {filterOptions.communes.map(commune => (
-                          <option key={commune} value={commune} className="text-meddoc-fonce">{commune}</option>
-                        ))}
-                      </select>
+                        {isFiltering ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Filtrage...
+                          </>
+                        ) : (
+                          <>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4 mr-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                              />
+                            </svg>
+                            Appliquer
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
 
-                  {/* Boutons d'action */}
-                  <div className="flex justify-end gap-3 mt-4">
-                    <button
-                      onClick={() => {
-                        setIsFiltering(true);
-                        resetFilters();
-                        setTimeout(() => {
-                          setIsFiltering(false);
-                        }, 500);
-                      }}
-                      className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-md text-sm font-medium transition-colors"
-                      disabled={isFiltering}
-                    >
-                      Réinitialiser
-                    </button>
-                    <button
-                      onClick={() => {
-                        console.log("Applying filters:", filters);
-                        // Indiquer que le filtrage est en cours
-                        setIsFiltering(true);
-
-                        // Force un re-render en modifiant légèrement l'état
-                        setFilters({...filters});
-
-                        // Simuler un délai pour montrer l'indicateur de filtrage
-                        setTimeout(() => {
-                          setIsFiltering(false);
-                        }, 500);
-                      }}
-                      className="px-4 py-2 text-white bg-meddoc-primary hover:bg-meddoc-primary/90 rounded-md text-sm font-medium transition-colors flex items-center"
-                      disabled={isFiltering}
-                    >
-                      {isFiltering ? (
-                        <>
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  {/* Active Filter Display */}
+                  {filters.province && (
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <div className="text-center">
+                        <div className="text-sm text-gray-500 mb-3">
+                          Filtre actif:
+                        </div>
+                        <div className="inline-flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 text-meddoc-primary px-4 py-2 rounded-full text-sm font-medium border border-blue-100">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
                           </svg>
-                          Filtrage en cours...
-                        </>
-                      ) : (
-                        "Appliquer les filtres"
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Filtres actifs */}
-                  {(filters.province || filters.region || filters.district || filters.commune) && (
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="text-sm text-gray-500 mb-2">Filtres actifs:</div>
-                      <div className="flex flex-wrap gap-2">
-                        {filters.province && (
-                          <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                            Province: {filters.province}
-                            <button
-                              onClick={() => handleFilterChange("province", "")}
-                              className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
+                          Province: {filters.province}
+                          <button
+                            onClick={() => handleFilterChange("province", "")}
+                            className="ml-3 text-meddoc-primary/70 hover:text-meddoc-primary transition-colors"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
-                            </button>
-                          </div>
-                        )}
-
-                        {filters.region && (
-                          <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                            Région: {filters.region}
-                            <button
-                              onClick={() => handleFilterChange("region", "")}
-                              className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
-                            </button>
-                          </div>
-                        )}
-
-                        {filters.district && (
-                          <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                            District: {filters.district}
-                            <button
-                              onClick={() => handleFilterChange("district", "")}
-                              className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
-                            </button>
-                          </div>
-                        )}
-
-                        {filters.commune && (
-                          <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                            Commune: {filters.commune}
-                            <button
-                              onClick={() => handleFilterChange("commune", "")}
-                              className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
-                            </button>
-                          </div>
-                        )}
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -520,42 +539,6 @@ const Pharmacy: React.FC = () => {
           </div>
         </div>
       </section>
-
-
-      {/* Stats Section */}
-      {/* <section className="py-8 bg-white shadow-md relative z-10 -mt-8 rounded-t-3xl">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center stat-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-blue-50 text-meddoc-primary animate-pulse-subtle">
-                  <Building2 className="h-6 w-6" />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-800">{pharmacies.length}</h3>
-                <p className="text-gray-500">Pharmacies</p>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center stat-card animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-blue-50 text-meddoc-primary animate-pulse-subtle">
-                  <Clock className="h-6 w-6" />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-800">{dutyPharmacies.length}</h3>
-                <p className="text-gray-500">Pharmacies de garde</p>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center stat-card animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 rounded-full bg-blue-50 text-meddoc-primary animate-pulse-subtle">
-                  <MapPin className="h-6 w-6" />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-800">
-                  {new Set(pharmacies.map(p => p.province)).size}
-                </h3>
-                <p className="text-gray-500">Provinces</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* Main Content */}
       <section className="py-12 sm:py-16">
@@ -592,12 +575,18 @@ const Pharmacy: React.FC = () => {
               {isLoading ? (
                 <div className="mt-12 text-center animate-fade-in">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-meddoc-primary mx-auto"></div>
-                  <p className="text-gray-500 mt-4">Chargement des pharmacies...</p>
+                  <p className="text-gray-500 mt-4">
+                    Chargement des pharmacies...
+                  </p>
                 </div>
               ) : (
                 <>
                   {/* Shared Content for Both Tabs */}
-                  <TabsContent value="all" className="mt-6 animate-fade-in" id="pharmacy-results">
+                  <TabsContent
+                    value="all"
+                    className="mt-6 animate-fade-in"
+                    id="pharmacy-results"
+                  >
                     <div className="flex flex-col items-center">
                       {filteredPharmacies.length > 0 ? (
                         <>
@@ -605,10 +594,24 @@ const Pharmacy: React.FC = () => {
                           <div className="w-full mb-6">
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                               <p className="text-gray-600">
-                                Affichage de <span className="font-medium text-gray-800">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredPharmacies.length)}</span> sur <span className="font-medium text-gray-800">{filteredPharmacies.length}</span> pharmacies
+                                Affichage de{" "}
+                                <span className="font-medium text-gray-800">
+                                  {indexOfFirstItem + 1}-
+                                  {Math.min(
+                                    indexOfLastItem,
+                                    filteredPharmacies.length
+                                  )}
+                                </span>{" "}
+                                sur{" "}
+                                <span className="font-medium text-gray-800">
+                                  {filteredPharmacies.length}
+                                </span>{" "}
+                                pharmacies
                               </p>
                               <div className="flex items-center space-x-2">
-                                <span className="text-sm text-gray-600">Pharmacies par page:</span>
+                                <span className="text-sm text-gray-600">
+                                  Pharmacies par page:
+                                </span>
                                 <select
                                   className="bg-white border border-gray-200 rounded-md text-sm px-2 py-1 text-meddoc-fonce"
                                   value={itemsPerPage}
@@ -617,69 +620,57 @@ const Pharmacy: React.FC = () => {
                                     setCurrentPage(1);
                                   }}
                                 >
-                                  <option value={12} className="text-meddoc-fonce">12</option>
-                                  <option value={24} className="text-meddoc-fonce">24</option>
-                                  <option value={36} className="text-meddoc-fonce">36</option>
+                                  <option
+                                    value={12}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    12
+                                  </option>
+                                  <option
+                                    value={24}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    24
+                                  </option>
+                                  <option
+                                    value={36}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    36
+                                  </option>
                                 </select>
                               </div>
                             </div>
 
                             {/* Filtres actifs */}
-                            {(filters.province || filters.region || filters.district || filters.commune) && (
+                            {filters.province && (
                               <div className="mt-4 pt-4 border-t border-gray-100">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="text-sm text-gray-500">Filtres actifs:</span>
+                                  <span className="text-sm text-gray-500">
+                                    Filtres actifs:
+                                  </span>
                                   {filters.province && (
                                     <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
                                       Province: {filters.province}
                                       <button
-                                        onClick={() => handleFilterChange("province", "")}
+                                        onClick={() =>
+                                          handleFilterChange("province", "")
+                                        }
                                         className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
                                       >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.region && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Région: {filters.region}
-                                      <button
-                                        onClick={() => handleFilterChange("region", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.district && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      District: {filters.district}
-                                      <button
-                                        onClick={() => handleFilterChange("district", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.commune && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Commune: {filters.commune}
-                                      <button
-                                        onClick={() => handleFilterChange("commune", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          className="h-4 w-4"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M6 18L18 6M6 6l12 12"
+                                          />
                                         </svg>
                                       </button>
                                     </div>
@@ -689,8 +680,19 @@ const Pharmacy: React.FC = () => {
                                     onClick={resetFilters}
                                     className="text-sm text-meddoc-primary hover:underline flex items-center"
                                   >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4 mr-1"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                      />
                                     </svg>
                                     Réinitialiser
                                   </button>
@@ -705,7 +707,9 @@ const Pharmacy: React.FC = () => {
                               <div
                                 key={pharmacy.id}
                                 className="w-full pharmacy-card animate-fade-in"
-                                style={{ animationDelay: `${0.05 * (index % 6)}s` }}
+                                style={{
+                                  animationDelay: `${0.05 * (index % 6)}s`,
+                                }}
                               >
                                 <PharmacyCard pharmacy={pharmacy} />
                               </div>
@@ -735,16 +739,25 @@ const Pharmacy: React.FC = () => {
 
                                 {/* Page Numbers */}
                                 <div className="flex items-center space-x-1">
-                                  {getPageNumbers().map((number, index) => (
+                                  {getPageNumbers().map((number, index) =>
                                     number === "ellipsis" ? (
-                                      <div key={`ellipsis-${index}`} className="h-10 w-10 flex items-center justify-center text-gray-500">
+                                      <div
+                                        key={`ellipsis-${index}`}
+                                        className="h-10 w-10 flex items-center justify-center text-gray-500"
+                                      >
                                         <MoreHorizontal className="h-5 w-5" />
                                       </div>
                                     ) : (
                                       <Button
                                         key={`page-${number}`}
-                                        variant={currentPage === number ? "default" : "outline"}
-                                        onClick={() => paginate(number as number)}
+                                        variant={
+                                          currentPage === number
+                                            ? "default"
+                                            : "outline"
+                                        }
+                                        onClick={() =>
+                                          paginate(number as number)
+                                        }
                                         className={`h-10 w-10 rounded-lg ${
                                           currentPage === number
                                             ? "bg-meddoc-primary text-white hover:bg-meddoc-primary/90"
@@ -754,7 +767,7 @@ const Pharmacy: React.FC = () => {
                                         {number}
                                       </Button>
                                     )
-                                  ))}
+                                  )}
                                 </div>
 
                                 {/* Next Page Button */}
@@ -775,9 +788,13 @@ const Pharmacy: React.FC = () => {
                         // Empty State
                         <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100 w-full empty-state animate-fade-in">
                           <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                          <h3 className="text-xl font-semibold text-gray-800 mb-2">Aucune pharmacie trouvée</h3>
+                          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                            Aucune pharmacie trouvée
+                          </h3>
                           <p className="text-gray-500 max-w-md mx-auto">
-                            Nous n'avons trouvé aucune pharmacie correspondant à votre recherche. Veuillez essayer avec d'autres termes.
+                            Nous n'avons trouvé aucune pharmacie correspondant à
+                            votre recherche. Veuillez essayer avec d'autres
+                            termes.
                           </p>
                         </div>
                       )}
@@ -785,30 +802,62 @@ const Pharmacy: React.FC = () => {
                   </TabsContent>
 
                   {/* Duty Pharmacies Tab */}
-                  <TabsContent value="duty" className="mt-6 animate-fade-in" id="pharmacy-results">
+                  <TabsContent
+                    value="duty"
+                    className="mt-6 animate-fade-in"
+                    id="pharmacy-results"
+                  >
                     <div className="flex flex-col items-center">
                       {dutyPharmacies.length > 0 ? (
                         <>
                           {/* Grand titre avec les dates de garde */}
-                          {dutyPharmacies.length > 0 && dutyPharmacies[0].garde && (
-                            <div className="w-full mb-8 text-center">
-                              <h1 className="text-2xl md:text-3xl font-bold text-meddoc-primary mb-2">
-                                Pharmacies de garde
-                              </h1>
-                              <p className="text-lg text-gray-600">
-                                Du {format(new Date(dutyPharmacies[0].garde.date_debut), "d MMMM yyyy", { locale: fr })} au {format(new Date(dutyPharmacies[0].garde.date_fin), "d MMMM yyyy", { locale: fr })}
-                              </p>
-                            </div>
-                          )}
+                          {dutyPharmacies.length > 0 &&
+                            dutyPharmacies[0].garde && (
+                              <div className="w-full mb-8 text-center">
+                                <h1 className="text-2xl md:text-3xl font-bold text-meddoc-primary mb-2">
+                                  Pharmacies de garde
+                                </h1>
+                                <p className="text-lg text-gray-600">
+                                  Du{" "}
+                                  {format(
+                                    new Date(
+                                      dutyPharmacies[0].garde.date_debut
+                                    ),
+                                    "d MMMM yyyy",
+                                    { locale: fr }
+                                  )}{" "}
+                                  au{" "}
+                                  {format(
+                                    new Date(dutyPharmacies[0].garde.date_fin),
+                                    "d MMMM yyyy",
+                                    { locale: fr }
+                                  )}
+                                </p>
+                              </div>
+                            )}
 
                           {/* Results Summary */}
                           <div className="w-full mb-6">
                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                               <p className="text-gray-600">
-                                Affichage de <span className="font-medium text-gray-800">{indexOfFirstItem + 1}-{Math.min(indexOfLastItem, dutyPharmacies.length)}</span> sur <span className="font-medium text-gray-800">{dutyPharmacies.length}</span> pharmacies de garde
+                                Affichage de{" "}
+                                <span className="font-medium text-gray-800">
+                                  {indexOfFirstItem + 1}-
+                                  {Math.min(
+                                    indexOfLastItem,
+                                    dutyPharmacies.length
+                                  )}
+                                </span>{" "}
+                                sur{" "}
+                                <span className="font-medium text-gray-800">
+                                  {dutyPharmacies.length}
+                                </span>{" "}
+                                pharmacies de garde
                               </p>
                               <div className="flex items-center space-x-2">
-                                <span className="text-sm text-gray-600">Pharmacies par page:</span>
+                                <span className="text-sm text-gray-600">
+                                  Pharmacies par page:
+                                </span>
                                 <select
                                   className="bg-white border border-gray-200 rounded-md text-sm px-2 py-1 text-meddoc-fonce"
                                   value={itemsPerPage}
@@ -817,69 +866,57 @@ const Pharmacy: React.FC = () => {
                                     setCurrentPage(1);
                                   }}
                                 >
-                                  <option value={12} className="text-meddoc-fonce">12</option>
-                                  <option value={24} className="text-meddoc-fonce">24</option>
-                                  <option value={36} className="text-meddoc-fonce">36</option>
+                                  <option
+                                    value={12}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    12
+                                  </option>
+                                  <option
+                                    value={24}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    24
+                                  </option>
+                                  <option
+                                    value={36}
+                                    className="text-meddoc-fonce"
+                                  >
+                                    36
+                                  </option>
                                 </select>
                               </div>
                             </div>
 
                             {/* Filtres actifs */}
-                            {(filters.province || filters.region || filters.district || filters.commune) && (
+                            {filters.province && (
                               <div className="mt-4 pt-4 border-t border-gray-100">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="text-sm text-gray-500">Filtres actifs:</span>
+                                  <span className="text-sm text-gray-500">
+                                    Filtres actifs:
+                                  </span>
                                   {filters.province && (
                                     <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
                                       Province: {filters.province}
                                       <button
-                                        onClick={() => handleFilterChange("province", "")}
+                                        onClick={() =>
+                                          handleFilterChange("province", "")
+                                        }
                                         className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
                                       >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.region && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Région: {filters.region}
-                                      <button
-                                        onClick={() => handleFilterChange("region", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.district && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      District: {filters.district}
-                                      <button
-                                        onClick={() => handleFilterChange("district", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {filters.commune && (
-                                    <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Commune: {filters.commune}
-                                      <button
-                                        onClick={() => handleFilterChange("commune", "")}
-                                        className="ml-2 text-meddoc-primary/70 hover:text-meddoc-primary"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          className="h-4 w-4"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M6 18L18 6M6 6l12 12"
+                                          />
                                         </svg>
                                       </button>
                                     </div>
@@ -889,8 +926,19 @@ const Pharmacy: React.FC = () => {
                                     onClick={resetFilters}
                                     className="text-sm text-meddoc-primary hover:underline flex items-center"
                                   >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4 mr-1"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                      />
                                     </svg>
                                     Réinitialiser
                                   </button>
@@ -905,7 +953,9 @@ const Pharmacy: React.FC = () => {
                               <div
                                 key={pharmacy.id}
                                 className="w-full pharmacy-card animate-fade-in"
-                                style={{ animationDelay: `${0.05 * (index % 6)}s` }}
+                                style={{
+                                  animationDelay: `${0.05 * (index % 6)}s`,
+                                }}
                               >
                                 <PharmacyCard pharmacy={pharmacy} />
                               </div>
@@ -935,16 +985,25 @@ const Pharmacy: React.FC = () => {
 
                                 {/* Page Numbers */}
                                 <div className="flex items-center space-x-1">
-                                  {getPageNumbers().map((number, index) => (
+                                  {getPageNumbers().map((number, index) =>
                                     number === "ellipsis" ? (
-                                      <div key={`ellipsis-${index}`} className="h-10 w-10 flex items-center justify-center text-gray-500">
+                                      <div
+                                        key={`ellipsis-${index}`}
+                                        className="h-10 w-10 flex items-center justify-center text-gray-500"
+                                      >
                                         <MoreHorizontal className="h-5 w-5" />
                                       </div>
                                     ) : (
                                       <Button
                                         key={`page-${number}`}
-                                        variant={currentPage === number ? "default" : "outline"}
-                                        onClick={() => paginate(number as number)}
+                                        variant={
+                                          currentPage === number
+                                            ? "default"
+                                            : "outline"
+                                        }
+                                        onClick={() =>
+                                          paginate(number as number)
+                                        }
                                         className={`h-10 w-10 rounded-lg ${
                                           currentPage === number
                                             ? "bg-meddoc-primary text-white hover:bg-meddoc-primary/90"
@@ -954,7 +1013,7 @@ const Pharmacy: React.FC = () => {
                                         {number}
                                       </Button>
                                     )
-                                  ))}
+                                  )}
                                 </div>
 
                                 {/* Next Page Button */}
@@ -975,9 +1034,13 @@ const Pharmacy: React.FC = () => {
                         // Empty State for Duty Pharmacies
                         <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100 w-full empty-state animate-fade-in">
                           <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                          <h3 className="text-xl font-semibold text-gray-800 mb-2">Aucune pharmacie de garde trouvée</h3>
+                          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                            Aucune pharmacie de garde trouvée
+                          </h3>
                           <p className="text-gray-500 max-w-md mx-auto">
-                            Nous n'avons trouvé aucune pharmacie de garde correspondant à votre recherche. Veuillez essayer avec d'autres termes.
+                            Nous n'avons trouvé aucune pharmacie de garde
+                            correspondant à votre recherche. Veuillez essayer
+                            avec d'autres termes.
                           </p>
                         </div>
                       )}
@@ -994,10 +1057,13 @@ const Pharmacy: React.FC = () => {
       <section className="py-12 bg-gradient-to-br from-blue-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Informations importantes</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+              Informations importantes
+            </h2>
             <p className="text-gray-600 mb-8">
-              Les informations sur les pharmacies de garde sont mises à jour régulièrement.
-              Nous vous recommandons de contacter la pharmacie avant de vous y rendre pour confirmer ses horaires d'ouverture.
+              Les informations sur les pharmacies de garde sont mises à jour
+              régulièrement. Nous vous recommandons de contacter la pharmacie
+              avant de vous y rendre pour confirmer ses horaires d'ouverture.
             </p>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 inline-block duty-badge">
               <div className="flex items-center justify-center">
