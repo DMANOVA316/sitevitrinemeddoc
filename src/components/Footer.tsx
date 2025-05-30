@@ -90,11 +90,11 @@ const Footer = () => {
                     numeros.map((num, index) => (
                       <span key={num.id}>
                         {num.numero && num.numero.startsWith('0')
-                          ? `+261${num.numero.substring(1)}`
-                          : num.numero.startsWith('+261')
+                          ? `+(261)${num.numero.substring(1)}`
+                          : num.numero.startsWith('+(261)')
                             ? num.numero
-                            : `+261${num.numero}`}
-                        {index < numeros.length - 1 ? " / " : ""}
+                            : `+(261)${num.numero}`}
+                        {index < numeros.length - 1 ? " | " : ""}
                       </span>
                     ))
                   ) : (
