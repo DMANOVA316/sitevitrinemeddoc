@@ -43,19 +43,39 @@ jobs:
           echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env
           npm run build
 
-      - name: Create directory on VPS
+      - name: Prepare VPS directory
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p ~/meddoc-app"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          echo "Current user: $(whoami)"
+          echo "Home directory: $HOME"
+          echo "Current directory: $(pwd)"
+          mkdir -p $HOME/meddoc-app
+          ls -la $HOME/
+          echo "Directory created successfully"
+          EOF
 
       - name: Copy files to VPS
         run: |
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10" \
+          # Créer une archive tar et la transférer
+          tar -czf deploy.tar.gz \
             --exclude='.git' \
             --exclude='node_modules' \
             --exclude='.env.local' \
             --exclude='dist' \
-            ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/meddoc-app
+            .
+
+          # Transférer l'archive
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
+            deploy.tar.gz ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/
+
+          # Extraire sur le VPS
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          rm -rf ~/meddoc-app
+          mkdir -p ~/meddoc-app
+          tar -xzf ~/deploy.tar.gz -C ~/meddoc-app
+          rm ~/deploy.tar.gz
+          ls -la ~/meddoc-app
+          EOF
 
       - name: Build and deploy on VPS
         run: |
