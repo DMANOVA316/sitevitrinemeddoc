@@ -14,15 +14,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Prepare SSH key
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          # Créer la clé SSH avec un format correct
+          echo "${{ secrets.VPS_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa || echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           chmod 700 ~/.ssh
+          # Vérifier le format de la clé
+          ssh-keygen -l -f ~/.ssh/id_rsa
+          # Ajouter l'hôte aux known_hosts
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-          # Test SSH connection
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH connection successful'"
+          # Test de connexion
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH connection test successful'"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -39,18 +43,61 @@ jobs:
           echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env
           npm run build
 
+      - name: Prepare VPS directory
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          echo "Current user: $(whoami)"
+          echo "Home directory: $HOME"
+          echo "Current directory: $(pwd)"
+          mkdir -p $HOME/meddoc-app
+          ls -la $HOME/
+          echo "Directory created successfully"
+          EOF
+
       - name: Copy files to VPS
         run: |
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-            --exclude='.git' \
-            --exclude='node_modules' \
-            --exclude='.env.local' \
-            ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/meddoc-app
+          # Créer un répertoire temporaire avec seulement les fichiers nécessaires
+          mkdir -p temp_deploy
+
+          # Copier les fichiers essentiels
+          cp -r src temp_deploy/ 2>/dev/null || true
+          cp -r public temp_deploy/ 2>/dev/null || true
+          cp -r dist temp_deploy/ 2>/dev/null || true
+          cp package*.json temp_deploy/ 2>/dev/null || true
+          cp *.config.* temp_deploy/ 2>/dev/null || true
+          cp *.json temp_deploy/ 2>/dev/null || true
+          cp *.js temp_deploy/ 2>/dev/null || true
+          cp *.ts temp_deploy/ 2>/dev/null || true
+          cp Dockerfile temp_deploy/ 2>/dev/null || true
+          cp docker-compose.yml temp_deploy/ 2>/dev/null || true
+          cp nginx.conf temp_deploy/ 2>/dev/null || true
+          cp .env temp_deploy/ 2>/dev/null || true
+
+          # Créer l'archive depuis le répertoire temporaire
+          tar -czf deploy.tar.gz -C temp_deploy .
+
+          # Nettoyer
+          rm -rf temp_deploy
+
+          # Vérifier que l'archive a été créée
+          ls -la deploy.tar.gz
+
+          # Transférer l'archive
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
+            deploy.tar.gz ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/
+
+          # Extraire sur le VPS
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          rm -rf ~/meddoc-app
+          mkdir -p ~/meddoc-app
+          tar -xzf ~/deploy.tar.gz -C ~/meddoc-app
+          rm ~/deploy.tar.gz
+          ls -la ~/meddoc-app
+          EOF
 
       - name: Build and deploy on VPS
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           cd ~/meddoc-app
           docker compose down || true
           docker compose build
