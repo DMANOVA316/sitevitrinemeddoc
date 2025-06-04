@@ -56,13 +56,31 @@ jobs:
 
       - name: Copy files to VPS
         run: |
-          # Créer une archive tar et la transférer
-          tar -czf deploy.tar.gz \
-            --exclude='.git' \
-            --exclude='node_modules' \
-            --exclude='.env.local' \
-            --exclude='dist' \
-            .
+          # Créer un répertoire temporaire avec seulement les fichiers nécessaires
+          mkdir -p temp_deploy
+
+          # Copier les fichiers essentiels
+          cp -r src temp_deploy/ 2>/dev/null || true
+          cp -r public temp_deploy/ 2>/dev/null || true
+          cp -r dist temp_deploy/ 2>/dev/null || true
+          cp package*.json temp_deploy/ 2>/dev/null || true
+          cp *.config.* temp_deploy/ 2>/dev/null || true
+          cp *.json temp_deploy/ 2>/dev/null || true
+          cp *.js temp_deploy/ 2>/dev/null || true
+          cp *.ts temp_deploy/ 2>/dev/null || true
+          cp Dockerfile temp_deploy/ 2>/dev/null || true
+          cp docker-compose.yml temp_deploy/ 2>/dev/null || true
+          cp nginx.conf temp_deploy/ 2>/dev/null || true
+          cp .env temp_deploy/ 2>/dev/null || true
+
+          # Créer l'archive depuis le répertoire temporaire
+          tar -czf deploy.tar.gz -C temp_deploy .
+
+          # Nettoyer
+          rm -rf temp_deploy
+
+          # Vérifier que l'archive a été créée
+          ls -la deploy.tar.gz
 
           # Transférer l'archive
           scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
