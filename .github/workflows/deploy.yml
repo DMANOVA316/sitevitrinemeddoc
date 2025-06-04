@@ -11,19 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build React app
-        run: npm run build
 
       - name: Prepare SSH key
         run: |
@@ -32,14 +21,16 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy with SCP
+      - name: Copy files to VPS
         run: |
-          scp -i ~/.ssh/id_rsa -r ./build ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/meddoc-react
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/meddoc-app
 
-      - name: Restart Docker container (optional)
+      - name: Build and deploy on VPS
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-          docker stop meddoc-container || true
-          docker rm meddoc-container || true
-          docker run -d -p 3000:80 --name meddoc-container -v /var/www/meddoc-react/build:/usr/share/nginx/html nginx
+          cd ~/meddoc-app
+          docker compose down || true
+          docker compose build
+          docker compose up -d
           EOF
+
