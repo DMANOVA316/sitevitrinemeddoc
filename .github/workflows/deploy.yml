@@ -38,27 +38,32 @@ jobs:
         run: npm ci
 
       - name: Build React App
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
+          # Vérifier que les variables d'environnement sont définies
+          echo "Vérification des variables d'environnement:"
+          echo "VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:0:20}..." # Affiche seulement les premiers caractères
+          echo "VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:0:20}..." # Affiche seulement les premiers caractères
+
           # Créer le fichier .env avec les variables d'environnement
-          cat > .env << EOF
-          VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          EOF
+          echo "VITE_SUPABASE_URL=$VITE_SUPABASE_URL" > .env
+          echo "VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY" >> .env
 
-          # Vérifier le contenu du fichier .env
-          echo "Contenu du fichier .env:"
-          cat .env
+          # Vérifier le contenu du fichier .env (masqué pour la sécurité)
+          echo "Fichier .env créé avec $(wc -l < .env) lignes"
 
-          # Build de l'application
+          # Build de l'application avec les variables d'environnement
           npm run build
 
           # Vérifier que le build a été créé
           echo "Contenu du dossier dist après build:"
           ls -la dist/
 
-          # Vérifier que les variables d'environnement sont bien intégrées
-          echo "Recherche des variables Supabase dans le build:"
-          grep -r "VITE_SUPABASE" dist/ || echo "Variables Supabase non trouvées dans le build"
+          # Vérifier que les variables d'environnement sont bien intégrées dans les fichiers JS
+          echo "Recherche des URLs Supabase dans le build:"
+          find dist/ -name "*.js" -exec grep -l "supabase" {} \; | head -3
 
       - name: Prepare VPS directory
         run: |
