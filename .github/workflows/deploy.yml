@@ -69,10 +69,11 @@ jobs:
           mkdir -p temp_deploy
 
           # Copier TOUT le contenu du dépôt (sauf ce qu'on veut exclure)
-          cp -r . temp_deploy/
+          find . -maxdepth 1 -not -name '.' -not -name 'temp_deploy' -not -name '.git' -not -name 'node_modules' -not -name 'dist' -exec cp -r {} temp_deploy/ \;
 
-          # Supprimer ce qu'on ne veut pas transférer
-          rm -rf temp_deploy/.git temp_deploy/node_modules temp_deploy/dist
+          # Vérifier ce qui a été copié
+          echo "Contenu copié dans temp_deploy:"
+          ls -la temp_deploy/
 
           # Vérifier que index.html est bien présent
           echo "Vérification du fichier index.html:"
