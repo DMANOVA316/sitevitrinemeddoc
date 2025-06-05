@@ -65,44 +65,37 @@ jobs:
 
       - name: Copy files to VPS
         run: |
-          # Créer un répertoire temporaire avec seulement les fichiers nécessaires
+          # Créer un répertoire temporaire
           mkdir -p temp_deploy
 
-          # Copier les fichiers essentiels
-          cp -r src temp_deploy/ 2>/dev/null || true
-          cp -r public temp_deploy/ 2>/dev/null || true
-          cp -r dist temp_deploy/ 2>/dev/null || true
-          cp package*.json temp_deploy/ 2>/dev/null || true
-          cp *.config.* temp_deploy/ 2>/dev/null || true
-          cp *.json temp_deploy/ 2>/dev/null || true
-          cp *.js temp_deploy/ 2>/dev/null || true
-          cp *.ts temp_deploy/ 2>/dev/null || true
-          cp Dockerfile temp_deploy/ 2>/dev/null || true
-          cp docker-compose.yml temp_deploy/ 2>/dev/null || true
-          cp nginx.conf temp_deploy/ 2>/dev/null || true
-          cp .env temp_deploy/ 2>/dev/null || true
+          # Copier TOUT le contenu du dépôt (sauf ce qu'on veut exclure)
+          cp -r . temp_deploy/
 
-          # Créer l'archive depuis le répertoire temporaire
+          # Supprimer ce qu'on ne veut pas transférer
+          rm -rf temp_deploy/.git temp_deploy/node_modules temp_deploy/dist
+
+          # Vérifier que index.html est bien présent
+          echo "Vérification du fichier index.html:"
+          ls -la temp_deploy/public/index.html || echo "ERREUR: index.html non trouvé"
+
+          # Créer l'archive
           tar -czf deploy.tar.gz -C temp_deploy .
 
-          # Nettoyer
-          rm -rf temp_deploy
-
-          # Vérifier que l'archive a été créée
-          ls -la deploy.tar.gz
-
           # Transférer l'archive
-          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
-            deploy.tar.gz ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/
+          scp -i ~/.ssh/id_rsa deploy.tar.gz ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/
 
           # Extraire sur le VPS
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           rm -rf ~/meddoc-app
           mkdir -p ~/meddoc-app
           tar -xzf ~/deploy.tar.gz -C ~/meddoc-app
           rm ~/deploy.tar.gz
-          ls -la ~/meddoc-app
+          echo "Contenu du dossier après extraction:"
+          ls -la ~/meddoc-app/public
           EOF
+
+          # Nettoyer localement
+          rm -rf temp_deploy deploy.tar.gz
 
       - name: Build and deploy on VPS
         run: |
