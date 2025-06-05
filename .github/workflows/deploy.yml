@@ -39,8 +39,17 @@ jobs:
 
       - name: Build React App
         run: |
-          echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" >> .env
-          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env
+          # Créer le fichier .env avec les variables d'environnement
+          cat > .env << EOF
+          VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          EOF
+
+          # Vérifier le contenu du fichier .env
+          echo "Contenu du fichier .env:"
+          cat .env
+
+          # Build de l'application
           npm run build
 
       - name: Prepare VPS directory
