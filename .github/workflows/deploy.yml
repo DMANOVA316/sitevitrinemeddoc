@@ -52,6 +52,14 @@ jobs:
           # Build de l'application
           npm run build
 
+          # Vérifier que le build a été créé
+          echo "Contenu du dossier dist après build:"
+          ls -la dist/
+
+          # Vérifier que les variables d'environnement sont bien intégrées
+          echo "Recherche des variables Supabase dans le build:"
+          grep -r "VITE_SUPABASE" dist/ || echo "Variables Supabase non trouvées dans le build"
+
       - name: Prepare VPS directory
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
@@ -69,11 +77,15 @@ jobs:
           mkdir -p temp_deploy
 
           # Copier TOUT le contenu du dépôt (sauf ce qu'on veut exclure)
-          find . -maxdepth 1 -not -name '.' -not -name 'temp_deploy' -not -name '.git' -not -name 'node_modules' -not -name 'dist' -exec cp -r {} temp_deploy/ \;
+          find . -maxdepth 1 -not -name '.' -not -name 'temp_deploy' -not -name '.git' -not -name 'node_modules' -exec cp -r {} temp_deploy/ \;
 
           # Vérifier ce qui a été copié
           echo "Contenu copié dans temp_deploy:"
           ls -la temp_deploy/
+
+          # Vérifier que le dossier dist est présent avec le build
+          echo "Contenu du dossier dist:"
+          ls -la temp_deploy/dist/ || echo "ATTENTION: dossier dist non trouvé"
 
           # Vérifier que index.html est bien présent
           echo "Vérification du fichier index.html:"
