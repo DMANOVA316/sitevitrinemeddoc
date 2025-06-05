@@ -42,28 +42,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          # Vérifier que les variables d'environnement sont définies
-          echo "Vérification des variables d'environnement:"
-          echo "VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:0:20}..." # Affiche seulement les premiers caractères
-          echo "VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:0:20}..." # Affiche seulement les premiers caractères
-
-          # Créer le fichier .env avec les variables d'environnement
-          echo "VITE_SUPABASE_URL=$VITE_SUPABASE_URL" > .env
-          echo "VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY" >> .env
-
-          # Vérifier le contenu du fichier .env (masqué pour la sécurité)
-          echo "Fichier .env créé avec $(wc -l < .env) lignes"
-
-          # Build de l'application avec les variables d'environnement
-          npm run build
-
-          # Vérifier que le build a été créé
-          echo "Contenu du dossier dist après build:"
-          ls -la dist/
-
-          # Vérifier que les variables d'environnement sont bien intégrées dans les fichiers JS
-          echo "Recherche des URLs Supabase dans le build:"
-          find dist/ -name "*.js" -exec grep -l "supabase" {} \; | head -3
+          # Utiliser le script de build personnalisé
+          node build-with-env.js
 
       - name: Prepare VPS directory
         run: |
@@ -117,11 +97,29 @@ jobs:
 
       - name: Build and deploy on VPS
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << EOF
           cd ~/meddoc-app
+
+          # Créer le fichier .env pour Docker Compose
+          cat > .env << 'ENVEOF'
+          VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          ENVEOF
+
+          echo "Variables d'environnement pour Docker:"
+          cat .env
+
+          # Arrêter les conteneurs existants
           docker compose down || true
-          docker compose build
+
+          # Supprimer les images pour forcer le rebuild
+          docker compose build --no-cache
+
+          # Démarrer les nouveaux conteneurs
           docker compose up -d
+
+          # Vérifier le statut
           docker compose ps
+          docker compose logs frontend --tail=20
           EOF
 
