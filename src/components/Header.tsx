@@ -117,7 +117,7 @@ const Header = () => {
                       </p>
                     </Link>
                     <Link
-                      to="/services/community"
+                      to="/services/community-management-medical"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -256,7 +256,7 @@ const Header = () => {
                           Solutions digitales santé
                         </Link>
                         <Link
-                          to="/services/community"
+                          to="/services/community-management-medical"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >

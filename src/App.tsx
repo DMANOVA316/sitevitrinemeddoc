@@ -10,7 +10,7 @@ import PrivateRoute from "@/components/PrivateRoute";
 import DashboardIndex from "./pages/Dashboard/Index";
 import DashboardPharmacies from "./pages/Dashboard/Pharmacy/PharmacyList";
 import Pharmacy from "./pages/Pharmacy";
-import Community from "./pages/services/Community";
+import Community from "./pages/services/community-management-medical";
 import Consulting from "./pages/services/Consulting";
 import Digital from "./pages/services/Digital";
 import DigitalLibrary from "./pages/DigitalLibrary";
@@ -134,7 +134,7 @@ const AppContent = () => {
         />
         {/* Routes des services */}
         <Route
-          path="/services/community"
+          path="/services/community-management-medical"
           element={
             <PublicLayout>
               <Community />

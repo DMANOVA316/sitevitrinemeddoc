@@ -55,7 +55,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/community"
+                  to="/services/community-management-medical"
                   className="text-gray-400 hover:text-white"
                 >
                   Community management médical
