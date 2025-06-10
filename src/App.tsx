@@ -12,7 +12,7 @@ import DashboardPharmacies from "./pages/Dashboard/Pharmacy/PharmacyList";
 import Pharmacy from "./pages/Pharmacy";
 import Community from "./pages/services/CommunityManagementMedical";
 import Consulting from "./pages/services/ConsultingSanteStrategie";
-import Digital from "./pages/services/Digital";
+import Digital from "./pages/services/SolutionsDigitalesSante";
 import DigitalLibrary from "./pages/DigitalLibrary";
 import LibraryDashboard from "./pages/Dashboard/Library/LibraryDashboard";
 import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
@@ -150,7 +150,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/services/digital"
+          path="/services/solutions-digitales-sante"
           element={
             <PublicLayout>
               <Digital />

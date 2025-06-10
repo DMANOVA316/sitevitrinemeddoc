@@ -106,7 +106,7 @@ const Header = () => {
                 <NavigationMenuContent>
                   <div className="grid gap-2 p-4 md:p-6 w-[300px] md:w-[400px] bg-white shadow-lg rounded-md">
                     <Link
-                      to="/services/digital"
+                      to="/services/solutions-digitales-sante"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -249,7 +249,7 @@ const Header = () => {
                     {servicesOpen && (
                       <div className="pl-4 mt-1 space-y-1 border-l-2 border-blue-100 ml-3">
                         <Link
-                          to="/services/digital"
+                          to="/services/solutions-digitales-sante"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >

@@ -47,7 +47,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/services/digital"
+                  to="/services/solutions-digitales-sante"
                   className="text-gray-400 hover:text-white"
                 >
                   Solutions digitales santé

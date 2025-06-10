@@ -252,7 +252,7 @@ const Index = () => {
 
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             {/* Service 1 */}
-            <Link to="/services/digital" className="group">
+            <Link to="/services/solutions-digitales-sante" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
