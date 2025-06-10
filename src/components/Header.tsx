@@ -164,7 +164,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/bibliotheque"
+                  to="/bibliotheque-numerique-sante"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Bibliothèque
@@ -289,7 +289,7 @@ const Header = () => {
                   </Link>
 
                   <Link
-                    to="/bibliotheque"
+                    to="/bibliotheque-numerique-sante"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >

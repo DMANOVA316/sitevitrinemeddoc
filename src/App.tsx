@@ -125,7 +125,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/bibliotheque"
+          path="/bibliotheque-numerique-sante"
           element={
             <PublicLayout>
               <DigitalLibrary />
@@ -205,7 +205,7 @@ const AppContent = () => {
               element={<AmbulanceList />}
             />
             <Route
-              path="/dashboard/bibliotheque"
+              path="/dashboard/bibliotheque-numerique-sante"
               element={<LibraryDashboard />}
             />
           </Route>

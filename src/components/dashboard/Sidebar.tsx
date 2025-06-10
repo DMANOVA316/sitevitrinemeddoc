@@ -126,7 +126,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         {
           title: "Bibliothèque",
           icon: Library,
-          href: "/dashboard/bibliotheque",
+          href: "/dashboard/bibliotheque-numerique-sante",
         },
       ],
     },
