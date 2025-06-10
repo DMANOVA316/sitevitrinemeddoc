@@ -117,7 +117,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/apropos"
+          path="/qui-sommes-nous"
           element={
             <PublicLayout>
               <About />
