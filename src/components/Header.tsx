@@ -128,7 +128,7 @@ const Header = () => {
                       </p>
                     </Link>
                     <Link
-                      to="/services/formations"
+                      to="/services/formations-sante"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -263,7 +263,7 @@ const Header = () => {
                           Community management médical
                         </Link>
                         <Link
-                          to="/services/formations"
+                          to="/services/formations-sante"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >

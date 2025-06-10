@@ -63,7 +63,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/formations"
+                  to="/services/formations-sante"
                   className="text-gray-400 hover:text-white"
                 >
                   Formations santé
