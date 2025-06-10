@@ -182,7 +182,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/contact"
+                  to="/contacts"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Contacts
@@ -305,7 +305,7 @@ const Header = () => {
                   </Link>
 
                   <Link
-                    to="/contact"
+                    to="/contacts"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -316,7 +316,7 @@ const Header = () => {
 
               <div className="p-4 border-t">
                 <Link
-                  to="/contact"
+                  to="/contacts"
                   className="flex items-center justify-center w-full p-3 text-base font-medium text-white bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:opacity-90 rounded-lg transition"
                   onClick={() => setMenuOpen(false)}
                 >

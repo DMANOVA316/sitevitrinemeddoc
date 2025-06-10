@@ -109,7 +109,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/contact"
+          path="/contacts"
           element={
             <PublicLayout>
               <ContactUs />

@@ -219,7 +219,7 @@ const Index = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link to="/contact" className="block w-full">
+                <Link to="/contacts" className="block w-full">
                   <Button
                     size="lg"
                     variant="outline"
@@ -601,7 +601,7 @@ const Index = () => {
                 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact">
+              <Link to="/contacts">
                 <Button
                   size="lg"
                   className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold"
