@@ -11,7 +11,7 @@ import DashboardIndex from "./pages/Dashboard/Index";
 import DashboardPharmacies from "./pages/Dashboard/Pharmacy/PharmacyList";
 import Pharmacy from "./pages/Pharmacy";
 import Community from "./pages/services/CommunityManagementMedical";
-import Consulting from "./pages/services/Consulting";
+import Consulting from "./pages/services/ConsultingSanteStrategie";
 import Digital from "./pages/services/Digital";
 import DigitalLibrary from "./pages/DigitalLibrary";
 import LibraryDashboard from "./pages/Dashboard/Library/LibraryDashboard";
@@ -29,7 +29,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
 import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
-import Formations from "./pages/services/FormationSante";
+import Formations from "./pages/services/FormationsSante";
 import AppMeddoc from "./pages/AppMeddoc";
 
 const queryClient = new QueryClient();
@@ -142,7 +142,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/services/consulting"
+          path="/services/consulting-sante-strategie"
           element={
             <PublicLayout>
               <Consulting />

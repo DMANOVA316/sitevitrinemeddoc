@@ -71,7 +71,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/consulting"
+                  to="/services/consulting-sante-strategie"
                   className="text-gray-400 hover:text-white"
                 >
                   Consulting santé et stratégie

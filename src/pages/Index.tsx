@@ -324,7 +324,7 @@ const Index = () => {
             </Link>
 
             {/* Service 4 */}
-            <Link to="/services/consulting" className="group">
+            <Link to="/services/consulting-sante-strategie" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
