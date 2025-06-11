@@ -42,8 +42,45 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
-          # Utiliser le script de build personnalisé
-          node build-with-env.js
+          # Vérifier que les variables d'environnement sont définies
+          echo "=== Vérification des variables d'environnement ==="
+          echo "VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:0:30}..."
+          echo "VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY:0:30}..."
+
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+            echo "❌ Variables d'environnement manquantes !"
+            echo "VITE_SUPABASE_URL définie: $([ -n "$VITE_SUPABASE_URL" ] && echo "OUI" || echo "NON")"
+            echo "VITE_SUPABASE_ANON_KEY définie: $([ -n "$VITE_SUPABASE_ANON_KEY" ] && echo "OUI" || echo "NON")"
+            exit 1
+          fi
+
+          # Créer le fichier .env
+          echo "=== Création du fichier .env ==="
+          echo "VITE_SUPABASE_URL=$VITE_SUPABASE_URL" > .env
+          echo "VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY" >> .env
+
+          echo "✅ Fichier .env créé avec $(wc -l < .env) lignes"
+
+          # Vérifier le contenu (masqué pour la sécurité)
+          echo "Première ligne du .env: $(head -1 .env | cut -c1-30)..."
+
+          # Build de l'application avec les variables explicites
+          echo "=== Lancement du build ==="
+          VITE_SUPABASE_URL="$VITE_SUPABASE_URL" VITE_SUPABASE_ANON_KEY="$VITE_SUPABASE_ANON_KEY" npm run build
+
+          # Vérifier le build
+          echo "=== Vérification du build ==="
+          ls -la dist/
+          echo "Fichiers JS générés:"
+          find dist/ -name "*.js" | head -5
+
+          # Chercher les variables Supabase dans le build
+          echo "=== Recherche des variables Supabase ==="
+          if find dist/ -name "*.js" -exec grep -l "supabase\.co" {} \; | head -1; then
+            echo "✅ URL Supabase trouvée dans le build"
+          else
+            echo "⚠️ URL Supabase non trouvée dans le build"
+          fi
 
       - name: Prepare VPS directory
         run: |

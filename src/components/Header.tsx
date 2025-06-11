@@ -106,7 +106,7 @@ const Header = () => {
                 <NavigationMenuContent>
                   <div className="grid gap-2 p-4 md:p-6 w-[300px] md:w-[400px] bg-white shadow-lg rounded-md">
                     <Link
-                      to="/services/digital"
+                      to="/services/solutions-digitales-sante"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -117,7 +117,7 @@ const Header = () => {
                       </p>
                     </Link>
                     <Link
-                      to="/services/community"
+                      to="/services/community-management-medical"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -128,7 +128,7 @@ const Header = () => {
                       </p>
                     </Link>
                     <Link
-                      to="/services/formations"
+                      to="/services/formations-sante"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -139,7 +139,7 @@ const Header = () => {
                       </p>
                     </Link>
                     <Link
-                      to="/services/consulting"
+                      to="/services/consulting-sante-strategie"
                       className="block p-3 hover:bg-blue-50 rounded-lg transition"
                     >
                       <div className="text-base lg:text-lg font-semibold text-gray-800">
@@ -164,7 +164,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/bibliotheque"
+                  to="/bibliotheque-numerique-sante"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Bibliothèque
@@ -173,7 +173,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/apropos"
+                  to="/qui-sommes-nous"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Qui sommes-nous ?
@@ -182,7 +182,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/contact"
+                  to="/contacts"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Contacts
@@ -249,28 +249,28 @@ const Header = () => {
                     {servicesOpen && (
                       <div className="pl-4 mt-1 space-y-1 border-l-2 border-blue-100 ml-3">
                         <Link
-                          to="/services/digital"
+                          to="/services/solutions-digitales-sante"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >
                           Solutions digitales santé
                         </Link>
                         <Link
-                          to="/services/community"
+                          to="/services/community-management-medical"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >
                           Community management médical
                         </Link>
                         <Link
-                          to="/services/formations"
+                          to="/services/formations-sante"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >
                           Formations santé
                         </Link>
                         <Link
-                          to="/services/consulting"
+                          to="/services/consulting-sante-strategie"
                           className="flex items-center w-full p-3 text-sm font-medium text-gray-700 hover:bg-blue-50 rounded-lg transition"
                           onClick={() => setMenuOpen(false)}
                         >
@@ -289,7 +289,7 @@ const Header = () => {
                   </Link>
 
                   <Link
-                    to="/bibliotheque"
+                    to="/bibliotheque-numerique-sante"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -297,15 +297,15 @@ const Header = () => {
                   </Link>
 
                   <Link
-                    to="/apropos"
+                    to="/qui-sommes-nous"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >
-                    A propos
+                    Qui sommes-nous 
                   </Link>
 
                   <Link
-                    to="/contact"
+                    to="/contacts"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -316,7 +316,7 @@ const Header = () => {
 
               <div className="p-4 border-t">
                 <Link
-                  to="/contact"
+                  to="/contacts"
                   className="flex items-center justify-center w-full p-3 text-base font-medium text-white bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:opacity-90 rounded-lg transition"
                   onClick={() => setMenuOpen(false)}
                 >

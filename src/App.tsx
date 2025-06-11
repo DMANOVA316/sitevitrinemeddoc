@@ -10,9 +10,9 @@ import PrivateRoute from "@/components/PrivateRoute";
 import DashboardIndex from "./pages/Dashboard/Index";
 import DashboardPharmacies from "./pages/Dashboard/Pharmacy/PharmacyList";
 import Pharmacy from "./pages/Pharmacy";
-import Community from "./pages/services/Community";
-import Consulting from "./pages/services/Consulting";
-import Digital from "./pages/services/Digital";
+import Community from "./pages/services/CommunityManagementMedical";
+import Consulting from "./pages/services/ConsultingSanteStrategie";
+import Digital from "./pages/services/SolutionsDigitalesSante";
 import DigitalLibrary from "./pages/DigitalLibrary";
 import LibraryDashboard from "./pages/Dashboard/Library/LibraryDashboard";
 import EditPageIndex from "./pages/Dashboard/EditPages/EditPageIndex";
@@ -29,8 +29,9 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import ContactUs from "./pages/ContactUs";
 import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
-import Formations from "./pages/services/Formations";
+import Formations from "./pages/services/FormationsSante";
 import AppMeddoc from "./pages/AppMeddoc";
+import RouteTracker from './components/RouteTracker';
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,10 @@ const ScrollToAnchor = () => {
 const AppContent = () => {
   return (
     <>
+      {/* google analytics */}
+      <RouteTracker /> 
+      {/* fin google analytics */}
+
       <ScrollToAnchor />
       <Routes>
         {/* Routes publiques */}
@@ -109,7 +114,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/contact"
+          path="/contacts"
           element={
             <PublicLayout>
               <ContactUs />
@@ -117,7 +122,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/apropos"
+          path="/qui-sommes-nous"
           element={
             <PublicLayout>
               <About />
@@ -125,7 +130,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/bibliotheque"
+          path="/bibliotheque-numerique-sante"
           element={
             <PublicLayout>
               <DigitalLibrary />
@@ -134,7 +139,7 @@ const AppContent = () => {
         />
         {/* Routes des services */}
         <Route
-          path="/services/community"
+          path="/services/community-management-medical"
           element={
             <PublicLayout>
               <Community />
@@ -142,7 +147,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/services/consulting"
+          path="/services/consulting-sante-strategie"
           element={
             <PublicLayout>
               <Consulting />
@@ -150,7 +155,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/services/digital"
+          path="/services/solutions-digitales-sante"
           element={
             <PublicLayout>
               <Digital />
@@ -158,7 +163,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/services/formations"
+          path="/services/formations-sante"
           element={
             <PublicLayout>
               <Formations />
@@ -205,7 +210,7 @@ const AppContent = () => {
               element={<AmbulanceList />}
             />
             <Route
-              path="/dashboard/bibliotheque"
+              path="/dashboard/bibliotheque-numerique-sante"
               element={<LibraryDashboard />}
             />
           </Route>

@@ -53,7 +53,7 @@ const About: React.FC = () => {
                   <ArrowRight className="ml-2 h-5 w-5 animate-bounce-right" />
                 </Button>
               </Link>
-              <Link to="/contact" className="block w-full sm:w-auto">
+              <Link to="/contacts" className="block w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
@@ -389,7 +389,7 @@ const About: React.FC = () => {
                     <ArrowRight className="ml-2 h-5 w-5 animate-bounce-right" />
                   </Button>
                 </Link>
-                <Link to="/contact">
+                <Link to="/contacts">
                   <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-3 text-lg font-semibold">
                     Nous contacter
                   </Button>

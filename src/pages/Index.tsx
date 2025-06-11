@@ -219,7 +219,7 @@ const Index = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link to="/contact" className="block w-full">
+                <Link to="/contacts" className="block w-full">
                   <Button
                     size="lg"
                     variant="outline"
@@ -252,7 +252,7 @@ const Index = () => {
 
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             {/* Service 1 */}
-            <Link to="/services/digital" className="group">
+            <Link to="/services/solutions-digitales-sante" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
@@ -276,7 +276,7 @@ const Index = () => {
             </Link>
 
             {/* Service 2 */}
-            <Link to="/services/community" className="group">
+            <Link to="/services/community-management-medical" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
@@ -300,7 +300,7 @@ const Index = () => {
             </Link>
 
             {/* Service 3 */}
-            <Link to="/services/formations" className="group">
+            <Link to="/services/formations-sante" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
@@ -324,7 +324,7 @@ const Index = () => {
             </Link>
 
             {/* Service 4 */}
-            <Link to="/services/consulting" className="group">
+            <Link to="/services/consulting-sante-strategie" className="group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full transform hover:-translate-y-2">
                 <div className="h-2 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary"></div>
                 <div className="p-8">
@@ -601,7 +601,7 @@ const Index = () => {
                 Contactez-nous ou suivez-nous sur les réseaux pour ne rien manquer
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact">
+              <Link to="/contacts">
                 <Button
                   size="lg"
                   className="bg-white text-meddoc-primary hover:bg-white/90 px-8 py-6 text-lg font-semibold"

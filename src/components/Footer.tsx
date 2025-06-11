@@ -47,7 +47,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/services/digital"
+                  to="/services/solutions-digitales-sante"
                   className="text-gray-400 hover:text-white"
                 >
                   Solutions digitales santé
@@ -55,7 +55,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/community"
+                  to="/services/community-management-medical"
                   className="text-gray-400 hover:text-white"
                 >
                   Community management médical
@@ -63,7 +63,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/formations"
+                  to="/services/formations-sante"
                   className="text-gray-400 hover:text-white"
                 >
                   Formations santé
@@ -71,7 +71,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/services/consulting"
+                  to="/services/consulting-sante-strategie"
                   className="text-gray-400 hover:text-white"
                 >
                   Consulting santé et stratégie

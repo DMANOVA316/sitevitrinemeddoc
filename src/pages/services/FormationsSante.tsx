@@ -204,7 +204,7 @@ const Formations = () => {
                   Demander un catalogue
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Link to="/contact">
+                <Link to="/contacts">
                       <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 text-lg">
                       <MessageCircle className="mr-2 h-5 w-5" />
                       Nous contacter
