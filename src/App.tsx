@@ -31,6 +31,7 @@ import ContactUs from "./pages/ContactUs";
 import ContactsUs from "./components/dashboard/contactUs/ContactsUs";
 import Formations from "./pages/services/FormationsSante";
 import AppMeddoc from "./pages/AppMeddoc";
+import RouteTracker from './components/RouteTracker';
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,10 @@ const ScrollToAnchor = () => {
 const AppContent = () => {
   return (
     <>
+      {/* google analytics */}
+      <RouteTracker /> 
+      {/* fin google analytics */}
+
       <ScrollToAnchor />
       <Routes>
         {/* Routes publiques */}
