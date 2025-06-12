@@ -129,7 +129,7 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
 
             <div>
               <Label className="text-sm font-medium text-gray-700">
-                Province *
+                Ville *
               </Label>
               <Input
                 value={formData.province || ""}
@@ -138,7 +138,7 @@ const PharmacyForm: React.FC<PharmacyFormProps> = ({
                 }
                 className="w-full"
                 required
-                placeholder="Entrez la province"
+                placeholder="Entrez la ville"
                 disabled={isLoading}
               />
               {errors.province && (
