@@ -21,7 +21,10 @@ const Header = () => {
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
         setMenuOpen(false);
       }
     };
@@ -155,7 +158,7 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
-                  to="/pharmacies"
+                  to="/pharmacies-et-pharmacies-de-garde"
                   className="text-base lg:text-lg font-semibold text-meddoc-fonce hover:text-meddoc-primary px-2 lg:px-4 py-2 rounded-md hover:bg-gray-50 transition"
                 >
                   Pharmacies
@@ -210,7 +213,10 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" onClick={() => setMenuOpen(false)}>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setMenuOpen(false)}
+        >
           <div
             className="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out"
             onClick={(e) => e.stopPropagation()}
@@ -243,7 +249,9 @@ const Header = () => {
                       onClick={() => setServicesOpen(!servicesOpen)}
                     >
                       <span>Nos Services</span>
-                      <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+                      />
                     </div>
 
                     {servicesOpen && (
@@ -281,7 +289,7 @@ const Header = () => {
                   </div>
 
                   <Link
-                    to="/pharmacies"
+                    to="/pharmacies-et-pharmacies-de-garde"
                     className="flex items-center w-full p-3 text-base font-medium text-gray-800 hover:bg-blue-50 rounded-lg transition"
                     onClick={() => setMenuOpen(false)}
                   >

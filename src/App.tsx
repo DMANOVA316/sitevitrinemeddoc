@@ -43,20 +43,21 @@ const ScrollToAnchor = () => {
     if (hash) {
       // Attendre que le DOM soit complètement chargé
       setTimeout(() => {
-        const id = hash.replace('#', '');
+        const id = hash.replace("#", "");
         const element = document.getElementById(id);
         if (element) {
           const offset = 80; // Offset pour tenir compte du header fixe
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          const elementPosition =
+            element.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
             top: elementPosition - offset,
-            behavior: 'smooth'
+            behavior: "smooth",
           });
 
           // Ajouter un effet de surbrillance
-          element.classList.add('highlight-section');
+          element.classList.add("highlight-section");
           setTimeout(() => {
-            element.classList.remove('highlight-section');
+            element.classList.remove("highlight-section");
           }, 1500);
         }
       }, 100);
@@ -101,7 +102,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/pharmacies"
+          path="/pharmacies-et-pharmacies-de-garde"
           element={
             <PublicLayout>
               <Pharmacy />
@@ -174,14 +175,8 @@ const AppContent = () => {
               element={<DashboardPharmacies />}
             />
             {/* Edition de page */}
-            <Route
-              path="/dashboard/page-meddoc/"
-              element={<EditPageIndex />}
-            />
-            <Route
-              path="/dashboard/partenaires"
-              element={<PartnerIndex />}
-            >
+            <Route path="/dashboard/page-meddoc/" element={<EditPageIndex />} />
+            <Route path="/dashboard/partenaires" element={<PartnerIndex />}>
               <Route
                 path="/dashboard/partenaires/list"
                 element={<PartnerList />}
@@ -192,18 +187,9 @@ const AppContent = () => {
               element={<SocialMediaIndex />}
             />
             <Route path="/dashboard/services" element={<Services />} />
-            <Route
-              path="/dashboard/contact-meddoc"
-              element={<ContactsUs />}
-            />
-            <Route
-              path="/dashboard/contacts"
-              element={<NumberList />}
-            />
-            <Route
-              path="/dashboard/ambulances"
-              element={<AmbulanceList />}
-            />
+            <Route path="/dashboard/contact-meddoc" element={<ContactsUs />} />
+            <Route path="/dashboard/contacts" element={<NumberList />} />
+            <Route path="/dashboard/ambulances" element={<AmbulanceList />} />
             <Route
               path="/dashboard/bibliotheque"
               element={<LibraryDashboard />}
