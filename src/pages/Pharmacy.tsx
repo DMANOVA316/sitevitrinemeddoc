@@ -45,7 +45,7 @@ const Pharmacy: React.FC = () => {
   // Réinitialiser la page courante lors d'une recherche ou changement de filtre
   useEffect(() => {
     console.log(
-      "Search term, active tab or filters changed - resetting to page 1"
+      "Search term, active tab or filters changed - resetting to page 1",
     );
     setCurrentPage(1);
   }, [searchTerm, activeTab, filters]);
@@ -66,7 +66,7 @@ const Pharmacy: React.FC = () => {
       }).length;
 
       console.log(
-        `Filtered pharmacies count: ${filteredCount} out of ${pharmacies.length}`
+        `Filtered pharmacies count: ${filteredCount} out of ${pharmacies.length}`,
       );
     };
 
@@ -83,7 +83,7 @@ const Pharmacy: React.FC = () => {
   // Mettre à jour les filtres
   const handleFilterChange = (
     filterName: keyof typeof filters,
-    value: string
+    value: string,
   ) => {
     console.log(`Changing filter ${filterName} to "${value}"`);
     setFilters((prev) => {
@@ -163,7 +163,7 @@ const Pharmacy: React.FC = () => {
     (pharmacy) =>
       pharmacy.garde &&
       new Date(pharmacy.garde.date_debut) <= new Date(now) &&
-      new Date(pharmacy.garde.date_fin) >= new Date(now)
+      new Date(pharmacy.garde.date_fin) >= new Date(now),
   );
 
   // Déterminer le tableau de pharmacies à utiliser en fonction de l'onglet actif
@@ -180,7 +180,7 @@ const Pharmacy: React.FC = () => {
   // Obtenir les pharmacies pour la page courante
   const currentItems = currentPharmacies.slice(
     indexOfFirstItem,
-    indexOfLastItem
+    indexOfLastItem,
   );
 
   // Fonction pour changer de page
@@ -330,10 +330,10 @@ const Pharmacy: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
                     <div className="text-center sm:text-left">
                       <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                        Filtrer par province
+                        Filtrer par ville
                       </h3>
                       <p className="text-sm text-gray-500">
-                        Sélectionnez une province pour affiner votre recherche
+                        Sélectionnez une ville pour affiner votre recherche
                       </p>
                     </div>
                     <button
@@ -381,7 +381,7 @@ const Pharmacy: React.FC = () => {
                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                           />
                         </svg>
-                        Choisir une province
+                        Choisir une ville
                       </label>
                       <select
                         value={filters.province}
@@ -393,7 +393,7 @@ const Pharmacy: React.FC = () => {
                         className="w-full rounded-lg border border-gray-200 shadow-sm focus:border-meddoc-primary focus:ring-2 focus:ring-meddoc-primary/20 text-base py-3 px-4 text-meddoc-fonce bg-white transition-all duration-200 hover:border-gray-300"
                       >
                         <option value="" className="text-meddoc-fonce">
-                          🌍 Toutes les provinces
+                          🌍 Toutes les villes
                         </option>
                         {filterOptions.provinces.map((province) => (
                           <option
@@ -509,7 +509,7 @@ const Pharmacy: React.FC = () => {
                               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                           </svg>
-                          Province: {filters.province}
+                          Ville: {filters.province}
                           <button
                             onClick={() => handleFilterChange("province", "")}
                             className="ml-3 text-meddoc-primary/70 hover:text-meddoc-primary transition-colors"
@@ -599,7 +599,7 @@ const Pharmacy: React.FC = () => {
                                   {indexOfFirstItem + 1}-
                                   {Math.min(
                                     indexOfLastItem,
-                                    filteredPharmacies.length
+                                    filteredPharmacies.length,
                                   )}
                                 </span>{" "}
                                 sur{" "}
@@ -651,7 +651,7 @@ const Pharmacy: React.FC = () => {
                                   </span>
                                   {filters.province && (
                                     <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Province: {filters.province}
+                                      Ville: {filters.province}
                                       <button
                                         onClick={() =>
                                           handleFilterChange("province", "")
@@ -766,7 +766,7 @@ const Pharmacy: React.FC = () => {
                                       >
                                         {number}
                                       </Button>
-                                    )
+                                    ),
                                   )}
                                 </div>
 
@@ -821,16 +821,16 @@ const Pharmacy: React.FC = () => {
                                   Du{" "}
                                   {format(
                                     new Date(
-                                      dutyPharmacies[0].garde.date_debut
+                                      dutyPharmacies[0].garde.date_debut,
                                     ),
                                     "d MMMM yyyy",
-                                    { locale: fr }
+                                    { locale: fr },
                                   )}{" "}
                                   au{" "}
                                   {format(
                                     new Date(dutyPharmacies[0].garde.date_fin),
                                     "d MMMM yyyy",
-                                    { locale: fr }
+                                    { locale: fr },
                                   )}
                                 </p>
                               </div>
@@ -845,7 +845,7 @@ const Pharmacy: React.FC = () => {
                                   {indexOfFirstItem + 1}-
                                   {Math.min(
                                     indexOfLastItem,
-                                    dutyPharmacies.length
+                                    dutyPharmacies.length,
                                   )}
                                 </span>{" "}
                                 sur{" "}
@@ -897,7 +897,7 @@ const Pharmacy: React.FC = () => {
                                   </span>
                                   {filters.province && (
                                     <div className="bg-blue-50 text-meddoc-primary px-3 py-1 rounded-full text-sm flex items-center">
-                                      Province: {filters.province}
+                                      Ville: {filters.province}
                                       <button
                                         onClick={() =>
                                           handleFilterChange("province", "")
@@ -1012,7 +1012,7 @@ const Pharmacy: React.FC = () => {
                                       >
                                         {number}
                                       </Button>
-                                    )
+                                    ),
                                   )}
                                 </div>
 
