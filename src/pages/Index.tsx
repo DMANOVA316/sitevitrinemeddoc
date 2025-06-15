@@ -428,13 +428,15 @@ const Index = () => {
             </div>
 
             <div className="mt-8 text-center">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 rounded-full"
-              >
-                En savoir plus sur nous
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/qui-sommes-nous">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 rounded-full transition-all duration-300 hover:scale-[1.02]"
+                >
+                  En savoir plus sur nous
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
