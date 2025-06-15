@@ -17,6 +17,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import useScrollToTop from "@/hooks/useScrollToTop";
+import { Link } from "react-router-dom";
 
 const AppMeddoc = () => {
   // Défilement automatique vers le haut lors du chargement de la page
@@ -56,11 +57,12 @@ const AppMeddoc = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             
-              <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
-                <Mail className="mr-2 h-5 w-5" />
-                M'inscrire pour le lancement
-              </Button>
+              <Link to="/contacts">
+                <Button className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
+                  <Mail className="mr-2 h-5 w-5" />
+                  Nous contacter
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -197,12 +199,18 @@ const AppMeddoc = () => {
                   </div>
                   <h3 className="text-2xl font-bold mb-4">Téléchargez l'app MEDDoC</h3>
                   <p className="mb-6">L'application sera disponible très bientôt sur Android et iOS.</p>
-                  <div className="space-y-4">
-                    <p className="font-medium">Inscrivez-vous dès maintenant pour être informé(e) du lancement officiel !</p>
-                    <Button className="bg-white text-meddoc-primary hover:bg-white/90 w-full">
-                      M'inscrire pour le lancement
-                      <ChevronRight className="ml-2 h-5 w-5" />
-                    </Button>
+                  <div className="space-y-6 md:space-y-8">
+                    <p className="font-medium text-lg md:text-xl text-center md:text-left">
+                      Contactez-nous pour plus d'informations sur le lancement !
+                    </p>
+                    <div className="px-4 md:px-0">
+                      <Link to="/contacts" className="block w-full">
+                        <Button className="bg-white text-meddoc-primary hover:bg-white/90 w-full py-6 text-lg font-semibold transition-all duration-300 hover:scale-[1.02]">
+                          Nous contacter
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
                 <div className="md:w-1/2 p-8 md:p-12 bg-white">
@@ -231,10 +239,12 @@ const AppMeddoc = () => {
                       <p className="text-gray-700">Suivre vos patients via un espace sécurisé</p>
                     </li>
                   </ul>
-                  <Button className="bg-meddoc-primary text-white hover:bg-meddoc-primary/90 w-full">
-                    Devenir partenaire médical
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  <Link to="/contacts">
+                    <Button className="bg-meddoc-primary text-white hover:bg-meddoc-primary/90 w-full">
+                      Devenir partenaire médical
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -272,11 +282,12 @@ const AppMeddoc = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-8 text-meddoc-fonce">Prêt à rejoindre la révolution de la santé digitale ?</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 text-lg font-semibold">
-              <Mail className="mr-2 h-5 w-5" />
-                M'inscrire pour le lancement
-              </Button>
-              
+              <Link to="/contacts">
+                <Button className="bg-gradient-to-r from-meddoc-primary to-meddoc-secondary hover:from-meddoc-primary/90 hover:to-meddoc-secondary/90 text-white px-8 py-6 text-lg font-semibold">
+                  <Mail className="mr-2 h-5 w-5" />
+                  Nous contacter
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
