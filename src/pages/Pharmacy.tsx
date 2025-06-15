@@ -1061,9 +1061,19 @@ const Pharmacy: React.FC = () => {
               Informations importantes
             </h2>
             <p className="text-gray-600 mb-8">
-              Les informations sur les pharmacies de garde sont mises à jour
-              régulièrement. Nous vous recommandons de contacter la pharmacie
-              avant de vous y rendre pour confirmer ses horaires d'ouverture.
+              {activeTab === "all" ? (
+                <>
+                  La liste des pharmacies que nous diffusons est fournie directement par les autorités compétentes. Elle est relayée uniquement à titre informatif et de service public.
+                  <br /><br />
+                  Nous vous recommandons de contacter la pharmacie avant de vous y rendre pour confirmer ses horaires d'ouverture.
+                </>
+              ) : (
+                <>
+                  La liste des pharmacies de garde que nous diffusons est fournie directement par les autorités compétentes. Elle est relayée uniquement à titre informatif et de service public.
+                  <br /><br />
+                  Nous vous recommandons de contacter la pharmacie avant de vous y rendre pour confirmer ses horaires d'ouverture.
+                </>
+              )}
             </p>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 inline-block duty-badge">
               <div className="flex items-center justify-center">
