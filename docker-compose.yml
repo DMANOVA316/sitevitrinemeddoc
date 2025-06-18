@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  frontend:
+  frontend-vitrine:
     build:
       context: .
       args:
         VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
         VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
-    container_name: meddoc-react
+    container_name: meddoc-site-vitrine
     ports:
       - "3000:80"
     restart: unless-stopped
