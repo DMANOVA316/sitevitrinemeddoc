@@ -88,7 +88,7 @@ jobs:
           echo "Current user: $(whoami)"
           echo "Home directory: $HOME"
           echo "Current directory: $(pwd)"
-          mkdir -p $HOME/meddoc-app
+          mkdir -p $HOME/meddoc-site-vitrine
           ls -la $HOME/
           echo "Directory created successfully"
           EOF
@@ -121,12 +121,12 @@ jobs:
 
           # Extraire sur le VPS
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-          rm -rf ~/meddoc-app
-          mkdir -p ~/meddoc-app
-          tar -xzf ~/deploy.tar.gz -C ~/meddoc-app
+          rm -rf ~/meddoc-site-vitrine
+          mkdir -p ~/meddoc-site-vitrine
+          tar -xzf ~/deploy.tar.gz -C ~/meddoc-site-vitrine
           rm ~/deploy.tar.gz
           echo "Contenu du dossier après extraction:"
-          ls -la ~/meddoc-app/public
+          ls -la ~/meddoc-site-vitrine/public
           EOF
 
           # Nettoyer localement
@@ -135,7 +135,7 @@ jobs:
       - name: Build and deploy on VPS
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << EOF
-          cd ~/meddoc-app
+          cd ~/meddoc-site-vitrine
 
           # Créer le fichier .env pour Docker Compose
           cat > .env << 'ENVEOF'

@@ -454,8 +454,17 @@ const Index = () => {
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-meddoc-fonce to-meddoc-fonce">POURQUOI CHOISIR MEDDoC ?</span>
                 <div className="absolute w-32 h-1 bg-gradient-to-r from-meddoc-primary to-meddoc-secondary bottom-0 left-1/2 transform -translate-x-1/2 -mb-2 rounded-full"></div>
               </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-6">
-                Nous combinons expertise locale et vision innovante pour transformer le secteur de la santé à Madagascar
+              <p 
+                className="text-lg text-gray-600 max-w-3xl mx-auto mt-6"
+                style={{
+                  contentVisibility: 'auto',
+                  containIntrinsicSize: '0 24px'
+                }}
+                data-priority="high"
+              >
+                <span className="inline-block animate-fade-in">
+                  Nous combinons expertise locale et vision innovante pour transformer le secteur de la santé à Madagascar
+                </span>
               </p>
             </div>
 
