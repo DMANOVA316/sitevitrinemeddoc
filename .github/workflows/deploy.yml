@@ -157,6 +157,6 @@ jobs:
 
           # Vérifier le statut
           docker compose ps
-          docker compose logs frontend --tail=20
+          docker compose logs frontend-vitrine --tail=20
           EOF
 
