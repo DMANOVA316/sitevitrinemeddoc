@@ -44,7 +44,7 @@ const Formations = () => {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight"
             >
-              FORMATIONS<span className="text-meddoc-secondary">.</span>
+              FORMATIONS SANTÉ<span className="text-meddoc-secondary">.</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
