@@ -7,7 +7,12 @@
    <!-- SEO -->
     <title>MEDDoC - Votre partenaire santé à Madagascar</title>
     <meta name="description" content="MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical." />
+    <meta name="keywords" content="santé Madagascar, médecine Madagascar, solutions digitales santé, consulting santé et stratégie, formation santé, community management médical, pharmacies et pharmacies de garde, bibliothèque numérique santé, prise de rendez-vous médical, médecin en ligne, clinique, hôpitaux, santé digitale, carnet de santé numérique" />
     <meta name="author" content="MEDDoC"/>
+
+    <!-- Balises robots et indexation -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="revisit-after" content="7 days" />
 
     <!-- Fallback statique (classique) -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -15,9 +20,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://meddoc.mg/" />
-    <meta property="og:title" content="MEDDoC - Votre partenaire santé à Madagascarr" />
+    <meta property="og:title" content="MEDDoC - Votre partenaire santé à Madagascar" />
     <meta property="og:description" content="MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical." />
     <meta property="og:image" content="https://meddoc.mg/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MEDDoC - Solutions santé Madagascar" />
+    <meta property="og:site_name" content="MEDDoC" />
+    <meta property="og:locale" content="fr_FR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -25,20 +35,162 @@
     <meta name="twitter:title" content="MEDDoC - Votre partenaire santé à Madagascar" />
     <meta name="twitter:description" content="MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical." />
     <meta name="twitter:image" content="https://meddoc.mg/og-image.png" />
-    
-    <link rel="canonical" href="https://meddoc.mg" />
+    <meta name="twitter:image:alt" content="MEDDoC - Solutions santé Madagascar" />
 
+    <link rel="canonical" href="https://meddoc.mg/" />
 
-   <!-- Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXE6VZ9L6N"></script> 
-   <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag() {
-       dataLayer.push(arguments);
+    <!-- Liens alternatifs et hreflang -->
+    <link rel="alternate" href="https://meddoc.mg/" hreflang="fr" />
+    <link rel="alternate" href="https://meddoc.mg/en/" hreflang="en" />
+
+    <!-- Données structurées JSON-LD -->
+    <script type="application/ld+json">
+    {
+     "@context": "https://schema.org",
+     "@type": "MedicalOrganization",
+     "name": "MEDDoC",
+     "url": "https://meddoc.mg",
+     "logo": "https://meddoc.mg/logo.png",
+     "image": "https://meddoc.mg/og-image.png",
+     "description": "MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical.",
+     "address": {
+       "@type": "PostalAddress",
+       "streetAddress": "Lot 37 Ampefiloha",
+       "addressLocality": "Antananarivo",
+       "addressRegion": "Analamanga",
+       "postalCode": "101",
+       "addressCountry": "MG"
+     },
+     "geo": {
+       "@type": "GeoCoordinates",
+       "latitude": -18.8792,
+       "longitude": 47.5079
+     },
+     "areaServed": {
+       "@type": "Country",
+       "name": "Madagascar"
+     },
+     "medicalSpecialty": [
+       "Solutions digitales santé",
+       "Consulting santé et stratégie",
+       "Formation santé",
+       "Community management médical"
+     ],
+     "serviceType": [
+      "Solutions digitales santé",
+       "Consulting santé et stratégie",
+       "Formation santé",
+       "Community management médical"
+     ],
+     "sameAs": [
+"https://www.facebook.com/MEDDOCHC",
+"https://www.linkedin.com/company/meddochealthcare",
+"https://www.instagram.com/meddoc.healthcare",
+"https://x.com/MEDDoCMG"
+     ],
+     "contactPoint": [
+       {
+         "@type": "ContactPoint",
+         "telephone": "+261-32-65-031-58",
+         "contactType": "Customer Service",
+         "availableLanguage": ["French", "Malagasy"],
+         "hoursAvailable": {
+           "@type": "OpeningHoursSpecification",
+           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+           "opens": "08:00",
+           "closes": "17:00"
+         }
+       },
+       {
+         "@type": "ContactPoint",
+         "email": "contact@meddoc.mg",
+         "contactType": "Customer Service",
+         "availableLanguage": ["French", "Malagasy"]
+       }
+     ]
+   }
+    </script>
+    <script type="application/ld+json">
+    {
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+       {
+         "@type": "ListItem",
+         "position": 1,
+         "name": "Accueil",
+         "item": "https://meddoc.mg/"
+       }
+     ]
+   }
+    </script>
+    <script type="application/ld+json">
+    {
+     "@context": "https://schema.org",
+     "@type": "WebSite",
+     "name": "MEDDoC",
+     "url": "https://meddoc.mg",
+     "description": "Votre partenaire santé à Madagascar",
+     "inLanguage": "fr-FR",
+     "publisher": {
+       "@type": "Organization",
+       "name": "MEDDoC",
+       "logo": {
+         "@type": "ImageObject",
+         "url": "https://meddoc.mg/logo.png"
+       }
+     },
+     "potentialAction": {
+       "@type": "SearchAction",
+       "target": "https://meddoc.mg/search?q={search_term_string}",
+       "query-input": "required name=search_term_string"
      }
-     gtag('js', new Date());
-     gtag('config', 'G-ZXE6VZ9L6N');
-   </script>
+   }
+    </script>
+
+    <!-- Optimisation performance et vitesse -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="/assets/index-CAEuL7Sm.js" as="script" crossorigin />
+    <link rel="preload" href="/assets/index-BLgNG0iP.css" as="style" />
+    <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon" />
+
+    <!-- Préchargement des polices si utilisées -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" /></noscript>
+
+    <!-- DNS Prefetch pour optimiser les connexions -->
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+    <!-- Google Analytics optimisé -->
+    <script>
+        // Optimisation GA4 avec chargement différé
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-ZXE6VZ9LGN', {
+            page_title: 'MEDDoC - Accueil',
+            page_location: window.location.href,
+            content_group1: 'Homepage',
+            cookie_flags: 'SameSite=None;Secure',
+            anonymize_ip: true,
+            allow_google_signals: false
+        });
+        // Chargement différé du script GA
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZXE6VZ9LGN';
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
 
   </head>
 
