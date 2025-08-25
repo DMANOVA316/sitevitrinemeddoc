@@ -43,11 +43,10 @@ const AppMeddoc = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
-              <span className="inline-flex items-center">
-
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight items-center">
+              
               REJOIGNEZ LA SANTÉ DE DEMAIN<span className="text-yellow-300 ml-2">!</span>
-              </span>
+              
             </h1>
 
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl mb-8">
