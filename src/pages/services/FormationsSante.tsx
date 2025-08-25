@@ -1,5 +1,6 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, GraduationCap, Target, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import formationsImage from "../../assets/serivces-images/formations.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Link } from "react-router-dom";
@@ -12,6 +13,11 @@ const Formations = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Formations Santé Madagascar | Formation médicale professionnelle"
+        description="Découvrez nos formations santé à Madagascar. Renforcez les compétences de vos équipes avec nos formations pratiques en gestion, finance, outils numériques et services de santé."
+        keywords="formations santé Madagascar, formation médicale, compétences santé, formation professionnelle santé, MEDDoC formation"
+      />
       {/* Hero Section avec image de fond et dégradé */}
       <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
         <motion.div

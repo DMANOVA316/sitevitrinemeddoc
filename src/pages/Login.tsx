@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -49,13 +50,17 @@ const Login = () => {
     }
   };
 
-  // Function to scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-meddoc-fonce via-sky-500/30 to-meddoc-fonce">
+      <PageTitle 
+        title="MEDDoC - Connexion | Accès sécurisé à votre espace santé Madagascar"
+        description="Connectez-vous à votre espace MEDDoC pour accéder à vos services de santé personnalisés à Madagascar. Connexion sécurisée pour professionnels et patients."
+        keywords="connexion MEDDoC, login santé Madagascar, espace personnel santé, accès sécurisé MEDDoC, se connecter"
+      />
       {/* Decorative Elements - Responsive sizes and positions */}
       <div className="absolute top-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-meddoc-primary/20 rounded-full blur-3xl -ml-24 sm:-ml-32 -mt-24 sm:-mt-32"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-meddoc-secondary/20 rounded-full blur-3xl -mr-24 sm:-mr-32 -mb-24 sm:-mb-32"></div>

@@ -1,5 +1,6 @@
-import { ArrowRight, Code, Database, Globe, MapPin, Shield, Smartphone, Users } from "lucide-react";
+import { ArrowRight, Code, Database, Globe, MapPin, Monitor, Shield, Smartphone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import digitaleImage from "../../assets/serivces-images/digitale.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { scrollToElement } from "@/utils/scrollUtils";
@@ -11,6 +12,11 @@ const Digital = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Solutions Digitales Santé Madagascar | Développement applications médicales"
+        description="Découvrez nos solutions digitales santé à Madagascar. Conception et développement d'applications mobiles, plateformes web et logiciels sur mesure pour moderniser la santé."
+        keywords="solutions digitales santé Madagascar, applications médicales, développement logiciel santé, plateformes web santé, MEDDoC digital"
+      />
       {/* Hero Section avec image de fond et dégradé */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
         {/* Background Image with Animation */}

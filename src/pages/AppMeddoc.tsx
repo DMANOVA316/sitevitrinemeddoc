@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import {
   Smartphone,
   Rocket,
@@ -25,6 +26,11 @@ const AppMeddoc = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Application web et mobile santé Madagascar | Carnet de santé numérique"
+        description="Découvrez l'application MEDDoC : votre carnet de santé numérique à Madagascar. Gérez vos rendez-vous médicaux, suivez votre santé et accédez aux services de santé facilement."
+        keywords="app MEDDoC, application santé Madagascar, carnet santé numérique, rendez-vous médical Madagascar, suivi santé mobile"
+      />
       {/* Hero Section */}
       <section className="relative py-8 overflow-hidden bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
         <div

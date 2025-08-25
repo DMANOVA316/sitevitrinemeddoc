@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import PageTitle from "@/components/PageTitle";
 import {
   ArrowRight,
   Stethoscope,
@@ -71,6 +72,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle title="MEDDoC - Votre partenaire santé à Madagascar" />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         {/* Background Image with Overlay */}

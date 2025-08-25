@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import PageTitle from "@/components/PageTitle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
@@ -32,9 +33,10 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const ContactUs = () => {
-  // Défilement automatique vers le haut lors du chargement de la page
+const ContactUs: React.FC = () => {
   useScrollToTop();
+
+
 
   const { addContact } = useContactRedux();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,6 +75,11 @@ const ContactUs = () => {
 
   return (
     <div className="py-8 sm:py-10 md:py-10 lg:py-14 min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
+      <PageTitle 
+        title="MEDDoC - Contactez-nous | Votre partenaire santé à Madagascar"
+        description="Contactez MEDDoC pour vos besoins en santé à Madagascar. Nous sommes là pour vous accompagner dans vos projets de santé digitale, consulting et formation."
+        keywords="contact MEDDoC, nous contacter Madagascar, partenaire santé Madagascar, contact santé digitale, MEDDoC contact"
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl overflow-hidden">
           <div className="flex flex-col md:flex-row">

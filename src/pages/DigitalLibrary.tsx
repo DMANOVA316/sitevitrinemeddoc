@@ -5,6 +5,7 @@ import DocumentGrid from "@/components/document/DocumentGrid";
 import DocumentFilters from "@/components/document/DocumentFilters";
 import DocumentViewer from "@/components/document/DocumentViewer";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import { RefreshCw } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -116,7 +117,12 @@ const DigitalLibrary: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
+      <PageTitle
+        title="MEDDoC - Bibliothèque numérique santé Madagascar | Ressources médicales"
+        description="Accédez à notre bibliothèque numérique santé à Madagascar. Consultez des ressources médicales, guides de santé et informations fiables pour professionnels et patients."
+        keywords="bibliothèque numérique santé Madagascar, ressources médicales, guides santé, documentation médicale Madagascar, MEDDoC bibliothèque"
+      />
       {/* Prévisualiseur de document */}
       <DocumentViewer
         document={selectedDocument}
