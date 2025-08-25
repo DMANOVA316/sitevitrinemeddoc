@@ -2,6 +2,7 @@ import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import PublicLayout from "@/components/PublicLayout";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -212,14 +213,16 @@ const App = () => {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <TooltipProvider>
-            <ServiceProvider>
-              <Toaster richColors />
-              <BrowserRouter>
-                <AppContent />
-              </BrowserRouter>
-            </ServiceProvider>
-          </TooltipProvider>
+          <HelmetProvider>
+            <TooltipProvider>
+              <ServiceProvider>
+                <Toaster richColors />
+                <BrowserRouter>
+                  <AppContent />
+                </BrowserRouter>
+              </ServiceProvider>
+            </TooltipProvider>
+          </HelmetProvider>
         </Provider>
       </QueryClientProvider>
     </Provider>

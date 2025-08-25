@@ -1,46 +1,54 @@
 import useInfoMeddocRedux from "@/hooks/use-info-meddoc-redux";
-import infoMeddocService from "@/services/infoMeddocService";
 import { getPublicUrl } from "@/utils/supabase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 export interface PageTitleProps {
-  isDashboard: boolean;
+  isDashboard?: boolean;
+  title?: string;
+  pageName?: string;
 }
 
-function PageTitle({ isDashboard }: PageTitleProps) {
-  const { infoMeddoc, showEditInformationModal, error, isLoading } =
-    useInfoMeddocRedux();
+function PageTitle({ isDashboard = false, title, pageName }: PageTitleProps) {
+  const { infoMeddoc } = useInfoMeddocRedux();
+  
+  // Construire le titre de la page
+  const getPageTitle = () => {
+    // Si un titre spécifique est fourni, l'utiliser
+    if (title) {
+      return title;
+    }
+    
+    // Sinon, construire le titre en fonction des informations disponibles
+    if (infoMeddoc?.titre_site) {
+      if (pageName) {
+        return `${infoMeddoc.titre_site} - ${pageName}`;
+      }
+      return isDashboard ? `${infoMeddoc.titre_site} - Dashboard` : infoMeddoc.titre_site;
+    }
+    
+    // Titre par défaut si rien d'autre n'est disponible
+    return pageName ? `MEDDoC - ${pageName}` : "MEDDoC - Votre partenaire santé à Madagascar";
+  };
 
   useEffect(() => {
-    const updateInfo = async () => {
-      try {
-        const data = infoMeddoc;
-        // Mise à jour du titre
-        if (data?.titre_site) {
-          const pageTitle = isDashboard
-            ? `${data.titre_site} - Dashboard`
-            : data.titre_site;
-          document.title = pageTitle;
-        }
-        // Mise à jour du favicon
-        if (data?.favicon) {
-          const faviconUrl = getPublicUrl(data.favicon);
-          const link = (document.querySelector("link[rel*='icon']") ||
-            document.createElement("link")) as HTMLLinkElement;
-          link.type = "image/x-icon";
-          link.rel = "shortcut icon";
-          link.href = faviconUrl;
-          document.getElementsByTagName("head")[0].appendChild(link);
-        }
-      } catch (error) {
-        console.error("Error updating site info:", error);
-      }
-    };
+    // Mise à jour du favicon
+    if (infoMeddoc?.favicon) {
+      const faviconUrl = getPublicUrl(infoMeddoc.favicon);
+      const link = (document.querySelector("link[rel*='icon']")||
+        document.createElement("link")) as HTMLLinkElement;
+      link.type = "image/x-icon";
+      link.rel = "shortcut icon";
+      link.href = faviconUrl;
+      document.getElementsByTagName("head")[0].appendChild(link);
+    }
+  }, [infoMeddoc]);
 
-    updateInfo();
-  }, [infoMeddoc, isDashboard]);
-
-  return null;
+  return (
+    <Helmet>
+      <title>{getPageTitle()}</title>
+    </Helmet>
+  );
 }
 
 export default PageTitle;
