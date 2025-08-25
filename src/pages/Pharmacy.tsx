@@ -1,5 +1,7 @@
 import PharmacyCard from "@/components/dashboard/Pharmacy/PharmacyCard";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import { Input } from "@/components/ui/input";
 import ScrollToTopButton from "@/components/ui/scroll-to-top-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,7 +17,6 @@ import {
   MoreHorizontal,
   Search,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 import "../styles/pharmacy.css";
 
 const Pharmacy: React.FC = () => {
@@ -234,7 +235,12 @@ const Pharmacy: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50/30 pharmacy-pattern">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
+      <PageTitle
+        title="MEDDoC - Pharmacies et Pharmacies de Garde Madagascar | Trouvez votre pharmacie"
+        description="Trouvez facilement les pharmacies et pharmacies de garde à Madagascar. Localisez les pharmacies ouvertes près de chez vous avec MEDDoC, votre guide santé de confiance."
+        keywords="pharmacies Madagascar, pharmacies de garde Madagascar, trouver pharmacie, localiser pharmacie Madagascar, MEDDoC pharmacies"
+      />
       {/* Bouton de retour en haut */}
       <ScrollToTopButton />
       {/* Hero Section */}

@@ -1,5 +1,6 @@
 import { ArrowRight, BarChart4, Building2, CheckCircle2, FileText, MessageCircle, PenTool, Share2, Target, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import communityImage from "../../assets/serivces-images/community.jpg";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import communityImage2 from "../../assets/serivces-images/community-2.jpg";
@@ -11,6 +12,11 @@ const Community = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Community Management Médical Madagascar | Gestion réseaux sociaux santé"
+        description="Découvrez nos services de community management médical à Madagascar. Nous gérons votre présence en ligne sur Facebook, Instagram, LinkedIn pour valoriser votre image santé."
+        keywords="community management médical Madagascar, gestion réseaux sociaux santé, marketing digital santé Madagascar, communication médicale, MEDDoC community"
+      />
       {/* Hero Section avec effet parallaxe */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">
         {/* Background Image with Animation */}

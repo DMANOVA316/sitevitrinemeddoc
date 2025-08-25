@@ -1,5 +1,6 @@
-import { ArrowRight, BarChart4, Building, CheckCircle2, HandshakeIcon, HeartPulse, MessageCircle, PieChart, Target } from "lucide-react";
+import { ArrowRight, BarChart4, Building2, CheckCircle2, FileText, Lightbulb, PenTool, Target, TrendingUp, Users, Building, PieChart, HeartPulse, HandshakeIcon, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/PageTitle";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -10,6 +11,11 @@ const Consulting = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Consulting Santé et Stratégie Madagascar | Conseil médical"
+        description="Bénéficiez de notre expertise en consulting santé et stratégie à Madagascar. Structurez, améliorez et innovez dans vos services de santé avec MEDDoC."
+        keywords="consulting santé Madagascar, conseil stratégie médicale, expertise santé Madagascar, diagnostic santé, MEDDoC consulting"
+      />
       {/* Hero Section avec effet parallaxe */}
       <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/90 to-meddoc-secondary/90 bg-fixed bg-cover"
         style={{

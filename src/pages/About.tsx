@@ -1,5 +1,6 @@
 import React from 'react';
 import useScrollToTop from "../hooks/useScrollToTop";
+import PageTitle from "@/components/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
@@ -22,6 +23,11 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen">
+      <PageTitle 
+        title="MEDDoC - Qui sommes-nous ? Notre mission et vision santé Madagascar"
+        description="Découvrez MEDDoC, votre partenaire santé à Madagascar. Notre mission : améliorer l'accès aux soins grâce à l'innovation, la formation et l'expertise locale."
+        keywords="MEDDoC Madagascar, qui sommes-nous, mission santé Madagascar, vision santé, partenaire santé, innovation médicale Madagascar"
+      />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]"></div>
