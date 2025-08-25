@@ -7,9 +7,17 @@ export interface PageTitleProps {
   isDashboard?: boolean;
   title?: string;
   pageName?: string;
+  description?: string;
+  keywords?: string;
 }
 
-function PageTitle({ isDashboard = false, title, pageName }: PageTitleProps) {
+function PageTitle({ 
+  isDashboard = false, 
+  title, 
+  pageName, 
+  description, 
+  keywords 
+}: PageTitleProps) {
   const { infoMeddoc } = useInfoMeddocRedux();
   
   // Construire le titre de la page
@@ -31,6 +39,24 @@ function PageTitle({ isDashboard = false, title, pageName }: PageTitleProps) {
     return pageName ? `MEDDoC - ${pageName}` : "MEDDoC - Votre partenaire santé à Madagascar";
   };
 
+  // Construire la description de la page
+  const getPageDescription = () => {
+    if (description) {
+      return description;
+    }
+    // infoMeddoc n'a pas de propriété description, donc on utilise la valeur par défaut
+    return "MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical.";
+  };
+
+  // Construire les mots-clés de la page
+  const getPageKeywords = () => {
+    if (keywords) {
+      return keywords;
+    }
+    // infoMeddoc n'a pas de propriété keywords, donc on utilise la valeur par défaut
+    return "santé Madagascar, médecine Madagascar, solutions digitales santé, consulting santé et stratégie, formation santé, community management médical";
+  };
+
   useEffect(() => {
     // Mise à jour du favicon
     if (infoMeddoc?.favicon) {
@@ -46,7 +72,15 @@ function PageTitle({ isDashboard = false, title, pageName }: PageTitleProps) {
 
   return (
     <Helmet>
+      <html lang="fr" />
       <title>{getPageTitle()}</title>
+      <meta name="description" content={getPageDescription()} />
+      <meta name="keywords" content={getPageKeywords()} />
+      <meta property="og:title" content={getPageTitle()} />
+      <meta property="og:description" content={getPageDescription()} />
+      <meta property="og:locale" content="fr_FR" />
+      <meta name="twitter:title" content={getPageTitle()} />
+      <meta name="twitter:description" content={getPageDescription()} />
     </Helmet>
   );
 }
