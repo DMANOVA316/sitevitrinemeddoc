@@ -76,9 +76,11 @@ const ContactUs: React.FC = () => {
   return (
     <div className="py-8 sm:py-10 md:py-10 lg:py-14 min-h-screen bg-gradient-to-br from-meddoc-primary to-meddoc-secondary">
       <PageTitle 
-        title="MEDDoC - Contactez-nous | Votre partenaire santé à Madagascar"
+        title="Contacts - MEDDoC"
         description="Contactez MEDDoC pour vos besoins en santé à Madagascar. Nous sommes là pour vous accompagner dans vos projets de santé digitale, consulting et formation."
         keywords="contact MEDDoC, nous contacter Madagascar, partenaire santé Madagascar, contact santé digitale, MEDDoC contact"
+        canonicalUrl="https://meddoc.mg/contacts"
+        ogImage="https://meddoc.mg/og-image-contact.png"
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl overflow-hidden">
