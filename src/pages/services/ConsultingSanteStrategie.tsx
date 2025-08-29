@@ -12,9 +12,11 @@ const Consulting = () => {
   return (
     <div className="min-h-screen">
       <PageTitle 
-        title="MEDDoC - Consulting Santé et Stratégie Madagascar | Conseil médical"
+        title="Consulting Santé et Stratégie - MEDDoC"
         description="Bénéficiez de notre expertise en consulting santé et stratégie à Madagascar. Structurez, améliorez et innovez dans vos services de santé avec MEDDoC."
         keywords="consulting santé Madagascar, conseil stratégie médicale, expertise santé Madagascar, diagnostic santé, MEDDoC consulting"
+        canonicalUrl="https://meddoc.mg/services/consulting-sante-strategie"
+        ogImage="https://meddoc.mg/og-image-consulting.png"
       />
       {/* Hero Section avec effet parallaxe */}
       <section className="relative py-28 overflow-hidden bg-gradient-to-br from-meddoc-primary/90 to-meddoc-secondary/90 bg-fixed bg-cover"

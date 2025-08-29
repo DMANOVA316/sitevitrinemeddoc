@@ -13,9 +13,11 @@ const Digital = () => {
   return (
     <div className="min-h-screen">
       <PageTitle 
-        title="MEDDoC - Solutions Digitales Santé Madagascar | Développement applications médicales"
+        title="Solutions Digitales Santé - MEDDoC"
         description="Découvrez nos solutions digitales santé à Madagascar. Conception et développement d'applications mobiles, plateformes web et logiciels sur mesure pour moderniser la santé."
         keywords="solutions digitales santé Madagascar, applications médicales, développement logiciel santé, plateformes web santé, MEDDoC digital"
+        canonicalUrl="https://meddoc.mg/services/solutions-digitales-sante"
+        ogImage="https://meddoc.mg/og-image-digital.png"
       />
       {/* Hero Section avec image de fond et dégradé */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">

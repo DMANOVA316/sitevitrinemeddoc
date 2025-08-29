@@ -1,6 +1,8 @@
 import React from 'react';
 import useScrollToTop from "../hooks/useScrollToTop";
 import PageTitle from "@/components/PageTitle";
+import SchemaOrg from "@/components/SchemaOrg";
+import { useBreadcrumbs } from "@/hooks/useBreadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
@@ -20,13 +22,23 @@ import {
 
 const About: React.FC = () => {
   useScrollToTop(); // Défilement automatique vers le haut lors du chargement de la page
+  const breadcrumbs = useBreadcrumbs();
 
   return (
     <div className="min-h-screen">
       <PageTitle 
-        title="MEDDoC - Qui sommes-nous ? Notre mission et vision santé Madagascar"
-        description="Découvrez MEDDoC, votre partenaire santé à Madagascar. Notre mission : améliorer l'accès aux soins grâce à l'innovation, la formation et l'expertise locale."
-        keywords="MEDDoC Madagascar, qui sommes-nous, mission santé Madagascar, vision santé, partenaire santé, innovation médicale Madagascar"
+        title="Qui sommes-nous - MEDDoC"
+        description="Découvrez l'équipe MEDDoC, une plateforme innovante dédiée à la santé digitale à Madagascar. Notre mission : améliorer l'accès aux soins grâce à l'innovation, la formation et l'expertise locale."
+        keywords="MEDDoC Madagascar, qui sommes-nous, mission santé Madagascar, vision santé, partenaire santé, innovation médicale Madagascar, équipe santé digitale"
+        canonicalUrl="https://meddoc.mg/qui-sommes-nous"
+        ogImage="https://meddoc.mg/og-image-about.png"
+      />
+      <SchemaOrg 
+        type="WebPage"
+        name="Qui sommes-nous - MEDDoC"
+        description="Découvrez l'équipe MEDDoC, une plateforme innovante dédiée à la santé digitale à Madagascar."
+        url="https://meddoc.mg/qui-sommes-nous"
+        breadcrumbs={breadcrumbs}
       />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-meddoc-fonce via-sky-500 to-meddoc-fonce overflow-hidden">

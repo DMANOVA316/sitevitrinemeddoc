@@ -13,9 +13,11 @@ const Community = () => {
   return (
     <div className="min-h-screen">
       <PageTitle 
-        title="MEDDoC - Community Management Médical Madagascar | Gestion réseaux sociaux santé"
+        title="Community Management Médical - MEDDoC"
         description="Découvrez nos services de community management médical à Madagascar. Nous gérons votre présence en ligne sur Facebook, Instagram, LinkedIn pour valoriser votre image santé."
         keywords="community management médical Madagascar, gestion réseaux sociaux santé, marketing digital santé Madagascar, communication médicale, MEDDoC community"
+        canonicalUrl="https://meddoc.mg/services/community-management-medical"
+        ogImage="https://meddoc.mg/og-image-community.png"
       />
       {/* Hero Section avec effet parallaxe */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">

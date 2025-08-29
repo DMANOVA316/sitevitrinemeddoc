@@ -14,9 +14,11 @@ const Formations = () => {
   return (
     <div className="min-h-screen">
       <PageTitle 
-        title="MEDDoC - Formations Santé Madagascar | Formation médicale professionnelle"
+        title="Formations Santé - MEDDoC"
         description="Découvrez nos formations santé à Madagascar. Renforcez les compétences de vos équipes avec nos formations pratiques en gestion, finance, outils numériques et services de santé."
         keywords="formations santé Madagascar, formation médicale, compétences santé, formation professionnelle santé, MEDDoC formation"
+        canonicalUrl="https://meddoc.mg/services/formations-sante"
+        ogImage="https://meddoc.mg/og-image-formations.png"
       />
       {/* Hero Section avec image de fond et dégradé */}
       <section className="relative py-24 overflow-hidden bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce">

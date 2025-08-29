@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PageTitle from "@/components/PageTitle";
+import SchemaOrg from "@/components/SchemaOrg";
 import {
   ArrowRight,
   Stethoscope,
@@ -72,7 +73,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <PageTitle title="MEDDoC - Votre partenaire santé à Madagascar" />
+      <PageTitle 
+        title="MEDDoC - Votre partenaire santé à Madagascar"
+        description="MEDDoC propose des solutions innovantes pour la santé à Madagascar : digital, consulting, formation et community management médical."
+        keywords="santé Madagascar, médecine Madagascar, solutions digitales santé, consulting santé et stratégie, formation santé, community management médical"
+        canonicalUrl="https://meddoc.mg/"
+        ogImage="https://meddoc.mg/og-image.png"
+      />
+      <SchemaOrg 
+        type="MedicalOrganization"
+        services={[
+          "Solutions Digitales Santé",
+          "Consulting Santé et Stratégie", 
+          "Formations Santé",
+          "Community Management Médical"
+        ]}
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-meddoc-fonce to-meddoc-fonce py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         {/* Background Image with Overlay */}

@@ -9,6 +9,8 @@ export interface PageTitleProps {
   pageName?: string;
   description?: string;
   keywords?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
 }
 
 function PageTitle({ 
@@ -16,7 +18,9 @@ function PageTitle({
   title, 
   pageName, 
   description, 
-  keywords 
+  keywords,
+  canonicalUrl,
+  ogImage
 }: PageTitleProps) {
   const { infoMeddoc } = useInfoMeddocRedux();
   
@@ -76,11 +80,29 @@ function PageTitle({
       <title>{getPageTitle()}</title>
       <meta name="description" content={getPageDescription()} />
       <meta name="keywords" content={getPageKeywords()} />
+      
+      {/* Canonical URL */}
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      
+      {/* Open Graph */}
       <meta property="og:title" content={getPageTitle()} />
       <meta property="og:description" content={getPageDescription()} />
+      <meta property="og:type" content="website" />
       <meta property="og:locale" content="fr_FR" />
+      <meta property="og:site_name" content="MEDDoC" />
+      {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+      {ogImage && <meta property="og:image" content={ogImage} />}
+      {ogImage && <meta property="og:image:alt" content={getPageTitle()} />}
+      
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={getPageTitle()} />
       <meta name="twitter:description" content={getPageDescription()} />
+      {ogImage && <meta name="twitter:image" content={ogImage} />}
+      {ogImage && <meta name="twitter:image:alt" content={getPageTitle()} />}
+      
+      {/* Robots */}
+      <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     </Helmet>
   );
 }
